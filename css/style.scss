@@ -1,0 +1,277 @@
+@import "../bourbon/bourbon";
+@import "custom-anims";
+
+$primary: #5a4af7;
+$anim: 0.3s;
+$bez: cubic-bezier(.13,1,.98,.98);
+
+@font-face {
+    font-family: 'GRBook';
+    src: url('../fonts/grb.eot');
+    src: url('../fonts/grb.eot') format('embedded-opentype'),
+    //url('../fonts/grb.woff2') format('woff2'),
+    url('../fonts/grb.woff') format('woff'),
+    url('../fonts/grb.ttf') format('truetype'),
+    url('../fonts/grb.svg#GRBook') format('svg');
+}
+@font-face {
+    font-family: 'GRLight';
+    src: url('../fonts/grl.eot');
+    src: url('../fonts/grl.eot') format('embedded-opentype'),
+    url('../fonts/grl.woff2') format('woff2'),
+    url('../fonts/grl.woff') format('woff'),
+    url('../fonts/grl.ttf') format('truetype'),
+    url('../fonts/grl.svg#GRLight') format('svg');
+}
+@font-face {
+    font-family: 'GRMedium';
+    src: url('../fonts/grm.eot');
+    src: url('../fonts/grm.eot') format('embedded-opentype'),
+    url('../fonts/grm.woff2') format('woff2'),
+    url('../fonts/grm.woff') format('woff'),
+    url('../fonts/grm.ttf') format('truetype'),
+    url('../fonts/grm.svg#GRMedium') format('svg');
+}
+@font-face {
+    font-family:'Avenir';
+    src: url('../fonts/AvenirLTStd-Light.eot');
+    src: url('../fonts/AvenirLTStd-Light.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/AvenirLTStd-Light.woff2') format('woff2'),
+    url('../fonts/AvenirLTStd-Light.woff') format('woff'),
+    url('../fonts/AvenirLTStd-Light.svg#AvenirLTStd-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-FB02;
+}
+/* Normalizer */
+body, h1, h2, h3, p {
+    margin: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+}
+:focus {
+    outline: 0;
+}
+a, a:focus, a:hover, a:visited {
+    color: $primary;
+    text-decoration: none;
+}
+* {
+    box-sizing: border-box;
+}
+/* Global */
+.container {
+    width: 1320px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.btn {
+    background: $primary;
+    border: 3px solid $primary;
+    border-radius: 100px;
+    color: #fff;
+    font-family: 'GRMedium', sans-serif;
+    font-size: 18px;
+    padding: 1em 3.2em;
+    cursor: pointer;
+    text-transform: uppercase;
+    min-width: 240px;
+    position: relative;
+    @include transform(translateZ(0));
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    @include transition-property(color);
+    @include transition( all $anim );
+    overflow: hidden;
+}
+.btn::before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    background: #fff;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include transform(scaleX(0));
+    @include transform-origin(50%);
+    @include transition( all $anim ease-out);
+}
+.btn-invert {
+    color: $primary;
+    background: #fff;
+    border: 3px solid $primary;
+}
+.btn-white {
+    border: 3px solid #fff;
+    color: #fff;
+    background: transparent;
+}
+.btn-large {
+    padding: 1em 4.2em;
+    font-size: 20px;
+}
+.btn:hover::before {
+    @include transform(scaleX(1));
+}
+.btn:hover {
+    color: $primary;
+}
+.btn-invert::before {
+    background: $primary;
+    @include transform-origin(50%);
+}
+.btn-invert:hover {
+    color: #fff;
+    background: $primary;
+    @include transition( background 0s );
+    @include transition-delay( $anim );
+    @include transition-timing-function( $bez );
+}
+.btn-white::before {
+    background: #fff;
+    height: 100%;
+    @include transform-origin(50%);
+}
+.btn-white:hover {
+    background: #fff;
+    @include transition( background 0s );
+    @include transition-delay( $anim );
+    @include transition-timing-function( $bez );
+}
+p {
+    font-family: 'Avenir', sans-serif;
+    font-size: 20px;
+    color: #2a2a2a;
+    line-height: 1.7;
+}
+h3 {
+    font-family: 'GRBook', sans-serif;
+    font-size: 40px;
+    color: #2a2a2a;
+}
+/* Navbar */
+nav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-family: 'GRMedium', sans-serif;
+    color: #fff;
+    z-index: 9999;
+    .container {
+        display: table;
+    }
+    .nav-links {
+        float: right;
+    }
+    ul {
+        list-style: none;
+    }
+    li {
+        display: inline-block;
+        padding: 2em;
+    }
+    a, a:focus, a:hover, a:visited {
+        color: #fff;
+        font-size: 16px;
+        position: relative;
+        @include transform(perspective(1px) translateZ(0));
+    }
+    a::before {
+        content: "";
+        position: absolute;
+        background: $primary;
+        left: 0;
+        bottom: -6px;
+        height: 4px;
+        right: 100%;
+        @include transition( all $anim );
+        @include transition-timing-function( cubic-bezier(.13,1,.98,.98) );
+        overflow: hidden;
+    }
+    .underline a:hover::before {
+        right: 0;
+    }
+    .btn-white {
+        font-size: 16px;
+        text-transform: none;
+        min-width: 0px;
+        padding: 0.75em 2em;
+        display: inline-flex;
+    }
+    .logo {
+        height: 60px;
+    }
+    .logo:hover {
+        opacity: 0.8;
+    }
+    .logo, .nav-links {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+/* Header */
+.header {
+    background: url('../img/head.png') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+
+    .header-content {
+        color: #fff;
+        top: 50%;
+        position: absolute;
+        @include transform(translateY(-50%));
+    }
+    h1 {
+        font-family: 'GRBook', sans-serif;
+        font-size: 72px;
+    }
+    h2 {
+        font-family: 'GRLight', sans-serif;
+        font-size: 32px;
+    }
+    .header-content h2 {
+        margin-top: 1em;
+    }
+    .header-content button {
+        margin-top: 4em;
+    }
+    .container {
+        padding: 2em;
+    }
+}
+/* About */
+#about {
+    padding: 80px 0;
+    left {
+        text-align: center;
+    }
+    right {
+        padding: 2em;
+    }
+}
+.half-block {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+}
+.half-block p {
+    padding-top: 1.75em;
+}
+.half-block span::before {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background: $primary;
+    position: absolute;
+    margin: 1em 0;
+}
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+    .half-block {
+        width: 100%;
+    }
+}

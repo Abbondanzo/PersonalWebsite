@@ -1,0 +1,43 @@
+@import "../bourbon/bourbon";
+
+$anim: 1s;
+$bez: cubic-bezier(.13,1,.98,.98);
+$primary: rgba(90, 74, 247, 1);
+
+@include keyframes(fadeInUp) {
+    0% {
+        margin-top: 80px;
+        opacity: 0;
+    }
+    100% {
+        margin-top: 0;
+        opacity: 1;
+    }
+}
+@include keyframes(openUp) {
+    0% {
+        background-color: rgba(90, 74, 247, 1);
+    }
+    100% {
+        background-color: rgba(90, 74, 247, 0);
+    }
+}
+
+.fade-in-up {
+    @include animation( fadeInUp $anim $bez forwards );
+}
+.opened {
+    @include animation-delay ( 2s );
+    @include animation( openUp $anim $bez forwards );
+}
+.open-in::after {
+    content: "";
+    height: 100Vh;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    background: $primary;
+    z-index: 99999;
+}
