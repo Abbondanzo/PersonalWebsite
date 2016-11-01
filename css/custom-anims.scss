@@ -1,6 +1,6 @@
 @import "../bourbon/bourbon";
 
-$anim: 1s;
+$anim: 1.2s;
 $bez: cubic-bezier(.13,1,.98,.98);
 $primary: rgba(90, 74, 247, 1);
 
@@ -14,37 +14,8 @@ $primary: rgba(90, 74, 247, 1);
         opacity: 1;
     }
 }
-@include keyframes(openUp) {
-    0% {
-        background-color: rgba(90, 74, 247, 1);
-        top: 0;
-        z-index: 99999;
-    }
-    10% {
-        background-color: rgba(90, 74, 247, 1);
-    }
-    100% {
-        background-color: rgba(90, 74, 247, 0);
-        top: -100%;
-        z-index: -1;
-    }
-}
 
 .fade-in-up {
+    opacity: 0!important;
     @include animation( fadeInUp $anim $bez forwards );
-}
-.open-in::after {
-    @include animation( openUp $anim $bez forwards );
-    @include animation-delay ( 0.4s );
-}
-.open-in::after {
-    content: "";
-    height: 100Vh;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    position: fixed;
-    background: $primary;
-    z-index: 99999;
 }

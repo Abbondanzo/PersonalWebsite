@@ -10,7 +10,3 @@ jQuery(document).ready(function ($) {
     });
 
 });
-
-jQuery(document).ready(function ($) {
-    $('.open-in').addClass('opened');
-});

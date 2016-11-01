@@ -35,7 +35,7 @@
 		</div>
 	</nav>
     <div class="content">
-		<div id="top" class="header">
+		<div id="particles-js" class="header">
 			<div class="container">
 				<div class="header-content fade-in-up">
 					<h1>Peter V. Abbondanzo</h1>
@@ -58,4 +58,6 @@
 		</div>
     </div>
 </body>
+<script src="js/particles.min.js" type="text/javascript"></script>
+<script src="js/footer.min.js"></script>
 </html>
