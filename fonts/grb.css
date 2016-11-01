@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'GRBook';
-    src: url('../fonts/grb.eot');
-    src: url('../fonts/grb.eot') format('embedded-opentype'),
-         url('../fonts/grb.woff2') format('woff2'),
-         url('../fonts/grb.woff') format('woff'),
-         url('../fonts/grb.ttf') format('truetype'),
-         url('../fonts/grb.svg#GRBook') format('svg');
-}

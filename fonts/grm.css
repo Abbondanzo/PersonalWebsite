@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'GRMedium';
-    src: url('../fonts/grm.eot');
-    src: url('../fonts/grm.eot') format('embedded-opentype'),
-         url('../fonts/grm.woff2') format('woff2'),
-         url('../fonts/grm.woff') format('woff'),
-         url('../fonts/grm.ttf') format('truetype'),
-         url('../fonts/grm.svg#GRMedium') format('svg');
-}

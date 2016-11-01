@@ -1,9 +1,0 @@
-@font-face {
-    font-family: 'GRLight';
-    src: url('../fonts/grl.eot');
-    src: url('../fonts/grl.eot') format('embedded-opentype'),
-         url('../fonts/grl.woff2') format('woff2'),
-         url('../fonts/grl.woff') format('woff'),
-         url('../fonts/grl.ttf') format('truetype'),
-         url('../fonts/grl.svg#GRLight') format('svg');
-}
