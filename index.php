@@ -43,6 +43,15 @@ function time_elapsed($datetime, $full = false) {
 						<a href="#">Contact</a>
 					</li>
 					<li>
+						<a href="https://github.com/Abbondanzo"><i class="fa fa-github" aria-hidden="true"></i></a>
+					</li>
+					<li>
+						<a href="https://twitter.com/pabbondanzo"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+					</li>
+					<li>
+						<a href="https://www.linkedin.com/in/pabbondanzo"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+					</li>
+					<li class="underline">
 						<a class="btn btn-white" href="#">Resume</a>
 					</li>
 				</ul>
@@ -59,17 +68,27 @@ function time_elapsed($datetime, $full = false) {
 				</div>
 			</div>
 		</div>
-		<div id="about" class="container">
-			<left class="half-block">
-				<img src="img/photo.png">
-			</left><right class="half-block">
-				<h3>About Me</h3>
-				<span></span>
-				<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
-				<div style="text-align: center;">
-					<button class="btn">Resume</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
+		<div id="about">
+			<div class="container">
+				<left class="half-block">
+					<img style="margin-bottom:-5px;" src="img/photo.png">
+				</left><right class="half-block sect-title">
+					<h3>About Me</h3>
+					<span></span>
+					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
+					<div style="text-align: center;">
+						<button class="btn">Resume</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
+					</div>
+				</right>
+			</div>
+		</div>
+		<div id="work" class="info-section">
+			<div class="container">
+				<div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
 				</div>
-			</right>
+			</div>
 		</div>
     </div>
 </body>

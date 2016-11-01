@@ -44,6 +44,15 @@ $bez: cubic-bezier(.13,1,.98,.98);
     font-stretch: normal;
     unicode-range: U+0020-FB02;
 }
+@font-face {
+    font-family:'FontAwesome';
+    src:url('../fonts/fontawesome-webfont.eot?v=4.4.0');
+    src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.4.0') format('embedded-opentype'),url('../fonts/fontawesome-webfont.woff2?v=4.4.0') format('woff2'),url('../fonts/fontawesome-webfont.woff?v=4.4.0') format('woff'),url('../fonts/fontawesome-webfont.ttf?v=4.4.0') format('truetype'),url('../fonts/fontawesome-webfont.svg?v=4.4.0#fontawesomeregular') format('svg');
+    font-weight:normal;
+    font-style:normal;
+}
+@import "font-awesome";
+
 /* Normalizer */
 body, h1, h2, h3, p {
     margin: 0;
@@ -169,6 +178,14 @@ nav {
     }
     li {
         display: inline-block;
+    }
+    a i {
+        padding: 0.75em;
+    }
+    a i:hover {
+        opacity: 0.6;
+    }
+    .underline {
         padding: 2em;
     }
     a, a:focus, a:hover, a:visited {
@@ -241,14 +258,16 @@ nav {
         padding: 2em;
     }
 }
+.info-section {
+    padding: 80px 0;
+}
 /* About */
 #about {
-    padding: 80px 0;
     left {
         text-align: center;
     }
     right {
-        padding: 2em;
+        padding: 2em 2em 4em 2em;
     }
 }
 .half-block {
@@ -259,7 +278,7 @@ nav {
 .half-block p {
     padding: 1.75em 0;
 }
-.half-block span::before {
+.sect-title span::before {
     content: "";
     width: 80px;
     height: 4px;
@@ -274,4 +293,8 @@ nav {
     .half-block {
         width: 100%;
     }
+}
+/* Work */
+#work {
+    background: #f8f5f8;
 }
