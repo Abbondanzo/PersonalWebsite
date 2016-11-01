@@ -35,7 +35,7 @@ $primary: rgba(90, 74, 247, 1);
 }
 .open-in::after {
     @include animation( openUp $anim $bez forwards );
-    @include animation-delay ( 0.5s );
+    @include animation-delay ( 0.4s );
 }
 .open-in::after {
     content: "";
