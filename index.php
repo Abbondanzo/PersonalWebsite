@@ -1,3 +1,18 @@
+<?php
+function time_elapsed($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+	$time = $diff->y;
+	if ($time == 18 || (80 <= $time && $time <= 89)) {
+		$output = "an ".$time;
+	} else {
+		$output = "a ".$time;
+	}
+	return $output;
+}
+?>
 <!DOCTYPE HTML>
 <html lang="en-us">
 <!-- Code solely created by Peter V. Abbondanzo. Copyright 2016. All rights reserved. -->
@@ -50,7 +65,7 @@
 			</left><right class="half-block">
 				<h3>About Me</h3>
 				<span></span>
-				<p>Hi! I’m Peter Abbondanzo, an 18-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
+				<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
 				<div style="text-align: center;">
 					<button class="btn">Resume</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
 				</div>
