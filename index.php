@@ -61,7 +61,7 @@ function time_elapsed($datetime, $full = false) {
     <div class="content">
 		<div id="particles-js" class="header">
 			<div class="container">
-				<div class="header-content fade-in-up">
+				<div class="header-content animate fade-in-up">
 					<h1>Peter V. Abbondanzo</h1>
 					<h2>Web &amp; Mobile Developer</h2>
 					<a href="#about"><button class="btn btn-large">About Me</button></a>
@@ -72,7 +72,7 @@ function time_elapsed($datetime, $full = false) {
 			<div class="container">
 				<left class="half-block">
 					<img style="margin-bottom:-5px;" src="img/photo.png">
-				</left><right class="half-block sect-title">
+				</left><right class="animate fade-in-up half-block sect-title">
 					<h3>About Me</h3>
 					<span></span>
 					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>

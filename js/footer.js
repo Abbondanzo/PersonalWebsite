@@ -9,5 +9,25 @@ $('#top').mousemove(function( event ) {
 });
 
 particlesJS.load('particles-js', 'js/particles.json', function() {
-  console.log('callback - particles.js config loaded');
+    console.log('callback - particles.js config loaded');
+});
+
+function checkAnimated(scroll) {
+    $('.animate').each(function () {
+        var offset = $(this).offset().top;
+        var height = $(this).height();
+        if (scroll > offset+height) {
+            $(this).addClass('animated');
+        }
+    });
+    $('.animated').each(function () {
+        var offset = $(this).offset().top;
+        var height = $(this).height();
+        if (scroll <= offset) {
+            $(this).removeClass('animated');
+        }
+    });
+}
+$(window).on('scroll',function() {
+    checkAnimated($(this).scrollTop());
 });
