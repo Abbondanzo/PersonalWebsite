@@ -1,4 +1,4 @@
-$('#top').mousemove(function( event ) {
+//$('#top').mousemove(function( event ) {
 //     var magnitudeForeground = 0.075;
 //     var magnitudeBackground = 0.025;
 //     var wh = $(window).height();
@@ -6,11 +6,9 @@ $('#top').mousemove(function( event ) {
 //     $('.header-content').css('margin-left',(magnitudeForeground*event.pageX*-1));
 //     $('.header-content').css('top',(magnitudeForeground*event.pageY*-0.25)+(55)+"%");
 //     $('.header').css('background-position',(magnitudeBackground*event.pageX*-1+50)+"% "+(magnitudeBackground*event.pageY*0.25+50)+"%");
-});
+//});
 
-particlesJS.load('particles-js', 'js/particles.json', function() {
-    console.log('callback - particles.js config loaded');
-});
+particlesJS.load('particles-js', 'js/particles.json');
 
 function checkAnimated(scroll) {
     $('.animate').each(function () {
@@ -18,16 +16,22 @@ function checkAnimated(scroll) {
         var height = $(this).height();
         if (scroll > offset+height) {
             $(this).addClass('animated');
+            $(this).removeClass('animate');
         }
     });
     $('.animated').each(function () {
         var offset = $(this).offset().top;
         var height = $(this).height();
         if (scroll <= offset) {
+            $(this).addClass('animate');
             $(this).removeClass('animated');
         }
     });
 }
+var timeoutId;
 $(window).on('scroll',function() {
-    checkAnimated($(this).scrollTop());
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(function() {
+        checkAnimated($(this).scrollTop());
+    }, 100 );
 });

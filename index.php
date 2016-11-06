@@ -58,10 +58,10 @@ function time_elapsed($datetime, $full = false) {
 			</div>
 		</div>
 	</nav>
-    <div class="content">
-		<div id="particles-js" class="header">
+    <div class="content" id="scene">
+		<div id="particles-js" class="header layer" data-depth="0.2">
 			<div class="container">
-				<div class="header-content animate fade-in-up">
+				<div class="header-content animate fade-in-up layer" data-depth="0.4">
 					<h1>Peter V. Abbondanzo</h1>
 					<h2>Web &amp; Mobile Developer</h2>
 					<a href="#about"><button class="btn btn-large">About Me</button></a>
@@ -84,7 +84,43 @@ function time_elapsed($datetime, $full = false) {
 		</div>
 		<div id="work" class="info-section">
 			<div class="container">
-				<div class="sect-title">
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
+					<h3>Works</h3>
+					<span></span>
+				</div>
+                <div class="sect-title">
 					<h3>Works</h3>
 					<span></span>
 				</div>

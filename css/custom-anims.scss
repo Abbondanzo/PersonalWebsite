@@ -14,8 +14,10 @@ $primary: rgba(90, 74, 247, 1);
         opacity: 1;
     }
 }
-
-.animated.fade-in-up {
+.animate.fade-in-up {
     opacity: 0!important;
     @include animation( fadeInUp $anim $bez forwards );
+}
+.animated {
+    opacity: 0;
 }

@@ -59,6 +59,9 @@ body, h1, h2, h3, p {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
 }
+ul {
+    cursor: default;
+}
 :focus {
     outline: 0;
 }
