@@ -28,6 +28,7 @@ function time_elapsed($datetime, $full = false) {
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 	<script src="js/modernizr.min.js" type="text/javascript"></script>
+	<script src="js/masonry.min.js" type="text/javascript"></script>
 	<script src="js/script.min.js" type="text/javascript"></script>
 </head>
 <body class="open-in">
@@ -88,42 +89,11 @@ function time_elapsed($datetime, $full = false) {
 					<h3>Works</h3>
 					<span></span>
 				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
-                <div class="sect-title">
-					<h3>Works</h3>
-					<span></span>
-				</div>
+                <div class="work-item">
+                    <div class="work-info">
+                    </div>
+                    
+                </div>
 			</div>
 		</div>
     </div>
