@@ -52,7 +52,7 @@ function time_elapsed($datetime, $full = false) {
 						<a href="https://www.linkedin.com/in/pabbondanzo"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
 					</li>
 					<li class="underline">
-						<a class="btn btn-white" href="#">Resume</a>
+						<a class="btn btn-white" href="#">Résumé</a>
 					</li>
 				</ul>
 			</div>
@@ -72,12 +72,12 @@ function time_elapsed($datetime, $full = false) {
 			<div class="container">
 				<left class="half-block">
 					<img style="margin-bottom:-5px;" src="img/photo.png">
-				</left><right class="animate fade-in-up half-block sect-title">
+				</left><right class="animated fade-in-up half-block sect-title">
 					<h3>About Me</h3>
 					<span></span>
 					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
 					<div style="text-align: center;">
-						<button class="btn">Resume</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
+						<button class="btn">Résumé</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
 					</div>
 				</right>
 			</div>

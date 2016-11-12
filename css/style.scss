@@ -54,7 +54,7 @@ $bez: cubic-bezier(.13,1,.98,.98);
 @import "font-awesome";
 
 /* Normalizer */
-body, h1, h2, h3, p {
+html, body, h1, h2, h3, h4, h5, h6, p, div, blockquote {
     margin: 0;
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
@@ -71,6 +71,10 @@ a, a:focus, a:hover, a:visited {
 }
 * {
     box-sizing: border-box;
+}
+*::selection {
+    background: $primary;
+    color: #fff;
 }
 /* Global */
 .container {
@@ -95,61 +99,61 @@ a, a:focus, a:hover, a:visited {
     @include transition-property(color);
     @include transition( all $anim );
     overflow: hidden;
-}
-.btn::before {
-    position: absolute;
-    content: "";
-    z-index: -1;
-    background: #fff;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    @include transform(scaleX(0));
-    @include transform-origin(50%);
-    @include transition( all $anim ease-out);
+    &::before {
+        position: absolute;
+        content: "";
+        z-index: -1;
+        background: #fff;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        @include transform(scaleX(0));
+        @include transform-origin(50%);
+        @include transition( all $anim ease-out);
+    }
+    &:hover {
+        color: $primary;
+    }
+    &:hover::before {
+        @include transform(scaleX(1));
+    }
 }
 .btn-invert {
     color: $primary;
     background: #fff;
     border: 3px solid $primary;
+    &::before {
+        background: $primary;
+        @include transform-origin(50%);
+    }
+    &:hover {
+        color: #fff;
+        background: $primary;
+        @include transition( background 0s );
+        @include transition-delay( $anim );
+        @include transition-timing-function( $bez );
+    }
 }
 .btn-white {
     border: 3px solid #fff;
     color: #fff;
     background: transparent;
+    &::before {
+        background: #fff;
+        height: 100%;
+        @include transform-origin(50%);
+    }
+    &:hover {
+        background: #fff;
+        @include transition( background 0s );
+        @include transition-delay( $anim );
+        @include transition-timing-function( $bez );
+    }
 }
 .btn-large {
     padding: 1em 4.2em;
     font-size: 20px;
-}
-.btn:hover::before {
-    @include transform(scaleX(1));
-}
-.btn:hover {
-    color: $primary;
-}
-.btn-invert::before {
-    background: $primary;
-    @include transform-origin(50%);
-}
-.btn-invert:hover {
-    color: #fff;
-    background: $primary;
-    @include transition( background 0s );
-    @include transition-delay( $anim );
-    @include transition-timing-function( $bez );
-}
-.btn-white::before {
-    background: #fff;
-    height: 100%;
-    @include transform-origin(50%);
-}
-.btn-white:hover {
-    background: #fff;
-    @include transition( background 0s );
-    @include transition-delay( $anim );
-    @include transition-timing-function( $bez );
 }
 p {
     font-family: 'Avenir', sans-serif;
@@ -184,12 +188,15 @@ nav {
     }
     a i {
         padding: 0.75em;
-    }
-    a i:hover {
-        opacity: 0.6;
+        &:hover {
+            opacity: 0.6;
+        }
     }
     .underline {
         padding: 2em;
+        a:hover::before {
+            right: 0;
+        }
     }
     a, a:focus, a:hover, a:visited {
         color: #fff;
@@ -209,9 +216,6 @@ nav {
         @include transition-timing-function( cubic-bezier(.13,1,.98,.98) );
         overflow: hidden;
     }
-    .underline a:hover::before {
-        right: 0;
-    }
     .btn-white {
         font-size: 16px;
         text-transform: none;
@@ -221,9 +225,9 @@ nav {
     }
     .logo {
         height: 60px;
-    }
-    .logo:hover {
-        opacity: 0.8;
+        &:hover {
+            opacity: 0.8;
+        }
     }
     .logo, .nav-links {
         display: table-cell;
@@ -242,6 +246,12 @@ nav {
         top: 50%;
         position: absolute;
         @include transform(translateY(-50%));
+        h2 {
+            margin-top: 1em;
+        }
+        button {
+            margin-top: 4em;
+        }
     }
     h1 {
         font-family: 'GRBook', sans-serif;
@@ -250,12 +260,6 @@ nav {
     h2 {
         font-family: 'GRLight', sans-serif;
         font-size: 32px;
-    }
-    .header-content h2 {
-        margin-top: 1em;
-    }
-    .header-content button {
-        margin-top: 4em;
     }
     .container {
         padding: 2em;
@@ -269,17 +273,14 @@ nav {
     left {
         text-align: center;
     }
-    right {
-        padding: 2em 2em 4em 2em;
-    }
 }
 .half-block {
     display: inline-block;
     width: 50%;
     vertical-align: middle;
-}
-.half-block p {
-    padding: 1.75em 0;
+    p {
+        padding: 1.75em 0;
+    }
 }
 .sect-title span::before {
     content: "";

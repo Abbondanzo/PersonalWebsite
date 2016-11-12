@@ -14,7 +14,9 @@ function checkAnimated(scroll) {
     $('.animate').each(function () {
         var offset = $(this).offset().top;
         var height = $(this).height();
-        if (scroll > offset+height) {
+        var wow = $(window).height();
+        if (scroll > offset+height || scroll+wow <= offset) {
+
             $(this).addClass('animated');
             $(this).removeClass('animate');
         }
@@ -22,7 +24,8 @@ function checkAnimated(scroll) {
     $('.animated').each(function () {
         var offset = $(this).offset().top;
         var height = $(this).height();
-        if (scroll <= offset) {
+        var wow = $(window).height();
+        if (scroll <= offset && scroll+wow > offset) {
             $(this).addClass('animate');
             $(this).removeClass('animated');
         }
@@ -35,3 +38,4 @@ $(window).on('scroll',function() {
         checkAnimated($(this).scrollTop());
     }, 100 );
 });
+checkAnimated($(window).scrollTop());
