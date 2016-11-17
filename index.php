@@ -90,31 +90,31 @@ function time_elapsed($datetime, $full = false) {
 					<span></span>
 				</div>
                 <div class="grid">
-                    <div class="grid-item">
+                    <div class="grid-item animated fade-in-up">
                         <img src="img/200x200bvc.png">
                         <div class="grid-info">
                             <h1>Bonne Vie Café</h1>
                         </div>
                     </div>
-                    <div class="grid-item">
+                    <div class="grid-item animated fade-in-up">
                         <img src="img/200x200rogue.png">
                         <div class="grid-info">
                             <h1>Rogue</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2 grid-item--height2">
+                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
                         <img src="img/400x400feedshare.png">
                         <div class="grid-info">
                             <h1>FeedShare</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2">
+                    <div class="grid-item grid-item--width2 animated fade-in-up">
                         <img src="img/400x200flipster.png">
                         <div class="grid-info">
                             <h1>Flipster</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2 grid-item--height2">
+                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
                         <img src="img/400x400myneu.png">
                         <div class="grid-info">
                             <h1>Modern MyNEU</h1>
