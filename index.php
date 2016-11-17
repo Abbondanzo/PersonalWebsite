@@ -38,7 +38,7 @@ function time_elapsed($datetime, $full = false) {
 			<div class="nav-links">
 				<ul>
 					<li class="underline">
-						<a href="#">Works</a>
+						<a href="#work">Works</a>
 					</li>
 					<li class="underline">
 						<a href="#">Contact</a>
@@ -85,14 +85,41 @@ function time_elapsed($datetime, $full = false) {
 		</div>
 		<div id="work" class="info-section">
 			<div class="container">
-                <div class="sect-title">
+                <div style="padding-bottom:3em;" class="sect-title">
 					<h3>Works</h3>
 					<span></span>
 				</div>
-                <div class="work-item">
-                    <div class="work-info">
+                <div class="grid">
+                    <div class="grid-item">
+                        <img src="img/200x200bvc.png">
+                        <div class="grid-info">
+                            <h1>Bonne Vie Café</h1>
+                        </div>
                     </div>
-                    
+                    <div class="grid-item">
+                        <img src="img/200x200rogue.png">
+                        <div class="grid-info">
+                            <h1>Rogue</h1>
+                        </div>
+                    </div>
+                    <div class="grid-item grid-item--width2 grid-item--height2">
+                        <img src="img/400x400feedshare.png">
+                        <div class="grid-info">
+                            <h1>FeedShare</h1>
+                        </div>
+                    </div>
+                    <div class="grid-item grid-item--width2">
+                        <img src="img/400x200flipster.png">
+                        <div class="grid-info">
+                            <h1>Flipster</h1>
+                        </div>
+                    </div>
+                    <div class="grid-item grid-item--width2 grid-item--height2">
+                        <img src="img/400x400myneu.png">
+                        <div class="grid-info">
+                            <h1>Modern MyNEU</h1>
+                        </div>
+                    </div>
                 </div>
 			</div>
 		</div>
