@@ -12,16 +12,17 @@ particlesJS.load('particles-js', 'js/particles.json');
 
 // Reloads animations into view
 function checkAnimated(scroll) {
-    //
+    // Hides elements when out of view
     $('.animate').each(function () {
-        var offset = $(this).offset().top;
-        var height = $(this).height();
-        var wow = $(window).height();
+        var offset = $(this).offset().top; // Distance from top to element
+        var height = $(this).height(); // Height of element
+        var wow = $(window).height(); // Height of window
         if (scroll > offset+height || scroll+wow <= offset) {
             $(this).addClass('animated');
             $(this).removeClass('animate');
         }
     });
+    // Animates elements that appear in scroll view
     $('.animated').each(function () {
         var offset = $(this).offset().top;
         var height = $(this).height();

@@ -1,7 +1,8 @@
 @import "../bourbon/bourbon";
 @import "custom-anims";
 
-$primary: #0094C6;
+//$primary: #5a4af7;
+$primary: #22dd9b;
 $anim: 0.3s;
 $bez: cubic-bezier(.13,1,.98,.98);
 
@@ -240,7 +241,18 @@ nav {
     background-size: cover;
     height: 100vh;
     position: relative;
-
+    overflow: hidden;
+    &::before {
+        @include background (linear-gradient(top, adjust_hue(darken($primary, 25), 40), $primary));
+        width: 100%;
+        height: 100%;
+        content: " ";
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.2;
+        pointer-events: none;
+    }
     .header-content {
         color: #fff;
         top: 50%;
