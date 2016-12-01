@@ -10,13 +10,14 @@
 
 particlesJS.load('particles-js', 'js/particles.json');
 
+// Reloads animations into view
 function checkAnimated(scroll) {
+    //
     $('.animate').each(function () {
         var offset = $(this).offset().top;
         var height = $(this).height();
         var wow = $(window).height();
         if (scroll > offset+height || scroll+wow <= offset) {
-
             $(this).addClass('animated');
             $(this).removeClass('animate');
         }
@@ -25,7 +26,7 @@ function checkAnimated(scroll) {
         var offset = $(this).offset().top;
         var height = $(this).height();
         var wow = $(window).height();
-        if (scroll <= offset && scroll+wow > offset) {
+        if (scroll <= offset+(0.8*height) && scroll+wow > offset) {
             $(this).addClass('animate');
             $(this).removeClass('animated');
         }

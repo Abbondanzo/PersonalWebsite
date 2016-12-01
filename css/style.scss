@@ -1,7 +1,7 @@
 @import "../bourbon/bourbon";
 @import "custom-anims";
 
-$primary: #5a4af7;
+$primary: #0094C6;
 $anim: 0.3s;
 $bez: cubic-bezier(.13,1,.98,.98);
 
@@ -236,7 +236,7 @@ nav {
 }
 /* Header */
 .header {
-    background: url('../img/head.png') no-repeat center center;
+    background: url('../img/header.png') no-repeat center center;
     background-size: cover;
     height: 100vh;
     position: relative;
@@ -324,7 +324,7 @@ nav {
         @include transition(all $anim $bez);
     }
     &:hover {
-        box-shadow: 0px 3px 10px #828282;
+        box-shadow: 0px 3px 10px darken(#fff, 30%);
         h1 {
             opacity: 1;
             bottom: 10px;
