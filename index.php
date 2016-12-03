@@ -53,7 +53,7 @@ function time_elapsed($datetime, $full = false) {
 						<a href="https://www.linkedin.com/in/pabbondanzo"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
 					</li>
 					<li class="underline">
-						<a class="btn btn-white" href="#">Résumé</a>
+						<a class="btn btn-white" href="content/resume.pdf">Résumé</a>
 					</li>
 				</ul>
 			</div>
@@ -78,7 +78,7 @@ function time_elapsed($datetime, $full = false) {
 					<span></span>
 					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
 					<div style="text-align: center;">
-						<button class="btn">Résumé</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
+						<a href="content/resume.pdf"><button class="btn">Résumé</button></a>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
 					</div>
 				</right>
 			</div>
@@ -120,9 +120,42 @@ function time_elapsed($datetime, $full = false) {
                             <h1>Modern MyNEU</h1>
                         </div>
                     </div>
+                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
+                        <img src="img/400x400sth.png">
+                        <div class="grid-info">
+                            <h1>Sthacks</h1>
+                        </div>
+                    </div>
                 </div>
 			</div>
 		</div>
+        <div id="footer">
+            <div class="container">
+                <div class="footer-widget">
+                    <h3>Sitemap</h3>
+                    <ul>
+                        <li><a href="#">Sitemap1</a></li>
+                        <li><a href="#">Sitemap2</a></li>
+                        <li><a href="#">Sitemap3</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="#">Sitemap1</a></li>
+                        <li><a href="#">Sitemap2</a></li>
+                        <li><a href="#">Sitemap3</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="#">Sitemap1</a></li>
+                        <li><a href="#">Sitemap2</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="js/particles.min.js" type="text/javascript"></script>

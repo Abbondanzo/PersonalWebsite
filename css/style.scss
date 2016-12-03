@@ -313,43 +313,65 @@ nav {
 /* Work */
 #work {
     background: #f8f5f8;
-}
-.grid-item {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    background: $primary;
-    h1 {
-        font-family: 'GRBook', sans-serif;
-        font-size: 20px;
-        color: #fff;
-        position: absolute;
-        bottom: -20px;
-        left: 10px;
-        opacity: 0;
-        @include transition(all $anim $bez);
-    }
-    img {
-        opacity: 1;
-        @include transition(all $anim $bez);
-    }
-    &:hover {
-        box-shadow: 0px 3px 10px darken(#fff, 30%);
+    .grid-item {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        background: $primary;
         h1 {
-            opacity: 1;
-            bottom: 10px;
+            font-family: 'GRBook', sans-serif;
+            font-size: 20px;
+            color: #fff;
+            position: absolute;
+            bottom: -20px;
+            left: 10px;
+            opacity: 0;
+            @include transition(all $anim $bez);
         }
         img {
-            opacity: 0.3;
-            @include transform(scale(1.1));
+            opacity: 1;
+            @include transition(all $anim $bez);
+        }
+        &:hover {
+            box-shadow: 0px 3px 10px darken(#fff, 30%);
+            h1 {
+                opacity: 1;
+                bottom: 10px;
+            }
+            img {
+                opacity: 0.3;
+                @include transform(scale(1.1));
+            }
         }
     }
+    .grid-item--width2 {
+        width: 400px;
+    }
+    .grid-item--height2 {
+        height: 400px;
+    }
 }
-.grid-item--width2 {
-    width: 400px;
-}
-.grid-item--height2 {
-    height: 400px;
+#footer {
+    background: $primary;
+    padding: 60px 0;
+    .footer-widget {
+        display: inline-block;
+        width: 33%;
+        vertical-align: top;
+    }
+    h3 {
+        font-size: 16px;
+        color: #fff;
+    }
+    ul {
+        list-style: none;
+        -webkit-padding-start: 0;
+        
+    }
+    a {
+        color: #fff;
+        font-family: 'Avenir', sans-serif;
+    }
 }
