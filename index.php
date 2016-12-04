@@ -34,7 +34,7 @@ function time_elapsed($datetime, $full = false) {
 <body class="open-in">
 	<nav class="resting">
 		<div class="container">
-			<div class="logo"><a href="/"><img height="60" title="Abbondanzo" src="img/logo.png" /></a></div>
+			<div class="logo"><a href="#scene"><img height="60" title="Abbondanzo" src="img/logo.png" /></a></div>
 			<div class="nav-links">
 				<ul>
 					<li class="underline">
@@ -129,31 +129,26 @@ function time_elapsed($datetime, $full = false) {
                 </div>
 			</div>
 		</div>
+        <div id="cta">
+            <div class="container">
+                <h1>Let's get in touch</h1>
+                <a class="btn btn-white" href="content/resume.pdf">Contact Me</a>
+            </div>
+        </div>
         <div id="footer">
             <div class="container">
-                <div class="footer-widget">
-                    <h3>Sitemap</h3>
+                <div style="text-align:center;">
+                    <a href="#scene"><img height="60" title="Abbondanzo" src="img/logo.png" /></a>
+                </div>
+                <div class="footer-social">
                     <ul>
-                        <li><a href="#">Sitemap1</a></li>
-                        <li><a href="#">Sitemap2</a></li>
-                        <li><a href="#">Sitemap3</a></li>
+                        <li><a href="https://twitter.com/pabbondanzo">Twitter</a></li>
+                        <li><a href="https://github.com/Abbondanzo">Github</a></li>
+                        <li><a href="https://www.linkedin.com/in/pabbondanzo">LinkedIn</a></li>
+                        <li><a href="https://www.behance.net/narwalshf41cf">Behance</a></li>
                     </ul>
                 </div>
-                <div class="footer-widget">
-                    <h3>Connect</h3>
-                    <ul>
-                        <li><a href="#">Sitemap1</a></li>
-                        <li><a href="#">Sitemap2</a></li>
-                        <li><a href="#">Sitemap3</a></li>
-                    </ul>
-                </div>
-                <div class="footer-widget">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li><a href="#">Sitemap1</a></li>
-                        <li><a href="#">Sitemap2</a></li>
-                    </ul>
-                </div>
+                <p>Copyright &copy; 2016 abbondanzo.com</p>
             </div>
         </div>
     </div>

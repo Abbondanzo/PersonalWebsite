@@ -1,3 +1,5 @@
+// Adjusts background to be parallax
+// Deprecated due to performance hit
 //$('#top').mousemove(function( event ) {
 //     var magnitudeForeground = 0.075;
 //     var magnitudeBackground = 0.025;
@@ -13,7 +15,8 @@ particlesJS.load('particles-js', 'js/particles.json');
 // Reloads animations into view
 function checkAnimated(scroll) {
     // Hides elements when out of view
-    $('.animate').each(function () {
+    // Deprecated due to performance hit (and it became annoying)
+    /*$('.animate').each(function () {
         var offset = $(this).offset().top; // Distance from top to element
         var height = $(this).height(); // Height of element
         var wow = $(window).height(); // Height of window
@@ -21,7 +24,7 @@ function checkAnimated(scroll) {
             $(this).addClass('animated');
             $(this).removeClass('animate');
         }
-    });
+    });*/
     // Animates elements that appear in scroll view
     $('.animated').each(function () {
         var offset = $(this).offset().top;
