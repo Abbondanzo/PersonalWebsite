@@ -3,6 +3,8 @@
 
 //$primary: #5a4af7;
 $primary: #22dd9b;
+//$primary: #1ce;
+//$primary: rgb(70, 122, 127);
 $anim: 0.3s;
 $bez: cubic-bezier(.13,1,.98,.98);
 
@@ -175,6 +177,7 @@ nav {
     font-family: 'GRMedium', sans-serif;
     color: #fff;
     z-index: 9999;
+    @include transition( all $anim );
     .container {
         display: table;
     }
@@ -186,6 +189,7 @@ nav {
     }
     li {
         display: inline-block;
+        @include transition( all $anim );
     }
     a i {
         padding: 0.75em;
@@ -194,7 +198,7 @@ nav {
         }
     }
     .underline {
-        padding: 2em;
+        padding: 0.75em;
         a:hover::before {
             right: 0;
         }
@@ -233,6 +237,76 @@ nav {
     .logo, .nav-links {
         display: table-cell;
         vertical-align: middle;
+        @include transition( all $anim );
+    }
+    .mobile-head {
+        width: 100%;
+        display: none;
+        height: 90px;
+    }
+    .mobile {
+        right: -100%;
+        width: 100%;
+        position: fixed;
+        display: none;
+        height: 100%;
+        background: #232323;
+        overflow-y: auto;
+        ul {
+            -webkit-padding-start: 0;
+            padding-top: 20px;
+        }
+        li {
+            display: block;
+            width: 90%;
+            margin: 0 auto;
+        }
+        a {
+            display: block;
+            padding: 1.2em 0;
+            text-align: center;
+            font-size: 28px;
+            i {
+                padding: 0 0.75em;
+            }
+        }
+        span {
+            font-size: 40px;
+            cursor: pointer;
+        }
+    }
+    .icon {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        font-size: 40px;
+    }
+    .mobile-active {
+        right: 0;
+        top: 0;
+    }
+    .close-menu {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+}
+$shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
+.in-view {
+    position: fixed;
+    top: 0;
+    background: $primary;
+    box-shadow: $shadow;
+    .underline {
+        padding: 0 0.75em;
+    }
+    .mobile-head {
+        background: $primary;
+        box-shadow: $shadow;
+    }
+    a::before {
+        background: #fff;
     }
 }
 /* Header */
@@ -243,7 +317,8 @@ nav {
     position: relative;
     overflow: hidden;
     &::before {
-        @include background (linear-gradient(top, adjust_hue(darken($primary, 25), 40), $primary));
+        //@include background (linear-gradient(top, adjust_hue(darken($primary, 25), 40), $primary));
+        @include background (linear-gradient(top, shade($primary, 80), $primary));
         width: 100%;
         height: 100%;
         content: " ";
@@ -257,9 +332,11 @@ nav {
         color: #fff;
         top: 50%;
         position: absolute;
+        pointer-events: none;
         @include transform(translateY(-50%));
         h2 {
             margin-top: 1em;
+            display: inline-block;
         }
         button {
             margin-top: 4em;
@@ -272,6 +349,9 @@ nav {
     h2 {
         font-family: 'GRLight', sans-serif;
         font-size: 32px;
+    }
+    h1, h2, a {
+        pointer-events: all;
     }
     .container {
         padding: 2em;
@@ -417,5 +497,30 @@ nav {
         font-family: 'Avenir', sans-serif;
         font-size: 14px;
         text-align: center;
+    }
+}
+@media screen and (max-width: 1340px) {
+    .container {
+        width: 1080px;
+    }
+}
+@media screen and (max-width: 1110px) {
+    .container {
+        width: 90%;
+    }
+    .half-block {
+        width: 100%;
+    }
+    #about left {
+        display: none;
+    }
+    #about right {
+        padding: 60px 0;
+    }
+    nav .container {
+        display: none;
+    }
+    .mobile, .mobile-head {
+        display: block!important;
     }
 }

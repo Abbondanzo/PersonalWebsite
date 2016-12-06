@@ -32,7 +32,7 @@ function time_elapsed($datetime, $full = false) {
 	<script src="js/script.min.js" type="text/javascript"></script>
 </head>
 <body class="open-in">
-	<nav class="resting">
+	<nav class="nav resting">
 		<div class="container">
 			<div class="logo"><a href="#scene"><img height="60" title="Abbondanzo" src="img/logo.png" /></a></div>
 			<div class="nav-links">
@@ -58,6 +58,35 @@ function time_elapsed($datetime, $full = false) {
 				</ul>
 			</div>
 		</div>
+        <div class="mobile-head">
+            <div class="logo"><a href="#scene"><img style="padding:20px;height:90px;" height="90" title="Abbondanzo" src="img/logo.png" /></a></div>
+            <div class="icon">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="mobile">
+            <span><i class="fa fa-times close-menu" aria-hidden="true"></i></span>
+            <ul>
+                <li>
+                    <a href="#work">Works</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+                <li>
+                    <a href="https://github.com/Abbondanzo">Github</a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/pabbondanzo">Twitter</a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/pabbondanzo">LinkedIn</a>
+                </li>
+                <li>
+                    <a href="content/resume.pdf">Résumé</a>
+                </li>
+            </ul>
+        </div>
 	</nav>
     <div class="content" id="scene">
 		<div id="particles-js" class="header layer" data-depth="0.2">
@@ -65,6 +94,7 @@ function time_elapsed($datetime, $full = false) {
 				<div class="header-content animate fade-in-up layer" data-depth="0.4">
 					<h1>Peter V. Abbondanzo</h1>
 					<h2>Web &amp; Mobile Developer</h2>
+                    <br>
 					<a href="#about"><button class="btn btn-large">About Me</button></a>
 				</div>
 			</div>

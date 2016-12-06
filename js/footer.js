@@ -12,6 +12,24 @@
 
 particlesJS.load('particles-js', 'js/particles.json');
 
+// Handles background changes
+var fromTop = $(window).scrollTop();
+function menuHandler(scroll) {
+    if (scroll < fromTop && scroll != 0 && !$('.mobile').hasClass('mobile-active')) {
+        $('.nav').addClass('in-view');
+    } else {
+        if (scroll > 100) {
+            $('.nav').addClass('hiding');
+        } else {
+            $('.nav').removeClass('hiding');
+        }
+        setTimeout(function (){
+            $('.nav').removeClass('in-view');
+            $('.nav').removeClass('hiding');
+        }, 250);
+    }
+    fromTop = scroll;
+}
 // Reloads animations into view
 function checkAnimated(scroll) {
     // Hides elements when out of view
@@ -36,16 +54,33 @@ function checkAnimated(scroll) {
         }
     });
 }
+
+// Start functions
+checkAnimated($(window).scrollTop());
+menuHandler($(window).scrollTop());
+
+// Prevents too much reloading, checks scrolling on 0.1s intervals
 var timeoutId;
 $(window).on('scroll',function() {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(function() {
         checkAnimated($(this).scrollTop());
+        menuHandler($(this).scrollTop());
     }, 100 );
 });
-checkAnimated($(window).scrollTop());
+
+// Activates masonry layout
 $('.grid').masonry({
     itemSelector: '.grid-item',
     columnWidth: 200,
     gutter: 20
 });
+
+// Toggles mobile menu state open/close
+$('.close-menu').on('click',function() {
+    $('.mobile').removeClass('mobile-active');
+})
+$('.icon').on('click',function() {
+    $('.mobile').addClass('mobile-active');
+    $('.nav').removeClass('in-view');
+})
