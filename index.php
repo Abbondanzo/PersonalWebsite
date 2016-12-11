@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 function time_elapsed($datetime, $full = false) {
     $now = new DateTime;
     $ago = new DateTime($datetime);
@@ -12,6 +13,7 @@ function time_elapsed($datetime, $full = false) {
 	}
 	return $output;
 }
+
 if(isset($_POST["submit"])) {
     // Checking For Blank Fields..
     if($_POST["name"]==""||$_POST["email"]==""||$_POST["message"]=="") {
@@ -36,10 +38,11 @@ if(isset($_POST["submit"])) {
             $message = wordwrap($message, 300);
             // Send Mail By PHP Mail Function
             mail("peter@abbondanzo.com", $subject, $message, $headers);
-            echo '<div class="success">Your mail has been sent successfully! We will be in touch soon</div>';
+            echo '<div class="success sdone">Your mail has been sent successfully! We will be in touch soon</div>';
         }
     }
-} ?>
+}
+?>
 <!DOCTYPE HTML>
 <html lang="en-us">
 <!-- Code solely created by Peter V. Abbondanzo. Copyright 2016. All rights reserved. -->
@@ -54,6 +57,7 @@ if(isset($_POST["submit"])) {
 	<link rel="icon" href="favicon.ico">
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
+	<script src="js/jquery.c.min.js" type="text/javascript"></script>
 	<script src="js/modernizr.min.js" type="text/javascript"></script>
 	<script src="js/masonry.min.js" type="text/javascript"></script>
 	<script src="js/script.min.js" type="text/javascript"></script>

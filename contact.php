@@ -1,10 +1,16 @@
 <div class="contact-content">
-    <div class="container animate fade-in-up">
+    <div class="contact-view container animate fade-in-up">
         <left>
             <h1>Hello, I'm Peter</h1>
             <span class="underscore-pls"></span>
             <p>I’m glad to hear that you’d like to get to know me further. The most effective means of reaching me is by <span class="responsive-right">using that form to the right</span><span class="responsive-down">scrolling down and using the form below</span>. However, I have, among other things, linked various social profiles below. In case one of those works better, feel free to use it. </p>
             <p>Need me to design your next mobile app or develop a new website? I am available for work.</p>
+            <div class="skills">
+                <img src="img/s1.png" title="PHP" alt="PHP"><img src="img/s2.png" title="JavaScript" alt="JavaScript"><img src="img/s3.png" title="CSS3" alt="CSS3"><img src="img/s4.png" title="React Native" alt="React Native">
+            </div>
+            <div class="social">
+
+            </div>
         </left><right>
             <h1>Let’s get in touch</h1>
             <span class="underscore-pls"></span>
@@ -22,9 +28,32 @@
     </div>
 </div>
 <script>
-$('.contact-close').on('click',function() {
-    $('.contact-form').empty();
-    $('body').css('overflow','auto');
-    $('.close-menu').css('display','block');
+$("[name=name]").val($.cookie('name'));
+$("[name=email]").val($.cookie('email'));
+$('textarea').html($.cookie('message'));
+$('textarea').on('keydown',function(){
+    $.cookie('message',$(this).val(),{ expires: 7 });
 });
+
+function closeAll() {
+    // Reset form container
+    $('.contact-form').empty();
+    // Allow scrolling on main page
+    $('body').css('overflow','auto');
+    // Reveal mobile menu close button
+    $('.close-menu').css('display','block');
+}
+$(document).keyup(function(e) {
+     if (e.keyCode == 27) { // escape key maps to keycode 27
+        closeAll();
+    }
+});
+$('.contact-close').on('click',function() {
+    closeAll();
+});
+$(document).on('click',function() {
+    if(!$(event.target).closest('.contact-view').length) {
+        closeAll();
+    }
+})
 </script>

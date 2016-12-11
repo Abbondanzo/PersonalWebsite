@@ -92,6 +92,23 @@ $('.contact-button').on('click',function() {
     $('.close-menu').css('display','none');
 });
 
+// Slow fade for success message
 setTimeout(function() {
     $('.success').fadeOut("slow");
 }, 4000);
+
+// Store input values until submitted
+$('.contact-form').on('keydown','input','textarea', function(e) {
+    if($(this).attr('name') == "name") {
+        $.cookie('name',$(this).val(),{ expires: 7 });
+    } else if($(this).attr('name') == "email") {
+        $.cookie('email',$(this).val(),{ expires: 7 });
+    }
+});
+
+// Removes cookies
+if($('.sdone').length > 0) {
+    $.removeCookie("name");
+    $.removeCookie("email");
+    $.removeCookie("message");
+}

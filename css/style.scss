@@ -464,6 +464,13 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
             color: $primary;
         }
     }
+    .skills {
+        img {
+            display: inline-block;
+            width: 25%;
+            padding: 1em;
+        }
+    }
 }
 /* Success pop-up */
 .success {
@@ -478,7 +485,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     font-family: 'GRLight', sans-serif;
 }
 .serr {
-    background: #bd3a3a; 
+    background: #bd3a3a;
 }
 /* About */
 #about {
