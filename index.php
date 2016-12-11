@@ -52,7 +52,7 @@ if(isset($_POST["submit"])) {
 	<title>Web &amp; Mobile Developer | Peter V. Abbondanzo</title>
 	<meta name="description" content="I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.">
 	<meta name="keywords" content="graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics">
-	<meta charset="utf-8">
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" href="favicon.ico">
 	<link rel="stylesheet" href="css/style.css">
@@ -84,7 +84,7 @@ if(isset($_POST["submit"])) {
 						<a href="https://www.linkedin.com/in/pabbondanzo"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
 					</li>
 					<li class="underline">
-						<a class="btn btn-white" href="content/resume.pdf">Résumé</a>
+						<a class="btn btn-white" target="_new" href="content/resume.pdf">Résumé</a>
 					</li>
 				</ul>
 			</div>
@@ -114,7 +114,7 @@ if(isset($_POST["submit"])) {
                     <a href="https://www.linkedin.com/in/pabbondanzo">LinkedIn</a>
                 </li>
                 <li>
-                    <a href="content/resume.pdf">Résumé</a>
+                    <a target="_new" href="content/resume.pdf">Résumé</a>
                 </li>
             </ul>
         </div>
@@ -141,7 +141,7 @@ if(isset($_POST["submit"])) {
 					<span class="underscore-pls"></span>
 					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
 					<div style="text-align: center;">
-						<a href="content/resume.pdf"><button class="btn">Résumé</button></a><span class="button-spacer"></span><button class="btn btn-invert contact-button">Contact</button>
+						<a target="_new" href="content/resume.pdf"><button class="btn">Résumé</button></a><span class="button-spacer"></span><button class="btn btn-invert contact-button">Contact</button>
 					</div>
 				</right>
 			</div>

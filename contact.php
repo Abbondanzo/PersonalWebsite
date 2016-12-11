@@ -8,8 +8,12 @@
             <div class="skills">
                 <img src="img/s1.png" title="PHP" alt="PHP"><img src="img/s2.png" title="JavaScript" alt="JavaScript"><img src="img/s3.png" title="CSS3" alt="CSS3"><img src="img/s4.png" title="React Native" alt="React Native">
             </div>
+            <span class="underscore-pls underscore-mid"></span>
             <div class="social">
-
+                <a href="https://twitter.com/pabbondanzo"><i class="fa fa-twitter" aria-hidden="true"></i>&nbsp;Twitter</a>
+                <a href="https://github.com/Abbondanzo"><i class="fa fa-git" aria-hidden="true"></i>&nbsp;Github</a>
+                <a href="https://www.linkedin.com/in/pabbondanzo"><i class="fa fa-linkedin" aria-hidden="true"></i>&nbsp;LinkedIn</a>
+                <a href="https://www.behance.net/narwalshf41cf"><i class="fa fa-behance" aria-hidden="true"></i>&nbsp;Behance</a>
             </div>
         </left><right>
             <h1>Let’s get in touch</h1>

@@ -396,14 +396,20 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
         .underscore-pls {
             display: block;
             padding-bottom: 3em;
+            &::before {
+                content: "";
+                width: 80px;
+                height: 4px;
+                background: $primary;
+                position: absolute;
+                margin: 1em 0;
+            }
         }
-        .underscore-pls::before {
-            content: "";
-            width: 80px;
-            height: 4px;
-            background: $primary;
-            position: absolute;
-            margin: 1em 0;
+        .underscore-mid {
+            text-align: center;
+            &::before {
+                @include transform(translateX(-50%));
+            }
         }
     }
     right {
@@ -431,12 +437,13 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     h4 {
         font-family: 'GRLight', sans-serif;
         font-size: 16px;
-        padding: 2.5em 0 1em 0;
+        padding-top: 2.5em;
         &:first-of-type {
             padding-top: 0;
         }
     }
     .input, textarea {
+        padding-top: 1em;
         background: transparent;
         border: 0;
         border-bottom: 3px solid #fff;
@@ -469,6 +476,36 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
             display: inline-block;
             width: 25%;
             padding: 1em;
+        }
+    }
+    .social {
+        font-family: 'GRBook', sans-serif;
+        text-align: center;
+        .fa {
+            color: $primary;
+        }
+        a {
+            color: #2a2a2a;
+            padding: 0 1em;
+            position: relative;
+            @include transform(perspective(1px) translateZ(0));
+            white-space: nowrap;
+            line-height: 2;
+        }
+        a::before {
+            content: "";
+            position: absolute;
+            background: $primary;
+            left: 0;
+            bottom: -6px;
+            height: 4px;
+            right: 100%;
+            @include transition( all $anim );
+            @include transition-timing-function( cubic-bezier(.13,1,.98,.98) );
+            overflow: hidden;
+        }
+        a:hover::before {
+            right: 0;
         }
     }
 }
