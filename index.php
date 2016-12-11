@@ -12,7 +12,34 @@ function time_elapsed($datetime, $full = false) {
 	}
 	return $output;
 }
-?>
+if(isset($_POST["submit"])) {
+    // Checking For Blank Fields..
+    if($_POST["name"]==""||$_POST["email"]==""||$_POST["message"]=="") {
+        echo '<div class="success serr">Fill All Fields.</div>';
+    } else {
+        $name = $_POST["name"];
+        // Check if the "Sender's Email" input field is filled out
+        $email = $_POST['email'];
+        // Sanitize E-mail Address
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        // Validate E-mail Address
+        $email= filter_var($email, FILTER_VALIDATE_EMAIL);
+        if (!$email) {
+            echo '<div class="success serr">Invalid Email</div>';
+        }
+        else {
+            $subject = "Contact Form from " . $name . " (IP: " . $_SERVER['REMOTE_ADDR'] . ")";
+            $message = $_POST['message'];
+            $headers = 'From:'. $email . "\r\n"; // Sender's Email
+            $headers .= 'Cc:'. $email . "\r\n"; // Carbon copy to Sender
+            // Message lines should not exceed 70 characters (PHP rule), so wrap it
+            $message = wordwrap($message, 300);
+            // Send Mail By PHP Mail Function
+            mail("peter@abbondanzo.com", $subject, $message, $headers);
+            echo '<div class="success">Your mail has been sent successfully! We will be in touch soon</div>';
+        }
+    }
+} ?>
 <!DOCTYPE HTML>
 <html lang="en-us">
 <!-- Code solely created by Peter V. Abbondanzo. Copyright 2016. All rights reserved. -->
@@ -31,7 +58,7 @@ function time_elapsed($datetime, $full = false) {
 	<script src="js/masonry.min.js" type="text/javascript"></script>
 	<script src="js/script.min.js" type="text/javascript"></script>
 </head>
-<body class="open-in">
+<body>
 	<nav class="nav resting">
 		<div class="container">
 			<div class="logo"><a href="#scene"><img height="60" title="Abbondanzo" src="img/logo.png" /></a></div>
@@ -41,7 +68,7 @@ function time_elapsed($datetime, $full = false) {
 						<a href="#work">Works</a>
 					</li>
 					<li class="underline">
-						<a href="#">Contact</a>
+						<a class="contact-button">Contact</a>
 					</li>
 					<li>
 						<a href="https://github.com/Abbondanzo"><i class="fa fa-github" aria-hidden="true"></i></a>
@@ -71,7 +98,7 @@ function time_elapsed($datetime, $full = false) {
                     <a href="#work">Works</a>
                 </li>
                 <li>
-                    <a href="#">Contact</a>
+                    <a class="contact-button">Contact</a>
                 </li>
                 <li>
                     <a href="https://github.com/Abbondanzo">Github</a>
@@ -88,6 +115,8 @@ function time_elapsed($datetime, $full = false) {
             </ul>
         </div>
 	</nav>
+    <div class="contact-form">
+    </div>
     <div class="content" id="scene">
 		<div id="particles-js" class="header layer" data-depth="0.2">
 			<div class="container">
@@ -105,10 +134,10 @@ function time_elapsed($datetime, $full = false) {
 					<img style="margin-bottom:-5px;" src="img/photo.png">
 				</left><right class="animated fade-in-up half-block sect-title">
 					<h3>About Me</h3>
-					<span></span>
+					<span class="underscore-pls"></span>
 					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
 					<div style="text-align: center;">
-						<a href="content/resume.pdf"><button class="btn">Résumé</button></a>&nbsp;&nbsp;&nbsp;<button class="btn btn-invert">Contact</button>
+						<a href="content/resume.pdf"><button class="btn">Résumé</button></a><span class="button-spacer"></span><button class="btn btn-invert contact-button">Contact</button>
 					</div>
 				</right>
 			</div>
@@ -162,7 +191,7 @@ function time_elapsed($datetime, $full = false) {
         <div id="cta">
             <div class="container">
                 <h1>Let's get in touch</h1>
-                <a class="btn btn-white" href="content/resume.pdf">Contact Me</a>
+                <a class="btn btn-white contact-button">Contact Me</a>
             </div>
         </div>
         <div id="footer">

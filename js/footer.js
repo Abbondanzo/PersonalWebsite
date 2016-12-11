@@ -79,8 +79,19 @@ $('.grid').masonry({
 // Toggles mobile menu state open/close
 $('.close-menu').on('click',function() {
     $('.mobile').removeClass('mobile-active');
-})
+});
 $('.icon').on('click',function() {
     $('.mobile').addClass('mobile-active');
     $('.nav').removeClass('in-view');
-})
+});
+
+// Dynamically load contact script
+$('.contact-button').on('click',function() {
+    $('.contact-form').load('contact.php');
+    $('body').css('overflow','hidden');
+    $('.close-menu').css('display','none');
+});
+
+setTimeout(function() {
+    $('.success').fadeOut("slow");
+}, 4000);
