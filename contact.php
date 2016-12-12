@@ -35,7 +35,7 @@
 $("[name=name]").val($.cookie('name'));
 $("[name=email]").val($.cookie('email'));
 $('textarea').html($.cookie('message'));
-$('textarea').on('keydown',function(){
+$('textarea').on('keyup',function(){
     $.cookie('message',$(this).val(),{ expires: 7 });
 });
 
@@ -52,10 +52,10 @@ $(document).keyup(function(e) {
         closeAll();
     }
 });
-$('.contact-close').on('click',function() {
+$('.contact-close').one('click',function() {
     closeAll();
 });
-$(document).on('click',function() {
+$(document).one('click',function() {
     if(!$(event.target).closest('.contact-view').length) {
         closeAll();
     }

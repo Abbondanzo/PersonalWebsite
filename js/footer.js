@@ -80,6 +80,11 @@ $('.grid').masonry({
 $('.close-menu').on('click',function() {
     $('.mobile').removeClass('mobile-active');
 });
+// Closes mobile menu when a link is clicked
+$('.mobile a').on('click',function() {
+    $('.mobile').removeClass('mobile-active');
+});
+// Opens mobile menu
 $('.icon').on('click',function() {
     $('.mobile').addClass('mobile-active');
     $('.nav').removeClass('in-view');
@@ -98,7 +103,7 @@ setTimeout(function() {
 }, 4000);
 
 // Store input values until submitted
-$('.contact-form').on('keydown','input','textarea', function(e) {
+$('.contact-form').on('keyup','input','textarea', function(e) {
     if($(this).attr('name') == "name") {
         $.cookie('name',$(this).val(),{ expires: 7 });
     } else if($(this).attr('name') == "email") {

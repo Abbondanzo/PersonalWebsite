@@ -49,7 +49,7 @@ if(isset($_POST["submit"])) {
 <!-- Fun facts: This is the third version of my personal website. The second grew old so I chose 1:31am as the proper time to start. -->
 <!-- At this very moment, I'm in the middle of a predicament. Do I go for Lucky Charms or Cinnamon Toast Crunch? -->
 <head>
-	<title>Web &amp; Mobile Developer | Peter V. Abbondanzo</title>
+	<title>Peter V. Abbondanzo | Web &amp; Mobile Developer</title>
 	<meta name="description" content="I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.">
 	<meta name="keywords" content="graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics">
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
@@ -58,6 +58,7 @@ if(isset($_POST["submit"])) {
 	<link rel="stylesheet" href="css/style.css">
 	<script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 	<script src="js/jquery.c.min.js" type="text/javascript"></script>
+	<script src="js/analytics.js" type="text/javascript"></script>
 	<script src="js/modernizr.min.js" type="text/javascript"></script>
 	<script src="js/masonry.min.js" type="text/javascript"></script>
 	<script src="js/script.min.js" type="text/javascript"></script>
@@ -154,36 +155,42 @@ if(isset($_POST["submit"])) {
 				</div>
                 <div class="grid">
                     <div class="grid-item animated fade-in-up">
+                        <a target="_new" href="http://cafe.abbondanzo.com/"></a>
                         <img src="img/200x200bvc.png">
                         <div class="grid-info">
                             <h1>Bonne Vie Café</h1>
                         </div>
                     </div>
                     <div class="grid-item animated fade-in-up">
+                        <a target="_new" href="http://demo.abbondanzo.com/rogue/"></a>
                         <img src="img/200x200rogue.png">
                         <div class="grid-info">
                             <h1>Rogue</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
+                        <a target="_new" href="http://feedshare.org/"></a>
                         <img src="img/400x400feedshare.png">
                         <div class="grid-info">
                             <h1>FeedShare</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 animated fade-in-up">
+                        <a target="_new" href="https://www.behance.net/gallery/46252871/Flipster-Website-Design"></a>
                         <img src="img/400x200flipster.png">
                         <div class="grid-info">
                             <h1>Flipster</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
+                        <a target="_new" href="https://chrome.google.com/webstore/detail/modern-myneu/phpjhjbppfdgofldhpecojjdfccboblk"></a>
                         <img src="img/400x400myneu.png">
                         <div class="grid-info">
                             <h1>Modern MyNEU</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
+                        <a target="_new" href="https://github.com/Sthacks/sthacksWebsite"></a>
                         <img src="img/400x400sth.png">
                         <div class="grid-info">
                             <h1>Sthacks</h1>
