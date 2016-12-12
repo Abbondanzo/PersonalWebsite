@@ -85,7 +85,7 @@ if(isset($_POST["submit"])) {
 						<a href="https://www.linkedin.com/in/pabbondanzo"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
 					</li>
 					<li class="underline">
-						<a class="btn btn-white" target="_new" href="content/resume.pdf">Résumé</a>
+						<a class="btn btn-white" target="_blank" href="content/resume.pdf">Résumé</a>
 					</li>
 				</ul>
 			</div>
@@ -115,7 +115,7 @@ if(isset($_POST["submit"])) {
                     <a href="https://www.linkedin.com/in/pabbondanzo">LinkedIn</a>
                 </li>
                 <li>
-                    <a target="_new" href="content/resume.pdf">Résumé</a>
+                    <a target="_blank" href="content/resume.pdf">Résumé</a>
                 </li>
             </ul>
         </div>
@@ -142,7 +142,7 @@ if(isset($_POST["submit"])) {
 					<span class="underscore-pls"></span>
 					<p>Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room. </p>
 					<div style="text-align: center;">
-						<a target="_new" href="content/resume.pdf"><button class="btn">Résumé</button></a><span class="button-spacer"></span><button class="btn btn-invert contact-button">Contact</button>
+						<a target="_blank" href="content/resume.pdf"><button class="btn">Résumé</button></a><span class="button-spacer"></span><button class="btn btn-invert contact-button">Contact</button>
 					</div>
 				</right>
 			</div>
@@ -155,42 +155,42 @@ if(isset($_POST["submit"])) {
 				</div>
                 <div class="grid">
                     <div class="grid-item animated fade-in-up">
-                        <a target="_new" href="http://cafe.abbondanzo.com/"></a>
+                        <a target="_blank" href="http://cafe.abbondanzo.com/"></a>
                         <img src="img/200x200bvc.png">
                         <div class="grid-info">
                             <h1>Bonne Vie Café</h1>
                         </div>
                     </div>
                     <div class="grid-item animated fade-in-up">
-                        <a target="_new" href="http://demo.abbondanzo.com/rogue/"></a>
+                        <a target="_blank" href="http://demo.abbondanzo.com/rogue/"></a>
                         <img src="img/200x200rogue.png">
                         <div class="grid-info">
                             <h1>Rogue</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
-                        <a target="_new" href="http://feedshare.org/"></a>
+                        <a target="_blank" href="http://feedshare.org/"></a>
                         <img src="img/400x400feedshare.png">
                         <div class="grid-info">
                             <h1>FeedShare</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 animated fade-in-up">
-                        <a target="_new" href="https://www.behance.net/gallery/46252871/Flipster-Website-Design"></a>
+                        <a target="_blank" href="https://www.behance.net/gallery/46252871/Flipster-Website-Design"></a>
                         <img src="img/400x200flipster.png">
                         <div class="grid-info">
                             <h1>Flipster</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
-                        <a target="_new" href="https://chrome.google.com/webstore/detail/modern-myneu/phpjhjbppfdgofldhpecojjdfccboblk"></a>
+                        <a target="_blank" href="https://chrome.google.com/webstore/detail/modern-myneu/phpjhjbppfdgofldhpecojjdfccboblk"></a>
                         <img src="img/400x400myneu.png">
                         <div class="grid-info">
                             <h1>Modern MyNEU</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
-                        <a target="_new" href="https://github.com/Sthacks/sthacksWebsite"></a>
+                        <a target="_blank" href="https://github.com/Sthacks/sthacksWebsite"></a>
                         <img src="img/400x400sth.png">
                         <div class="grid-info">
                             <h1>Sthacks</h1>
