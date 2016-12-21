@@ -380,7 +380,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     right: 0;
     bottom: 0;
     z-index: 999999;
-    -webkit-font-smoothing: none;
+    -webkit-font-smoothing: subpixel-antialiased;
     overflow-y: auto;
     .container {
         background: #fff;
@@ -521,6 +521,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     z-index: 999999;
     -webkit-font-smoothing: none;
     overflow-y: auto;
+    -webkit-font-smoothing: subpixel-antialiased;
     .container {
         background: #fff;
         position: absolute;
