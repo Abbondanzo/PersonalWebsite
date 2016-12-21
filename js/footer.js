@@ -97,6 +97,13 @@ $('.contact-button').on('click',function() {
     $('.close-menu').css('display','none');
 });
 
+// Dynamically load Portfolio items
+$('.item-cafe').on('click',function() {
+    $('.contact-form').load('cafe.php');
+    $('body').css('overflow','hidden');
+    $('.close-menu').css('display','none');
+});
+
 // Slow fade for success message
 setTimeout(function() {
     $('.success').fadeOut("slow");

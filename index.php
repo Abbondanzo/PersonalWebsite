@@ -154,8 +154,7 @@ if(isset($_POST["submit"])) {
 					<span></span>
 				</div>
                 <div class="grid">
-                    <div class="grid-item animated fade-in-up">
-                        <a target="_blank" href="http://cafe.abbondanzo.com/"></a>
+                    <div class="grid-item animated fade-in-up item-cafe">
                         <img src="img/200x200bvc.png">
                         <div class="grid-info">
                             <h1>Bonne Vie Café</h1>
