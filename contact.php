@@ -59,5 +59,5 @@ $(document).one('click',function() {
     if(!$(event.target).closest('.contact-view').length) {
         closeAll();
     }
-})
+});
 </script>
