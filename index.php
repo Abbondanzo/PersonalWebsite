@@ -160,8 +160,7 @@ if(isset($_POST["submit"])) {
                             <h1>Bonne Vie Café</h1>
                         </div>
                     </div>
-                    <div class="grid-item animated fade-in-up">
-                        <a target="_blank" href="http://demo.abbondanzo.com/rogue/"></a>
+                    <div class="grid-item animated fade-in-up item-rogue">
                         <img src="img/200x200rogue.png">
                         <div class="grid-info">
                             <h1>Rogue</h1>

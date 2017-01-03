@@ -90,18 +90,25 @@ $('.icon').on('click',function() {
     $('.nav').removeClass('in-view');
 });
 
+// Display correction
+function bodyFlow() {
+    $('body').css('overflow','hidden');
+    $('.close-menu').css('display','none');
+}
 // Dynamically load contact script
 $('.contact-button').on('click',function() {
     $('.contact-form').load('contact.php');
-    $('body').css('overflow','hidden');
-    $('.close-menu').css('display','none');
+    bodyFlow();
 });
 
 // Dynamically load Portfolio items
 $('.item-cafe').on('click',function() {
     $('.contact-form').load('cafe.php');
-    $('body').css('overflow','hidden');
-    $('.close-menu').css('display','none');
+    bodyFlow();
+});
+$('.item-rogue').on('click',function() {
+    $('.contact-form').load('rogue.php');
+    bodyFlow();
 });
 
 // Slow fade for success message
