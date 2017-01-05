@@ -166,8 +166,7 @@ if(isset($_POST["submit"])) {
                             <h1>Rogue</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
-                        <a target="_blank" href="http://feedshare.org/"></a>
+                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-feedshare">
                         <img src="img/400x400feedshare.png">
                         <div class="grid-info">
                             <h1>FeedShare</h1>

@@ -110,6 +110,10 @@ $('.item-rogue').on('click',function() {
     $('.contact-form').load('rogue.php');
     bodyFlow();
 });
+$('.item-feedshare').on('click',function() {
+    $('.contact-form').load('feedshare.php');
+    bodyFlow();
+});
 
 // Slow fade for success message
 setTimeout(function() {
