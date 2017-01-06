@@ -102,16 +102,23 @@ $('.contact-button').on('click',function() {
 });
 
 // Dynamically load Portfolio items
-$('.item-cafe').on('click',function() {
-    $('.contact-form').load('cafe.php');
-    bodyFlow();
-});
-$('.item-rogue').on('click',function() {
-    $('.contact-form').load('rogue.php');
-    bodyFlow();
-});
-$('.item-feedshare').on('click',function() {
-    $('.contact-form').load('feedshare.php');
+$('.grid-item').on('click',function(){
+    var contact = $('.contact-form');
+    if ($(this).hasClass('item-cafe')) {
+        contact.load('cafe.php');
+    } else if ($(this).hasClass('item-cafe')) {
+        contact.load('rogue.php');
+    } else if ($(this).hasClass('item-rogue')) {
+        contact.load('rogue.php');
+    } else if ($(this).hasClass('item-feedshare')) {
+        contact.load('feedshare.php');
+    } else if ($(this).hasClass('item-flipster')) {
+        contact.load('flipster.php');
+    } else if ($(this).hasClass('item-myneu')) {
+        contact.load('myneu.php');
+    } else if ($(this).hasClass('item-sthacks')) {
+        contact.load('sthacks.php');
+    }
     bodyFlow();
 });
 

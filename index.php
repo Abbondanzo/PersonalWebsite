@@ -172,22 +172,19 @@ if(isset($_POST["submit"])) {
                             <h1>FeedShare</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2 animated fade-in-up">
-                        <a target="_blank" href="https://www.behance.net/gallery/46252871/Flipster-Website-Design"></a>
+                    <div class="grid-item grid-item--width2 animated fade-in-up item-flipster">
                         <img src="img/400x200flipster.png">
                         <div class="grid-info">
                             <h1>Flipster</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
-                        <a target="_blank" href="https://chrome.google.com/webstore/detail/modern-myneu/phpjhjbppfdgofldhpecojjdfccboblk"></a>
+                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-myneu">
                         <img src="img/400x400myneu.png">
                         <div class="grid-info">
                             <h1>Modern MyNEU</h1>
                         </div>
                     </div>
-                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up">
-                        <a target="_blank" href="https://github.com/Sthacks/sthacksWebsite"></a>
+                    <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-sthacks">
                         <img src="img/400x400sth.png">
                         <div class="grid-info">
                             <h1>Sthacks</h1>
