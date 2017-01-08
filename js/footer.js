@@ -106,8 +106,6 @@ $('.grid-item').on('click',function(){
     var contact = $('.contact-form');
     if ($(this).hasClass('item-cafe')) {
         contact.load('cafe.php');
-    } else if ($(this).hasClass('item-cafe')) {
-        contact.load('rogue.php');
     } else if ($(this).hasClass('item-rogue')) {
         contact.load('rogue.php');
     } else if ($(this).hasClass('item-feedshare')) {
