@@ -1,4 +1,4 @@
-<div class="contact-content">
+<div class="contact-content valign-mid">
     <div class="contact-view container animate fade-in-up">
         <left>
             <h1>Hello, I'm Peter</h1>

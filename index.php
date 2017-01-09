@@ -124,7 +124,7 @@ if(isset($_POST["submit"])) {
     </div>
     <div class="content" id="scene">
 		<div id="particles-js" class="header layer" data-depth="0.2">
-			<div class="container">
+			<div class="container valign-mid">
 				<div class="header-content animate fade-in-up layer" data-depth="0.4">
 					<h1>Peter V. Abbondanzo</h1>
 					<h2>Web &amp; Mobile Developer</h2>

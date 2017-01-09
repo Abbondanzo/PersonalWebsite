@@ -1,4 +1,4 @@
-<div class="item-content">
+<div class="item-content valign-mid">
     <div class="item-view container animate fade-in-up">
         <h1>Rogue</h1>
         <p>Rogue was designed as a simple one-page demo of a client-side application for the famous Counter Strike: Global Offensive game. The client wanted an effective means of showcasing the power of their application, so a full-page live video runs above the fold for every user that reaches the site.</p>

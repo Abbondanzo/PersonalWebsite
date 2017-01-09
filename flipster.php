@@ -1,4 +1,4 @@
-<div class="item-content">
+<div class="item-content valign-mid">
     <div class="item-view container animate fade-in-up">
         <h1>Flipster</h1>
         <p></p>

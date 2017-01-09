@@ -1,4 +1,4 @@
-<div class="item-content">
+<div class="item-content valign-mid">
     <div class="item-view container animate fade-in-up">
         <h1>Bonne Vie Café</h1>
         <p>Bonne Vie Café began as a mockup design made for a college student. He had very little requirements, other than to satisfy a number of sections. When he came to me, I knew just how to build the perfect site.</p>

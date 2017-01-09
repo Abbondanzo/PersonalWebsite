@@ -92,7 +92,6 @@ a, a:focus, a:hover, a:visited {
 /* Global */
 .container {
     width: 1320px;
-    overflow: hidden;
     margin: 0 auto;
 }
 .btn {
@@ -178,6 +177,14 @@ h3 {
     font-family: 'GRBook', sans-serif;
     font-size: 40px;
     color: #2a2a2a;
+}
+.valign-mid {
+    @include display(flex);
+    @include flex-direction(column);
+    &::before, &::after {
+        content: "";
+        @include flex-grow(1);
+    }
 }
 /* Navbar */
 nav {
@@ -341,10 +348,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     }
     .header-content {
         color: #fff;
-        top: 50%;
-        position: absolute;
         pointer-events: none;
-        @include transform(translateY(-50%));
         h2 {
             margin-top: 1em;
             display: inline-block;
@@ -365,7 +369,11 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
         pointer-events: all;
     }
     .container {
-        padding: 2em;
+        padding: 5em 2em;
+        position: absolute;
+        left: 50%;
+        @include transform(translateX(-50%));
+        height: 100%;
     }
 }
 .info-section {
@@ -382,12 +390,9 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     z-index: 999999;
     -webkit-font-smoothing: subpixel-antialiased;
     overflow-y: auto;
+    overflow-x: hidden;
     .container {
         background: #fff;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        @include transform(translate(-50%,-50%));
     }
     left, right {
         display: table-cell;
@@ -416,6 +421,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     right {
         background: $primary;
         color: #fff;
+        position: relative;
         .underscore-pls::before {
             background: #fff;
         }
@@ -520,14 +526,12 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     bottom: 0;
     z-index: 999999;
     overflow-y: auto;
+    overflow-x: hidden;
     -webkit-font-smoothing: subpixel-antialiased;
     .container {
         background: #fff;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        @include transform(translate(-50%,-50%));
         padding: 2em;
+        position: relative;
     }
     h1 {
         font-family: 'GRMedium', sans-serif;
