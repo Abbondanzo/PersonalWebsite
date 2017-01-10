@@ -155,37 +155,37 @@ if(isset($_POST["submit"])) {
 				</div>
                 <div class="grid">
                     <div class="grid-item animated fade-in-up item-cafe">
-                        <img src="img/200x200bvc.png">
+                        <img src="img/200x200/bvc.png">
                         <div class="grid-info">
                             <h1>Bonne Vie Café</h1>
                         </div>
                     </div>
                     <div class="grid-item animated fade-in-up item-rogue">
-                        <img src="img/200x200rogue.png">
+                        <img src="img/200x200/rogue.png">
                         <div class="grid-info">
                             <h1>Rogue</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-feedshare">
-                        <img src="img/400x400feedshare.png">
+                        <img src="img/400x400/feedshare.png">
                         <div class="grid-info">
                             <h1>FeedShare</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 animated fade-in-up item-flipster">
-                        <img src="img/400x200flipster.png">
+                        <img src="img/400x200/flipster.png">
                         <div class="grid-info">
                             <h1>Flipster</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-myneu">
-                        <img src="img/400x400myneu.png">
+                        <img src="img/400x400/myneu.png">
                         <div class="grid-info">
                             <h1>Modern MyNEU</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-sthacks">
-                        <img src="img/400x400sth.png">
+                        <img src="img/400x400/sth.png">
                         <div class="grid-info">
                             <h1>Sthacks</h1>
                         </div>

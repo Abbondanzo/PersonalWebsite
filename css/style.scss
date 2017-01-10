@@ -672,10 +672,16 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
         }
     }
     .grid-item--width2 {
-        width: 400px;
+        width: 420px;
+        img {
+            width: 420px;
+        }
     }
     .grid-item--height2 {
-        height: 400px;
+        height: 420px;
+        img {
+            height: 420px;
+        }
     }
 }
 #cta {
