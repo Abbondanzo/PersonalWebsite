@@ -60,7 +60,7 @@ if(isset($_POST["submit"])) {
 	<script src="js/jquery.c.min.js" type="text/javascript"></script>
 	<script src="js/analytics.js" type="text/javascript"></script>
 	<script src="js/modernizr.min.js" type="text/javascript"></script>
-	<script src="js/masonry.min.js" type="text/javascript"></script>
+	<script src="js/packery.min.js" type="text/javascript"></script>
 	<script src="js/script.min.js" type="text/javascript"></script>
 </head>
 <body>
@@ -167,25 +167,25 @@ if(isset($_POST["submit"])) {
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-feedshare">
-                        <img src="img/400x400/feedshare.png">
+                        <img src="img/420x420/feedshare.png">
                         <div class="grid-info">
                             <h1>FeedShare</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 animated fade-in-up item-flipster">
-                        <img src="img/400x200/flipster.png">
+                        <img src="img/420x200/flipster.png">
                         <div class="grid-info">
                             <h1>Flipster</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-myneu">
-                        <img src="img/400x400/myneu.png">
+                        <img src="img/420x420/myneu.png">
                         <div class="grid-info">
                             <h1>Modern MyNEU</h1>
                         </div>
                     </div>
                     <div class="grid-item grid-item--width2 grid-item--height2 animated fade-in-up item-sthacks">
-                        <img src="img/400x400/sth.png">
+                        <img src="img/420x420/sth.png">
                         <div class="grid-info">
                             <h1>Sthacks</h1>
                         </div>

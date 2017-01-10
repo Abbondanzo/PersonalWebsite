@@ -49,14 +49,16 @@ function checkAnimated(scroll) {
         var height = $(this).height();
         var wow = $(window).height();
         if (scroll <= offset+(0.8*height) && scroll+wow > offset) {
-            $(this).addClass('animate');
             $(this).removeClass('animated');
+            $(this).addClass('animate');
         }
     });
 }
 
 // Start functions
-checkAnimated($(window).scrollTop());
+setTimeout(function() {
+    checkAnimated($(window).scrollTop());
+}, 50);
 menuHandler($(window).scrollTop());
 
 // Prevents too much reloading, checks scrolling on 0.1s intervals
@@ -70,9 +72,8 @@ $(window).on('scroll',function() {
 });
 
 // Activates masonry layout
-$('.grid').masonry({
+$('.grid').packery({
     itemSelector: '.grid-item',
-    columnWidth: 200,
     gutter: 20
 });
 
