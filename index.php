@@ -151,7 +151,7 @@ if(isset($_POST["submit"])) {
 			<div class="container">
                 <div style="padding-bottom:3em;" class="sect-title">
 					<h3>Works</h3>
-					<span></span>
+					<span class="underscore-pls"></span>
 				</div>
                 <div class="grid">
                     <div class="grid-item animated fade-in-up item-cafe">
