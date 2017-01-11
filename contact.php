@@ -40,12 +40,22 @@ $('textarea').on('keyup',function(){
 });
 
 function closeAll() {
-    // Reset form container
-    $('.contact-form').empty();
-    // Allow scrolling on main page
-    $('body').css('overflow','auto');
-    // Reveal mobile menu close button
-    $('.close-menu').css('display','block');
+    // Animate exit
+    $('.contact-content').addClass('fade-out');
+    $('.contact-view').addClass('fade-out-up');
+    // Wait until animations over
+    setTimeout(function() {
+        // Reset form container
+        $('.contact-form').empty();
+        // Allow scrolling on main page
+        $('body').css('position','relative');
+        // Return body
+        var top = parseInt($('body').css('top'), 10) * -1;
+        $('body').scrollTop(top);
+        $('body').css('top', 0);
+        // Reveal mobile menu close button
+        $('.close-menu').css('display','block');
+    }, 250);
 }
 $(document).keyup(function(e) {
      if (e.keyCode == 27) { // escape key maps to keycode 27
@@ -55,7 +65,7 @@ $(document).keyup(function(e) {
 $('.contact-close').one('click',function() {
     closeAll();
 });
-$(document).one('click',function() {
+$('.contact-content').on('click',function() {
     if(!$(event.target).closest('.contact-view').length) {
         closeAll();
     }

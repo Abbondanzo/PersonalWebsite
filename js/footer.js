@@ -93,7 +93,9 @@ $('.icon').on('click',function() {
 
 // Display correction
 function bodyFlow() {
-    $('body').css('overflow','hidden');
+    var top = $(window).scrollTop();
+    $('body').css('position','fixed');
+    $('body').css('top', -top);
     $('.close-menu').css('display','none');
 }
 // Dynamically load contact script

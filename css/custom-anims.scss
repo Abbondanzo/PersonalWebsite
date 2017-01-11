@@ -14,6 +14,18 @@ $primary: rgba(90, 74, 247, 1);
         opacity: 1;
     }
 }
+@include keyframes(fadeOutUp) {
+    0% {
+        margin-top: 0;
+        margin-bottom: 0;
+        opacity: 1;
+    }
+    100% {
+        margin-top: -80px;
+        margin-bottom: 80px;
+        opacity: 0;
+    }
+}
 @include keyframes(dropDown) {
     0% {
         top: -100px;
@@ -30,6 +42,22 @@ $primary: rgba(90, 74, 247, 1);
         top: -100px;
     }
 }
+@include keyframes(fadeInBack) {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
+@include keyframes(fadeOutBack) {
+    0% {
+        background: rgba(0, 0, 0, 0.7);
+    }
+    100% {
+        background: rgba(0, 0, 0, 0);
+    }
+}
 .animate.fade-in-up {
     opacity: 0!important;
     @include animation( fadeInUp $anim $bez forwards );
@@ -42,4 +70,13 @@ $primary: rgba(90, 74, 247, 1);
 }
 .hiding {
     @include animation( slideUp $anim*0.5 $bez forwards );
+}
+.animate.fade-out-up {
+    @include animation( fadeOutUp $anim/2 $bez forwards );
+}
+.contact-content, .item-content {
+    @include animation( fadeInBack $anim $bez forwards );
+}
+.contact-content.fade-out, .item-content.fade-out {
+    @include animation( fadeOutBack $anim/2 $bez forwards );
 }

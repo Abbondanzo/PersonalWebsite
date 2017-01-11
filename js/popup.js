@@ -1,24 +1,34 @@
-function closeAll() {
-    // Reset form container
-    $('.contact-form').empty();
-    // Allow scrolling on main page
-    $('body').css('overflow','auto');
-    // Reveal mobile menu close button
-    $('.close-menu').css('display','block');
+function closeItem() {
+    // Animate exit
+    $('.item-content').addClass('fade-out');
+    $('.item-view').addClass('fade-out-up');
+    // Wait until animations over
+    setTimeout(function() {
+        // Reset form container
+        $('.contact-form').empty();
+        // Allow scrolling on main page
+        $('body').css('position','relative');
+        // Return body
+        var top = parseInt($('body').css('top'), 10) * -1;
+        $('body').scrollTop(top);
+        $('body').css('top', 0);
+        // Reveal mobile menu close button
+        $('.close-menu').css('display','block');
+    }, 250);
 }
 // Close when hitting ESC key
 $(document).keyup(function(e) {
      if (e.keyCode == 27) { // escape key maps to keycode 27
-        closeAll();
+        closeItem();
     }
 });
 // Close "X" button
 $('.contact-close').one('click',function() {
-    closeAll();
+    closeItem();
 });
 // Close when clicking outside of window space
-$(document).one('click',function() {
+$('.item-content').on('click',function() {
     if(!$(event.target).closest('.item-view').length) {
-        closeAll();
+        closeItem();
     }
 });
