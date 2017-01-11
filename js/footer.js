@@ -18,8 +18,10 @@ function menuHandler(scroll) {
     if (scroll < fromTop && scroll != 0 && !$('.mobile').hasClass('mobile-active')) {
         $('.nav').addClass('in-view');
     } else {
-        if (scroll > 100) {
-            $('.nav').addClass('hiding');
+        if (scroll > fromTop) {
+            if ($('.nav').hasClass('in-view')) {
+                $('.nav').addClass('hiding');
+            }
         } else {
             $('.nav').removeClass('hiding');
         }

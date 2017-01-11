@@ -219,6 +219,9 @@ nav {
             right: 0;
         }
     }
+    .menu-home {
+        display: none;
+    }
     a, a:focus, a:hover, a:visited {
         color: #fff;
         font-size: 16px;
@@ -317,6 +320,9 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     box-shadow: $shadow;
     .underline {
         padding: 0 0.75em;
+    }
+    .menu-home {
+        display: inline-block;
     }
     .mobile-head {
         background: $primary;

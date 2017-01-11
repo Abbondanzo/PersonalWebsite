@@ -58,8 +58,11 @@ function closeAll() {
     }, 250);
 }
 $(document).keyup(function(e) {
-     if (e.keyCode == 27) { // escape key maps to keycode 27
+    var top = parseInt($('body').css('top'), 10);
+    if ((e.keyCode == 27) && (top != 0)) { // escape key maps to keycode 27
+        e.preventDefault();
         closeAll();
+        $(document).off("keyup");
     }
 });
 $('.contact-close').one('click',function() {

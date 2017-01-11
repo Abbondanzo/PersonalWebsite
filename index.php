@@ -69,6 +69,9 @@ if(isset($_POST["submit"])) {
 			<div class="logo"><a href="#scene"><img height="60" title="Abbondanzo" src="img/logo.png" /></a></div>
 			<div class="nav-links">
 				<ul>
+					<li class="underline menu-home">
+						<a href="#scene">Home</a>
+					</li>
 					<li class="underline">
 						<a href="#work">Works</a>
 					</li>
