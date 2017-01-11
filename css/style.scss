@@ -391,6 +391,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     overflow-x: hidden;
     .container {
         background: #fff;
+        position: relative;
     }
     left, right {
         display: table-cell;
@@ -419,7 +420,6 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
     right {
         background: $primary;
         color: #fff;
-        position: relative;
         .underscore-pls::before {
             background: #fff;
         }
