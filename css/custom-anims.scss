@@ -76,6 +76,7 @@ $primary: rgba(90, 74, 247, 1);
 }
 .contact-content, .item-content {
     @include animation( fadeInBack $anim $bez forwards );
+    padding: 30px 0;
 }
 .contact-content.fade-out, .item-content.fade-out {
     @include animation( fadeOutBack $anim/2 $bez forwards );

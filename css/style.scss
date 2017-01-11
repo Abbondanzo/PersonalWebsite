@@ -806,7 +806,8 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
             width: 100%;
             text-align: center;
             img {
-                float: none;
+                float: none!important;
+                height: 100%;
             }
         }
         .lr-content {

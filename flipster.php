@@ -10,7 +10,7 @@
             </right>
         </div>
         <div>
-            <left>
+            <left style="height: 330px;">
                 <img alt="Flipster in Photoshop" src="img/660pxflipster2.png">
             </left><right class="lr-content">
                 <p>In order to design the concepts, I utilized Adobe’s Photoshop and Illustrator to deliver what the client was looking for. Photoshop allowed me to make small tweaks without having to change code. Illustrator gave  me the power to design various visual elements from mockups to the logo itself.</p>
