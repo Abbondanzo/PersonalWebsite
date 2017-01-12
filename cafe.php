@@ -16,13 +16,13 @@
                 <p>I started by designing a wireframe and various slides in Adobe Photoshop and InDesign. The customer instantly fell in love and we went from there. I built the site from scratch using various amounts of PHP and Javascript to handle contact/review forms and table reservations. Everything else was made using HTML and CSS.</p>
             </right>
         </div>
-        <div>
-            <left class="lr-content">
+        <div class="switch">
+            <right>
+                <img alt="Reserve a table" src="img/660pxcafe3.png">
+            </right><left class="lr-content">
                 <p>Users can book a reservation in just a few clicks. I utilized Zapla's table management API to allow potential restaurant-goers to see what number of tables are available. Users could also view a number of informative canvases that displayed restaurant location and contact details.</p>
                 <a target="_blank" href="http://cafe.abbondanzo.com/"><button class="btn">View Mockup</button></a>
-            </left><right>
-                <img alt="Reserve a table" src="img/660pxcafe3.png">
-            </right>
+            </left>
         </div>
         <i class="fa fa-times contact-close" aria-hidden="true"></i>
     </div>
