@@ -215,7 +215,7 @@ if(isset($_POST["submit"])) {
                         <li><a href="https://www.behance.net/narwalshf41cf">Behance</a></li>
                     </ul>
                 </div>
-                <p>Copyright &copy; 2016 abbondanzo.com</p>
+                <p>Copyright &copy; <?php echo date("Y"); ?> abbondanzo.com</p>
             </div>
         </div>
     </div>
