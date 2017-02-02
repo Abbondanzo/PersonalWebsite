@@ -7,10 +7,12 @@
 </head>
 <body class="landing">
 	<?php require_once 'navbar.php'; ?>
-	<div class="content">
-		<div class="container valign">
-			<h1>Hello,</h1>
-			<h1>You've found me.</h1>
+	<div class="content valign">
+		<div class="container">
+			<div class="hello-text">
+				<h1>Hello,</h1>
+				<h1>You've found me.</h1>
+			</div>
 			<a href="/about">
 				<button class="btn btn-white">About</button>
 			</a>
@@ -18,3 +20,4 @@
 	</div>
 </body>
 </html>
+<script src="js/script.js" type="text/javascript"></script>

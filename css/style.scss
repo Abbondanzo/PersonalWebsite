@@ -7,6 +7,10 @@ $textcolor2: #787878;
 
 $anim: 0.25s;
 
+$navbarheight: 100px;
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+
 /*
 http://patorjk.com/software/taag/#p=display&f=Sub-Zero&t=Normalizer
  __   __     ______     ______     __    __     ______     __         __     ______     ______     ______
@@ -27,6 +31,11 @@ html, body, h1, h2, h3, h4, h5, h6, p, div, blockquote {
 }
 ul {
     cursor: default;
+    -webkit-margin-before: 0px;
+	-webkit-margin-after: 0px;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 0px;
 }
 :focus {
     outline: 0;
@@ -56,12 +65,14 @@ a, a:focus, a:hover, a:visited {
 .container {
     width: 1320px;
     margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
 }
 // Underline hover effect
 .underline {
     color: #fff;
     font-size: 16px;
     position: relative;
+    @include transition( all $anim $ease-out-quint );
     &::before {
         content: "";
         position: absolute;
@@ -70,8 +81,7 @@ a, a:focus, a:hover, a:visited {
         bottom: -6px;
         height: 4px;
         right: 100%;
-        @include transition( all $anim );
-        @include transition-timing-function( cubic-bezier(.13,1,.98,.98) );
+        @include transition( all $anim $ease-out-quint );
         overflow: hidden;
     }
     &:hover {
@@ -80,6 +90,56 @@ a, a:focus, a:hover, a:visited {
             right: 0;
         }
     }
+}
+.btn {
+    background: transparent;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    border: 4px solid $primary;
+    color: $primary;
+    padding: 0.5em 3em;
+    min-width: 240px;
+    min-height: 60px;
+    cursor: pointer;
+    position: relative;
+    @include transition( all $anim*2 $ease-out-quint );
+    &::before {
+        content: "";
+        background: $primary;
+        right: 100%;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        overflow: hidden;
+        position: absolute;
+        @include transition( all $anim*2 $ease-out-quint );
+        z-index: -1;
+    }
+    &:hover {
+        color: #fff;
+        &::before {
+            right: 0;
+        }
+    }
+}
+.btn-white {
+    border-color: #fff;
+    color: #fff;
+    &::before {
+        background: #fff;
+    }
+    &:hover {
+        color: $primary;
+    }
+}
+.valign {
+    @include display(flex);
+    @include flex-direction(column);
+    &::before, &::after {
+        content: "";
+        @include flex-grow(1);
+    }
+    height: 100%;
 }
 
 /*
@@ -92,19 +152,33 @@ a, a:focus, a:hover, a:visited {
 */
 
 .nav {
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    width: 100%;
     .nav-logo {
-        background: url('../img/logo-small-white.png') center center no-repeat;
+        background: url('../img/logo_small_white.png') center center no-repeat;
         width: 80px;
-        height: 66px;
+        height: $navbarheight;
+        float: left;
     }
     .logo-black {
-        background: url('../img/logo-small-black.png') center center no-repeat;
+        background: url('../img/logo_small_black.png') center center no-repeat;
     }
-    ul {
-        list-style: none;
-        li {
-            display: inline-block;
-            padding: 1em;
+    .nav-links {
+        float: right;
+        height: $navbarheight;
+        overflow: hidden;
+        ul {
+            list-style: none;
+            display: table;
+            height: 100%;
+            li {
+                display: table-cell;
+                vertical-align: middle;
+                padding: 2em;
+                font-size: 18px;
+            }
         }
     }
 }
@@ -122,4 +196,12 @@ a, a:focus, a:hover, a:visited {
     background: url('../img/bg.jpg') center center no-repeat;
     background-size: cover;
     height: 100%;
+    .hello-text {
+        padding-bottom: 48px;
+        h1 {
+            color: #fff;
+            font-size: 96px;
+            cursor: default;
+        }
+    }
 }
