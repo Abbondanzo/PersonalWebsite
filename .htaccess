@@ -1,5 +1,9 @@
 ErrorDocument 404 /index.php
 
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
  SetEnvIfNoCase User-Agent "^Wget" bad_bot
 
     <Limit GET POST>

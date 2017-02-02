@@ -1,5 +1,12 @@
 @import "../bourbon/bourbon";
 
+// Variables
+$primary: #a0a083;
+$textcolor1: #2a2a2a;
+$textcolor2: #787878;
+
+$anim: 0.25s;
+
 /*
 http://patorjk.com/software/taag/#p=display&f=Sub-Zero&t=Normalizer
  __   __     ______     ______     __    __     ______     __         __     ______     ______     ______
@@ -10,6 +17,9 @@ http://patorjk.com/software/taag/#p=display&f=Sub-Zero&t=Normalizer
 
 */
 
+html {
+    height: 100%;
+}
 html, body, h1, h2, h3, h4, h5, h6, p, div, blockquote {
     margin: 0;
     -webkit-margin-before: 0;
@@ -42,26 +52,74 @@ a, a:focus, a:hover, a:visited {
   \/_____/   \/_____/   \/_____/   \/_____/   \/_/\/_/   \/_____/
 
 */
+
 .container {
     width: 1320px;
     margin: 0 auto;
 }
 // Underline hover effect
-a, a:focus, a:hover, a:visited {
+.underline {
     color: #fff;
     font-size: 16px;
     position: relative;
-    @include transform(perspective(1px) translateZ(0));
+    &::before {
+        content: "";
+        position: absolute;
+        background: $primary;
+        left: 0;
+        bottom: -6px;
+        height: 4px;
+        right: 100%;
+        @include transition( all $anim );
+        @include transition-timing-function( cubic-bezier(.13,1,.98,.98) );
+        overflow: hidden;
+    }
+    &:hover {
+        color: $primary;
+        &::before {
+            right: 0;
+        }
+    }
 }
-a::before {
-    content: "";
-    position: absolute;
-    background: $primary;
-    left: 0;
-    bottom: -6px;
-    height: 4px;
-    right: 100%;
-    @include transition( all $anim );
-    @include transition-timing-function( cubic-bezier(.13,1,.98,.98) );
-    overflow: hidden;
+
+/*
+ __   __     ______     __   __   ______     ______     ______
+/\ "-.\ \   /\  __ \   /\ \ / /  /\  == \   /\  __ \   /\  == \
+\ \ \-.  \  \ \  __ \  \ \ \'/   \ \  __<   \ \  __ \  \ \  __<
+ \ \_\\"\_\  \ \_\ \_\  \ \__|    \ \_____\  \ \_\ \_\  \ \_\ \_\
+  \/_/ \/_/   \/_/\/_/   \/_/      \/_____/   \/_/\/_/   \/_/ /_/
+
+*/
+
+.nav {
+    .nav-logo {
+        background: url('../img/logo-small-white.png') center center no-repeat;
+        width: 80px;
+        height: 66px;
+    }
+    .logo-black {
+        background: url('../img/logo-small-black.png') center center no-repeat;
+    }
+    ul {
+        list-style: none;
+        li {
+            display: inline-block;
+            padding: 1em;
+        }
+    }
+}
+
+/*
+ __  __     ______     __    __     ______
+/\ \_\ \   /\  __ \   /\ "-./  \   /\  ___\
+\ \  __ \  \ \ \/\ \  \ \ \-./\ \  \ \  __\
+ \ \_\ \_\  \ \_____\  \ \_\ \ \_\  \ \_____\
+  \/_/\/_/   \/_____/   \/_/  \/_/   \/_____/
+
+*/
+
+.landing {
+    background: url('../img/bg.jpg') center center no-repeat;
+    background-size: cover;
+    height: 100%;
 }
