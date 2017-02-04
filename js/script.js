@@ -16,11 +16,10 @@ function showWord(word, length, count, $html) {
     var margin = $('.active-text span').width();
     var width = $html.width();
     console.log(width);
-    $('.blink').css('margin-left', margin - width + 27);
+    //$('.blink').css('margin-left', margin - width + 27);
     if(count < length) {
         setTimeout(function() {
             showWord(word, length, count+1, $html);
-            //console.log(word,length,count);
         }, 100);
     } else {
         setTimeout(function() {
@@ -30,6 +29,28 @@ function showWord(word, length, count, $html) {
     }
 }
 
+// Start landing animation
 setTimeout(function() {
     animHello(0);
 }, 1000);
+
+// Mobile navigation menu click
+$('.mobile-links .fa-bars').on('click', function() {
+    $(this).next().addClass('active');
+})
+
+// Closing mobile navigation menu
+function closeAll() {
+    $('.mobile-links .active').removeClass('active');
+}
+$(document).keyup(function(e) {
+    var top = parseInt($('body').css('top'), 10);
+    if ((e.keyCode == 27) && (top != 0)) { // escape key maps to keycode 27
+        e.preventDefault();
+        closeAll();
+        $(document).off("keyup");
+    }
+});
+$('.menu-close').on('click',function() {
+    closeAll();
+});

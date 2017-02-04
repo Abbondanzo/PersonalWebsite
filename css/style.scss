@@ -1,3 +1,5 @@
+@import "font-awesome";
+@import "font-awesome-compass";
 @import "../bourbon/bourbon";
 
 // Variables
@@ -142,7 +144,9 @@ a, a:focus, a:hover, a:visited {
     height: 100%;
 }
 .blink {
-    @include animation(blinker 1s linear infinite);
+    @include animation(blinker 1.2s linear infinite);
+    font-weight: 300;
+    float: left;
 }
 @include keyframes(blinker) {
     0% { opacity: 1; }
@@ -197,6 +201,56 @@ a, a:focus, a:hover, a:visited {
             }
         }
     }
+    .mobile-links {
+        display: none;
+        float: right;
+        height: $navbarheight;
+        line-height: $navbarheight;
+        vertical-align: middle;
+        font-size: 28px;
+        color: #fff;
+        cursor: pointer;
+        ul {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            left: 100%;
+            @include transition( all $anim*2 $ease-out-quint );
+            background: $primary;
+            text-align: center;
+            font-size: 28px;
+            z-index: 99999;
+            list-style: none;
+            overflow: hidden;
+            li {
+                &:first-child {
+                    margin-top: 10vh;
+                }
+            }
+        }
+        .active ul {
+            left: 0;
+            display: block;
+        }
+        .menu-close {
+            position: absolute;
+            padding: 1em;
+            top: 0;
+            right: 0;
+        }
+    }
+}
+@media screen and (max-width: 960px) {
+    .nav {
+        .nav-links {
+            display: none;
+        }
+        .mobile-links {
+            display: block;
+        }
+    }
 }
 
 /*
@@ -225,6 +279,7 @@ a, a:focus, a:hover, a:visited {
             clear: left;
             span {
                 visibility: visible;
+                float: left;
             }
         }
     }
