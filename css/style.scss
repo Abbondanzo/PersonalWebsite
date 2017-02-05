@@ -6,9 +6,13 @@
 $primary: #a0a083;
 $textcolor1: #2a2a2a;
 $textcolor2: #787878;
+$linkcolor: #414141;
+$bgcolor2: #e2e2e2;
 
 $anim: 0.25s;
 
+$padding: 80px;
+$container: 1320px;
 $navbarheight: 100px;
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
@@ -63,11 +67,15 @@ a, a:focus, a:hover, a:visited {
   \/_____/   \/_____/   \/_____/   \/_____/   \/_/\/_/   \/_____/
 
 */
-
-.container {
-    width: 1320px;
-    margin: 0 auto;
+body {
     font-family: 'Montserrat', sans-serif;
+}
+p {
+    color: $textcolor2;
+}
+.container {
+    width: $container;
+    margin: 0 auto;
 }
 // Underline hover effect
 .underline {
@@ -104,11 +112,12 @@ a, a:focus, a:hover, a:visited {
     min-height: 60px;
     cursor: pointer;
     position: relative;
+    z-index: 0;
     @include transition( all $anim*2 $ease-out-quint );
     &::before {
         content: "";
-        background: $primary;
         right: 100%;
+        background: $primary;
         left: 0;
         bottom: 0;
         top: 0;
@@ -119,8 +128,10 @@ a, a:focus, a:hover, a:visited {
     }
     &:hover {
         color: #fff;
+        z-index: 0;
         &::before {
             right: 0;
+            z-index: -1;
         }
     }
 }
@@ -133,6 +144,9 @@ a, a:focus, a:hover, a:visited {
     &:hover {
         color: $primary;
     }
+}
+.background-2 {
+    background: $bgcolor2;
 }
 .valign {
     @include display(flex);
@@ -290,6 +304,95 @@ a, a:focus, a:hover, a:visited {
             h1 {
                 font-size: 60px;
                 white-space: normal;
+            }
+        }
+    }
+}
+
+/*
+  ______     ______     ______     __  __     ______
+ /\  __ \   /\  == \   /\  __ \   /\ \/\ \   /\__  _\
+ \ \  __ \  \ \  __<   \ \ \/\ \  \ \ \_\ \  \/_/\ \/
+  \ \_\ \_\  \ \_____\  \ \_____\  \ \_____\    \ \_\
+   \/_/\/_/   \/_____/   \/_____/   \/_____/     \/_/
+
+*/
+
+.about {
+    background: url('../img/bg.jpg') center center no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    h1 {
+        color: #fff;
+        font-size: 72px;
+    }
+    h2 {
+        color: #2a2a2a;
+        font-size: 32px;
+        padding-bottom: $padding/2;
+    }
+    section {
+        .left, .right {
+            display: inline-block;
+            width: 50%;
+            min-height: 700px;
+            vertical-align: top;
+            .valign {
+                min-height: 500px;
+            }
+        }
+        .greeting {
+            margin-top: $navbarheight;
+        }
+        .info-block {
+            background: #fff;
+            margin-top: $navbarheight;
+            margin-left: -$padding;
+            padding: $padding;
+            width: $container/2;
+            p {
+                line-height: 1.8;
+                padding-bottom: $padding/2;
+            }
+            a.under {
+                position: relative;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    background: $primary;
+                    left: 0;
+                    right: 0;
+                    bottom: -6px;
+                    height: 4px;
+                }
+            }
+        }
+        h1, .experience {
+            width: $container/2;
+            float: right;
+            clear: both;
+        }
+        .experience {
+            background: $primary;
+            color: #fff;
+            padding: $padding;
+            ul {
+                list-style: none;
+                li {
+                    overflow: auto;
+                    h3 {
+                        font-size: 18px;
+                        float: left;
+                        clear: both;
+                        font-weight: 300;
+                    }
+                    h4 {
+                        font-size: 12px;
+                        float: right;
+                        font-weight: 300;
+                        opacity: 0.8;
+                    }
+                }
             }
         }
     }
