@@ -20,7 +20,7 @@ function showWord(word, length, count, $html) {
     if(count < length) {
         setTimeout(function() {
             showWord(word, length, count+1, $html);
-        }, 100);
+        }, 80);
     } else {
         setTimeout(function() {
             $html.removeClass('active-text');
