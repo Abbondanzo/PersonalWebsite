@@ -358,14 +358,30 @@ p {
             }
             a.under {
                 position: relative;
-                &::before {
+                padding-bottom: 6px;
+                &::before, &::after {
                     content: "";
                     position: absolute;
                     background: $primary;
                     left: 0;
                     right: 0;
-                    bottom: -6px;
+                    margin-top: 2px;
+                    bottom: 0;
                     height: 4px;
+                }
+                &::after {
+                    background: #fff;
+                    position: relative;
+                    left: -80px;
+                    right: 100%;
+                }
+                &:hover {
+                    &::after {
+                        position: absolute;
+                        left: 100%;
+                        right: -80px;
+                        transition: all $anim*1.5;
+                    }
                 }
             }
         }
