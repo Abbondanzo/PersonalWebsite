@@ -37,17 +37,17 @@ function time_elapsed($datetime, $full = false) {
 						<li>
 							<h3>HTML5, CSS3</h3>
 							<h4>Expert</h4>
-							<span class="exp-bar" pct="97"></span>
+							<span class="exp-bar" pct="97"><div class="exp-width"></div></span>
 						</li>
 						<li>
 							<h3>jQuery</h3>
 							<h4>Expert</h4>
-							<span class="exp-bar" pct="92"></span>
+							<span class="exp-bar" pct="92"><div class="exp-width"></div></span>
 						</li>
 						<li>
 							<h3>Java, Python</h3>
 							<h4>Advanced</h4>
-							<span class="exp-bar" pct="82"></span>
+							<span class="exp-bar" pct="82"><div class="exp-width"></div></span>
 						</li>
 					</ul>
 				</div>

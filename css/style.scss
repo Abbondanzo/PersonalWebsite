@@ -190,6 +190,7 @@ p {
     position: absolute;
     top: 0;
     width: 100%;
+    z-index: 999999;
     .nav-logo {
         background: url('../img/logo_small_white.png') center center no-repeat;
         width: 80px;
@@ -335,8 +336,9 @@ p {
         .left, .right {
             display: inline-block;
             width: 50%;
-            min-height: 700px;
+            min-height: 800px;
             vertical-align: top;
+            position: relative;
             .valign {
                 min-height: 500px;
             }
@@ -374,12 +376,21 @@ p {
         }
         .experience {
             background: $primary;
+            position: absolute;
+            bottom: -$padding;
+            right: 0;
             color: #fff;
             padding: $padding;
             ul {
                 list-style: none;
                 li {
                     overflow: auto;
+                    position: relative;
+                    margin-bottom: 24px;
+                    padding-bottom: 18px;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
                     h3 {
                         font-size: 18px;
                         float: left;
@@ -391,6 +402,20 @@ p {
                         float: right;
                         font-weight: 300;
                         opacity: 0.8;
+                    }
+                    span.exp-bar {
+                        height: 4px;
+                        width: 100%;
+                        background: darken($primary, 20);
+                        display: block;
+                        position: absolute;
+                        bottom: 0;
+                        .exp-width {
+                            transition: width $anim*4;
+                            width: 0%;
+                            height: 100%;
+                            background: #fff;
+                        }
                     }
                 }
             }

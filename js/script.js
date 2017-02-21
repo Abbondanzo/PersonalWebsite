@@ -54,3 +54,15 @@ $(document).keyup(function(e) {
 $('.menu-close').on('click',function() {
     closeAll();
 });
+
+// Animates skill bars
+function animateExperience() {
+    $('.experience .exp-bar').each(function() {
+        var pct = $(this).attr('pct');
+        $(this).children('.exp-width').css('width', pct + '%');
+    });
+}
+
+setTimeout(function() {
+    animateExperience();
+}, 500);
