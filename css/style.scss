@@ -94,7 +94,7 @@ p {
         @include transition( all $anim $ease-out-quint );
         overflow: hidden;
     }
-    &:hover {
+    &:hover, &.active {
         color: $primary;
         &::before {
             right: 0;

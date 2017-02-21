@@ -63,6 +63,15 @@ function animateExperience() {
     });
 }
 
+// Sets waiting time for animation
 setTimeout(function() {
     animateExperience();
 }, 500);
+
+// Display the active page in navbar
+var primary = $('.underline:hover').css('color');
+if (window.location.pathname.indexOf('about') != -1) {
+    $('nav').find('.underline[href="/about"]').addClass('active');
+} else if (window.location.pathname.indexOf('projects') != -1) {
+    $('nav').find('.underline[href="/projects"]').addClass('active');
+}
