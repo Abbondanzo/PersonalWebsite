@@ -55,10 +55,10 @@ function time_elapsed($datetime, $full = false) {
 				<div class="info-block">
 					<h2>A Little Bit About Me...</h2>
 					<p>
-						Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Title Design">Titus&nbsp;Design</a> out of my dorm room.
+						Hi! I’m Peter Abbondanzo, <?php echo time_elapsed('1998-05-21 00:00:00'); ?>-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
 					</p>
 					<a href="http://abbondanzo.com/content/resume.pdf">
-						<button class="btn">Résumé</button>
+						<button title="View PDF resume" class="btn">Résumé</button>
 					</a>
 				</div>
 			</div>

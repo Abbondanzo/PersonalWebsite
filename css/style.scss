@@ -378,6 +378,7 @@ p {
                 &:hover {
                     &::after {
                         position: absolute;
+                        pointer-events: none;
                         left: 100%;
                         right: -80px;
                         transition: all $anim*1.5;
