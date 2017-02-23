@@ -332,6 +332,13 @@ p {
         font-size: 32px;
         padding-bottom: $padding/2;
     }
+    h4 {
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .content {
+        overflow: hidden;
+    }
     section {
         .left, .right {
             display: inline-block;
@@ -339,9 +346,18 @@ p {
             min-height: 800px;
             vertical-align: top;
             position: relative;
+            z-index: 2;
             .valign {
                 min-height: 500px;
             }
+        }
+        .left {
+            min-height: 800 + $padding;
+        }
+        .right {
+            margin-left: $padding;
+            margin-right: -$padding;
+            margin-bottom: $padding;
         }
         .greeting {
             margin-top: $navbarheight;
@@ -387,15 +403,15 @@ p {
             }
         }
         h1, .experience {
-            width: $container/2;
+            width: $container/2 + $padding;
             float: right;
             clear: both;
         }
         .experience {
             background: $primary;
             position: absolute;
-            bottom: -$padding;
-            right: 0;
+            bottom: 0;
+            right: -$padding;
             color: #fff;
             padding: $padding;
             ul {
@@ -417,7 +433,6 @@ p {
                     h4 {
                         font-size: 12px;
                         float: right;
-                        font-weight: 300;
                         opacity: 0.8;
                     }
                     span.exp-bar {
@@ -434,6 +449,34 @@ p {
                             background: #fff;
                         }
                     }
+                }
+            }
+        }
+        &.about-contact {
+            margin-top: -$padding;
+            .left {
+                background: #fff;
+                color: $primary;
+                z-index: 1;
+            }
+            .right {
+                float: right;
+            }
+            .contact-form {
+                width: $container/2 - $padding;
+                float: right;
+                clear: both;
+                padding: $padding;
+                padding-top: $padding*2;
+                input, textarea {
+                    width: 100%;
+                    padding-top: 40px;
+                    margin-bottom: 20px;
+                	background: transparent;
+                	border: 0;
+                	border-bottom: 3px solid $primary;
+                	width: 100%;
+                	font-size: 18px;
                 }
             }
         }

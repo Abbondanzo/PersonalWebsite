@@ -64,7 +64,20 @@ function time_elapsed($datetime, $full = false) {
 			</div>
 		</section>
 		<section id="contact" class="about-contact">
-			<div class="left"></div>
+			<div class="left">
+                <div class="contact-form">
+                    <h2>Contact Me</h2>
+                    <form>
+                        <h4>Name</h4>
+                        <input type="text" name="name" class="input" required>
+                        <h4>Email</h4>
+                        <input type="email" name="email" class="input" required>
+                        <h4>Message</h4>
+                        <textarea type="text" rows="4" name="message" required></textarea>
+                        <button type="submit" name="submit" value="Send Message" class="btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
 			<div class="right"></div>
 		</section>
 	</div>
