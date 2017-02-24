@@ -1,7 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
 
-import { App, About, Projects }  from './app.component';
+import { AppComponent, About, Projects }  from './app.component';
 import { PageNotFoundComponent } from './404/not-found.component';
 
 /* States */

@@ -21,7 +21,7 @@ export class Hero {
   <router-outlet></router-outlet>
   `
 })
-export class App  {
+export class AppComponent  {
     title = 'Angular Demo';
     hero: Hero = {
       id: 1,
