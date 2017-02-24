@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en-us" ng-app="abbondanzo">
+<head>
+    <title>Peter V. Abbondanzo | Web &amp; Mobile Developer</title>
+	<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <meta charset="UTF-8">
+    <meta name="description" content="I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.">
+    <meta name="keywords" content="graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <link rel="icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <script src="systemjs.config.js"></script>
+    <script>
+    System.import('app/main.js').catch(function(err){ console.error(err); });
+    </script>
+</head>
+
+<body class="landing">
+    <?php require_once 'navbar.php'; ?>
+    <div class="content valign">
+        <div class="container">
+            <div class="hello-text">
+                <h1>Hello,</h1>
+                <h1>You've found me.</h1>
+            </div>
+            <my-app>Good ol' stuff to load in</my-app>
+            <a routerLink="/about" routerLinkActive="active">
+                <button class="btn btn-white">About</button>
+            </a>
+             <router-outlet></router-outlet>
+        </div>
+    </div>
+</body>
+</html>
