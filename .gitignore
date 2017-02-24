@@ -1,4 +1,10 @@
+# NPM-related files
+node_modules/
+
+# SCSS compiled files
 .sass-cache/
 *.css.map
 *.css
+
+# For Macs
 .DS_Store

@@ -1,0 +1,23 @@
+{
+  "name": "abbondanzo",
+  "version": "1.0.0",
+  "description": "Package file for personal website at abbondanzo.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abbondanzo/PersonalWebsite.git"
+  },
+  "author": "Peter Abbondanzo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abbondanzo/PersonalWebsite/issues"
+  },
+  "homepage": "https://github.com/Abbondanzo/PersonalWebsite#readme",
+  "devDependencies": {
+    "vue": "^2.1.10",
+    "webpack": "^2.2.1"
+  }
+}
