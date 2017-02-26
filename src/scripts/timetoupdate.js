@@ -1,1 +1,0 @@
-window.alert("You're running an outdated, unsupported browser. I highly recommend you check out Chrome or just push forward a few version numbers. Content with your current browser? Sorry for the rendering (or lack thereof). This is written with Angular and was developed for modern browsers. Although, I may just produce a text-only version of this page soon.");

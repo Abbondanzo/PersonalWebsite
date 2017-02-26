@@ -1,3 +1,4 @@
+/* eslint eqeqeq: "off", curly: "error" */
 @import "font-awesome";
 @import "font-awesome-compass";
 @import "../bourbon/bourbon";
@@ -18,7 +19,6 @@ $navbarheight: 100px;
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
 /*
-http://patorjk.com/software/taag/#p=display&f=Sub-Zero&t=Normalizer
  __   __     ______     ______     __    __     ______     __         __     ______     ______     ______
 /\ "-.\ \   /\  __ \   /\  == \   /\ "-./  \   /\  __ \   /\ \       /\ \   /\___  \   /\  ___\   /\  == \
 \ \ \-.  \  \ \ \/\ \  \ \  __<   \ \ \-./\ \  \ \  __ \  \ \ \____  \ \ \  \/_/  /__  \ \  __\   \ \  __<
@@ -29,6 +29,9 @@ http://patorjk.com/software/taag/#p=display&f=Sub-Zero&t=Normalizer
 
 html, body {
     height: auto;
+}
+html {
+    height: 100%;
 }
 html, body, h1, h2, h3, h4, h5, h6, p, div, blockquote {
     margin: 0;
@@ -67,6 +70,9 @@ a, a:focus, a:hover, a:visited {
   \/_____/   \/_____/   \/_____/   \/_____/   \/_/\/_/   \/_____/
 
 */
+#app {
+    height: 100%;
+}
 body {
     font-family: 'Montserrat', sans-serif;
 }
@@ -264,48 +270,6 @@ p {
         }
         .mobile-links {
             display: block;
-        }
-    }
-}
-
-/*
- __  __     ______     __    __     ______
-/\ \_\ \   /\  __ \   /\ "-./  \   /\  ___\
-\ \  __ \  \ \ \/\ \  \ \ \-./\ \  \ \  __\
- \ \_\ \_\  \ \_____\  \ \_\ \ \_\  \ \_____\
-  \/_/\/_/   \/_____/   \/_/  \/_/   \/_____/
-
-*/
-
-.landing {
-    background: url('../img/bg.jpg') center center no-repeat;
-    background-size: cover;
-    height: 100%;
-    .hello-text {
-        padding-bottom: 48px;
-        overflow: auto;
-        h1 {
-            color: #fff;
-            font-size: 96px;
-            cursor: default;
-            visibility: hidden;
-            white-space: nowrap;
-            float: left;
-            clear: left;
-            span {
-                visibility: visible;
-                float: left;
-            }
-        }
-    }
-}
-@media screen and (max-width: 1360px) {
-    .landing {
-        .hello-text {
-            h1 {
-                font-size: 60px;
-                white-space: normal;
-            }
         }
     }
 }

@@ -1,8 +1,18 @@
 module.exports = {
-    entry: './main.js'
-    output: {
-        path: __dirname + '/build',
-        publicPath: '/build/',
-        filename: 'bundle.js'
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [{
+                    loader: "sass-loader" // compiles Sass to CSS
+                }]
+            },
+            {
+                test: /\.jpg$/,
+                use: [{
+                    loader: 'url-loader'
+                }]
+            }
+        ]
     }
 }

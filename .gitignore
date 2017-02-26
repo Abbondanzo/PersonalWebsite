@@ -8,3 +8,9 @@ node_modules/
 
 # For Macs
 .DS_Store
+
+# Init provided
+dist/
+npm-debug.log
+test/e2e/reports
+selenium-debug.log
