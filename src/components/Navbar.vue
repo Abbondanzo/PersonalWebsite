@@ -6,7 +6,7 @@
                 <ul>
                     <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
                     <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
-                    <li><router-link class="underline" :to="{ path: 'about' }">Contact</router-link></li>
+                    <li><router-link class="underline" :to="{ path: 'contact' }">Contact</router-link></li>
                 </ul>
             </div>
             <div class="mobile-links">
@@ -15,7 +15,7 @@
                     <ul>
                         <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
                         <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
-                        <li><router-link class="underline" :to="{ path: 'about' }">Contact</router-link></li>
+                        <li><router-link class="underline" :to="{ path: 'contact' }">Contact</router-link></li>
                         <i class="fa fa-times menu-close" aria-hidden="true"></i>
                     </ul>
                 </div>
