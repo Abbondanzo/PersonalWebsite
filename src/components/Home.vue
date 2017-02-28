@@ -20,8 +20,6 @@ export default {
 
 <style lang="scss">
 body {
-    background: url('../assets/img/bg.jpg') center center no-repeat;
-    background-size: cover;
     height: 100%;
     .hello-text {
         padding-bottom: 48px;

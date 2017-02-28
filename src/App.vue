@@ -15,3 +15,11 @@ export default {
 </script>
 
 <style lang="scss" src="./assets/styles/style.scss"></style>
+<style lang="scss">
+body {
+    background: url('./assets/img/bg.jpg') top left no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-y: scroll;
+}
+</style>
