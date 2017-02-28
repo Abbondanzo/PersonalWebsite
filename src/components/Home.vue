@@ -5,9 +5,9 @@
 				<h1>Hello,</h1>
 				<h1>You've found me.</h1>
 			</div>
-			<a v-link="{ path: '/about' }">
+			<router-link :to="{ path: 'about' }">
 				<button class="btn btn-white">About</button>
-			</a>
+			</router-link>
 		</div>
 	</div>
 </template>

@@ -1,21 +1,21 @@
 <template>
     <nav class="nav" v-once>
         <div class="container">
-            <div class="nav-logo"></div>
+            <router-link class="underline" :to="{ path: '/' }"><div class="nav-logo"></div></router-link>
             <div class="nav-links">
                 <ul>
-                    <li><a class="underline" href="/about">About</a></li>
-                    <li><a class="underline" href="/projects">Projects</a></li>
-                    <li><a class="underline" href="#">Contact</a></li>
+                    <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
+                    <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
+                    <li><router-link class="underline" :to="{ path: 'about' }">Contact</router-link></li>
                 </ul>
             </div>
             <div class="mobile-links">
                 <i class="fa fa-bars" aria-hidden="true"></i>
                 <div>
                     <ul>
-                        <li><a class="underline" href="/about">About</a></li>
-                        <li><a class="underline" href="/projects">Projects</a></li>
-                        <li><a class="underline" href="#">Contact</a></li>
+                        <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
+                        <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
+                        <li><router-link class="underline" :to="{ path: 'about' }">Contact</router-link></li>
                         <i class="fa fa-times menu-close" aria-hidden="true"></i>
                     </ul>
                 </div>
@@ -38,6 +38,12 @@ export default {
     top: 0;
     width: 100%;
     z-index: 999999;
+    a {
+        color: #fff;
+        &.router-link-active {
+            color: $primary;
+        }
+    }
     .nav-logo {
         background: url('../assets/img/logo_small_white.png') center center no-repeat;
         width: 80px;
