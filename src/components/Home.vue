@@ -5,7 +5,7 @@
 				<h1>Hello,</h1>
 				<h1>You've found me.</h1>
 			</div>
-			<a href="/about">
+			<a v-link="{ path: '/about' }">
 				<button class="btn btn-white">About</button>
 			</a>
 		</div>

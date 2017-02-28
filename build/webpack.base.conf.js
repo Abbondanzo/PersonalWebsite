@@ -23,6 +23,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.common.js',
       '@': resolve('src'),
+      '@style': resolve('src/assets/styles')
     }
   },
   module: {
@@ -40,6 +41,15 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
+      },
+      {
+          test: /\.scss$/,
+          loader: 'sass-loader',
+          options: {
+              loaders: {
+                  scss: 'vue-style-loader!css-loader!sass-loader' // <style lang="scss">
+              }
+          }
       },
       {
         test: /\.js$/,
