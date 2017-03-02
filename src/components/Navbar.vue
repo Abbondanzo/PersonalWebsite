@@ -1,5 +1,5 @@
 <template>
-    <nav class="nav" v-once>
+    <nav class="nav">
         <div class="container">
             <router-link class="underline" :to="{ path: '/' }"><div class="nav-logo"></div></router-link>
             <div class="nav-links">
@@ -9,14 +9,14 @@
                     <li><router-link class="underline" :to="{ path: 'contact' }">Contact</router-link></li>
                 </ul>
             </div>
-            <div class="mobile-links">
-                <i class="fa fa-bars" aria-hidden="true"></i>
+            <div id="mobile-links" class="mobile-links">
                 <div>
-                    <ul>
+                    <i @click="showMenu" class="fa fa-bars" aria-hidden="true"></i>
+                    <ul v-bind:class="{ active: show }">
                         <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
                         <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
                         <li><router-link class="underline" :to="{ path: 'contact' }">Contact</router-link></li>
-                        <i class="fa fa-times menu-close" aria-hidden="true"></i>
+                        <i @click="showMenu" class="fa fa-times menu-close" aria-hidden="true"></i>
                     </ul>
                 </div>
             </div>
@@ -26,11 +26,26 @@
 
 <script>
 export default {
-    name: 'navbar'
+    name: 'navbar',
+    data () {
+        return {
+            show: false
+        }
+    },
+    methods: {
+        showMenu: function (event) {
+            // this.$set(this, 'show', !this.show)
+            this.show = !this.show
+            this.$nextTick(function () {
+                console.log(this.show) // => 'updated'
+            })
+        }
+    }
 }
+
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../assets/styles/global';
 .nav {
     overflow: auto;
@@ -98,7 +113,7 @@ export default {
                 }
             }
         }
-        .active ul {
+        ul.active {
             left: 0;
             display: block;
         }
@@ -107,6 +122,7 @@ export default {
             padding: 1em;
             top: 0;
             right: 0;
+            cursor: pointer;
         }
     }
 }

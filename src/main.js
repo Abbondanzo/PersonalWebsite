@@ -8,6 +8,9 @@ import router from './router'
 new Vue({
     el: '#app',
     router,
+    data: {
+        show: false
+    },
     template: '<App/>',
     components: { App }
 })
