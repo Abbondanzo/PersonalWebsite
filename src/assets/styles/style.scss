@@ -63,6 +63,7 @@ body {
 }
 p {
     color: $textcolor2;
+    cursor: default;
 }
 .container {
     width: $container;
@@ -89,6 +90,32 @@ p {
         color: $primary;
         &::before {
             right: 0;
+        }
+    }
+}
+a.under {
+    position: relative;
+    padding-bottom: 6px;
+    &::before, &::after {
+        content: "";
+        position: absolute;
+        background: $primary;
+        left: 0;
+        right: 0;
+        margin-top: 2px;
+        bottom: 0;
+        height: 4px;
+    }
+    &::after {
+        background: #fff;
+        left: -$padding;
+        width: $padding;
+    }
+    &:hover {
+        &::after {
+            pointer-events: none;
+            left: 100%;
+            transition: all $anim*1.5;
         }
     }
 }

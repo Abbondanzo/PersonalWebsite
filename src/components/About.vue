@@ -131,35 +131,6 @@ export default {
                 line-height: 1.8;
                 padding-bottom: $padding/2;
             }
-            a.under {
-                position: relative;
-                padding-bottom: 6px;
-                &::before, &::after {
-                    content: "";
-                    position: absolute;
-                    background: $primary;
-                    left: 0;
-                    right: 0;
-                    margin-top: 2px;
-                    bottom: 0;
-                    height: 4px;
-                }
-                &::after {
-                    background: #fff;
-                    position: relative;
-                    left: -80px;
-                    right: 100%;
-                }
-                &:hover {
-                    &::after {
-                        position: absolute;
-                        pointer-events: none;
-                        left: 100%;
-                        right: -80px;
-                        transition: all $anim*1.5;
-                    }
-                }
-            }
         }
         h1, .experience {
             width: $container/2 + $padding;
