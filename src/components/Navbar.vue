@@ -10,7 +10,7 @@
                 </ul>
             </div>
             <div id="mobile-links" class="mobile-links">
-                <div>
+                <div @keyup.esc="escapeMenu">
                     <i @click="showMenu" class="fa fa-bars" aria-hidden="true"></i>
                     <ul v-bind:class="{ active: show }">
                         <li><router-link class="underline" :to="{ path: 'about' }"><span @click="showMenu">About</span></router-link></li>
@@ -36,6 +36,13 @@ export default {
         showMenu: function (event) {
             // this.$set(this, 'show', !this.show)
             this.show = !this.show
+        },
+        escapeMenu: function (event) {
+            console.log('pressed')
+            console.log(event)
+            if (this.show) {
+                this.show = !this.show
+            }
         }
     }
 }
@@ -88,7 +95,11 @@ export default {
         line-height: $navbarheight;
         vertical-align: middle;
         color: #fff;
-        cursor: pointer;
+        i {
+            cursor: pointer;
+            padding: 1em;
+            font-size: 28px;
+        }
         ul {
             position: fixed;
             top: 0;
