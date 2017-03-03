@@ -13,9 +13,9 @@
                 <div>
                     <i @click="showMenu" class="fa fa-bars" aria-hidden="true"></i>
                     <ul v-bind:class="{ active: show }">
-                        <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
-                        <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
-                        <li><router-link class="underline" :to="{ path: 'contact' }">Contact</router-link></li>
+                        <li><router-link class="underline" :to="{ path: 'about' }"><span @click="showMenu">About</span></router-link></li>
+                        <li><router-link class="underline" :to="{ path: 'projects' }"><span @click="showMenu">Projects</span></router-link></li>
+                        <li><router-link class="underline" :to="{ path: 'contact' }"><span @click="showMenu">Contact</span></router-link></li>
                         <i @click="showMenu" class="fa fa-times menu-close" aria-hidden="true"></i>
                     </ul>
                 </div>
@@ -36,9 +36,6 @@ export default {
         showMenu: function (event) {
             // this.$set(this, 'show', !this.show)
             this.show = !this.show
-            this.$nextTick(function () {
-                console.log(this.show) // => 'updated'
-            })
         }
     }
 }
@@ -90,7 +87,6 @@ export default {
         height: $navbarheight;
         line-height: $navbarheight;
         vertical-align: middle;
-        font-size: 28px;
         color: #fff;
         cursor: pointer;
         ul {
@@ -111,11 +107,17 @@ export default {
                 &:first-child {
                     margin-top: 10vh;
                 }
+                .underline {
+                    font-size: 28px;
+                }
             }
         }
         ul.active {
             left: 0;
             display: block;
+        }
+        a.router-link-active {
+            color: #222;
         }
         .menu-close {
             position: absolute;
