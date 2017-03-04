@@ -79,7 +79,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../assets/styles/global';
 #app {
     h1 {
@@ -100,8 +100,6 @@ export default {
     }
     section {
         .left, .right {
-            display: inline-block;
-            width: 50%;
             min-height: 800px;
             vertical-align: top;
             position: relative;

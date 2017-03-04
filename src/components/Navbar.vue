@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="container">
-            <router-link class="underline" :to="{ path: '/' }"><div class="nav-logo"></div></router-link>
+            <router-link class="underline" :to="{ path: '/' }"><div class="nav-logo" v-bind:class="{ 'logo-black': lightBackground }"></div></router-link>
             <div class="nav-links">
                 <ul>
                     <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
@@ -29,7 +29,8 @@ export default {
     name: 'navbar',
     data () {
         return {
-            show: false
+            show: false,
+            lightBackground: true
         }
     },
     methods: {
@@ -43,6 +44,9 @@ export default {
             if (this.show) {
                 this.show = !this.show
             }
+        },
+        colorBackground: function (event) {
+            this.lightBackground = !this.lightBackground
         }
     }
 }

@@ -1,6 +1,19 @@
 <template>
-    <div class="test">
-        Sample content
+    <div class="content">
+        <section>
+            <div class="left">
+                <div class="project-list">
+                    <ul>
+                        <li>Project 1</li>
+                        <li>Project 1</li>
+                        <li>Project 1</li>
+                        <li>Project 1</li>
+                        <li>Project 1</li>
+                        <li>Project 1</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -10,6 +23,12 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '../assets/styles/global';
+.left {
+    background: $bgcolor2;
+    .project-list {
+        background: #fff;
+    }
+}
 </style>

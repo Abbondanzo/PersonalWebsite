@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 body {
     height: 100%;
     .hello-text {
