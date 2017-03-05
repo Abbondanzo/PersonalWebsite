@@ -4,12 +4,12 @@
             <div class="left">
                 <div class="project-list valign">
                     <ul>
-                        <li>Project 1</li>
-                        <li>Project 1</li>
-                        <li>Project 1</li>
-                        <li>Project 1</li>
-                        <li>Project 1</li>
-                        <li>Project 1</li>
+                        <li v-bind:index="0" @mouseover="project">Project 1</li>
+                        <li v-bind:index="1" @mouseover="project">Project 2</li>
+                        <li v-bind:index="2" @mouseover="project">Project 3</li>
+                        <li v-bind:index="3" @mouseover="project">Project 4</li>
+                        <li v-bind:index="4" @mouseover="project">Project 5</li>
+                        <li v-bind:index="5" @mouseover="project">Project 6</li>
                     </ul>
                 </div>
             </div><div class="right">
@@ -25,6 +25,11 @@ export default {
     data () {
         return {
             img: require('../assets/img/bg.png')
+        }
+    },
+    methods: {
+        project (event) {
+            console.log(event)
         }
     }
 }
