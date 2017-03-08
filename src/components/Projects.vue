@@ -4,12 +4,12 @@
             <div class="left">
                 <div class="project-list valign">
                     <ul>
-                        <li v-bind:index="0" @mouseover="project">Project 1</li>
-                        <li v-bind:index="1" @mouseover="project">Project 2</li>
-                        <li v-bind:index="2" @mouseover="project">Project 3</li>
-                        <li v-bind:index="3" @mouseover="project">Project 4</li>
-                        <li v-bind:index="4" @mouseover="project">Project 5</li>
-                        <li v-bind:index="5" @mouseover="project">Project 6</li>
+                        <li v-bind:index="0" @mouseover="project(1)">Project 1</li>
+                        <li v-bind:index="1" @mouseover="project(2)">Project 2</li>
+                        <li v-bind:index="2" @mouseover="project(3)">Project 3</li>
+                        <li v-bind:index="3" @mouseover="project(4)">Project 4</li>
+                        <li v-bind:index="4" @mouseover="project(5)">Project 5</li>
+                        <li v-bind:index="5" @mouseover="project(6)">Project 6</li>
                     </ul>
                 </div>
             </div><div class="right">
@@ -28,8 +28,8 @@ export default {
         }
     },
     methods: {
-        project (event) {
-            console.log(event)
+        project (arg) {
+            console.log(arg)
         }
     }
 }
