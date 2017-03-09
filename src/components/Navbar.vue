@@ -1,7 +1,9 @@
 <template>
     <nav class="nav">
-        <div class="container">
-            <router-link class="underline" :to="{ path: '/' }"><div class="nav-logo" v-bind:class="{ 'logo-black': lightBackground }"></div></router-link>
+        <div class="container" @click="updateLogo">
+            <router-link class="underline" :to="{ path: '/' }">
+                <div class="nav-logo" v-bind:class="{ 'logo-black': lightBackground }"></div>
+            </router-link>
             <div class="nav-links">
                 <ul>
                     <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
@@ -12,7 +14,7 @@
             <div id="mobile-links" class="mobile-links">
                 <div @keyup.esc="escapeMenu">
                     <i @click="showMenu" class="fa fa-bars" aria-hidden="true"></i>
-                    <ul v-bind:class="{ active: show }">
+                    <ul v-bind:class="{ active: show }" @click="updateLogo">
                         <li><router-link class="underline" :to="{ path: 'about' }"><span @click="showMenu">About</span></router-link></li>
                         <li><router-link class="underline" :to="{ path: 'projects' }"><span @click="showMenu">Projects</span></router-link></li>
                         <li><router-link class="underline" :to="{ path: 'contact' }"><span @click="showMenu">Contact</span></router-link></li>
@@ -30,8 +32,11 @@ export default {
     data () {
         return {
             show: false,
-            lightBackground: true
+            lightBackground: false
         }
+    },
+    created: function () {
+        this.updateLogo()
     },
     methods: {
         showMenu: function (event) {
@@ -47,6 +52,13 @@ export default {
         },
         colorBackground: function (event) {
             this.lightBackground = !this.lightBackground
+        },
+        updateLogo: function () {
+            if (this.$route.path === '/projects') {
+                this.lightBackground = true
+            } else {
+                this.lightBackground = false
+            }
         }
     }
 }
