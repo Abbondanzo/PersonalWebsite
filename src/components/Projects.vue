@@ -13,7 +13,7 @@
                     </ul>
                 </div>
                 <div class="popup info-block">
-                    <p>Want to see some code? Check out my Github at <a class="under" title="Github Profile" href="https://github.com/Abbondanzo">this link</a>.
+                    <p>Want to see the code behind these projects? Check out my Github profile at <a class="under" target="_blank" title="Github Profile" href="https://github.com/Abbondanzo">this link</a>.</p>
                 </div>
             </div><div class="right">
                 <img v-bind:src="img" />
@@ -80,7 +80,24 @@ section {
     }
     .info-block {
         background: $primary;
-        padding: $padding;
+        padding: $padding / 2;
+        position: absolute;
+        bottom: 10px;
+        left: 90%;
+        min-width: 200px;
+        width: 320px;
+        p {
+            color: #fff;
+        }
+        .under {
+            color: #fff;
+            &::before {
+                background: #fff;
+            }
+            &::after {
+                background: $primary;
+            }
+        }
     }
 }
 </style>
