@@ -12,6 +12,9 @@
                         <li @mouseover="project(6)">Project 6</li>
                     </ul>
                 </div>
+                <div class="popup info-block">
+                    <p>Want to see some code? Check out my Github at <a class="under" title="Github Profile" href="https://github.com/Abbondanzo">this link</a>.
+                </div>
             </div><div class="right">
                 <img v-bind:src="img" />
             </div>
@@ -74,6 +77,10 @@ section {
     }
     .right {
         z-index: 1;
+    }
+    .info-block {
+        background: $primary;
+        padding: $padding;
     }
 }
 </style>
