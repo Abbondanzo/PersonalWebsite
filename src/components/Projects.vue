@@ -4,12 +4,13 @@
             <div class="left">
                 <div class="project-list valign">
                     <ul>
-                        <li @mouseover="project(1)">Project 1</li>
-                        <li @mouseover="project(2)">Project 2</li>
-                        <li @mouseover="project(3)">Project 3</li>
-                        <li @mouseover="project(4)">Project 4</li>
-                        <li @mouseover="project(5)">Project 5</li>
-                        <li @mouseover="project(6)">Project 6</li>
+                        <h2>Recent Projects</h2>
+                        <li v-for="(project, index) in projects"
+                            v-bind:item="project"
+                            v-bind:index="index"
+                            v-on:mouseover="projectCheck(index)">
+                        {{ project.title }}
+                        </li>
                     </ul>
                 </div>
                 <div class="popup info-block">
@@ -27,14 +28,22 @@ export default {
     name: 'projects',
     data () {
         return {
-            img: require('../assets/img/bg.png')
+            img: require('../assets/img/bg.png'),
+            projects: [
+                 { title: 'Title 1' },
+                 { title: 'Title 2' },
+                 { title: 'Title 3' },
+                 { title: 'Title 4' },
+                 { title: 'Title 5' }
+            ]
         }
     },
     methods: {
-        project (arg) {
+        projectCheck (arg) {
             const images =
                 ['bg.png', 'bg.png', 'bg.png', 'bg.png', 'bg.png', 'bg.png']
-            this.img = require('../assets/img/' + images[arg - 1])
+            console.log(arg)
+            this.img = require('../assets/img/' + images[arg])
         }
     }
 }

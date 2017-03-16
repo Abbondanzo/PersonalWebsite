@@ -82,19 +82,6 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/styles/global';
 #app {
-    h1 {
-        color: #fff;
-        font-size: 72px;
-    }
-    h2 {
-        color: #2a2a2a;
-        font-size: 32px;
-        padding-bottom: $padding/2;
-    }
-    h4 {
-        font-size: 14px;
-        font-weight: 300;
-    }
     .content {
         overflow: hidden;
     }
