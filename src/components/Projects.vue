@@ -8,8 +8,9 @@
                         <li v-for="(project, index) in projects"
                             v-bind:item="project"
                             v-bind:index="index"
-                            v-on:mouseover="projectCheck(index)">
-                        {{ project.title }}
+                            v-bind:class="isActive(index)"
+                            v-on:click="projectCheck(index)">
+                            <span>0{{ index + 1 }}</span> <h3>{{ project.title }}</h3>
                         </li>
                     </ul>
                 </div>
@@ -28,22 +29,43 @@ export default {
     name: 'projects',
     data () {
         return {
-            img: require('../assets/img/bg.png'),
+            img: require('../assets/img/fullbvc.png'),
+            activeProject: 0,
             projects: [
-                 { title: 'Title 1' },
-                 { title: 'Title 2' },
-                 { title: 'Title 3' },
-                 { title: 'Title 4' },
-                 { title: 'Title 5' }
+                 { title: 'Bonne Vie Cafe' },
+                 { title: 'Rogue' },
+                 { title: 'FeedShare' },
+                 { title: 'Flipster' },
+                 { title: 'Sthacks' },
+                 { title: 'Modern MyNEU' },
+                 { title: 'Titus Design' }
+            ],
+            images: [
+                'fullbvc.png',
+                'fullrogue.png',
+                'fullrogue.png',
+                'fullflipster.png',
+                'fullsth.png',
+                'fullmyneu.png'
             ]
         }
     },
     methods: {
         projectCheck (arg) {
-            const images =
-                ['bg.png', 'bg.png', 'bg.png', 'bg.png', 'bg.png', 'bg.png']
             console.log(arg)
-            this.img = require('../assets/img/' + images[arg])
+            this.activeProject = arg
+            var newImg = require('../assets/img/' + this.images[arg])
+            console.log()
+            this.$nextTick(function () {
+                this.img = newImg
+            })
+        },
+        isActive (arg) {
+            if (arg === this.activeProject) {
+                return {
+                    active: 'active'
+                }
+            }
         }
     }
 }
@@ -52,19 +74,23 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/styles/global';
 .content {
-    height: 100vh;
+    min-height: 100vh;
 }
 section {
-    height: 100%;
+    height: 100vh;
+    width: 100%;
     overflow: hidden;
+    display: table;
+    table-layout: fixed;
     .left, .right {
-        margin-right: $padding;
-        margin-left: -$padding;
         position: relative;
+        display: table-cell;
     }
     .left {
         background: $bgcolor2;
         height: 100%;
+        margin-right: $padding;
+        margin-left: -$padding;
         padding-top: $navbarheight;
         z-index: 2;
         .project-list {
@@ -76,7 +102,30 @@ section {
                 background: #fff;
                 li {
                     cursor: pointer;
-                    margin-bottom: 1.5em;
+                    margin-bottom: 2em;
+                    line-height: 36px;
+                    margin-left: $padding / 2;
+                    h3, span {
+                        display: inline-block;
+                        vertical-align: bottom;
+                    }
+                    h3 {
+                        font-size: 24px;
+                        font-weight: 600;
+                        color: $textcolor2;
+                        @include transition( all $anim / 2 $ease-out-quint );
+                    }
+                    span {
+                        color: $primary;
+                        font-size: 14px;
+                        line-height: 36px;
+                    }
+                    &:hover, &.active {
+                        h3 {
+                            font-size: 32px;
+                            color: $primary;
+                        }
+                    }
                     &:last-child {
                         margin-bottom: 0;
                     }
@@ -86,6 +135,10 @@ section {
     }
     .right {
         z-index: 1;
+	    background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0;
+        @include transition( all $anim $ease-out-quint );
     }
     .info-block {
         background: $primary;
