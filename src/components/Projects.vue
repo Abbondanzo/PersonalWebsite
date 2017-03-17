@@ -8,7 +8,8 @@
                         <li v-for="(project, index) in projects"
                             v-bind:index="index"
                             v-bind:class="isActive(index)"
-                            v-on:click="projectCheck(index)">
+                            v-on:mouseover="projectCheck(index)"
+                            v-on:click="openProject(index)">
                             <span>0{{ index + 1 }}</span> <h3>{{ project.title }}</h3>
                         </li>
                     </ul>
@@ -39,16 +40,14 @@ export default {
                  { title: 'FeedShare' },
                  { title: 'Flipster' },
                  { title: 'Sthacks' },
-                 { title: 'Modern MyNEU' },
-                 { title: 'Titus Design' }
+                 { title: 'Modern MyNEU' }
             ],
             images: [
                 'bvc.jpg',
                 'rogue.jpg',
-                'fullrogue.png',
+                'feedshare.jpg',
                 'flipster.jpg',
                 'sth.jpg',
-                'myneu.jpg',
                 'myneu.jpg'
             ]
         }
@@ -85,6 +84,9 @@ export default {
             } else {
                 this.preview = 'expand'
             }
+        },
+        openProject (arg) {
+            alert(arg)
         }
     }
 }
