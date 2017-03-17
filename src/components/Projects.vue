@@ -46,7 +46,8 @@ export default {
                 'fullrogue.png',
                 'fullflipster.png',
                 'fullsth.png',
-                'fullmyneu.png'
+                'myneu.jpg',
+                'myneu.jpg'
             ]
         }
     },
@@ -74,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/styles/global';
 .content {
-    min-height: 100vh;
+    height: 100vh;
 }
 section {
     height: 100vh;
@@ -85,6 +86,7 @@ section {
     .left, .right {
         position: relative;
         display: table-cell;
+        font-size: 0;
     }
     .left {
         background: $bgcolor2;
@@ -102,7 +104,7 @@ section {
                 background: #fff;
                 li {
                     cursor: pointer;
-                    margin-bottom: 2em;
+                    margin-bottom: 24px;
                     line-height: 36px;
                     margin-left: $padding / 2;
                     h3, span {
@@ -135,10 +137,10 @@ section {
     }
     .right {
         z-index: 1;
-	    background-size: cover;
-        background-repeat: no-repeat;
-        margin: 0;
-        @include transition( all $anim $ease-out-quint );
+	    img {
+            height: 100vh;
+            @include transition( all $anim $ease-out-quint );
+        }
     }
     .info-block {
         background: $primary;
@@ -150,6 +152,7 @@ section {
         width: 320px;
         p {
             color: #fff;
+            font-size: 14px;
         }
         .under {
             color: #fff;
