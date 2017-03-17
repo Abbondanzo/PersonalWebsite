@@ -6,7 +6,6 @@
                     <ul>
                         <h2>Recent Projects</h2>
                         <li v-for="(project, index) in projects"
-                            v-bind:item="project"
                             v-bind:index="index"
                             v-bind:class="isActive(index)"
                             v-on:click="projectCheck(index)">
@@ -18,7 +17,7 @@
                     <p>Want to see the code behind these projects? Check out my Github profile at <a class="under" target="_blank" title="Github Profile" href="https://github.com/Abbondanzo">this link</a>.</p>
                 </div>
             </div><div class="right">
-                <img v-bind:src="img" />
+                <img v-bind:class="preview" v-bind:height="previewHeight" v-bind:src="img" />
             </div>
         </section>
     </div>
@@ -31,6 +30,9 @@ export default {
         return {
             img: require('../assets/img/fullbvc.png'),
             activeProject: 0,
+            windowHeight: 0,
+            preview: '',
+            previewHeight: 0,
             projects: [
                  { title: 'Bonne Vie Cafe' },
                  { title: 'Rogue' },
@@ -51,6 +53,12 @@ export default {
             ]
         }
     },
+    mounted () {
+        this.$nextTick(function () {
+            window.addEventListener('resize', this.getWindowHeight)
+            this.getWindowHeight()
+        })
+    },
     methods: {
         projectCheck (arg) {
             console.log(arg)
@@ -66,6 +74,16 @@ export default {
                 return {
                     active: 'active'
                 }
+            }
+        },
+        getWindowHeight (event) {
+            this.windowHeight = document.documentElement.clientHeight
+            var leftHeight = document.querySelector('.left').clientHeight
+            if (this.windowHeight < leftHeight) {
+                this.preview = 'contract'
+                this.previewHeight = leftHeight
+            } else {
+                this.preview = 'expand'
             }
         }
     }
@@ -139,8 +157,9 @@ section {
     .right {
         z-index: 1;
 	    img {
-            height: 100vh;
-            @include transition( all $anim $ease-out-quint );
+            &.expand {
+                height: 100vh;
+            }
         }
     }
     .info-block {
