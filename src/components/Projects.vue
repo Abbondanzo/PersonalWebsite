@@ -41,11 +41,11 @@ export default {
                  { title: 'Titus Design' }
             ],
             images: [
-                'fullbvc.png',
+                'bvc.jpg',
+                'rogue.jpg',
                 'fullrogue.png',
-                'fullrogue.png',
-                'fullflipster.png',
-                'fullsth.png',
+                'flipster.jpg',
+                'sth.jpg',
                 'myneu.jpg',
                 'myneu.jpg'
             ]
@@ -70,6 +70,7 @@ export default {
         }
     }
 }
+
 </script>
 
 <style lang="scss" scoped>
