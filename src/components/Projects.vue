@@ -18,7 +18,7 @@
                     <p>Want to see the code behind these projects? Check out my Github profile at <a class="under" target="_blank" title="Github Profile" href="https://github.com/Abbondanzo">this link</a>.</p>
                 </div>
             </div><div class="right">
-                <img v-bind:class="preview" v-bind:height="previewHeight" v-bind:src="img" />
+                <img v-bind:class="preview" v-bind:height="previewHeight" v-bind:src="img" v-on:click="openProject(activeProject)"/>
             </div>
         </section>
     </div>
@@ -29,26 +29,18 @@ export default {
     name: 'projects',
     data () {
         return {
-            img: require('../assets/img/fullbvc.png'),
+            img: require('../assets/img/bvc.jpg'),
             activeProject: 0,
             windowHeight: 0,
             preview: '',
             previewHeight: 0,
             projects: [
-                 { title: 'Bonne Vie Cafe' },
-                 { title: 'Rogue' },
-                 { title: 'FeedShare' },
-                 { title: 'Flipster' },
-                 { title: 'Sthacks' },
-                 { title: 'Modern MyNEU' }
-            ],
-            images: [
-                'bvc.jpg',
-                'rogue.jpg',
-                'feedshare.jpg',
-                'flipster.jpg',
-                'sth.jpg',
-                'myneu.jpg'
+                 { title: 'Bonne Vie Cafe', source: 'bvc', image: 'bvc.jpg' },
+                 { title: 'Rogue', source: 'rogue', image: 'rogue.jpg' },
+                 { title: 'FeedShare', source: 'feedshare', image: 'feedshare.jpg' },
+                 { title: 'Flipster', source: 'flipster', image: 'flipster.jpg' },
+                 { title: 'Sthacks', source: 'sthacks', image: 'sth.jpg' },
+                 { title: 'Modern MyNEU', source: 'myneu', image: 'myneu.jpg' }
             ]
         }
     },
@@ -60,10 +52,8 @@ export default {
     },
     methods: {
         projectCheck (arg) {
-            console.log(arg)
             this.activeProject = arg
-            var newImg = require('../assets/img/' + this.images[arg])
-            console.log()
+            var newImg = require('../assets/img/' + this.projects[arg].image)
             this.$nextTick(function () {
                 this.img = newImg
             })
@@ -86,7 +76,7 @@ export default {
             }
         },
         openProject (arg) {
-            alert(arg)
+            alert(this.projects[arg].source)
         }
     }
 }
@@ -159,6 +149,7 @@ section {
     .right {
         z-index: 1;
 	    img {
+            cursor: pointer;
             &.expand {
                 height: 100vh;
             }
