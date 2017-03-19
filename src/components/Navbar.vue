@@ -1,23 +1,23 @@
 <template>
     <nav class="nav">
-        <div class="container" @click="updateLogo">
+        <div class="container">
             <router-link class="underline" :to="{ path: '/' }">
                 <div class="nav-logo" v-bind:class="{ 'logo-black': lightBackground }"></div>
             </router-link>
             <div class="nav-links">
                 <ul>
-                    <li><router-link class="underline" :to="{ path: 'about' }">About</router-link></li>
-                    <li><router-link class="underline" :to="{ path: 'projects' }">Projects</router-link></li>
-                    <li><router-link class="underline" :to="{ path: 'contact' }">Contact</router-link></li>
+                    <li><router-link class="underline" :to="{ path: '/about' }">About</router-link></li>
+                    <li><router-link class="underline" :to="{ path: '/projects' }">Projects</router-link></li>
+                    <li><router-link class="underline" :to="{ path: '/contact' }">Contact</router-link></li>
                 </ul>
             </div>
             <div id="mobile-links" class="mobile-links">
                 <div @keyup.esc="escapeMenu">
                     <i @click="showMenu" class="fa fa-bars" aria-hidden="true"></i>
-                    <ul v-bind:class="{ active: show }" @click="updateLogo">
-                        <li><router-link class="underline" :to="{ path: 'about' }"><span @click="showMenu">About</span></router-link></li>
-                        <li><router-link class="underline" :to="{ path: 'projects' }"><span @click="showMenu">Projects</span></router-link></li>
-                        <li><router-link class="underline" :to="{ path: 'contact' }"><span @click="showMenu">Contact</span></router-link></li>
+                    <ul v-bind:class="{ active: show }">
+                        <li><router-link class="underline" :to="{ path: '/about' }"><span @click="showMenu">About</span></router-link></li>
+                        <li><router-link class="underline" :to="{ path: '/projects' }"><span @click="showMenu">Projects</span></router-link></li>
+                        <li><router-link class="underline" :to="{ path: '/contact' }"><span @click="showMenu">Contact</span></router-link></li>
                         <i @click="showMenu" class="fa fa-times menu-close" aria-hidden="true"></i>
                     </ul>
                 </div>
@@ -59,6 +59,11 @@ export default {
             } else {
                 this.lightBackground = false
             }
+        }
+    },
+    watch: {
+        '$route' () {
+            this.updateLogo()
         }
     }
 }

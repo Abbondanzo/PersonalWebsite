@@ -7,6 +7,10 @@ import Contact from '@/components/Contact'
 
 Vue.use(Router)
 
+const ProjectRoute = {
+    template: '<router-view></router-view>'
+}
+
 export default new Router({
     mode: 'history',
     routes: [
@@ -22,8 +26,38 @@ export default new Router({
         },
         {
             path: '/projects',
-            name: 'Projects',
-            component: Projects
+            component: ProjectRoute,
+            children: [
+                {
+                    path: '',
+                    name: 'Projects',
+                    component: Projects
+                },
+                {
+                    path: 'bvc',
+                    component: Contact
+                },
+                {
+                    path: 'rogue',
+                    component: Contact
+                },
+                {
+                    path: 'feedshare',
+                    component: Contact
+                },
+                {
+                    path: 'flipster',
+                    component: Contact
+                },
+                {
+                    path: 'sthacks',
+                    component: Contact
+                },
+                {
+                    path: 'myneu',
+                    component: Contact
+                }
+            ]
         },
         {
             path: '/contact',

@@ -76,7 +76,9 @@ export default {
             }
         },
         openProject (arg) {
-            alert(this.projects[arg].source)
+            this.$router.replace({
+                path: '/projects/' + this.projects[arg].source
+            })
         }
     }
 }
