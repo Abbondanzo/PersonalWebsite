@@ -1,5 +1,5 @@
 # Personal Website
-The current entirety of my personal website (in progress/under construction). I have included everything relevant, but have ignored CSS/CSS maps. SCSS is fine enough.
+The current entirety of my personal website (in progress/under construction). This site is built using [Vue](https://vuejs.org/) and [Webpack](https://webpack.github.io/). Since the current site-in-progress is more of an experiment than a working webpage, proper edits to this Readme will be added in the future.
 
 ## Compiling
 
@@ -25,5 +25,7 @@ npm test
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+[You can view the currently live here](http://abbondanzo.com)
 
-[You can view it here](http://abbondanzo.com)
+## Notes
+You can follow my Twitter for some random updates as to my progress on the site [here](https://twitter.com/PAbbondanzo)
