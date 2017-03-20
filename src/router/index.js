@@ -7,7 +7,7 @@ import Contact from '@/components/Contact'
 
 Vue.use(Router)
 
-const ProjectRoute = {
+const TemplateRoute = {
     template: '<router-view></router-view>'
 }
 
@@ -26,7 +26,7 @@ export default new Router({
         },
         {
             path: '/projects',
-            component: ProjectRoute,
+            component: TemplateRoute,
             children: [
                 {
                     path: '',
