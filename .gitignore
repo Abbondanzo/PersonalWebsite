@@ -1,4 +1,16 @@
+# NPM-related files
+node_modules/
+
+# SCSS compiled files
 .sass-cache/
 *.css.map
 *.css
+
+# For Macs
 .DS_Store
+
+# Init provided
+dist/
+npm-debug.log
+test/e2e/reports
+selenium-debug.log
