@@ -332,6 +332,23 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
         background: #fff;
     }
 }
+/* Notice */
+.notice {
+    background: $primary;
+    padding: 10px;
+    position: fixed;
+    width: 250px;
+    bottom: 6px;
+    right: 6px;
+    border-radius: 6px;
+    z-index: 999999999;
+    p {
+        color: #fff;
+        font-family: 'GRBook', sans-serif;
+        font-size: 10px;
+        text-align: center;
+    }
+}
 /* Header */
 .header {
     background: url('../img/header.png') no-repeat center center;
@@ -379,6 +396,7 @@ $shadow: 0px 3px 5px rgba(darken($primary, 30%), 0.2);
         left: 50%;
         @include transform(translateX(-50%));
         height: 100%;
+        pointer-events: none;
     }
 }
 .info-section {

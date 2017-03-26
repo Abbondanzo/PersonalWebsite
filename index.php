@@ -126,6 +126,9 @@ if(isset($_POST["submit"])) {
     <div class="contact-form">
     </div>
     <div class="content" id="scene">
+        <div class="notice">
+            <a href="https://github.com/Abbondanzo/PersonalWebsite/tree/master"><p>Notice: This site is currently outdated. A new page is being constructed to treat all deprecations. </p></a>
+        </div>
 		<div id="particles-js" class="header layer" data-depth="0.2">
 			<div class="container valign-mid">
 				<div class="header-content animate fade-in-up layer" data-depth="0.4">
