@@ -54,7 +54,7 @@ export default {
             this.lightBackground = !this.lightBackground
         },
         updateLogo: function () {
-            if (this.$route.path === '/projects') {
+            if (this.$route.path === '/projects' || this.$route.path === '/contact') {
                 this.lightBackground = true
             } else {
                 this.lightBackground = false

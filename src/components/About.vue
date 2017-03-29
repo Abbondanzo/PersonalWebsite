@@ -30,7 +30,7 @@
 				</div>
 			</div><div class="right background-2">
 				<div class="info-block">
-					<h2>A Little Bit About Me...</h2>
+					<h2>A little bit about me...</h2>
 					<p>
 						Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
 					</p>
@@ -40,19 +40,20 @@
 				</div>
 			</div>
 		</section>
-		<section id="contact" class="about-contact">
+		<section class="about-more">
 			<div class="left">
-                <div class="contact-form">
-                    <h2>Contact Me</h2>
-                    <form>
-                        <h4>Name</h4>
-                        <input type="text" name="name" class="input" required>
-                        <h4>Email</h4>
-                        <input type="email" name="email" class="input" required>
-                        <h4>Message</h4>
-                        <textarea type="text" rows="4" name="message" required></textarea>
-                        <button type="submit" name="submit" value="Send Message" class="btn">Send Message</button>
-                    </form>
+                <div class="more-info-block">
+                    <h2>... and what to expect</h2>
+                    <p>
+                        I’ve been creating art before I could even walk on two feet. Since then, I have been designing graphics and developing websites for clients across the globe. When I could still count my age on two hands, I fancied myself to endless access of Adobe’s wonderful Photoshop, Illustrator, and After Effects; programs that I continue to use today.
+                    </p>
+                    <p>
+                        My most incredible asset is my ability to work with
+                        others to achieve a common goal. I continuously work
+                        to develop my leadership skills in the working
+                        environment. I strive to create perfection where others
+                        do not look.
+                    </p>
                 </div>
             </div>
 			<div class="right"></div>
@@ -83,20 +84,16 @@ export default {
 @import '../assets/styles/global';
 #app {
     .content {
-        overflow: hidden;
+        overflow-x: hidden;
     }
     section {
         .left, .right {
-            min-height: 800px;
             vertical-align: top;
             position: relative;
             z-index: 2;
             .valign {
                 min-height: 500px;
             }
-        }
-        .left {
-            min-height: 800 + $padding;
         }
         .right {
             margin-left: $padding;
@@ -114,6 +111,7 @@ export default {
             width: $container/2;
             p {
                 line-height: 1.8;
+                font-size: 18px;
                 padding-bottom: $padding/2;
             }
         }
@@ -167,7 +165,15 @@ export default {
                 }
             }
         }
-        &.about-contact {
+        &.about-info {
+            .left {
+                min-height: 820 + $padding;
+            }
+            .right {
+                min-height: 800px;
+            }
+        }
+        &.about-more {
             margin-top: -$padding;
             .left {
                 background: #fff;
@@ -177,21 +183,19 @@ export default {
             .right {
                 float: right;
             }
-            .contact-form {
+            .more-info-block {
                 width: $container/2 - $padding;
                 float: right;
                 clear: both;
                 padding: $padding;
                 padding-top: $padding*2;
-                input, textarea {
-                    width: 100%;
-                    padding-top: 40px;
-                    margin-bottom: 20px;
-                	background: transparent;
-                	border: 0;
-                	border-bottom: 3px solid $primary;
-                	width: 100%;
-                	font-size: 18px;
+                p {
+                    line-height: 1.8;
+                    font-size: 18px;
+                    padding-bottom: $padding/2;
+                    &:last-child {
+                        padding-bottom: 0;
+                    }
                 }
             }
         }
