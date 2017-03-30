@@ -16,7 +16,7 @@
                                 v-bind:index="index">
                                 <h3>{{ skill.name }}</h3>
                                 <h4>{{ skill.quality }}</h4>
-                                <span class="exp-bar"><div class="exp-width"></div></span>
+                                <span class="exp-bar"><div v-bind:style="{ width: baseWidths[index].width + '%' }" class="exp-width"></div></span>
                             </li>
     					</ul>
                     </transition>
@@ -62,8 +62,13 @@ export default {
         return {
             skills: [
                 { name: 'HTML5, CSS3', quality: 'Expert', pct: '97' },
-                { name: 'jQuery/JS', quality: 'Expert', pct: '92' },
-                { name: 'Java, Python', quality: 'Addvanced', pct: '82' }
+                { name: 'jQuery/JS', quality: 'Expert', pct: '87' },
+                { name: 'Java, Python', quality: 'Advanced', pct: '75' }
+            ],
+            baseWidths: [
+                { width: 0 },
+                { width: 0 },
+                { width: 0 }
             ]
         }
     },
@@ -79,7 +84,9 @@ export default {
             }
         },
         afterEnter: function () {
-            console.log('"entered"')
+            for (var i = 0; i < this.baseWidths.length; i++) {
+                this.baseWidths[i].width = this.skills[i].pct
+            }
         }
     }
 }
