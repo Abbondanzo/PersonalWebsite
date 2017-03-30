@@ -10,23 +10,16 @@
 				</div>
 				<div class="experience">
 					<h2>Experience</h2>
-					<ul>
-						<li>
-							<h3>HTML5, CSS3</h3>
-							<h4>Expert</h4>
-							<span class="exp-bar" pct="97"><div class="exp-width"></div></span>
-						</li>
-						<li>
-							<h3>jQuery</h3>
-							<h4>Expert</h4>
-							<span class="exp-bar" pct="92"><div class="exp-width"></div></span>
-						</li>
-						<li>
-							<h3>Java, Python</h3>
-							<h4>Advanced</h4>
-							<span class="exp-bar" pct="82"><div class="exp-width"></div></span>
-						</li>
-					</ul>
+                    <transition appear v-on:after-appear="afterEnter">
+                        <ul>
+                            <li v-for="(skill, index) in skills"
+                                v-bind:index="index">
+                                <h3>{{ skill.name }}</h3>
+                                <h4>{{ skill.quality }}</h4>
+                                <span class="exp-bar"><div class="exp-width"></div></span>
+                            </li>
+    					</ul>
+                    </transition>
 				</div>
 			</div><div class="right background-2">
 				<div class="info-block">
@@ -65,6 +58,15 @@
 
 export default {
     name: 'About',
+    data () {
+        return {
+            skills: [
+                { name: 'HTML5, CSS3', quality: 'Expert', pct: '97' },
+                { name: 'jQuery/JS', quality: 'Expert', pct: '92' },
+                { name: 'Java, Python', quality: 'Addvanced', pct: '82' }
+            ]
+        }
+    },
     methods: {
         getAge: function () {
             var bday = new Date('1998-05-21').getTime()
@@ -75,6 +77,9 @@ export default {
             } else {
                 return 'a ' + age
             }
+        },
+        afterEnter: function () {
+            console.log('"entered"')
         }
     }
 }
@@ -98,7 +103,6 @@ export default {
         .right {
             margin-left: $padding;
             margin-right: -$padding;
-            margin-bottom: $padding;
         }
         .greeting {
             margin-top: $navbarheight;
@@ -123,7 +127,7 @@ export default {
         .experience {
             background: $primary;
             position: absolute;
-            bottom: 0;
+            bottom: -$padding;
             right: -$padding;
             color: #fff;
             padding: $padding;
@@ -166,15 +170,11 @@ export default {
             }
         }
         &.about-info {
-            .left {
-                min-height: 820 + $padding;
-            }
-            .right {
+            .left, .right {
                 min-height: 800px;
             }
         }
         &.about-more {
-            margin-top: -$padding;
             .left {
                 background: #fff;
                 color: $primary;

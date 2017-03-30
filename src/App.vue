@@ -18,7 +18,6 @@ export default {
             var down = document.body.scrollTop / bodyHeight
             var img = document.querySelector('.underbg')
             var imgHeight = bodyHeight - img.offsetHeight
-            console.log(imgHeight * down)
             img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
         }
     },
