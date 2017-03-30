@@ -185,6 +185,13 @@ a.under {
         color: $primary;
     }
 }
+.btn-square {
+    height: 60px;
+    min-height: 60px;
+    width: 60px;
+    min-width: 60px;
+    padding: 0;
+}
 .background-2 {
     background: $bgcolor2;
 }

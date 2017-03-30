@@ -29,16 +29,16 @@ export default {
     name: 'projects',
     data () {
         return {
-            img: require('../assets/img/bvc.jpg'),
+            img: require('../assets/img/flipster.jpg'),
             activeProject: 0,
             windowHeight: 0,
             preview: '',
             previewHeight: 0,
             projects: [
+                 { title: 'Flipster', source: 'flipster', image: 'flipster.jpg' },
                  { title: 'Bonne Vie Cafe', source: 'bvc', image: 'bvc.jpg' },
                  { title: 'Rogue', source: 'rogue', image: 'rogue.jpg' },
                  { title: 'FeedShare', source: 'feedshare', image: 'feedshare.jpg' },
-                 { title: 'Flipster', source: 'flipster', image: 'flipster.jpg' },
                  { title: 'Sthacks', source: 'sthacks', image: 'sth.jpg' },
                  { title: 'Modern MyNEU', source: 'myneu', image: 'myneu.jpg' }
             ]
@@ -161,7 +161,7 @@ section {
         background: $primary;
         padding: $padding / 2;
         position: absolute;
-        bottom: 10px;
+        bottom: $padding / 2;
         left: 90%;
         min-width: 200px;
         width: 320px;
