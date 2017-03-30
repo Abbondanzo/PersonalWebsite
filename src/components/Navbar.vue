@@ -80,6 +80,7 @@ export default {
     z-index: 999999;
     a {
         color: #fff;
+        cursor: pointer;
         &.router-link-active {
             color: $primary;
         }

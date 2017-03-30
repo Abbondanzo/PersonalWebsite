@@ -76,6 +76,9 @@ export default {
                 	width: 100%;
                 	font-size: 18px;
                 }
+                textarea {
+                    resize: vertical;
+                }
             }
         }
     }
