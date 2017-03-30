@@ -203,5 +203,38 @@ export default {
             }
         }
     }
+    @media screen and (max-width: 768px) {
+        section {
+            .info-block, .experience, &.about-more .more-info-block {
+                width: 100%;
+                display: block;
+                position: relative;
+            }
+            .info-block {
+                margin-left: 0;
+                margin-top: 0;
+            }
+            .experience {
+                bottom: 0;
+                right: 0;
+                float: none;
+            }
+            .left, .right {
+                width: 100%;
+                display: block;
+                margin-left: 0;
+                margin-right: 0;
+                min-height: 0!important;
+            }
+            &.about-more {
+                .more-info-block {
+                    padding-top: $padding;
+                    background: $bgcolor2;
+                    float: none;
+                    clear: none;
+                }
+            }
+        }
+    }
 }
 </style>

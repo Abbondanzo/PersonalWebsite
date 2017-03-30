@@ -73,7 +73,8 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/styles/global';
 .nav {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: absolute;
     top: 0;
     width: 100%;

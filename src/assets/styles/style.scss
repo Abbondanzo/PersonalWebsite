@@ -214,7 +214,7 @@ a.under {
     50% { opacity: 0; }
     100% { opacity: 1; }
 }
-@media screen and (max-width:1360px) {
+@media screen and (max-width:$container) {
     body {
         overflow: hidden;
     }
