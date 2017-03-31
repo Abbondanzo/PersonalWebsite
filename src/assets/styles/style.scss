@@ -234,13 +234,13 @@ a.under {
 
 .slide-leave-active {
     .left {
-        transform: translateX(-120%);
-        transition-duration: 0.25s;
+        transform: translateX(-130%);
+        transition-duration: $anim * 2;
         transition-property: all;
     }
     .right {
-        transform: translateX(120%);
-        transition-duration: 0.25s;
+        transform: translateX(130%);
+        transition-duration: $anim * 2;
         transition-property: all;
     }
 }
@@ -250,18 +250,18 @@ a.under {
     }
 }
 @include keyframes(slide-from-left) {
-    0% { transform: translateX(-120%);}
+    0% { transform: translateX(-130%);}
     100% { transform: translateX(0%); }
 }
 @include keyframes(slide-from-right) {
-    0% { transform: translateX(120%); }
+    0% { transform: translateX(130%); }
     100% { transform: translateX(0%); }
 }
 .slide-enter-active {
     .left {
-        @include animation(slide-from-left 0.25s);
+        @include animation(slide-from-left $anim * 2);
     }
     .right {
-        @include animation(slide-from-right 0.25s);
+        @include animation(slide-from-right $anim * 2);
     }
 }
