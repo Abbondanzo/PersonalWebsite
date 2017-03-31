@@ -8,7 +8,7 @@
 						<h1>I'm Peter Abbondanzo</h1>
 					</div>
 				</div>
-				<div class="experience">
+				<div class="experience block-1">
 					<h2>Experience</h2>
                     <transition appear v-on:after-appear="afterEnter">
                         <ul>
@@ -22,7 +22,7 @@
                     </transition>
 				</div>
 			</div><div class="right background-2">
-				<div class="info-block">
+				<div class="info-block block-2">
 					<h2>A little bit about me...</h2>
 					<p>
 						Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
@@ -130,7 +130,7 @@ export default {
         .experience {
             background: $primary;
             position: absolute;
-            bottom: -$padding;
+            bottom: -$padding * 2;
             right: -$padding;
             color: #fff;
             padding: $padding;
