@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <navbar></navbar>
-        <router-view></router-view>
+        <transition name="slide" mode="out-in" :duration="250"><router-view></router-view></transition>
         <img class="underbg" src="static/bg.jpg">
     </div>
 </template>

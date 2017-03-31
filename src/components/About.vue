@@ -1,37 +1,37 @@
 <template>
     <div class="content">
-		<section class="about-info">
-			<div class="left">
-				<div class="valign">
-					<div class="greeting">
-						<h1>Hi,</h1>
-						<h1>I'm Peter Abbondanzo</h1>
-					</div>
-				</div>
-				<div class="experience block-1">
-					<h2>Experience</h2>
-                    <transition appear v-on:after-appear="afterEnter">
-                        <ul>
-                            <li v-for="(skill, index) in skills"
+        <section class="about-info">
+                <div class="left">
+                    <div class="valign">
+                        <div class="greeting">
+                            <h1>Hi,</h1>
+                            <h1>I'm Peter Abbondanzo</h1>
+                        </div>
+                    </div>
+                    <div class="experience block-1">
+                        <h2>Experience</h2>
+                        <transition appear v-on:after-appear="afterEnter">
+                            <ul>
+                                <li v-for="(skill, index) in skills"
                                 v-bind:index="index">
                                 <h3>{{ skill.name }}</h3>
                                 <h4>{{ skill.quality }}</h4>
                                 <span class="exp-bar"><div v-bind:style="{ width: baseWidths[index].width + '%' }" class="exp-width"></div></span>
                             </li>
-    					</ul>
+                        </ul>
                     </transition>
-				</div>
-			</div><div class="right background-2">
-				<div class="info-block block-2">
-					<h2>A little bit about me...</h2>
-					<p>
-						Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
-					</p>
-					<a href="http://abbondanzo.com/content/resume.pdf">
-						<button title="View PDF resume" class="btn">Résumé</button>
-					</a>
-				</div>
-			</div>
+                </div>
+            </div><div class="right background-2">
+                <div class="info-block block-2">
+                    <h2>A little bit about me...</h2>
+                    <p>
+                        Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
+                    </p>
+                    <a href="http://abbondanzo.com/content/resume.pdf">
+                        <button title="View PDF resume" class="btn">Résumé</button>
+                    </a>
+                </div>
+            </div>
 		</section>
 		<section class="about-more">
 			<div class="left">

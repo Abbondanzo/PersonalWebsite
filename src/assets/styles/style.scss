@@ -222,3 +222,46 @@ a.under {
         width: 90%;
     }
 }
+
+/*
+ ______   ______     ______     __   __     ______     __     ______   __     ______     __   __     ______
+/\__  _\ /\  == \   /\  __ \   /\ "-.\ \   /\  ___\   /\ \   /\__  _\ /\ \   /\  __ \   /\ "-.\ \   /\  ___\
+\/_/\ \/ \ \  __<   \ \  __ \  \ \ \-.  \  \ \___  \  \ \ \  \/_/\ \/ \ \ \  \ \ \/\ \  \ \ \-.  \  \ \___  \
+  \ \_\  \ \_\ \_\  \ \_\ \_\  \ \_\\"\_\  \/\_____\  \ \_\    \ \_\  \ \_\  \ \_____\  \ \_\\"\_\  \/\_____\
+   \/_/   \/_/ /_/   \/_/\/_/   \/_/ \/_/   \/_____/   \/_/     \/_/   \/_/   \/_____/   \/_/ \/_/   \/_____/
+
+*/
+
+.slide-leave-active {
+    .left {
+        transform: translateX(-120%);
+        transition-duration: 0.25s;
+        transition-property: all;
+    }
+    .right {
+        transform: translateX(120%);
+        transition-duration: 0.25s;
+        transition-property: all;
+    }
+}
+.slide-leave-to {
+    .left {
+
+    }
+}
+@include keyframes(slide-from-left) {
+    0% { transform: translateX(-120%);}
+    100% { transform: translateX(0%); }
+}
+@include keyframes(slide-from-right) {
+    0% { transform: translateX(120%); }
+    100% { transform: translateX(0%); }
+}
+.slide-enter-active {
+    .left {
+        @include animation(slide-from-left 0.25s);
+    }
+    .right {
+        @include animation(slide-from-right 0.25s);
+    }
+}
