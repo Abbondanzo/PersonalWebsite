@@ -1,16 +1,15 @@
 <template>
-    <div class="content valign">
+    <div class="content">
+        <div class="valign">
 		<div class="container">
 			<div class="hello-text">
-				<h1>Hello,</h1>
-				<h1>You've found me.</h1>
+				<h1>Peter Abbondanzo</h1>
+				<h1>UI/UX Developer</h1>
 			</div>
-            <div>
-                <h1>Peter Abbondanzo</h1>
-            </div>
 			<router-link :to="{ path: 'about' }">
 				<button class="btn btn-white">About</button>
 			</router-link>
+		</div>
 		</div>
 	</div>
 </template>
@@ -56,24 +55,25 @@ function animHello (index) {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/styles/global';
 body {
     height: 100%;
+    .content {
+        height: 100vh;
+    }
     .hello-text {
         padding-bottom: 48px;
-        overflow: auto;
+        // overflow: auto;
         h1 {
             color: #fff;
             font-size: 96px;
             cursor: default;
-            visibility: hidden;
-            white-space: nowrap;
-            float: left;
-            clear: left;
-            span {
-                visibility: visible;
-                float: left;
-            }
+            // white-space: nowrap;
         }
+    }
+    .underbg {
+        z-index: -1;
+        display: none;
     }
 }
 @media screen and (max-width: 1360px) {
