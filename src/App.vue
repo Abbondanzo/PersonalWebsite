@@ -21,6 +21,10 @@ export default {
             var img = document.querySelector('.underbg')
             var imgHeight = bodyHeight - img.offsetHeight
             img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
+            if (img.offsetHeight < bodyHeight) {
+                img.style.height = bodyHeight + (imgHeight * down)
+                img.style.width = 'auto'
+            }
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')
             for (var i = 0; i < block1.length; i++) {
@@ -37,6 +41,9 @@ export default {
     },
     created () {
         window.addEventListener('scroll', this.parallax)
+    },
+    mounted () {
+        this.parallax()
     }
 }
 </script>

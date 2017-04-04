@@ -203,7 +203,21 @@ export default {
             }
         }
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1440px) {
+        section {
+            .greeting {
+                padding: 0 5%;
+            }
+            h1 {
+                width: 100%;
+                float: none;
+            }
+            .experience {
+                width: 100%;
+            }
+        }
+    }
+    @media screen and (max-width: 1024px) {
         section {
             .info-block, .experience, &.about-more .more-info-block {
                 width: 100%;
@@ -226,6 +240,9 @@ export default {
                 margin-right: 0;
                 min-height: 0!important;
             }
+            .block-1, .block-2 {
+                transform: translateY(0)!important;
+            }
             &.about-more {
                 .more-info-block {
                     padding-top: $padding;
@@ -233,6 +250,13 @@ export default {
                     float: none;
                     clear: none;
                 }
+            }
+        }
+    }
+    @media screen and (max-width: 768px) {
+        section {
+            h1 {
+                font-size: 48px;
             }
         }
     }
