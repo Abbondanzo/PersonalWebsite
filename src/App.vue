@@ -20,11 +20,7 @@ export default {
             // Parallax for background
             var img = document.querySelector('.underbg')
             var imgHeight = bodyHeight - img.offsetHeight
-            img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
-            if (img.offsetHeight < bodyHeight) {
-                img.style.height = bodyHeight + (imgHeight * down)
-                img.style.width = 'auto'
-            }
+            img.style.transform = 'translateY(-' + (imgHeight * down / 1.15) + 'px)'
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')
             for (var i = 0; i < block1.length; i++) {
@@ -37,13 +33,32 @@ export default {
                 var block2Height = block2[idx].offsetHeight
                 block2[idx].style.transform = 'translateY(-' + (block2Height * down) + 'px)'
             }
+        },
+        backgroundHeight () {
+            // Get the height of the user's window
+            var windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight
+            // Select image
+            var img = document.querySelector('.underbg')
+            // Full document body height
+            var bodyHeight = document.body.offsetHeight
+            var imgHeight = bodyHeight - windowHeight
+            // Set the height to just less than document's height for parallax
+            img.style.height = (windowHeight + (imgHeight / 2)) + 'px'
+            // Maintain aspect ratio
+            console.log(img.offsetWidth, document.body.offsetWidth)
+            if (img.offsetWidth < document.body.offsetWidth) {
+                img.style.width = '100%'
+            } else {
+                img.style.width = 'auto'
+            }
         }
     },
     created () {
         window.addEventListener('scroll', this.parallax)
+        window.addEventListener('resize', this.backgroundHeight)
     },
     mounted () {
-        this.parallax()
+        this.backgroundHeight()
     }
 }
 </script>

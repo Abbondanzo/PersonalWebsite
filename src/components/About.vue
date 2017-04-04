@@ -215,6 +215,9 @@ export default {
             .experience {
                 width: 100%;
             }
+            .info-block {
+                width: 90%;
+            }
         }
     }
     @media screen and (max-width: 1024px) {
