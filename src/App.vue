@@ -42,14 +42,16 @@ export default {
             // Full document body height
             var bodyHeight = document.body.offsetHeight
             var imgHeight = bodyHeight - windowHeight
-            // Set the height to just less than document's height for parallax
-            img.style.height = (windowHeight + (imgHeight / 2)) + 'px'
             // Maintain aspect ratio
             console.log(img.offsetWidth, document.body.offsetWidth)
-            if (img.offsetWidth < document.body.offsetWidth) {
+            if (img.offsetWidth <= document.body.offsetWidth) {
+                // If the image width should ever exist less than document width
                 img.style.width = '100%'
+                img.style.height = 'auto'
             } else {
+                // If the image height should ever exist less than document height
                 img.style.width = 'auto'
+                img.style.height = (windowHeight + (imgHeight / 2)) + 'px'
             }
         }
     },
