@@ -127,7 +127,7 @@ export default {
             position: fixed;
             top: 0;
             bottom: 0;
-            width: 100%;
+            width: 100vw;
             height: 100%;
             left: 100%;
             @include transition( all $anim*2 $ease-out-quint );

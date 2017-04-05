@@ -132,5 +132,28 @@ export default {
             }
         }
     }
+    @media screen and (max-width: 1440px) {
+        section {
+            &.about-contact {
+                .text-block {
+                    width: 100%;
+                    padding-right: $padding;
+                    background: #fff;
+                }
+                .contact-form {
+                    width: 100%;
+                    left: 0;
+                }
+            }
+        }
+    }
+    @media screen and (max-width: 768px) {
+        section {
+            .left, .right {
+                width: 100%;
+                min-height: inherit;
+            }
+        }
+    }
 }
 </style>

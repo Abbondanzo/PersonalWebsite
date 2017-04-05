@@ -18,7 +18,7 @@
 export default {
     name: 'Home',
     mounted () {
-        console.log('Mounted')
+        console.log('Mounted Home component')
     }
 }
 

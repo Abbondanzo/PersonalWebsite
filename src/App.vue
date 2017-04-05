@@ -43,7 +43,6 @@ export default {
             var bodyHeight = document.body.offsetHeight
             var imgHeight = bodyHeight - windowHeight
             // Maintain aspect ratio
-            console.log(img.offsetWidth, document.body.offsetWidth)
             if (img.offsetWidth <= document.body.offsetWidth) {
                 // If the image width should ever exist less than document width
                 img.style.width = '100%'
