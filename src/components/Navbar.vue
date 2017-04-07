@@ -2,7 +2,7 @@
     <nav class="nav">
         <div class="container">
             <router-link class="underline" :to="{ path: '/' }">
-                <div class="nav-logo" v-bind:class="[{ 'logo-black': lightBackground }, {  'home': homeScreen }]"></div>
+                <img class="nav-logo" src="../assets/img/logo.svg" v-bind:class="[{ 'logo-black': lightBackground }, {  'home': homeScreen }]" />
             </router-link>
             <div class="nav-links">
                 <ul>
@@ -96,12 +96,16 @@ export default {
         }
     }
     .nav-logo {
-        background: url('../assets/img/logo_small_white.png') center center no-repeat;
+        // background: url('../assets/img/logo_small_white.png') center center no-repeat;
+        @include filter(invert(1));
+        fill: #fff;
         width: 80px;
         height: $navbarheight;
         float: left;
+        transition: all $anim * 4;
         &.home {
             position: fixed;
+            pointer-events: none;
         	left: 10%;
         	top: 10%;
         	width: 80%;
@@ -111,7 +115,7 @@ export default {
         }
     }
     .logo-black {
-        background: url('../assets/img/logo_small_black.png') center center no-repeat;
+        @include filter(invert(0));
     }
     .nav-links {
         float: right;
