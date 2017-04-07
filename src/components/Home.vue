@@ -1,15 +1,15 @@
 <template>
     <div class="content">
         <div class="valign">
-		<div class="container">
-			<div class="hello-text">
-				<h1>Peter Abbondanzo</h1>
-				<h1>UI/UX Developer</h1>
-			</div>
-			<router-link :to="{ path: 'about' }">
-				<button class="btn btn-white">About</button>
-			</router-link>
-		</div>
+    		<div class="container">
+    			<div class="hello-text">
+    				<h1>Peter Abbondanzo</h1>
+    				<h2>UI/UX Developer</h2>
+                    <router-link :to="{ path: 'about' }">
+                        <button class="btn btn-white">About</button>
+                    </router-link>
+    			</div>
+    		</div>
 		</div>
 	</div>
 </template>
@@ -58,30 +58,41 @@ function animHello (index) {
 @import '../assets/styles/global';
 body {
     height: 100%;
-    .content {
-        height: 100vh;
-    }
-    .hello-text {
-        padding-bottom: 48px;
-        // overflow: auto;
-        h1 {
-            color: #fff;
-            font-size: 96px;
-            cursor: default;
-            // white-space: nowrap;
+    #app {
+        .content {
+            height: 100vh;
+            a {
+                text-align: center;
+            }
         }
-    }
-    .underbg {
-        z-index: -1;
-        display: none;
-    }
-}
-@media screen and (max-width: 1360px) {
-    .landing {
         .hello-text {
+            text-align: center;
+            // overflow: auto;
             h1 {
-                font-size: 60px;
-                white-space: normal;
+                color: #fff;
+                font-size: 96px;
+                cursor: default;
+                // white-space: nowrap;
+            }
+            h2 {
+                color: #fff;
+                font-weight: 300;
+                font-size: 40px;
+                padding-bottom: 48px;
+            }
+        }
+        .underbg {
+            z-index: -1;
+            display: none;
+        }
+        @media screen and (max-width: 1360px) {
+            .landing {
+                .hello-text {
+                    h1 {
+                        font-size: 60px;
+                        white-space: normal;
+                    }
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
     <nav class="nav">
         <div class="container">
             <router-link class="underline" :to="{ path: '/' }">
-                <div class="nav-logo" v-bind:class="{ 'logo-black': lightBackground }"></div>
+                <div class="nav-logo" v-bind:class="[{ 'logo-black': lightBackground }, {  'home': homeScreen }]"></div>
             </router-link>
             <div class="nav-links">
                 <ul>
@@ -32,7 +32,8 @@ export default {
     data () {
         return {
             show: false,
-            lightBackground: false
+            lightBackground: false,
+            homeScreen: false
         }
     },
     created: function () {
@@ -59,11 +60,19 @@ export default {
             } else {
                 this.lightBackground = false
             }
+        },
+        isHome: function () {
+            if (this.$route.path === '/') {
+                this.homeScreen = true
+            } else {
+                this.homeScreen = false
+            }
         }
     },
     watch: {
         '$route' () {
             this.updateLogo()
+            this.isHome()
         }
     }
 }
@@ -91,6 +100,15 @@ export default {
         width: 80px;
         height: $navbarheight;
         float: left;
+        &.home {
+            position: fixed;
+        	left: 10%;
+        	top: 10%;
+        	width: 80%;
+        	opacity: 0.1;
+        	background-size: contain;
+        	height: 80%;
+        }
     }
     .logo-black {
         background: url('../assets/img/logo_small_black.png') center center no-repeat;
