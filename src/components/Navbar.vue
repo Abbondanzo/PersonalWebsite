@@ -38,6 +38,7 @@ export default {
     },
     created: function () {
         this.updateLogo()
+        this.isHome()
     },
     methods: {
         showMenu: function (event) {
@@ -100,7 +101,7 @@ export default {
         @include filter(invert(1));
         fill: #fff;
         width: 80px;
-        height: $navbarheight;
+        height: $navbarheight * 0.8;
         float: left;
         transition: all $anim * 4;
         &.home {
