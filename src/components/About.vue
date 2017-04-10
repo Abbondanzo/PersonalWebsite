@@ -36,16 +36,23 @@
 		<section class="about-more">
 			<div class="left">
                 <div class="more-info-block">
-                    <h2>... and what to expect</h2>
+                    <h2>... and what I do</h2>
                     <p>
-                        I’ve been creating art before I could even walk on two feet. Since then, I have been designing graphics and developing websites for clients across the globe. When I could still count my age on two hands, I fancied myself to endless access of Adobe’s wonderful Photoshop, Illustrator, and InDesign; programs that I continue to use today.
+                        I have experience with Adobe's Creative Suite, most commonly Photoshop, Illustrator, and InDesign. I utilize these programs in tandem with my background in computer science to build a wide variety of web and mobile applications (as those that can be seen <router-link class="under" :to="{ path: '/projects' }">here</router-link>).
                     </p>
                     <p>
-                        My most incredible asset is my ability to work with others to achieve a common goal. I continuously work to develop my leadership skills in the working environment. I strive to create perfection where others do not look.
+                        I'm a full-stack developer, building applications from the ground, up. I strive to create perfection where others do not look.
                     </p>
                 </div>
             </div>
-			<div class="right"></div>
+			<div class="right">
+                <div>
+                    <div class="contact-cta">
+                        <h3>Send a message</h3>
+                        <button class="btn">Contact Me</button>
+                    </div>
+                </div>
+            </div>
 		</section>
 	</div>
 </template>
@@ -98,7 +105,6 @@ export default {
         .left, .right {
             vertical-align: top;
             position: relative;
-            z-index: 2;
             .valign {
                 min-height: 500px;
             }
@@ -112,6 +118,8 @@ export default {
         }
         .info-block {
             background: #fff;
+            z-index: 3;
+            position: absolute;
             margin-top: $navbarheight;
             margin-left: -$padding;
             padding: $padding;
@@ -129,6 +137,7 @@ export default {
         }
         .experience {
             background: $primary;
+            z-index: 2;
             position: absolute;
             bottom: -$padding * 2;
             right: -$padding;
@@ -173,9 +182,7 @@ export default {
             }
         }
         &.about-info {
-            .left, .right {
-                min-height: 800px;
-            }
+            min-height: 800px;
         }
         &.about-more {
             .left {
@@ -186,7 +193,7 @@ export default {
             .right {
                 float: right;
             }
-            .more-info-block {
+            .more-info-block, .contact-cta {
                 width: $container/2 - $padding;
                 float: right;
                 clear: both;
@@ -199,6 +206,10 @@ export default {
                     &:last-child {
                         padding-bottom: 0;
                     }
+                }
+                h3 {
+                    color: #fff;
+                    font-size: 48px;
                 }
             }
         }
@@ -247,8 +258,10 @@ export default {
                 transform: translateY(0)!important;
             }
             &.about-more {
-                .more-info-block {
+                .more-info-block, .contact-cta {
                     padding-top: $padding;
+                }
+                .more-info-block {
                     background: $bgcolor2;
                     float: none;
                     clear: none;

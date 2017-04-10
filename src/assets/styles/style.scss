@@ -109,8 +109,10 @@ p {
     }
 }
 section {
+    display: table;
+    width: 100%;
     .left, .right {
-        display: inline-block;
+        display: table-cell;
         width: 50%;
         vertical-align: top;
     }

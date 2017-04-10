@@ -74,9 +74,6 @@ export default {
                 color: $primary;
                 z-index: 1;
             }
-            .right {
-                float: right;
-            }
             .text-block {
                 width: $container/2;
                 float: right;
