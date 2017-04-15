@@ -46,10 +46,10 @@
                 </div>
             </div>
 			<div class="right">
-                <div>
+                <div class="valign">
                     <div class="contact-cta">
                         <h3>Send a message</h3>
-                        <button class="btn">Contact Me</button>
+                         <router-link :to="{ path: '/contact' }"><button class="btn">Contact Me</button></router-link>
                     </div>
                 </div>
             </div>
@@ -102,6 +102,7 @@ export default {
         overflow-x: hidden;
     }
     section {
+        position: relative;
         .left, .right {
             vertical-align: top;
             position: relative;
@@ -183,22 +184,21 @@ export default {
         }
         &.about-info {
             min-height: 800px;
+            z-index: 2;
         }
         &.about-more {
+            z-index: 1;
             .left {
                 background: #fff;
                 color: $primary;
                 z-index: 1;
             }
             .right {
-                float: right;
+                height: 100%;
             }
             .more-info-block, .contact-cta {
                 width: $container/2 - $padding;
-                float: right;
-                clear: both;
                 padding: $padding;
-                padding-top: $padding*2;
                 p {
                     line-height: 1.8;
                     font-size: 18px;
@@ -211,6 +211,14 @@ export default {
                     color: #fff;
                     font-size: 48px;
                 }
+            }
+            .contact-cta {
+                margin: 0 auto;
+            }
+            .more-info-block {
+                float: right;
+                clear: both;
+                padding-top: $padding*2;
             }
         }
     }
