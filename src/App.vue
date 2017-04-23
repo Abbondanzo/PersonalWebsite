@@ -20,7 +20,6 @@ export default {
             // Parallax for background
             var img = document.querySelector('.underbg')
             var imgHeight = img.offsetHeight - window.innerHeight
-            console.log(down, img.offsetHeight, imgHeight)
             img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')
@@ -44,14 +43,17 @@ export default {
             var bodyHeight = document.body.offsetHeight
             var imgHeight = bodyHeight - windowHeight
             // Maintain aspect ratio
-            if (img.offsetWidth <= document.body.offsetWidth) {
-                // If the image width should ever exist less than document width
+            if (img.offsetWidth < document.body.offsetWidth) { // If the image width should ever exist less than document width
                 img.style.width = '100%'
                 img.style.height = 'auto'
-            } else {
-                // If the image height should ever exist less than document height
-                img.style.width = 'auto'
-                img.style.height = (windowHeight + (imgHeight / 2)) + 'px'
+            } else { // If the image height should ever exist less than document height
+                if (img.offsetHeight < windowHeight) { // If the height of the image is smaller than the window's
+                    img.style.width = 'auto'
+                    img.style.height = '100%'
+                } else { // If the height of the image is larger than the window's
+                    img.style.width = 'auto'
+                    img.style.height = (windowHeight + (imgHeight / 2)) + 'px'
+                }
             }
         }
     },

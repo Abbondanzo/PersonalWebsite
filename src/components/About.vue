@@ -66,7 +66,7 @@ export default {
             skills: [
                 { name: 'HTML5, CSS3', quality: 'Expert', pct: '97' },
                 { name: 'jQuery/JS', quality: 'Expert', pct: '87' },
-                { name: 'Java, Python', quality: 'Advanced', pct: '75' }
+                { name: 'Java, Python, PHP, Lisp', quality: 'Advanced', pct: '75' }
             ],
             baseWidths: [
                 { width: 0 },
@@ -214,6 +214,7 @@ export default {
             }
             .contact-cta {
                 margin: 0 auto;
+                text-align: center;
             }
             .more-info-block {
                 float: right;
@@ -246,6 +247,11 @@ export default {
                 display: block;
                 position: relative;
             }
+            .greeting {
+                h1 {
+                    text-align: center;
+                }
+            }
             .info-block {
                 margin-left: 0;
                 margin-top: 0;
@@ -273,6 +279,9 @@ export default {
                     background: $bgcolor2;
                     float: none;
                     clear: none;
+                    .under::after {
+                        background: $bgcolor2;
+                    }
                 }
             }
         }
