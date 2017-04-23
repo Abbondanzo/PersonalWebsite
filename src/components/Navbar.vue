@@ -2,7 +2,7 @@
     <nav class="nav">
         <div class="container">
             <router-link class="underline" :to="{ path: '/' }">
-                <img class="nav-logo" src="../assets/img/logo.svg" v-bind:class="[{ 'logo-black': lightBackground }, {  'home': homeScreen }]" />
+                <img class="nav-logo" src="../assets/img/logo.svg" v-bind:class="[{ 'logo-black': lightBackground }, { 'home': homeScreen }]" />
             </router-link>
             <div class="nav-links">
                 <ul>
@@ -13,7 +13,7 @@
             </div>
             <div id="mobile-links" class="mobile-links">
                 <div @keyup.esc="escapeMenu">
-                    <i @click="showMenu" class="fa fa-bars" aria-hidden="true"></i>
+                    <i @click="showMenu" class="fa fa-bars" aria-hidden="true" v-bind:class="{ 'logo-black': lightBackground }"></i>
                     <ul v-bind:class="{ active: show }">
                         <li><router-link class="underline" :to="{ path: '/about' }"><span @click="showMenu">About</span></router-link></li>
                         <li><router-link class="underline" :to="{ path: '/projects' }"><span @click="showMenu">Projects</span></router-link></li>
@@ -56,7 +56,8 @@ export default {
             this.lightBackground = !this.lightBackground
         },
         updateLogo: function () {
-            if (this.$route.path === '/projects' || this.$route.path === '/contact') {
+            var width = document.body.offsetWidth
+            if ((this.$route.path === '/projects' && width > 960) || this.$route.path === '/contact') {
                 this.lightBackground = true
             } else {
                 this.lightBackground = false
@@ -192,6 +193,9 @@ export default {
         }
         .mobile-links {
             display: block;
+        }
+        .logo-black {
+            color: #000;
         }
     }
 }

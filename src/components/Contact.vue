@@ -5,7 +5,7 @@
                 <div class="text-block">
                     <h2>Let's Chat!</h2>
                     <p>
-                        Fill out that beautiful form to the right and we'll get in touch! Or, if email is too outdated for you to use, I've linked several social media profiles below. I love posting about my projects on Twitter, and I keep the LinkedIn fresh with all sorts of content. Use whatever floats your boat.
+                        Fill out that beautiful form <span v-if="mobile">below</span><span v-else>to the right</span> and we'll get in touch! Or, if email is too outdated for you to use, I've linked several social media profiles below. I love posting about my projects on Twitter, and I keep the LinkedIn fresh with all sorts of content. Use whatever floats your boat.
                     </p>
                     <a v-for="(social, index) in socials" v-bind:index="index" v-bind:href="social.url" target="_blank">
                         <button class="btn btn-square"><i class="fa" v-bind:class="social.icon" aria-hidden="true"></i></button>
@@ -38,8 +38,25 @@ export default {
                 { name: 'Twitter', url: 'https://twitter.com/PAbbondanzo', icon: 'fa-twitter' },
                 { name: 'LinkedIn', url: 'https://www.linkedin.com/in/pabbondanzo', icon: 'fa-linkedin' },
                 { name: 'Github', url: 'https://github.com/Abbondanzo', icon: 'fa-github' }
-            ]
+            ],
+            mobile: false
         }
+    },
+    methods: {
+        mobileCheck () {
+            var width = document.body.offsetWidth
+            if (width > 768) {
+                this.mobile = false
+            } else {
+                this.mobile = true
+            }
+        }
+    },
+    mounted () {
+        this.mobileCheck()
+    },
+    created () {
+        window.addEventListener('resize', this.backgroundHeight)
     }
 }
 </script>
@@ -148,7 +165,13 @@ export default {
         section {
             .left, .right {
                 width: 100%;
-                min-height: inherit;
+                min-height: initial;
+                display: block;
+            }
+            .right {
+                .contact-form {
+                    margin-top: 0;
+                }
             }
         }
     }

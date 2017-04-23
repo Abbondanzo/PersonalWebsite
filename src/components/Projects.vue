@@ -17,7 +17,8 @@
                 <div class="popup info-block">
                     <p>Want to see the code behind these projects? Check out my Github profile at <a class="under" target="_blank" title="Github Profile" href="https://github.com/Abbondanzo">this link</a>.</p>
                 </div>
-            </div><div class="right">
+            </div>
+            <div class="right">
                 <img v-bind:class="preview" v-bind:height="previewHeight" v-bind:src="img" v-on:click="openProject(activeProject)"/>
             </div>
         </section>
@@ -177,6 +178,29 @@ section {
             &::after {
                 background: $primary;
             }
+        }
+    }
+    @media screen and (max-width: 960px) {
+        .left, .right  {
+            width: 100%;
+            display: block;
+        }
+        .left {
+            margin: 0;
+            background: transparent;
+            .project-list {
+                margin: $padding;
+                margin-top: 0;
+            }
+        }
+        .right {
+            position: fixed;
+            top: 0;
+        }
+        .info-block {
+            right: $padding / 2;
+            left: inherit;
+            bottom: 10px;
         }
     }
 }
