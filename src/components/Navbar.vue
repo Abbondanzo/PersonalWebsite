@@ -39,6 +39,7 @@ export default {
     created: function () {
         this.updateLogo()
         this.isHome()
+        window.addEventListener('resize', this.updateLogo)
     },
     methods: {
         showMenu: function (event) {

@@ -45,7 +45,7 @@ export default {
     methods: {
         mobileCheck () {
             var width = document.body.offsetWidth
-            if (width > 768) {
+            if (width > 960) {
                 this.mobile = false
             } else {
                 this.mobile = true
@@ -56,7 +56,7 @@ export default {
         this.mobileCheck()
     },
     created () {
-        window.addEventListener('resize', this.backgroundHeight)
+        window.addEventListener('resize', this.mobileCheck)
     }
 }
 </script>
@@ -161,7 +161,7 @@ export default {
             }
         }
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 960px) {
         section {
             .left, .right {
                 width: 100%;
