@@ -16,21 +16,22 @@ export default {
         parallax () {
             var bodyHeight = document.body.offsetHeight
             // "Percent" of page that has been scrolled through
-            var down = document.body.scrollTop / bodyHeight
+            var down = document.body.scrollTop / (bodyHeight - window.innerHeight)
             // Parallax for background
             var img = document.querySelector('.underbg')
-            var imgHeight = bodyHeight - img.offsetHeight
-            img.style.transform = 'translateY(-' + (imgHeight * down / 1.15) + 'px)'
+            var imgHeight = img.offsetHeight - window.innerHeight
+            console.log(down, img.offsetHeight, imgHeight)
+            img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')
             for (var i = 0; i < block1.length; i++) {
-                var block1Height = block1[i].offsetHeight / 2
+                var block1Height = block1[i].offsetHeight / 4
                 block1[i].style.transform = 'translateY(-' + (block1Height * down) + 'px)'
             }
             // Z2 elements
             var block2 = document.querySelectorAll('.block-2')
             for (var idx = 0; idx < block2.length; idx++) {
-                var block2Height = block2[idx].offsetHeight
+                var block2Height = block2[idx].offsetHeight / 2
                 block2[idx].style.transform = 'translateY(-' + (block2Height * down) + 'px)'
             }
         },
@@ -56,9 +57,11 @@ export default {
     },
     created () {
         window.addEventListener('scroll', this.parallax)
+        window.addEventListener('resize', this.parallax)
         window.addEventListener('resize', this.backgroundHeight)
     },
     mounted () {
+        this.parallax()
         this.backgroundHeight()
     }
 }
