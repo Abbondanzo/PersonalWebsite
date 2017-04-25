@@ -2,6 +2,7 @@
     <div class="content">
         <section id="contact" class="about-contact">
 			<div class="left">
+                <img class="portrait" src="~../assets/img/peter.png">
                 <div class="text-block">
                     <h2>Let's Chat!</h2>
                     <p>
@@ -68,9 +69,8 @@ export default {
         overflow-x: hidden;
     }
     section {
-        height: 100vh;
+        min-height: 100vh;
         .left, .right {
-            min-height: 800px;
             vertical-align: top;
             position: relative;
             z-index: 2;
@@ -80,7 +80,6 @@ export default {
         }
         .left {
             height: 100%;
-            min-height: 800 + $padding;
         }
         .right {
             margin-bottom: $padding;
@@ -90,9 +89,18 @@ export default {
                 background: #fff;
                 color: $primary;
                 z-index: 1;
+                overflow-x: hidden;
+            }
+            .portrait {
+                position: absolute;
+                bottom: 0;
+                z-index: 0;
+                opacity: 0.075;
+                pointer-events: none;
             }
             .text-block {
                 width: $container/2;
+                z-index: 1;
                 float: right;
                 clear: both;
                 padding: $padding;
@@ -163,14 +171,37 @@ export default {
     }
     @media screen and (max-width: 960px) {
         section {
+            &.about-contact {
+                .text-block {
+                    padding: 5%;
+                    padding-top: 120px;
+                    p {
+                        padding: 5%;
+                    }
+                }
+                .portrait {
+                    right: -300px;
+                }
+            }
             .left, .right {
                 width: 100%;
-                min-height: initial;
                 display: block;
             }
             .right {
+                margin-bottom: 0;
                 .contact-form {
                     margin-top: 0;
+                    padding: 10%;
+                }
+            }
+        }
+    }
+    @media screen and (max-height: 800px) {
+        section {
+            &.about-contact {
+                .contact-form {
+                    margin-top: 0;
+                    position: relative;
                 }
             }
         }
