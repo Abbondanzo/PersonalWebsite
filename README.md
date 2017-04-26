@@ -28,7 +28,7 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 [You can view the currently live here](http://abbondanzo.com)
 
 ## Version Releases
-You can check out older versions of the site, or view major updates on the releases tab of this repository or by clicking [here](/releases). 
+You can check out older versions of the site, or view major updates on the releases tab of this repository or by clicking [here](https://github.com/Abbondanzo/PersonalWebsite/releases). 
 
 ## Notes
 You can follow my Twitter for some random updates as to my progress on the site [here](https://twitter.com/PAbbondanzo)
