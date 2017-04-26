@@ -37,17 +37,18 @@ export default {
         backgroundHeight () {
             // Get the height of the user's window
             var windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight
+            var windowWidth = 'innerWidth' in window ? window.innerWidth : document.documentElement.offsetWidth
             // Select image
             var img = document.querySelector('.underbg')
             // Full document body height
             var bodyHeight = document.body.offsetHeight
             var imgHeight = bodyHeight - windowHeight
             // Maintain aspect ratio
-            if (img.offsetWidth <= document.body.offsetWidth) { // If the image width should ever exist less than document width
+            if (img.offsetWidth < document.body.offsetWidth) { // If the image width should ever exist less than document width
                 img.style.width = '100%'
                 img.style.height = 'auto'
             } else { // If the image height should ever exist less than document height
-                if (img.offsetHeight < windowHeight) { // If the height of the image is smaller than the window's
+                if (img.offsetWidth === windowWidth) { // If the width of the image is smaller than the window's
                     img.style.width = 'auto'
                     img.style.height = '100%'
                 } else { // If the height of the image is larger than the window's
