@@ -37,23 +37,18 @@ export default {
         backgroundHeight () {
             // Get the height of the user's window
             var windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight
-            var windowWidth = 'innerWidth' in window ? window.innerWidth : document.documentElement.offsetWidth
+            var windowWidth = document.body.offsetWidth || document.documentElement.offsetWidth // Using window's width ignores scrollbar
             // Select image
             var img = document.querySelector('.underbg')
-            // Full document body height
-            var bodyHeight = document.body.offsetHeight
-            var imgHeight = bodyHeight - windowHeight
             // Maintain aspect ratio
-            if (img.offsetWidth < document.body.offsetWidth) { // If the image width should ever exist less than document width
+            // TODO: Fix bug where img initializes with height 0
+            if (img.offsetWidth < windowWidth) { // If the image width should ever exist less than document width
                 img.style.width = '100%'
                 img.style.height = 'auto'
             } else { // If the image height should ever exist less than document height
-                if (img.offsetWidth === windowWidth) { // If the width of the image is smaller than the window's
+                if (img.offsetHeight < windowHeight && img.offsetHeight !== 0) { // If the width of the image is smaller than the window's
                     img.style.width = 'auto'
                     img.style.height = '100%'
-                } else { // If the height of the image is larger than the window's
-                    img.style.width = 'auto'
-                    img.style.height = (windowHeight + (imgHeight / 2)) + 'px'
                 }
             }
         }
@@ -79,6 +74,7 @@ body {
     overflow-y: scroll;
     .underbg {
         position: fixed;
+        display: block;
         top: 0;
         left: 0;
         width: 100%;
