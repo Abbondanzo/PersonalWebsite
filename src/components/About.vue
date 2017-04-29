@@ -1,19 +1,19 @@
 <template>
     <div class="content">
         <section class="about-info">
-                <div class="left">
-                    <div class="valign">
-                        <div class="greeting">
-                            <h1>Hi,</h1>
-                            <h1>I'm Peter Abbondanzo</h1>
-                        </div>
+            <div class="left">
+                <div class="valign">
+                    <div class="greeting">
+                        <h1>Hi,</h1>
+                        <h1>I'm Peter Abbondanzo</h1>
                     </div>
-                    <div class="experience block-1">
-                        <h2>Experience</h2>
-                        <transition appear v-on:after-appear="afterEnter">
-                            <ul>
-                                <li v-for="(skill, index) in skills"
-                                v-bind:index="index">
+                </div>
+                <div class="experience block-1">
+                    <h2>Experience</h2>
+                    <transition appear v-on:after-appear="afterEnter">
+                        <ul>
+                            <li v-for="(skill, index) in skills"
+                            v-bind:index="index">
                                 <h3>{{ skill.name }}</h3>
                                 <h4>{{ skill.quality }}</h4>
                                 <span class="exp-bar"><div v-bind:style="{ width: baseWidths[index].width + '%' }" class="exp-width"></div></span>
@@ -21,16 +21,17 @@
                         </ul>
                     </transition>
                 </div>
-            </div><div class="right background-2">
+            </div><div class="right">
                 <div class="info-block block-2">
                     <h2>A little bit about me...</h2>
                     <p>
                         Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
-                    </p>
+                        </p>
                     <a href="http://abbondanzo.com/content/resume.pdf">
                         <button title="View PDF resume" class="btn">Résumé</button>
                     </a>
                 </div>
+                <div class="background-2"></div>
             </div>
 		</section>
 		<section class="about-more">
@@ -114,77 +115,84 @@ export default {
             margin-left: $padding;
             margin-right: -$padding;
         }
-        .greeting {
-            margin-top: $navbarheight;
-        }
-        .info-block {
-            background: #fff;
-            z-index: 3;
-            position: absolute;
-            margin-top: $navbarheight;
-            margin-left: -$padding;
-            padding: $padding;
-            width: $container/2;
-            p {
-                line-height: 1.8;
-                font-size: 18px;
-                padding-bottom: $padding/2;
-            }
-        }
-        h1, .experience {
-            width: $container/2 + $padding;
-            float: right;
-            clear: both;
-        }
-        .experience {
-            background: $primary;
+        &.about-info {
+            min-height: 800px;
             z-index: 2;
-            position: absolute;
-            bottom: -$padding * 2;
-            right: -$padding;
-            color: #fff;
-            padding: $padding;
-            ul {
-                list-style: none;
-                li {
-                    overflow: auto;
-                    position: relative;
-                    margin-bottom: 24px;
-                    padding-bottom: 18px;
-                    &:last-child {
-                        margin-bottom: 0;
-                    }
-                    h3 {
-                        font-size: 18px;
-                        float: left;
-                        clear: both;
-                        font-weight: 300;
-                    }
-                    h4 {
-                        font-size: 12px;
-                        float: right;
-                        opacity: 0.8;
-                    }
-                    span.exp-bar {
-                        height: 4px;
-                        width: 100%;
-                        background: darken($primary, 20);
-                        display: block;
-                        position: absolute;
-                        bottom: 0;
-                        .exp-width {
-                            transition: width $anim*4;
-                            width: 0%;
-                            height: 100%;
-                            background: #fff;
+            .greeting {
+                margin-top: $navbarheight;
+            }
+            .info-block {
+                background: #fff;
+                z-index: 3;
+                position: absolute;
+                margin-top: $navbarheight;
+                margin-left: -$padding;
+                padding: $padding;
+                width: $container/2;
+                p {
+                    line-height: 1.8;
+                    font-size: 18px;
+                    padding-bottom: $padding/2;
+                }
+            }
+            h1, .experience {
+                width: $container/2 + $padding;
+                float: right;
+                clear: both;
+            }
+            .experience {
+                background: $primary;
+                z-index: 2;
+                position: absolute;
+                bottom: -$padding * 2;
+                right: -$padding;
+                color: #fff;
+                padding: $padding;
+                ul {
+                    list-style: none;
+                    li {
+                        overflow: auto;
+                        position: relative;
+                        margin-bottom: 24px;
+                        padding-bottom: 18px;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        h3 {
+                            font-size: 18px;
+                            float: left;
+                            clear: both;
+                            font-weight: 300;
+                        }
+                        h4 {
+                            font-size: 12px;
+                            float: right;
+                            opacity: 0.8;
+                        }
+                        span.exp-bar {
+                            height: 4px;
+                            width: 100%;
+                            background: darken($primary, 20);
+                            display: block;
+                            position: absolute;
+                            bottom: 0;
+                            .exp-width {
+                                transition: width $anim*4;
+                                width: 0%;
+                                height: 100%;
+                                background: #fff;
+                            }
                         }
                     }
                 }
             }
-        }
-        &.about-info {
-            min-height: 800px;
-            z-index: 2;
+            .background-2 {
+                height: 100%;
+                width: 100%;
+                display: block;
+                position: absolute;
+                z-index: 0;
+            }
         }
         &.about-more {
             z-index: 1;

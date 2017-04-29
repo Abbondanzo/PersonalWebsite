@@ -271,6 +271,7 @@ a.under {
     100% { opacity: 0; }
 }
 .slide-enter-active {
+    transform-style: preserve-3d;
     .left {
         @include animation(slide-from-left $anim * 2);
     }
