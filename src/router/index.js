@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import About from '@/components/About'
 import Projects from '@/components/Projects'
+import Flipster from '@/components/Projects/Flipster'
 import Contact from '@/components/Contact'
 
 Vue.use(Router)
@@ -47,7 +48,7 @@ export default new Router({
                 },
                 {
                     path: 'flipster',
-                    component: Contact
+                    component: Flipster
                 },
                 {
                     path: 'sthacks',

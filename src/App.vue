@@ -2,7 +2,7 @@
     <div id="app">
         <navbar></navbar>
         <transition name="slide" mode="out-in" :duration="500"><router-view></router-view></transition>
-        <img class="underbg" src="static/bg.jpg">
+        <img class="underbg" src="./assets/img/bg.jpg">
     </div>
 </template>
 
@@ -20,7 +20,10 @@ export default {
             // Parallax for background
             var img = document.querySelector('.underbg')
             var imgHeight = img.offsetHeight - window.innerHeight
-            img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
+            // Make sure background isn't being modified in a projects environment
+            if (this.$route.path.indexOf('projects') === -1) {
+                img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
+            }
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')
             for (var i = 0; i < block1.length; i++) {

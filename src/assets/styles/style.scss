@@ -282,3 +282,59 @@ a.under {
         @include animation(fade-in $anim * 2);
     }
 }
+
+/*
+ ______   ______     ______       __     ______     ______     ______   ______
+/\  == \ /\  == \   /\  __ \     /\ \   /\  ___\   /\  ___\   /\__  _\ /\  ___\
+\ \  _-/ \ \  __<   \ \ \/\ \   _\_\ \  \ \  __\   \ \ \____  \/_/\ \/ \ \___  \
+\ \_\    \ \_\ \_\  \ \_____\ /\_____\  \ \_____\  \ \_____\    \ \_\  \/\_____\
+ \/_/     \/_/ /_/   \/_____/ \/_____/   \/_____/   \/_____/     \/_/   \/_____/
+
+*/
+
+.p-heading {
+    height: 60vh;
+    background-size: cover;
+    .p-title {
+        @include display(flex);
+        @include flex-direction(column);
+        &::before, &::after {
+            content: "";
+            @include flex-grow(1);
+        }
+        height: 100%;
+        width: $container;
+        margin: 0 auto;
+        h4 {
+            color: #fff;
+            font-size: 24px!important;
+            opacity: 0.8;
+        }
+    }
+}
+.p-text {
+    padding: $padding;
+    background: #fff;
+    text-align: center;
+    p {
+        width: 960px;
+        margin: 0 auto;
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: $padding / 2;
+        text-align: left;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    img {
+        width: 50%;
+    }
+    span {
+        color: #bdbdbd;
+        text-align: center;
+        display: block;
+        font-style: italic;
+        padding: 20px;
+    }
+}
