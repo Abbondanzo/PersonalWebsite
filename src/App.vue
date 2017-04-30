@@ -23,6 +23,12 @@ export default {
             // Make sure background isn't being modified in a projects environment
             if (this.$route.path.indexOf('projects') === -1) {
                 img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
+            } else {
+                // Run on 'project' pages
+                img = document.querySelectorAll('.p-heading')[0]
+                imgHeight = img.offsetHeight
+                console.log(img.offsetHeight, imgHeight)
+                img.style.backgroundPositionY = (imgHeight * down * 0.5) + 'px'
             }
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')

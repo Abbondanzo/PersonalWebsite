@@ -248,6 +248,9 @@ a.under {
     .hello-text {
         @include animation(fade-out $anim * 2);
     }
+    &.project {
+        @include animation(slide-to-bottom $anim * 2);
+    }
 }
 .slide-leave-to {
     .hello-text {
@@ -261,6 +264,14 @@ a.under {
 @include keyframes(slide-from-right) {
     0% { transform: translateX(130%); }
     100% { transform: translateX(0%); }
+}
+@include keyframes(slide-from-bottom) {
+    0% { transform: translateY(130%); }
+    100% { transform: translateY(0%); }
+}
+@include keyframes(slide-to-bottom) {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(130%); }
 }
 @include keyframes(fade-in) {
     0% { opacity: 0;}
@@ -281,6 +292,9 @@ a.under {
     .hello-text {
         @include animation(fade-in $anim * 2);
     }
+    &.project {
+        @include animation(slide-from-bottom $anim * 2);
+    }
 }
 
 /*
@@ -295,6 +309,7 @@ a.under {
 .p-heading {
     height: 60vh;
     background-size: cover;
+    background-position-y: 0px;
     .p-title {
         @include display(flex);
         @include flex-direction(column);
@@ -320,21 +335,27 @@ a.under {
         width: 960px;
         margin: 0 auto;
         font-size: 20px;
-        line-height: 1.5;
+        line-height: 1.8;
         margin-bottom: $padding / 2;
         text-align: left;
-        &:last-child {
-            margin-bottom: 0;
-        }
     }
     img {
         width: 50%;
+        display: block;
+        margin: 0 auto;
     }
     span {
         color: #bdbdbd;
         text-align: center;
         display: block;
         font-style: italic;
-        padding: 20px;
+        padding: $padding / 2;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .p-text {
+        p, img {
+            width: 90%;
+        }
     }
 }

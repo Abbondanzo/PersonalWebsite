@@ -9,7 +9,7 @@ import Contact from '@/components/Contact'
 Vue.use(Router)
 
 const TemplateRoute = {
-    template: '<router-view></router-view>'
+    template: '<router-view transition="slide" mode="out-in" :duration="500"></router-view>'
 }
 
 export default new Router({
@@ -36,26 +36,32 @@ export default new Router({
                 },
                 {
                     path: 'bvc',
+                    name: 'Bonne Vie Cafe',
                     component: Contact
                 },
                 {
                     path: 'rogue',
+                    name: 'Rogue',
                     component: Contact
                 },
                 {
                     path: 'feedshare',
+                    name: 'Feedshare',
                     component: Contact
                 },
                 {
                     path: 'flipster',
+                    name: 'Flipster',
                     component: Flipster
                 },
                 {
                     path: 'sthacks',
+                    name: 'Sthacks',
                     component: Contact
                 },
                 {
                     path: 'myneu',
+                    name: 'Modern MyNEU',
                     component: Contact
                 }
             ]
