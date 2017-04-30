@@ -26,9 +26,10 @@ export default {
             } else {
                 // Run on 'project' pages
                 img = document.querySelectorAll('.p-heading')[0]
-                imgHeight = img.offsetHeight
-                console.log(img.offsetHeight, imgHeight)
-                img.style.backgroundPositionY = (imgHeight * down * 0.5) + 'px'
+                if (img) { // Prevent modifications if there is no heading
+                    imgHeight = img.offsetHeight
+                    img.style.backgroundPositionY = (imgHeight * down) + 'px'
+                }
             }
             // Z1 elements
             var block1 = document.querySelectorAll('.block-1')
@@ -60,6 +61,10 @@ export default {
                     img.style.height = '100%'
                 }
             }
+        },
+        metaData () {
+            var title = this.$route.name + ' | Peter V. Abbondanzo'
+            document.title = title
         }
     },
     created () {
@@ -70,6 +75,12 @@ export default {
     mounted () {
         this.parallax()
         this.backgroundHeight()
+        this.metaData()
+    },
+    watch: {
+        '$route': function () {
+            this.metaData()
+        }
     }
 }
 </script>
