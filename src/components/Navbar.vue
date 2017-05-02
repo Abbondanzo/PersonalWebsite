@@ -139,7 +139,6 @@ export default {
     .mobile-links {
         display: none;
         float: right;
-        height: $navbarheight;
         line-height: $navbarheight;
         vertical-align: middle;
         color: #fff;
@@ -149,7 +148,7 @@ export default {
             font-size: 28px;
         }
         ul {
-            position: fixed;
+            position: absolute;
             top: 0;
             bottom: 0;
             width: 100vw;
@@ -161,7 +160,6 @@ export default {
             font-size: 28px;
             z-index: 99999;
             list-style: none;
-            overflow: hidden;
             li {
                 &:first-child {
                     margin-top: 10vh;

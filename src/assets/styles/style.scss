@@ -109,10 +109,10 @@ p {
     }
 }
 section {
-    display: table;
+    display: block;
     width: 100%;
     .left, .right {
-        display: table-cell;
+        display: inline-block;
         width: 50%;
         vertical-align: top;
     }
@@ -134,12 +134,14 @@ a.under {
         background: #fff;
         left: -$padding;
         width: $padding;
+        visibility: hidden;
     }
     &:hover {
         &::after {
             pointer-events: none;
             left: 100%;
             transition: all $anim*1.5;
+            visibility: visible;
         }
     }
 }
@@ -222,6 +224,9 @@ a.under {
     }
     .container {
         width: 90%;
+    }
+    section {
+        display: block;
     }
 }
 

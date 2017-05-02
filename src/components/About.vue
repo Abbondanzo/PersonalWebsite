@@ -45,8 +45,7 @@
                         I'm a full-stack developer, building applications from the ground, up. I strive to create perfection where others do not look.
                     </p>
                 </div>
-            </div>
-			<div class="right">
+            </div><div class="right">
                 <div class="valign">
                     <div class="contact-cta">
                         <h3>Send a message</h3>
@@ -108,7 +107,7 @@ export default {
             vertical-align: top;
             position: relative;
             .valign {
-                min-height: 500px;
+                min-height: 600px;
             }
         }
         .right {
@@ -119,7 +118,8 @@ export default {
             min-height: 800px;
             z-index: 2;
             .greeting {
-                margin-top: $navbarheight;
+                margin-top: $navbarheight + $padding;
+                right: -$padding * 2;
             }
             .info-block {
                 background: #fff;
@@ -135,17 +135,19 @@ export default {
                     padding-bottom: $padding/2;
                 }
             }
-            h1, .experience {
+            .left, .right {
+                min-height: 800px;
+            }
+            .greeting, .experience {
                 width: $container/2 + $padding;
-                float: right;
-                clear: both;
+                position: absolute;
             }
             .experience {
+                right: -$padding;
                 background: $primary;
                 z-index: 2;
-                position: absolute;
                 bottom: -$padding * 2;
-                right: -$padding;
+                margin-right: -$padding;
                 color: #fff;
                 padding: $padding;
                 ul {
@@ -233,51 +235,69 @@ export default {
     }
     @media screen and (max-width: 1440px) {
         section {
-            .greeting {
-                padding: 0 5%;
-            }
-            h1 {
-                width: 100%;
-                float: none;
-            }
-            .experience {
-                width: 100%;
-            }
-            .info-block {
-                width: 90%;
+            &.about-info {
+                .greeting, .experience, .info-block {
+                    // width: 50%;
+                }
+                .greeting {
+                    // padding-left: $padding;
+                }
             }
         }
     }
-    @media screen and (max-width: 1024px) {
-        section {
-            .info-block, .experience, &.about-more .more-info-block {
-                width: 100%;
-                display: block;
-                position: relative;
-            }
-            .greeting {
-                h1 {
-                    text-align: center;
+    @media screen and (max-width: 1320px) {
+            section {
+                &.about-info .greeting {
+                    right: 0;
+                }
+                .right {
+                    margin-left: 0;
                 }
             }
-            .info-block {
-                margin-left: 0;
-                margin-top: 0;
-            }
-            .experience {
-                bottom: 0;
-                right: 0;
-                float: none;
-            }
+    }
+    @media screen and (max-width: 1024px) {
+        section {
+            width: 100vw;
             .left, .right {
                 width: 100%;
                 display: block;
                 margin-left: 0;
                 margin-right: 0;
                 min-height: 0!important;
+                .valign {
+                    min-height: 0!important;
+                }
             }
-            .block-1, .block-2 {
-                transform: translateY(0)!important;
+            &.about-info {
+                .info-block, .experience, .greeting {
+                    width: 100%;
+                    display: block;
+                    position: relative;
+                }
+                .greeting {
+                    margin-top: $navbarheight;
+                    h1 {
+                        text-align: center;
+                    }
+                }
+                .info-block {
+                    margin-left: 0;
+                    margin-top: 0;
+                }
+                .experience {
+                    bottom: 0;
+                    right: 0;
+                    float: none;
+                }
+                .left {
+                    height: 400px;
+                }
+                .block-1, .block-2 {
+                    transform: translateY(0)!important;
+                }
+                .background-2 {
+                    display: none;
+                }
             }
             &.about-more {
                 .more-info-block, .contact-cta {
@@ -287,6 +307,7 @@ export default {
                     background: $bgcolor2;
                     float: none;
                     clear: none;
+                    width: 100%;
                     .under::after {
                         background: $bgcolor2;
                     }
