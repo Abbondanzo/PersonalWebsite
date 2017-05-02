@@ -94,7 +94,7 @@ body {
     overflow-y: scroll;
     .underbg {
         position: fixed;
-        display: block;
+        display: none;
         top: 0;
         left: 0;
         width: 100%;

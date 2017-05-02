@@ -89,6 +89,8 @@ export default {
     overflow-x: hidden;
     position: absolute;
     top: 0;
+    bottom: 0;
+    pointer-events: none;
     width: 100%;
     z-index: 999999;
     a {
@@ -106,6 +108,7 @@ export default {
         height: $navbarheight * 0.8;
         float: left;
         transition: all $anim * 4;
+        pointer-events: all;
         &.home {
             position: fixed;
             pointer-events: none;
@@ -124,6 +127,7 @@ export default {
         float: right;
         height: $navbarheight;
         overflow: hidden;
+        pointer-events: all;
         ul {
             list-style: none;
             display: table;
@@ -142,6 +146,7 @@ export default {
         line-height: $navbarheight;
         vertical-align: middle;
         color: #fff;
+        pointer-events: all;
         i {
             cursor: pointer;
             padding: 1em;

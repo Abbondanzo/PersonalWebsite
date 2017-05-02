@@ -101,6 +101,9 @@ export default {
     .content {
         overflow-x: hidden;
     }
+    .underbg {
+        display: block!important;
+    }
     section {
         position: relative;
         .left, .right {

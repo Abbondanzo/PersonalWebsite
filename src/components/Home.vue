@@ -50,10 +50,6 @@ export default {
             }
         }
     }
-    .underbg {
-        z-index: -1;
-        display: none!important; // This is not working
-    }
     @media screen and (max-width: 1360px) {
         .content {
             .hello-text {

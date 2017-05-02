@@ -90,6 +90,7 @@ export default {
                 color: $primary;
                 z-index: 1;
                 overflow-x: hidden;
+                height: 100vh;
             }
             .portrait {
                 position: absolute;
