@@ -25,14 +25,11 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/styles/global';
-body {
-    height: 100%;
-    #app {
-        .content {
-            height: 100vh;
-            a {
-                text-align: center;
-            }
+#app {
+    .content {
+        height: 100vh;
+        a {
+            text-align: center;
         }
         .hello-text {
             text-align: center;
@@ -52,18 +49,22 @@ body {
                 padding-bottom: 48px;
             }
         }
-        .underbg {
-            z-index: -1;
-            display: none;
-        }
-        @media screen and (max-width: 1360px) {
-            .landing {
-                .hello-text {
+    }
+    .underbg {
+        z-index: -1;
+        display: none!important; // This is not working
+    }
+    @media screen and (max-width: 1360px) {
+        .content {
+            .hello-text {
                     h1 {
-                        font-size: 60px;
+                        font-size: 40px;
                         white-space: normal;
                     }
-                }
+                    h2 {
+                        font-size: 20px;
+                        padding-bottom: 24px;
+                    }
             }
         }
     }

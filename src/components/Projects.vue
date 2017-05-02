@@ -203,5 +203,8 @@ section {
             bottom: 10px;
         }
     }
+    @media screen and (max-width: 768px) {
+        
+    }
 }
 </style>

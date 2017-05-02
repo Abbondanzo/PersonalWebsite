@@ -11,7 +11,7 @@
                     <li><router-link class="underline" :to="{ path: '/contact' }">Contact</router-link></li>
                 </ul>
             </div>
-            <div id="mobile-links" class="mobile-links">
+            <div id="mobile-links" class="mobile-links" v-bind:class="{ active: show }">
                 <div @keyup.esc="escapeMenu">
                     <i @click="showMenu" class="fa fa-bars" aria-hidden="true" v-bind:class="{ 'logo-black': lightBackground }"></i>
                     <ul v-bind:class="{ active: show }">
@@ -148,11 +148,10 @@ export default {
             font-size: 28px;
         }
         ul {
-            position: absolute;
+            position: fixed;
             top: 0;
-            bottom: 0;
+            bottom: 0px;
             width: 100vw;
-            height: 100%;
             left: 100%;
             @include transition( all $anim*2 $ease-out-quint );
             background: $primary;

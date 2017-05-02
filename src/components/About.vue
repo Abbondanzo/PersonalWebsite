@@ -289,7 +289,7 @@ export default {
                     right: 0;
                     float: none;
                 }
-                .left {
+                .left .valign {
                     height: 400px;
                 }
                 .block-1, .block-2 {
@@ -302,12 +302,12 @@ export default {
             &.about-more {
                 .more-info-block, .contact-cta {
                     padding-top: $padding;
+                    width: 100%;
                 }
                 .more-info-block {
                     background: $bgcolor2;
                     float: none;
                     clear: none;
-                    width: 100%;
                     .under::after {
                         background: $bgcolor2;
                     }
@@ -317,8 +317,16 @@ export default {
     }
     @media screen and (max-width: 768px) {
         section {
-            h1 {
-                font-size: 48px;
+            &.about-info, &.about-more {
+                .info-block, .more-info-block, .contact-cta, .experience {
+                    padding: 15%;
+                }
+                h1 {
+                    font-size: 48px;
+                }
+            }
+            &.about-more {
+
             }
         }
     }
