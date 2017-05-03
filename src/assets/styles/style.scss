@@ -357,6 +357,14 @@ a.under {
         padding: $padding / 2;
     }
 }
+@media screen and (max-width: $container) {
+    .p-heading {
+        .p-title {
+            width: 90%;
+            margin: 0 auto;
+        }
+    }
+}
 @media screen and (max-width: 1024px) {
     .p-text {
         p, img {

@@ -15,7 +15,7 @@
             <img src="../../assets/img/flipster/f2.jpg">
             <img class="block-1" src="../../assets/img/flipster/f3.jpg">
             <img class="block-2" src="../../assets/img/flipster/f4.jpg">
-            <p style="margin-top: -280px;">You can view the full suite of screenshots by following the button below. Each shot features the full-size mock-up of the pages commissioned for the project.</p>
+            <p>You can view the full suite of screenshots by following the button below. Each shot features the full-size mock-up of the pages commissioned for the project.</p>
             <a title="View on Behance" href="https://www.behance.net/gallery/46252871/Flipster-Website-Design">
                 <button class="btn">View Concept</button>
             </a>
@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets/styles/global';
-.content {
+.project {
     .p-heading {
         background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../../assets/img/flipster.jpg') no-repeat;
     }

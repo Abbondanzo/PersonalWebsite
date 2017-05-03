@@ -4,6 +4,11 @@ import Home from '@/components/Home'
 import About from '@/components/About'
 import Projects from '@/components/Projects'
 import Flipster from '@/components/Projects/Flipster'
+import Bonne from '@/components/Projects/Bonne'
+import Rogue from '@/components/Projects/Rogue'
+import FeedShare from '@/components/Projects/FeedShare'
+import Sthacks from '@/components/Projects/Sthacks'
+import ModernMyNEU from '@/components/Projects/ModernMyNEU'
 import Contact from '@/components/Contact'
 
 Vue.use(Router)
@@ -36,18 +41,18 @@ export default new Router({
                 },
                 {
                     path: 'bvc',
-                    name: 'Bonne Vie Cafe',
-                    component: Contact
+                    name: 'Bonne Vie Café',
+                    component: Bonne
                 },
                 {
                     path: 'rogue',
                     name: 'Rogue',
-                    component: Contact
+                    component: Rogue
                 },
                 {
                     path: 'feedshare',
                     name: 'Feedshare',
-                    component: Contact
+                    component: FeedShare
                 },
                 {
                     path: 'flipster',
@@ -57,12 +62,12 @@ export default new Router({
                 {
                     path: 'sthacks',
                     name: 'Sthacks',
-                    component: Contact
+                    component: Sthacks
                 },
                 {
                     path: 'myneu',
                     name: 'Modern MyNEU',
-                    component: Contact
+                    component: ModernMyNEU
                 }
             ]
         },
