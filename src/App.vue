@@ -21,9 +21,14 @@ export default {
             var img = document.querySelector('.underbg')
             var imgHeight = img.offsetHeight - window.innerHeight
             // Make sure background isn't being modified in a projects environment
-            if (this.$route.path.indexOf('projects') === -1) {
+            if (this.$route.path.indexOf('about') !== -1) {
+                // Display parallax image
+                img.style.display = 'block'
+                // Vertical scroll
                 img.style.transform = 'translateY(-' + (imgHeight * down) + 'px)'
             } else {
+                // Hide parallax image
+                img.style.display = 'none'
                 // Run on 'project' pages
                 img = document.querySelectorAll('.p-heading')[0]
                 if (img) { // Prevent modifications if there is no heading
