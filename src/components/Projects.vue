@@ -204,7 +204,27 @@ section {
         }
     }
     @media screen and (max-width: 768px) {
-        
+        .left {
+            .project-list {
+                margin-bottom: 0;
+                ul {
+                    padding: $padding / 2;
+                    text-align: center;
+                    li {
+                        margin-left: 0;
+                        span {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            .info-block {
+                position: relative;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+        }
     }
 }
 </style>

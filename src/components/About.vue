@@ -208,6 +208,7 @@ export default {
             }
             .right {
                 height: 100%;
+                margin-left: 0;
             }
             .more-info-block, .contact-cta {
                 width: $container/2 - $padding;
