@@ -104,6 +104,9 @@ export default {
     .underbg {
         display: block!important;
     }
+    .slide-enter-active {
+        // Transition-specific
+    }
     section {
         position: relative;
         .left, .right {
@@ -126,7 +129,6 @@ export default {
             }
             .info-block {
                 background: #fff;
-                z-index: 3;
                 position: absolute;
                 margin-top: $navbarheight;
                 margin-left: -$padding;
@@ -148,7 +150,6 @@ export default {
             .experience {
                 right: -$padding;
                 background: $primary;
-                z-index: 2;
                 bottom: -$padding * 2;
                 margin-right: -$padding;
                 color: #fff;
@@ -196,7 +197,7 @@ export default {
                 width: 100%;
                 display: block;
                 position: absolute;
-                z-index: 0;
+                z-index: -1;
             }
         }
         &.about-more {
