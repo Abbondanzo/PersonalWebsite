@@ -14,7 +14,7 @@ import Contact from '@/components/Contact'
 Vue.use(Router)
 
 const TemplateRoute = {
-    template: '<router-view transition="slide" mode="out-in" :duration="500"></router-view>'
+    template: '<router-view transition="slide" mode="out-in" :duration="500"><div class="project-return">Return to projects</div></router-view>'
 }
 
 export default new Router({

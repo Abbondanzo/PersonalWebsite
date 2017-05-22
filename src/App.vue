@@ -70,6 +70,24 @@ export default {
         metaData () {
             var title = this.$route.name + ' | Peter V. Abbondanzo'
             document.title = title
+        },
+        slider () {
+            var img = document.querySelectorAll('.image-slider img')
+            // Checks if image slider exists
+            if (img.length > 0) {
+                // If there are no active images, set first to active
+                if (!document.querySelector('img.active')) {
+                    img[0].className = 'active'
+                }
+                var activeIdx = 0
+                // Find index of active image
+                for (var i = 0; i < img.length; i++) {
+                    if (img[i].className === 'active') {
+                        activeIdx = i
+                    }
+                }
+                updateSlider(img, activeIdx)
+            }
         }
     },
     created () {
@@ -81,12 +99,45 @@ export default {
         this.parallax()
         this.backgroundHeight()
         this.metaData()
+        this.slider()
     },
     watch: {
         '$route': function () {
             this.metaData()
+            this.slider()
         }
     }
+}
+
+function updateSlider (array, center) {
+    var left, right
+    if (center === 0) {
+        left = array[array.length - 1]
+        right = array[1]
+    } else if (center + 1 === array.length) {
+        left = array[center - 1]
+        right = array[0]
+    } else {
+        left = array[center - 1]
+        right = array[center + 1]
+    }
+    left.onclick = function () {
+        if (center === 0) {
+            updateSlider(array, array.length - 1)
+        } else {
+            updateSlider(array, center - 1)
+        }
+    }
+    right.onclick = function () {
+        if (center + 1 === array.length) {
+            updateSlider(array, 0)
+        } else {
+            updateSlider(array, array.length + 1)
+        }
+    }
+    array[center].className = 'active'
+    left.className = 'left-active'
+    right.className = 'right-active'
 }
 </script>
 

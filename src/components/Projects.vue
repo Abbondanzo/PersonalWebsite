@@ -206,7 +206,7 @@ section {
     @media screen and (max-width: 768px) {
         .left {
             .project-list {
-                margin-bottom: 0;
+                margin: 0 ($padding / 2);
                 ul {
                     padding: $padding / 2;
                     text-align: center;
