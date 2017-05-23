@@ -74,6 +74,16 @@ export default {
         slider () {
             // Only loads once DOM is ready
             this.$nextTick(function () {
+                var slider = document.querySelector('.image-slider')
+                // Add left/right arrows
+                if (slider) {
+                    var leftArrow = document.createElement('i')
+                    leftArrow.className = 'fa fa-chevron-left'
+                    slider.appendChild(leftArrow)
+                    var rightArrow = document.createElement('i')
+                    rightArrow.className = 'fa fa-chevron-right'
+                    slider.appendChild(rightArrow)
+                }
                 var img = document.querySelectorAll('.image-slider img')
                 // Checks if image slider exists
                 if (img.length > 0) {
@@ -127,21 +137,33 @@ function updateSlider (array, center) {
     }
     left.onclick = function () {
         if (center === 0) {
+            array[array.length - 2].className = 'to-left'
             updateSlider(array, array.length - 1)
+        } else if (center === 1) {
+            array[array.length - 1].className = 'to-left'
+            updateSlider(array, center - 1)
         } else {
+            array[center - 2].className = 'to-left'
             updateSlider(array, center - 1)
         }
     }
     right.onclick = function () {
         if (center + 1 === array.length) {
+            array[1].className = 'to-right'
             updateSlider(array, 0)
+        } else if (center + 2 === array.length) {
+            array[0].className = 'to-right'
+            updateSlider(array, center + 1)
         } else {
+            array[center + 2].className = 'to-right'
             updateSlider(array, center + 1)
         }
     }
     array[center].className = 'active'
-    left.className = 'left-active'
-    right.className = 'right-active'
+    setTimeout(function () {
+        left.className = 'left-active'
+        right.className = 'right-active'
+    }, 1)
 }
 </script>
 
