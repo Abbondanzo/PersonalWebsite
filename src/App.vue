@@ -72,22 +72,26 @@ export default {
             document.title = title
         },
         slider () {
-            var img = document.querySelectorAll('.image-slider img')
-            // Checks if image slider exists
-            if (img.length > 0) {
-                // If there are no active images, set first to active
-                if (!document.querySelector('img.active')) {
-                    img[0].className = 'active'
-                }
-                var activeIdx = 0
-                // Find index of active image
-                for (var i = 0; i < img.length; i++) {
-                    if (img[i].className === 'active') {
-                        activeIdx = i
+            // Only loads once DOM is ready
+            this.$nextTick(function () {
+                var img = document.querySelectorAll('.image-slider img')
+                // Checks if image slider exists
+                if (img.length > 0) {
+                    console.log('calling slider')
+                    // If there are no active images, set first to active
+                    if (!document.querySelector('img.active')) {
+                        img[0].className = 'active'
                     }
+                    var activeIdx = 0
+                    // Find index of active image
+                    for (var i = 0; i < img.length; i++) {
+                        if (img[i].className === 'active') {
+                            activeIdx = i
+                        }
+                    }
+                    updateSlider(img, activeIdx)
                 }
-                updateSlider(img, activeIdx)
-            }
+            })
         }
     },
     created () {
@@ -132,7 +136,7 @@ function updateSlider (array, center) {
         if (center + 1 === array.length) {
             updateSlider(array, 0)
         } else {
-            updateSlider(array, array.length + 1)
+            updateSlider(array, center + 1)
         }
     }
     array[center].className = 'active'

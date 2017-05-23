@@ -380,15 +380,15 @@ a.under {
                 opacity: 0.5;
                 left: -25%;
                 cursor: pointer;
+                &::after {
+                    content: '';
+                    background: red;
+                }
             }
             &.right-active {
                 cursor: pointer;
                 opacity: 0.5;
                 left: 75%;
-            }
-            &::after {
-                content: '';
-                background: red;
             }
         }
     }
