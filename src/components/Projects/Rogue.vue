@@ -30,7 +30,9 @@ export default {
                 require('../../assets/img/bonne/b1.jpg'),
                 require('../../assets/img/bonne/b2.jpg'),
                 require('../../assets/img/bonne/b3.jpg'),
-                require('../../assets/img/bonne/b1.jpg')
+                require('../../assets/img/flipster/f1.jpg'),
+                require('../../assets/img/flipster/f2.jpg'),
+                require('../../assets/img/flipster/f3.jpg')
             ]
         }
     },
