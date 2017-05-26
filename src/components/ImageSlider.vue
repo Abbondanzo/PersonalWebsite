@@ -5,8 +5,8 @@
         v-bind:index="index"
         v-bind:style="{ 'background-image': 'url(' + images[index] + ')' }">
         </div>
-        <i class="fa fa-chevron-left" aria-hidden="true" v-on:click="moveLeft"></i>
-        <i class="fa fa-chevron-right" aria-hidden="true" v-on:click="moveRight"></i>
+        <i class="fa fa-chevron-left" aria-hidden="true" v-on:click="moveRight"></i>
+        <i class="fa fa-chevron-right" aria-hidden="true" v-on:click="moveLeft"></i>
     </div>
 </template>
 
