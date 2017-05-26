@@ -70,38 +70,6 @@ export default {
         metaData () {
             var title = this.$route.name + ' | Peter V. Abbondanzo'
             document.title = title
-        },
-        slider () {
-            // Only loads once DOM is ready
-            this.$nextTick(function () {
-                var slider = document.querySelector('.image-slider')
-                // Add left/right arrows
-                if (slider) {
-                    var leftArrow = document.createElement('i')
-                    leftArrow.className = 'fa fa-chevron-left'
-                    slider.appendChild(leftArrow)
-                    var rightArrow = document.createElement('i')
-                    rightArrow.className = 'fa fa-chevron-right'
-                    slider.appendChild(rightArrow)
-                }
-                var img = document.querySelectorAll('.image-slider img')
-                // Checks if image slider exists
-                if (img.length > 0) {
-                    console.log('calling slider')
-                    // If there are no active images, set first to active
-                    if (!document.querySelector('img.active')) {
-                        img[0].className = 'active'
-                    }
-                    var activeIdx = 0
-                    // Find index of active image
-                    for (var i = 0; i < img.length; i++) {
-                        if (img[i].className === 'active') {
-                            activeIdx = i
-                        }
-                    }
-                    updateSlider(img, activeIdx)
-                }
-            })
         }
     },
     created () {
@@ -113,57 +81,12 @@ export default {
         this.parallax()
         this.backgroundHeight()
         this.metaData()
-        this.slider()
     },
     watch: {
         '$route': function () {
             this.metaData()
-            this.slider()
         }
     }
-}
-
-function updateSlider (array, center) {
-    var left, right
-    if (center === 0) {
-        left = array[array.length - 1]
-        right = array[1]
-    } else if (center + 1 === array.length) {
-        left = array[center - 1]
-        right = array[0]
-    } else {
-        left = array[center - 1]
-        right = array[center + 1]
-    }
-    left.onclick = function () {
-        if (center === 0) {
-            array[array.length - 2].className = 'to-left'
-            updateSlider(array, array.length - 1)
-        } else if (center === 1) {
-            array[array.length - 1].className = 'to-left'
-            updateSlider(array, center - 1)
-        } else {
-            array[center - 2].className = 'to-left'
-            updateSlider(array, center - 1)
-        }
-    }
-    right.onclick = function () {
-        if (center + 1 === array.length) {
-            array[1].className = 'to-right'
-            updateSlider(array, 0)
-        } else if (center + 2 === array.length) {
-            array[0].className = 'to-right'
-            updateSlider(array, center + 1)
-        } else {
-            array[center + 2].className = 'to-right'
-            updateSlider(array, center + 1)
-        }
-    }
-    array[center].className = 'active'
-    setTimeout(function () {
-        left.className = 'left-active'
-        right.className = 'right-active'
-    }, 1)
 }
 </script>
 
