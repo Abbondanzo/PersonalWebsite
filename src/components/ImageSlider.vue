@@ -81,8 +81,11 @@ export default {
         shiftPosition: function () {
             this.updateActive()
             var wrapper = document.querySelector('.image-wrapper')
+            var imgWidth = document.querySelectorAll('.image-slider .image')[0].offsetWidth
+            var offset = parseInt(imgWidth / document.querySelector('.image-slider').offsetWidth * 100) + 1
+            console.log(offset)
             wrapper.className += ' animated'
-            var shift = -(this.active / 2) * 100
+            var shift = -(this.active) * offset
             // "Hide" all images
             wrapper.style.transform = 'translateX(' + (shift) + '%)'
             // TODO: Fix timing issue when multiple shifts happen in under 0.5s
@@ -111,7 +114,6 @@ export default {
             var current = this.active
             images.forEach(function (img) {
                 var idx = parseInt(img.getAttribute('index'))
-                console.log(idx, current)
                 if (idx === current) {
                     img.className = 'image active'
                 } else {
@@ -122,6 +124,9 @@ export default {
     },
     mounted () {
         this.updateActive()
+    },
+    created () {
+        window.addEventListener('resize', this.updateActive())
     }
 }
 </script>
@@ -165,6 +170,24 @@ body {
         }
         &.fa-chevron-right {
             right: 12.5%;
+        }
+    }
+}
+@media screen and (max-width: 1024px) {
+    .image-slider {
+        height: 300px;
+        .image {
+            height: 300px;
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    .image-slider {
+        height: 250px;
+        .image {
+            height: 250px;
+            margin-left: -45%;
+            width: 90%;
         }
     }
 }
