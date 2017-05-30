@@ -27,12 +27,10 @@ export default {
     data: function () {
         return {
             imageArray: [
-                require('../../assets/img/bonne/b1.jpg'),
-                require('../../assets/img/bonne/b2.jpg'),
-                require('../../assets/img/bonne/b3.jpg'),
-                require('../../assets/img/flipster/f1.jpg'),
-                require('../../assets/img/flipster/f2.jpg'),
-                require('../../assets/img/flipster/f3.jpg')
+                require('../../assets/img/rogue/r1.png'),
+                require('../../assets/img/rogue/r2.png'),
+                require('../../assets/img/rogue/r3.png'),
+                require('../../assets/img/rogue/r4.png')
             ]
         }
     },

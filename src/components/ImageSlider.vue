@@ -83,8 +83,7 @@ export default {
             var wrapper = document.querySelector('.image-wrapper')
             var imgWidth = document.querySelectorAll('.image-slider .image')[0].offsetWidth
             var offset = parseInt(imgWidth / document.querySelector('.image-slider').offsetWidth * 100) + 1
-            console.log(offset)
-            wrapper.className += ' animated'
+            wrapper.className = 'image-wrapper animated'
             var shift = -(this.active) * offset
             // "Hide" all images
             wrapper.style.transform = 'translateX(' + (shift) + '%)'
@@ -149,6 +148,8 @@ body {
         width: 50%;
         margin-left: -25%;
         background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
         opacity: 0.5;
         font-size: 0;
         display: inline-block;
