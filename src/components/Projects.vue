@@ -69,11 +69,13 @@ export default {
         getWindowHeight (event) {
             this.windowHeight = document.documentElement.clientHeight
             var leftHeight = document.querySelector('.left').clientHeight
-            if (this.windowHeight < leftHeight) {
-                this.preview = 'contract'
-                this.previewHeight = leftHeight
-            } else {
-                this.preview = 'expand'
+            if (leftHeight) {
+                if (this.windowHeight < leftHeight) {
+                    this.preview = 'contract'
+                    this.previewHeight = leftHeight
+                } else {
+                    this.preview = 'expand'
+                }
             }
         },
         openProject (arg) {

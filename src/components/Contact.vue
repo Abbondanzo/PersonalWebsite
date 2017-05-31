@@ -80,6 +80,7 @@ export default {
         }
         .left {
             height: 100%;
+            min-height: 682px;
         }
         .right {
             margin-bottom: $padding;
