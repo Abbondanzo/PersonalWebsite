@@ -85,9 +85,11 @@ export default {
 }
 
 </script>
-
 <style lang="scss" scoped>
 @import '../assets/styles/global';
+.project-return {
+    display: none;
+}
 .content {
     height: 100vh;
 }

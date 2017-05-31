@@ -10,12 +10,9 @@ import FeedShare from '@/components/Projects/FeedShare'
 import Sthacks from '@/components/Projects/Sthacks'
 import ModernMyNEU from '@/components/Projects/ModernMyNEU'
 import Contact from '@/components/Contact'
+import TemplateRoute from './ProjectsTemplate'
 
 Vue.use(Router)
-
-const TemplateRoute = {
-    template: '<router-view transition="slide" mode="out-in" :duration="500"><div class="project-return">Return to projects</div></router-view>'
-}
 
 export default new Router({
     mode: 'history',

@@ -310,7 +310,14 @@ a.under {
  \/_/     \/_/ /_/   \/_____/ \/_____/   \/_____/   \/_____/     \/_/   \/_____/
 
 */
-
+.project-return {
+    text-align: center;
+    padding: $padding;
+    background: $primary;
+    a {
+        color: #fff;
+    }
+}
 .project {
     .p-heading {
         height: 60vh;
