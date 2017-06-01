@@ -17,12 +17,14 @@
                     <h2>Contact Me</h2>
                     <form>
                         <h4>Name</h4>
-                        <input type="text" name="name" class="input" required>
+                        <input type="text" v-model="name" name="name" class="input" v-validate="'required|alpha_spaces'" data-vv-delay="500" :class="{ 'is-danger': errors.has('name') }" required="required">
+                        <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
                         <h4>Email</h4>
-                        <input type="email" name="email" class="input" required>
+                        <input type="email" v-model="email" name="email" class="input" v-validate="'required|email'" data-vv-delay="500" :class="{ 'is-danger': errors.has('email') }" required="required">
+                        <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
                         <h4>Message</h4>
-                        <textarea type="text" rows="4" name="message" required></textarea>
-                        <button type="submit" name="submit" value="Send Message" class="btn btn-white">Send Message</button>
+                        <textarea type="text" v-model="message" rows="4" name="message" required></textarea>
+                        <button type="submit" @click="submitForm" name="submit" value="Send Message" class="btn btn-white">Send Message</button>
                     </form>
                 </div>
             </div>
@@ -31,6 +33,11 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import VeeValidate from 'vee-validate'
+
+Vue.use(VeeValidate)
+
 export default {
     name: 'contact',
     data () {
@@ -40,7 +47,10 @@ export default {
                 { name: 'LinkedIn', url: 'https://www.linkedin.com/in/pabbondanzo', icon: 'fa-linkedin' },
                 { name: 'Github', url: 'https://github.com/Abbondanzo', icon: 'fa-github' }
             ],
-            mobile: false
+            mobile: false,
+            name: '',
+            email: '',
+            message: ''
         }
     },
     methods: {
@@ -51,6 +61,15 @@ export default {
             } else {
                 this.mobile = true
             }
+        },
+        submitForm (e) {
+            e.preventDefault()
+            this.$validator.validateAll().then(() => {
+                console.log('fuck you')
+            }).catch(() => {
+                // eslint-disable-next-line
+                alert('Correct them errors!')
+            })
         }
     },
     mounted () {
@@ -80,7 +99,7 @@ export default {
         }
         .left {
             height: 100%;
-            min-height: 682px;
+            min-height: 722px;
         }
         .right {
             margin-bottom: $padding;
@@ -135,6 +154,10 @@ export default {
                 left: -$padding;
                 h4 {
                     color: #fff;
+                    padding-top: $padding / 4;
+                    &:first-child {
+                        padding-top: 0;
+                    }
                 }
                 input, textarea {
                     width: 100%;
@@ -149,9 +172,23 @@ export default {
                     color: #fff;
                     -webkit-box-shadow: 0 0 0px 1000px $primary inset;
                 	-webkit-text-fill-color: white !important;
+                    &.is-danger {
+                        border-bottom: 3px double #fff;
+                    }
                 }
                 textarea {
                     resize: vertical;
+                }
+                form {
+                    position: relative;
+                }
+                .help {
+                    position: absolute;
+                    display: block;
+                    color: #fff;
+                    font-size: 12px;
+                    margin-top: -16px;
+                    opacity: 0.8;
                 }
             }
         }
@@ -188,6 +225,10 @@ export default {
             .left, .right {
                 width: 100%;
                 display: block;
+            }
+            .left {
+                height: auto!important;
+                min-height: inherit;
             }
             .right {
                 margin-bottom: 0;
