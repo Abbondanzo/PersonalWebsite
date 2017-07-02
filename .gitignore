@@ -1,19 +1,23 @@
-# NPM-related files
-node_modules/
+# Node-related files
+/node_modules
 
-# SCSS compiled files
-.sass-cache/
-*.css.map
-*.css
+# Compiled files
+/public/hot
+/public/storage
+
+# Custom configurations
+/storage/*.key
+/vendor
+/.idea
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+.env
 
 # For Macs
 .DS_Store
 
-# Init provided
-dist/
-npm-debug.log
-test/e2e/reports
-selenium-debug.log
-
-# Config files
-email-config.json
+# SASS
+.sass-cache/
+bourbon

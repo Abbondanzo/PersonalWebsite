@@ -1,5 +1,0 @@
-build/*.js
-config/*.js
-**/*.scss
-**/*.css
-src/assets/styles/*
