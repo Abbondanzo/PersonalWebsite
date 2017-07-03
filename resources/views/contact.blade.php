@@ -255,9 +255,9 @@
                                   <table border="0" cellpadding="0" cellspacing="0">
                                       <tr>
                                           <td>
+                                              <p>Sent by: {{ $name }} <{{ $email }}></p>
                                               <p>Message Body: </p>
                                               <p>{{ $msg }}</p>
-                                              <p>Sent by: {{ $name }}</p>
                                           </td>
                                       </tr>
                                   </table>

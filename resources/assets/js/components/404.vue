@@ -1,0 +1,64 @@
+<template>
+    <div class="content">
+        <div class="valign">
+    		<div class="container">
+    			<div class="hello-text">
+    				<h1>404</h1>
+    				<h2>That's not a page!</h2>
+                    <router-link :to="{ path: '/' }">
+                        <button class="btn btn-white">Go Home</button>
+                    </router-link>
+    			</div>
+    		</div>
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+    name: 'page-not-found'
+}
+</script>
+
+<style lang="scss" scoped>
+#app {
+    .content {
+        height: 100vh;
+        a {
+            text-align: center;
+        }
+        .hello-text {
+            text-align: center;
+            // overflow: auto;
+            h1, h2 {
+                color: #fff;
+                cursor: default;
+                pointer-events: none;
+            }
+            h1 {
+                font-size: 96px;
+                // white-space: nowrap;
+            }
+            h2 {
+                font-weight: 300;
+                font-size: 40px;
+                padding-bottom: 48px;
+            }
+        }
+    }
+    @media screen and (max-width: 1360px) {
+        .content {
+            .hello-text {
+                    h1 {
+                        font-size: 40px;
+                        white-space: normal;
+                    }
+                    h2 {
+                        font-size: 20px;
+                        padding-bottom: 24px;
+                    }
+            }
+        }
+    }
+}
+</style>

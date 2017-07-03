@@ -3726,6 +3726,10 @@ var routes = [{
     path: '/contact',
     name: 'Contact',
     component: __webpack_require__(149)
+}, {
+    path: '*',
+    name: 'Page Not Found',
+    component: __webpack_require__(171)
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
@@ -4039,7 +4043,7 @@ exports = module.exports = __webpack_require__(77)(undefined);
 
 
 // module
-exports.push([module.i, "\n#app .content[data-v-01ab747b] {\n  overflow-x: hidden;\n}\n#app .underbg[data-v-01ab747b] {\n  display: block !important;\n}\n#app section[data-v-01ab747b] {\n  position: relative;\n}\n#app section .left[data-v-01ab747b], #app section .right[data-v-01ab747b] {\n    vertical-align: top;\n    position: relative;\n}\n#app section .left .valign[data-v-01ab747b], #app section .right .valign[data-v-01ab747b] {\n      min-height: 600px;\n}\n#app section .right[data-v-01ab747b] {\n    margin-left: 80px;\n    margin-right: -80px;\n}\n#app section.about-info[data-v-01ab747b] {\n    min-height: 800px;\n    z-index: 2;\n}\n#app section.about-info .greeting[data-v-01ab747b] {\n      margin-top: 180px;\n      right: -160px;\n}\n#app section.about-info .info-block[data-v-01ab747b] {\n      background: #fff;\n      position: absolute;\n      margin-top: 100px;\n      margin-left: -80px;\n      padding: 80px;\n      width: 660px;\n}\n#app section.about-info .info-block p[data-v-01ab747b] {\n        line-height: 1.8;\n        font-size: 18px;\n        padding-bottom: 40px;\n}\n#app section.about-info .left[data-v-01ab747b], #app section.about-info .right[data-v-01ab747b] {\n      min-height: 800px;\n}\n#app section.about-info .greeting[data-v-01ab747b], #app section.about-info .experience[data-v-01ab747b] {\n      width: 740px;\n      position: absolute;\n}\n#app section.about-info .experience[data-v-01ab747b] {\n      right: -80px;\n      background: #a0a083;\n      bottom: -160px;\n      margin-right: -80px;\n      color: #fff;\n      padding: 80px;\n}\n#app section.about-info .experience ul[data-v-01ab747b] {\n        list-style: none;\n}\n#app section.about-info .experience ul li[data-v-01ab747b] {\n          overflow: auto;\n          position: relative;\n          margin-bottom: 24px;\n          padding-bottom: 18px;\n}\n#app section.about-info .experience ul li[data-v-01ab747b]:last-child {\n            margin-bottom: 0;\n}\n#app section.about-info .experience ul li h3[data-v-01ab747b] {\n            font-size: 18px;\n            float: left;\n            clear: both;\n            font-weight: 300;\n}\n#app section.about-info .experience ul li h4[data-v-01ab747b] {\n            font-size: 12px;\n            float: right;\n            opacity: 0.8;\n}\n#app section.about-info .experience ul li span.exp-bar[data-v-01ab747b] {\n            height: 4px;\n            width: 100%;\n            background: #6b6b52;\n            display: block;\n            position: absolute;\n            bottom: 0;\n}\n#app section.about-info .experience ul li span.exp-bar .exp-width[data-v-01ab747b] {\n              transition: width 1s;\n              width: 0%;\n              height: 100%;\n              background: #fff;\n}\n#app section.about-info .background-2[data-v-01ab747b] {\n      height: 100%;\n      width: 100%;\n      display: block;\n      position: absolute;\n      z-index: -1;\n}\n#app section.about-more[data-v-01ab747b] {\n    z-index: 1;\n}\n#app section.about-more .left[data-v-01ab747b] {\n      background: #fff;\n      color: #a0a083;\n      z-index: 1;\n}\n#app section.about-more .right[data-v-01ab747b] {\n      height: 100%;\n      margin-left: 0;\n}\n#app section.about-more .more-info-block[data-v-01ab747b], #app section.about-more .contact-cta[data-v-01ab747b] {\n      width: 580px;\n      padding: 80px;\n}\n#app section.about-more .more-info-block p[data-v-01ab747b], #app section.about-more .contact-cta p[data-v-01ab747b] {\n        line-height: 1.8;\n        font-size: 18px;\n        padding-bottom: 40px;\n}\n#app section.about-more .more-info-block p[data-v-01ab747b]:last-child, #app section.about-more .contact-cta p[data-v-01ab747b]:last-child {\n          padding-bottom: 0;\n}\n#app section.about-more .more-info-block h3[data-v-01ab747b], #app section.about-more .contact-cta h3[data-v-01ab747b] {\n        color: #fff;\n        font-size: 48px;\n}\n#app section.about-more .contact-cta[data-v-01ab747b] {\n      margin: 0 auto;\n      text-align: center;\n}\n#app section.about-more .more-info-block[data-v-01ab747b] {\n      float: right;\n      clear: both;\n      padding-top: 160px;\n}\n@media screen and (max-width: 1320px) {\n#app section.about-info .greeting[data-v-01ab747b] {\n    right: 0;\n}\n#app section .right[data-v-01ab747b] {\n    margin-left: 0;\n}\n}\n@media screen and (max-width: 1024px) {\n#app section[data-v-01ab747b] {\n    width: 100vw;\n}\n#app section .left[data-v-01ab747b], #app section .right[data-v-01ab747b] {\n      width: 100%;\n      display: block;\n      margin-left: 0;\n      margin-right: 0;\n      min-height: 0 !important;\n}\n#app section .left .valign[data-v-01ab747b], #app section .right .valign[data-v-01ab747b] {\n        min-height: 0 !important;\n}\n#app section.about-info .info-block[data-v-01ab747b], #app section.about-info .experience[data-v-01ab747b], #app section.about-info .greeting[data-v-01ab747b] {\n      width: 100%;\n      display: block;\n      position: relative;\n}\n#app section.about-info .greeting[data-v-01ab747b] {\n      margin-top: 100px;\n}\n#app section.about-info .greeting h1[data-v-01ab747b] {\n        text-align: center;\n}\n#app section.about-info .info-block[data-v-01ab747b] {\n      margin-left: 0;\n      margin-top: 0;\n}\n#app section.about-info .experience[data-v-01ab747b] {\n      bottom: 0;\n      right: 0;\n      float: none;\n}\n#app section.about-info .left .valign[data-v-01ab747b] {\n      height: 400px;\n}\n#app section.about-info .block-1[data-v-01ab747b], #app section.about-info .block-2[data-v-01ab747b] {\n      transform: translateY(0) !important;\n}\n#app section.about-info .background-2[data-v-01ab747b] {\n      display: none;\n}\n#app section.about-more .more-info-block[data-v-01ab747b], #app section.about-more .contact-cta[data-v-01ab747b] {\n      padding-top: 80px;\n      width: 100%;\n}\n#app section.about-more .more-info-block[data-v-01ab747b] {\n      background: #e2e2e2;\n      float: none;\n      clear: none;\n}\n#app section.about-more .more-info-block .under[data-v-01ab747b]::after {\n        background: #e2e2e2;\n}\n}\n@media screen and (max-width: 768px) {\n#app section.about-info .info-block[data-v-01ab747b], #app section.about-info .more-info-block[data-v-01ab747b], #app section.about-info .contact-cta[data-v-01ab747b], #app section.about-info .experience[data-v-01ab747b], #app section.about-more .info-block[data-v-01ab747b], #app section.about-more .more-info-block[data-v-01ab747b], #app section.about-more .contact-cta[data-v-01ab747b], #app section.about-more .experience[data-v-01ab747b] {\n    padding: 15%;\n}\n#app section.about-info h1[data-v-01ab747b], #app section.about-more h1[data-v-01ab747b] {\n    font-size: 48px;\n}\n}\n", ""]);
+exports.push([module.i, "\n#app .content[data-v-01ab747b] {\n  overflow-x: hidden;\n}\n#app .underbg[data-v-01ab747b] {\n  display: block !important;\n}\n#app section[data-v-01ab747b] {\n  position: relative;\n}\n#app section .left[data-v-01ab747b], #app section .right[data-v-01ab747b] {\n    vertical-align: top;\n    position: relative;\n}\n#app section .left .valign[data-v-01ab747b], #app section .right .valign[data-v-01ab747b] {\n      min-height: 600px;\n}\n#app section .right[data-v-01ab747b] {\n    margin-left: 80px;\n    margin-right: -80px;\n}\n#app section.about-info[data-v-01ab747b] {\n    min-height: 800px;\n    z-index: 2;\n}\n#app section.about-info .greeting[data-v-01ab747b] {\n      margin-top: 180px;\n      right: -160px;\n}\n#app section.about-info .info-block[data-v-01ab747b] {\n      background: #fff;\n      position: absolute;\n      margin-top: 100px;\n      margin-left: -80px;\n      padding: 80px;\n      width: 660px;\n}\n#app section.about-info .info-block p[data-v-01ab747b] {\n        line-height: 1.8;\n        font-size: 18px;\n        padding-bottom: 40px;\n}\n#app section.about-info .backgrounding[data-v-01ab747b] {\n      position: absolute;\n      right: 0;\n}\n#app section.about-info .left[data-v-01ab747b], #app section.about-info .right[data-v-01ab747b] {\n      min-height: 800px;\n}\n#app section.about-info .greeting[data-v-01ab747b], #app section.about-info .experience[data-v-01ab747b] {\n      width: 740px;\n      position: absolute;\n}\n#app section.about-info .experience[data-v-01ab747b] {\n      right: -80px;\n      background: #a0a083;\n      bottom: -160px;\n      margin-right: -80px;\n      color: #fff;\n      padding: 80px;\n}\n#app section.about-info .experience ul[data-v-01ab747b] {\n        list-style: none;\n}\n#app section.about-info .experience ul li[data-v-01ab747b] {\n          overflow: auto;\n          position: relative;\n          margin-bottom: 24px;\n          padding-bottom: 18px;\n}\n#app section.about-info .experience ul li[data-v-01ab747b]:last-child {\n            margin-bottom: 0;\n}\n#app section.about-info .experience ul li h3[data-v-01ab747b] {\n            font-size: 18px;\n            float: left;\n            clear: both;\n            font-weight: 300;\n}\n#app section.about-info .experience ul li h4[data-v-01ab747b] {\n            font-size: 12px;\n            float: right;\n            opacity: 0.8;\n}\n#app section.about-info .experience ul li span.exp-bar[data-v-01ab747b] {\n            height: 4px;\n            width: 100%;\n            background: #6b6b52;\n            display: block;\n            position: absolute;\n            bottom: 0;\n}\n#app section.about-info .experience ul li span.exp-bar .exp-width[data-v-01ab747b] {\n              transition: width 1s;\n              width: 0%;\n              height: 100%;\n              background: #fff;\n}\n#app section.about-info .background-2[data-v-01ab747b] {\n      height: 100%;\n      width: 100%;\n      display: block;\n      position: absolute;\n      z-index: -1;\n}\n#app section.about-more[data-v-01ab747b] {\n    z-index: 1;\n}\n#app section.about-more .left[data-v-01ab747b] {\n      background: #fff;\n      color: #a0a083;\n      z-index: 1;\n}\n#app section.about-more .right[data-v-01ab747b] {\n      height: 100%;\n      margin-left: 0;\n}\n#app section.about-more .more-info-block[data-v-01ab747b], #app section.about-more .contact-cta[data-v-01ab747b] {\n      width: 580px;\n      padding: 80px;\n}\n#app section.about-more .more-info-block p[data-v-01ab747b], #app section.about-more .contact-cta p[data-v-01ab747b] {\n        line-height: 1.8;\n        font-size: 18px;\n        padding-bottom: 40px;\n}\n#app section.about-more .more-info-block p[data-v-01ab747b]:last-child, #app section.about-more .contact-cta p[data-v-01ab747b]:last-child {\n          padding-bottom: 0;\n}\n#app section.about-more .more-info-block h3[data-v-01ab747b], #app section.about-more .contact-cta h3[data-v-01ab747b] {\n        color: #fff;\n        font-size: 48px;\n}\n#app section.about-more .contact-cta[data-v-01ab747b] {\n      margin: 0 auto;\n      text-align: center;\n}\n#app section.about-more .more-info-block[data-v-01ab747b] {\n      float: right;\n      clear: both;\n      padding-top: 160px;\n}\n@media screen and (max-width: 1320px) {\n#app section.about-info .greeting[data-v-01ab747b] {\n    right: 0;\n}\n#app section .right[data-v-01ab747b] {\n    margin-left: 0;\n}\n}\n@media screen and (max-width: 1024px) {\n#app section[data-v-01ab747b] {\n    width: 100vw;\n}\n#app section .left[data-v-01ab747b], #app section .right[data-v-01ab747b] {\n      width: 100%;\n      display: block;\n      margin-left: 0;\n      margin-right: 0;\n      min-height: 0 !important;\n}\n#app section .left .valign[data-v-01ab747b], #app section .right .valign[data-v-01ab747b] {\n        min-height: 0 !important;\n}\n#app section.about-info .info-block[data-v-01ab747b], #app section.about-info .experience[data-v-01ab747b], #app section.about-info .greeting[data-v-01ab747b] {\n      width: 100%;\n      display: block;\n      position: relative;\n}\n#app section.about-info .greeting[data-v-01ab747b] {\n      margin-top: 100px;\n}\n#app section.about-info .greeting h1[data-v-01ab747b] {\n        text-align: center;\n}\n#app section.about-info .info-block[data-v-01ab747b] {\n      margin-left: 0;\n      margin-top: 0;\n}\n#app section.about-info .experience[data-v-01ab747b] {\n      bottom: 0;\n      right: 0;\n      float: none;\n}\n#app section.about-info .left .valign[data-v-01ab747b] {\n      height: 400px;\n}\n#app section.about-info .block-1[data-v-01ab747b], #app section.about-info .block-2[data-v-01ab747b] {\n      transform: translateY(0) !important;\n}\n#app section.about-info .background-2[data-v-01ab747b] {\n      display: none;\n}\n#app section.about-more .more-info-block[data-v-01ab747b], #app section.about-more .contact-cta[data-v-01ab747b] {\n      padding-top: 80px;\n      width: 100%;\n}\n#app section.about-more .more-info-block[data-v-01ab747b] {\n      background: #e2e2e2;\n      float: none;\n      clear: none;\n}\n#app section.about-more .more-info-block .under[data-v-01ab747b]::after {\n        background: #e2e2e2;\n}\n}\n@media screen and (max-width: 768px) {\n#app section.about-info .info-block[data-v-01ab747b], #app section.about-info .more-info-block[data-v-01ab747b], #app section.about-info .contact-cta[data-v-01ab747b], #app section.about-info .experience[data-v-01ab747b], #app section.about-more .info-block[data-v-01ab747b], #app section.about-more .more-info-block[data-v-01ab747b], #app section.about-more .contact-cta[data-v-01ab747b], #app section.about-more .experience[data-v-01ab747b] {\n    padding: 15%;\n}\n#app section.about-info h1[data-v-01ab747b], #app section.about-more h1[data-v-01ab747b] {\n    font-size: 48px;\n}\n}\n", ""]);
 
 // exports
 
@@ -4050,6 +4054,8 @@ exports.push([module.i, "\n#app .content[data-v-01ab747b] {\n  overflow-x: hidde
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -4148,9 +4154,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content"
   }, [_c('section', {
     staticClass: "about-info"
-  }, [_c('div', {
-    staticClass: "left"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "left"
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "experience block-1"
   }, [_c('h2', [_vm._v("Experience")]), _vm._v(" "), _c('transition', {
     attrs: {
@@ -4188,9 +4194,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "href": "http://titusdesign.org/",
       "title": "Titus Design"
     }
-  }, [_vm._v("Titus Design")]), _vm._v(" out of my dorm room.\n                        ")]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
-    staticClass: "background-2"
-  })])]), _vm._v(" "), _c('section', {
+  }, [_vm._v("Titus Design")]), _vm._v(" out of my dorm room.\n                        ")]), _vm._v(" "), _vm._m(2)])])]), _vm._v(" "), _c('section', {
     staticClass: "about-more"
   }, [_c('div', {
     staticClass: "left"
@@ -4219,6 +4223,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn"
   }, [_vm._v("Contact Me")])])], 1)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "right backgrounding"
+  }, [_c('div', {
+    staticClass: "background-2"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "valign"
   }, [_c('div', {
@@ -10309,6 +10319,148 @@ module.exports = "/fonts/fontawesome-webfont.ttf?b06871f281fee6b241d60582ae9369b
 /***/ (function(module, exports) {
 
 module.exports = "/fonts/fontawesome-webfont.svg?912ec66d7572ff821749319396470bde";
+
+/***/ }),
+/* 171 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(174)
+}
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(172),
+  /* template */
+  __webpack_require__(173),
+  /* styles */
+  injectStyle,
+  /* scopeId */
+  "data-v-562ef246",
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/mnt/d/Users/PeterA/Documents/Git/Laravel/vue-app/resources/assets/js/components/404.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] 404.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-562ef246", Component.options)
+  } else {
+    hotAPI.reload("data-v-562ef246", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 172 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'page-not-found'
+});
+
+/***/ }),
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "valign"
+  }, [_c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "hello-text"
+  }, [_c('h1', [_vm._v("404")]), _vm._v(" "), _c('h2', [_vm._v("That's not a page!")]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "to": {
+        path: '/'
+      }
+    }
+  }, [_c('button', {
+    staticClass: "btn btn-white"
+  }, [_vm._v("Go Home")])])], 1)])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-562ef246", module.exports)
+  }
+}
+
+/***/ }),
+/* 174 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(175);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(1)("761db59c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-562ef246\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-562ef246\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(77)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n#app .content[data-v-562ef246] {\n  height: 100vh;\n}\n#app .content a[data-v-562ef246] {\n    text-align: center;\n}\n#app .content .hello-text[data-v-562ef246] {\n    text-align: center;\n}\n#app .content .hello-text h1[data-v-562ef246], #app .content .hello-text h2[data-v-562ef246] {\n      color: #fff;\n      cursor: default;\n      pointer-events: none;\n}\n#app .content .hello-text h1[data-v-562ef246] {\n      font-size: 96px;\n}\n#app .content .hello-text h2[data-v-562ef246] {\n      font-weight: 300;\n      font-size: 40px;\n      padding-bottom: 48px;\n}\n@media screen and (max-width: 1360px) {\n#app .content .hello-text h1[data-v-562ef246] {\n    font-size: 40px;\n    white-space: normal;\n}\n#app .content .hello-text h2[data-v-562ef246] {\n    font-size: 20px;\n    padding-bottom: 24px;\n}\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 ],[39]);

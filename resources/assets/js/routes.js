@@ -56,6 +56,11 @@ let routes = [
         path: '/contact',
         name: 'Contact',
         component: require('./components/Contact')
+    },
+    {
+        path: '*',
+        name: 'Page Not Found',
+        component: require('./components/404')
     }
 ]
 

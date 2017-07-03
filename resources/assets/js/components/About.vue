@@ -1,6 +1,9 @@
 <template>
     <div class="content">
         <section class="about-info">
+            <div class="right backgrounding">
+                <div class="background-2"></div>
+            </div>
             <div class="left">
                 <div class="valign">
                     <div class="greeting">
@@ -31,7 +34,6 @@
                         <button title="View PDF resume" class="btn">Résumé</button>
                     </a>
                 </div>
-                <div class="background-2"></div>
             </div>
 		</section>
 		<section class="about-more">
@@ -139,6 +141,10 @@ export default {
                     font-size: 18px;
                     padding-bottom: $padding/2;
                 }
+            }
+            .backgrounding {
+                position: absolute;
+                right: 0;
             }
             .left, .right {
                 min-height: 800px;
@@ -329,9 +335,6 @@ export default {
                 h1 {
                     font-size: 48px;
                 }
-            }
-            &.about-more {
-
             }
         }
     }
