@@ -66,7 +66,7 @@ export default {
     data () {
         return {
             skills: [
-                { name: 'HTML5, CSS3', quality: 'Expert', pct: '97' },
+                { name: 'Node/NPM, HTML5, CSS3', quality: 'Expert', pct: '97' },
                 { name: 'jQuery/JS', quality: 'Expert', pct: '87' },
                 { name: 'Java, Python, PHP, Lisp', quality: 'Advanced', pct: '75' }
             ],

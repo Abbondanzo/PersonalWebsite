@@ -22,7 +22,8 @@ class MailController extends Controller
             'name' => request('name'),
             'email' => request('email'),
             'msg' => request('message'),
-            'ip' => request()->ip()
+            'ip' => request()->ip(),
+            'userAgent' => request()->header('User-Agent')
         );
 
 

@@ -273,7 +273,7 @@
                               <tr>
                                   <td class="content-block">
                                       <span class="apple-link">Logged user information (for spam protection):</span>
-                                      <br> IP Address: {{ $ip }} | Email: {{ $email }}</a>.
+                                      <br> IP Address: {{ $ip }} | Email: {{ $email }} | User-Agent: {{ $userAgent }}</a>.
                                   </td>
                               </tr>
                               <tr>

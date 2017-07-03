@@ -97,6 +97,88 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -115,7 +197,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(65)
+var listToStyles = __webpack_require__(77)
 
 /*
 type StyleObject = {
@@ -317,28 +399,34 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 2 */,
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/logo.svg?32751f18a4faec5e52e13afc556dc8dc";
-
-/***/ }),
-/* 12 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/bg.jpg?6f50e0147652997141b431030ef0164b";
 
 /***/ }),
-/* 13 */
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/flipster.jpg?924a6c401ddfe081e8fc762e00aa8da3";
+
+/***/ }),
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/logo.svg?32751f18a4faec5e52e13afc556dc8dc";
+
+/***/ }),
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2850,163 +2938,187 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/flipster.jpg?924a6c401ddfe081e8fc762e00aa8da3";
-
-/***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/b1.jpg?6fe8b40305fdbd72b1c0679d60a16fcd";
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/b2.jpg?fdb44b9f82bccb64e6ff153aed287f00";
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = "/images/b3.jpg?464bc9f4f27aaa50b9420aa7a79b5086";
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/f1.png?2d807f6c93fae2249dbd2bb77b37becb";
-
-/***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/f2.png?0e4a6ffb93e5f5c6e227f8ed8687114d";
+module.exports = "/images/bvc.jpg?30608f50f5aa7f08c402354b98cf92ed";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/f1.jpg?e4d90c613c737e5ae7d950846ea0f849";
+module.exports = "/images/feedshare.jpg?6a25876c5adf680d1bf078669e45786e";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/f2.jpg?0639c5fe5c4fe46a940fd93caac2e4b0";
+module.exports = "/images/f1.png?2d807f6c93fae2249dbd2bb77b37becb";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/f3.jpg?b403763168ea541949597aad58e9be5f";
+module.exports = "/images/f2.png?0e4a6ffb93e5f5c6e227f8ed8687114d";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/f4.jpg?2e1e2c57b2886c0fc9efced7d705a176";
+module.exports = "/images/f1.jpg?e4d90c613c737e5ae7d950846ea0f849";
 
 /***/ }),
 /* 24 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/m1.jpg?d51a8aa3b6429c71cfec69d8717e0e51";
+module.exports = "/images/f2.jpg?0639c5fe5c4fe46a940fd93caac2e4b0";
 
 /***/ }),
 /* 25 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/m1.png?d188b6acb24a32b7e7712566ef1f1d78";
+module.exports = "/images/f3.jpg?b403763168ea541949597aad58e9be5f";
 
 /***/ }),
 /* 26 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/m2.png?f1f1d7bd2bc205aa746fab452aee7547";
+module.exports = "/images/f4.jpg?2e1e2c57b2886c0fc9efced7d705a176";
 
 /***/ }),
 /* 27 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/m3.png?c48c4f963a19bf188b7646618f19f38e";
+module.exports = "/images/myneu.jpg?74a43d7ea4b466b8216e9f290cdfb400";
 
 /***/ }),
 /* 28 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/peter.png?236080437de272d377c2c3965e061bd4";
+module.exports = "/images/m1.jpg?d51a8aa3b6429c71cfec69d8717e0e51";
 
 /***/ }),
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/r1.png?e2fb17eae57f7e203099525bf91626c2";
+module.exports = "/images/m1.png?d188b6acb24a32b7e7712566ef1f1d78";
 
 /***/ }),
 /* 30 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/r2.png?b828a9bef3eb9caae2528299776d960b";
+module.exports = "/images/m2.png?f1f1d7bd2bc205aa746fab452aee7547";
 
 /***/ }),
 /* 31 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/r3.png?e808af6c75bb1d07da0bf52fc2df0346";
+module.exports = "/images/m3.png?c48c4f963a19bf188b7646618f19f38e";
 
 /***/ }),
 /* 32 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/r4.png?fe451236cd86a53ec8235f5ccd555d0b";
+module.exports = "/images/peter.png?236080437de272d377c2c3965e061bd4";
 
 /***/ }),
 /* 33 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/s1.gif?9d00e8626fe7555a60fedb88341fb5a7";
+module.exports = "/images/rogue.jpg?a4edb9704e12b286be13aee8070ff761";
 
 /***/ }),
 /* 34 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/s2.gif?cec8b7e4d2a3aed1663cf8989f27eae8";
+module.exports = "/images/r1.png?e2fb17eae57f7e203099525bf91626c2";
 
 /***/ }),
 /* 35 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/s3.gif?a2889ae130ca43829f658c48f339d41e";
+module.exports = "/images/r2.png?b828a9bef3eb9caae2528299776d960b";
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/s4.gif?c5279cded0c105c9a31f9a0dd0c04b22";
+module.exports = "/images/r3.png?e808af6c75bb1d07da0bf52fc2df0346";
 
 /***/ }),
 /* 37 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/s5.gif?9ff5e975a266c20dce0070d3ffafbe59";
+module.exports = "/images/r4.png?fe451236cd86a53ec8235f5ccd555d0b";
 
 /***/ }),
 /* 38 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/sth.jpg?18ce43b25ab09a8513a9ddb68e273a31";
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/s1.gif?9d00e8626fe7555a60fedb88341fb5a7";
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/s2.gif?cec8b7e4d2a3aed1663cf8989f27eae8";
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/s3.gif?a2889ae130ca43829f658c48f339d41e";
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/s4.gif?c5279cded0c105c9a31f9a0dd0c04b22";
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/s5.gif?9ff5e975a266c20dce0070d3ffafbe59";
+
+/***/ }),
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(124)
+  __webpack_require__(130)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(126),
+  __webpack_require__(132),
   /* template */
-  __webpack_require__(127),
+  __webpack_require__(133),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -3038,26 +3150,26 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 39 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(40);
-module.exports = __webpack_require__(160);
+__webpack_require__(46);
+module.exports = __webpack_require__(171);
 
 
 /***/ }),
-/* 40 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__App__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(73);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(85);
 // Global import Vue
-__webpack_require__(41);
-window.Vue = __webpack_require__(4);
+__webpack_require__(47);
+window.Vue = __webpack_require__(5);
 
 
 
@@ -3073,7 +3185,7 @@ var app = new Vue({
 });
 
 /***/ }),
-/* 41 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3082,7 +3194,7 @@ var app = new Vue({
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(5);
+window.axios = __webpack_require__(8);
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
@@ -3100,12 +3212,6 @@ if (token) {
 }
 
 /***/ }),
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
 /* 48 */,
 /* 49 */,
 /* 50 */,
@@ -3120,19 +3226,25 @@ if (token) {
 /* 59 */,
 /* 60 */,
 /* 61 */,
-/* 62 */
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(63)
+  __webpack_require__(69)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(66),
+  __webpack_require__(78),
   /* template */
-  __webpack_require__(72),
+  __webpack_require__(84),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -3164,17 +3276,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 63 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(64);
+var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("2e9181f8", content, false);
+var update = __webpack_require__(2)("2e9181f8", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -3190,22 +3302,58 @@ if(false) {
 }
 
 /***/ }),
-/* 64 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);", ""]);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Montserrat:400,600,700);", ""]);
 
 // module
-exports.push([module.i, "\n@charset \"UTF-8\";\n/*!\n *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(" + __webpack_require__(165) + ");\n  src: url(" + __webpack_require__(166) + "?#iefix&v=4.7.0) format(\"embedded-opentype\"), url(" + __webpack_require__(167) + ") format(\"woff2\"), url(" + __webpack_require__(168) + ") format(\"woff\"), url(" + __webpack_require__(169) + ") format(\"truetype\"), url(" + __webpack_require__(170) + "#fontawesomeregular) format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.fa-2x {\n  font-size: 2em;\n}\n.fa-3x {\n  font-size: 3em;\n}\n.fa-4x {\n  font-size: 4em;\n}\n.fa-5x {\n  font-size: 5em;\n}\n.fa-fw {\n  width: 1.28571em;\n  text-align: center;\n}\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14286em;\n  list-style-type: none;\n}\n.fa-ul > li {\n    position: relative;\n}\n.fa-li {\n  position: absolute;\n  left: -2.14286em;\n  width: 2.14286em;\n  top: 0.14286em;\n  text-align: center;\n}\n.fa-li.fa-lg {\n    left: -1.85714em;\n}\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eee;\n  border-radius: .1em;\n}\n.fa-pull-left {\n  float: left;\n}\n.fa-pull-right {\n  float: right;\n}\n.fa.fa-pull-left {\n  margin-right: .3em;\n}\n.fa.fa-pull-right {\n  margin-left: .3em;\n}\n\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right;\n}\n.pull-left {\n  float: left;\n}\n.fa.pull-left {\n  margin-right: .3em;\n}\n.fa.pull-right {\n  margin-left: .3em;\n}\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear;\n}\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8);\n}\n@-webkit-keyframes fa-spin {\n0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n}\n}\n@keyframes fa-spin {\n0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n}\n}\n.fa-rotate-90 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.fa-rotate-180 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.fa-rotate-270 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.fa-flip-horizontal {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.fa-flip-vertical {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\";\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  filter: none;\n}\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.fa-stack-1x, .fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.fa-stack-1x {\n  line-height: inherit;\n}\n.fa-stack-2x {\n  font-size: 2em;\n}\n.fa-inverse {\n  color: #fff;\n}\n\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\\F000\";\n}\n.fa-music:before {\n  content: \"\\F001\";\n}\n.fa-search:before {\n  content: \"\\F002\";\n}\n.fa-envelope-o:before {\n  content: \"\\F003\";\n}\n.fa-heart:before {\n  content: \"\\F004\";\n}\n.fa-star:before {\n  content: \"\\F005\";\n}\n.fa-star-o:before {\n  content: \"\\F006\";\n}\n.fa-user:before {\n  content: \"\\F007\";\n}\n.fa-film:before {\n  content: \"\\F008\";\n}\n.fa-th-large:before {\n  content: \"\\F009\";\n}\n.fa-th:before {\n  content: \"\\F00A\";\n}\n.fa-th-list:before {\n  content: \"\\F00B\";\n}\n.fa-check:before {\n  content: \"\\F00C\";\n}\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\\F00D\";\n}\n.fa-search-plus:before {\n  content: \"\\F00E\";\n}\n.fa-search-minus:before {\n  content: \"\\F010\";\n}\n.fa-power-off:before {\n  content: \"\\F011\";\n}\n.fa-signal:before {\n  content: \"\\F012\";\n}\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\\F013\";\n}\n.fa-trash-o:before {\n  content: \"\\F014\";\n}\n.fa-home:before {\n  content: \"\\F015\";\n}\n.fa-file-o:before {\n  content: \"\\F016\";\n}\n.fa-clock-o:before {\n  content: \"\\F017\";\n}\n.fa-road:before {\n  content: \"\\F018\";\n}\n.fa-download:before {\n  content: \"\\F019\";\n}\n.fa-arrow-circle-o-down:before {\n  content: \"\\F01A\";\n}\n.fa-arrow-circle-o-up:before {\n  content: \"\\F01B\";\n}\n.fa-inbox:before {\n  content: \"\\F01C\";\n}\n.fa-play-circle-o:before {\n  content: \"\\F01D\";\n}\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\\F01E\";\n}\n.fa-refresh:before {\n  content: \"\\F021\";\n}\n.fa-list-alt:before {\n  content: \"\\F022\";\n}\n.fa-lock:before {\n  content: \"\\F023\";\n}\n.fa-flag:before {\n  content: \"\\F024\";\n}\n.fa-headphones:before {\n  content: \"\\F025\";\n}\n.fa-volume-off:before {\n  content: \"\\F026\";\n}\n.fa-volume-down:before {\n  content: \"\\F027\";\n}\n.fa-volume-up:before {\n  content: \"\\F028\";\n}\n.fa-qrcode:before {\n  content: \"\\F029\";\n}\n.fa-barcode:before {\n  content: \"\\F02A\";\n}\n.fa-tag:before {\n  content: \"\\F02B\";\n}\n.fa-tags:before {\n  content: \"\\F02C\";\n}\n.fa-book:before {\n  content: \"\\F02D\";\n}\n.fa-bookmark:before {\n  content: \"\\F02E\";\n}\n.fa-print:before {\n  content: \"\\F02F\";\n}\n.fa-camera:before {\n  content: \"\\F030\";\n}\n.fa-font:before {\n  content: \"\\F031\";\n}\n.fa-bold:before {\n  content: \"\\F032\";\n}\n.fa-italic:before {\n  content: \"\\F033\";\n}\n.fa-text-height:before {\n  content: \"\\F034\";\n}\n.fa-text-width:before {\n  content: \"\\F035\";\n}\n.fa-align-left:before {\n  content: \"\\F036\";\n}\n.fa-align-center:before {\n  content: \"\\F037\";\n}\n.fa-align-right:before {\n  content: \"\\F038\";\n}\n.fa-align-justify:before {\n  content: \"\\F039\";\n}\n.fa-list:before {\n  content: \"\\F03A\";\n}\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\\F03B\";\n}\n.fa-indent:before {\n  content: \"\\F03C\";\n}\n.fa-video-camera:before {\n  content: \"\\F03D\";\n}\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\\F03E\";\n}\n.fa-pencil:before {\n  content: \"\\F040\";\n}\n.fa-map-marker:before {\n  content: \"\\F041\";\n}\n.fa-adjust:before {\n  content: \"\\F042\";\n}\n.fa-tint:before {\n  content: \"\\F043\";\n}\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\\F044\";\n}\n.fa-share-square-o:before {\n  content: \"\\F045\";\n}\n.fa-check-square-o:before {\n  content: \"\\F046\";\n}\n.fa-arrows:before {\n  content: \"\\F047\";\n}\n.fa-step-backward:before {\n  content: \"\\F048\";\n}\n.fa-fast-backward:before {\n  content: \"\\F049\";\n}\n.fa-backward:before {\n  content: \"\\F04A\";\n}\n.fa-play:before {\n  content: \"\\F04B\";\n}\n.fa-pause:before {\n  content: \"\\F04C\";\n}\n.fa-stop:before {\n  content: \"\\F04D\";\n}\n.fa-forward:before {\n  content: \"\\F04E\";\n}\n.fa-fast-forward:before {\n  content: \"\\F050\";\n}\n.fa-step-forward:before {\n  content: \"\\F051\";\n}\n.fa-eject:before {\n  content: \"\\F052\";\n}\n.fa-chevron-left:before {\n  content: \"\\F053\";\n}\n.fa-chevron-right:before {\n  content: \"\\F054\";\n}\n.fa-plus-circle:before {\n  content: \"\\F055\";\n}\n.fa-minus-circle:before {\n  content: \"\\F056\";\n}\n.fa-times-circle:before {\n  content: \"\\F057\";\n}\n.fa-check-circle:before {\n  content: \"\\F058\";\n}\n.fa-question-circle:before {\n  content: \"\\F059\";\n}\n.fa-info-circle:before {\n  content: \"\\F05A\";\n}\n.fa-crosshairs:before {\n  content: \"\\F05B\";\n}\n.fa-times-circle-o:before {\n  content: \"\\F05C\";\n}\n.fa-check-circle-o:before {\n  content: \"\\F05D\";\n}\n.fa-ban:before {\n  content: \"\\F05E\";\n}\n.fa-arrow-left:before {\n  content: \"\\F060\";\n}\n.fa-arrow-right:before {\n  content: \"\\F061\";\n}\n.fa-arrow-up:before {\n  content: \"\\F062\";\n}\n.fa-arrow-down:before {\n  content: \"\\F063\";\n}\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\\F064\";\n}\n.fa-expand:before {\n  content: \"\\F065\";\n}\n.fa-compress:before {\n  content: \"\\F066\";\n}\n.fa-plus:before {\n  content: \"\\F067\";\n}\n.fa-minus:before {\n  content: \"\\F068\";\n}\n.fa-asterisk:before {\n  content: \"\\F069\";\n}\n.fa-exclamation-circle:before {\n  content: \"\\F06A\";\n}\n.fa-gift:before {\n  content: \"\\F06B\";\n}\n.fa-leaf:before {\n  content: \"\\F06C\";\n}\n.fa-fire:before {\n  content: \"\\F06D\";\n}\n.fa-eye:before {\n  content: \"\\F06E\";\n}\n.fa-eye-slash:before {\n  content: \"\\F070\";\n}\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\\F071\";\n}\n.fa-plane:before {\n  content: \"\\F072\";\n}\n.fa-calendar:before {\n  content: \"\\F073\";\n}\n.fa-random:before {\n  content: \"\\F074\";\n}\n.fa-comment:before {\n  content: \"\\F075\";\n}\n.fa-magnet:before {\n  content: \"\\F076\";\n}\n.fa-chevron-up:before {\n  content: \"\\F077\";\n}\n.fa-chevron-down:before {\n  content: \"\\F078\";\n}\n.fa-retweet:before {\n  content: \"\\F079\";\n}\n.fa-shopping-cart:before {\n  content: \"\\F07A\";\n}\n.fa-folder:before {\n  content: \"\\F07B\";\n}\n.fa-folder-open:before {\n  content: \"\\F07C\";\n}\n.fa-arrows-v:before {\n  content: \"\\F07D\";\n}\n.fa-arrows-h:before {\n  content: \"\\F07E\";\n}\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\\F080\";\n}\n.fa-twitter-square:before {\n  content: \"\\F081\";\n}\n.fa-facebook-square:before {\n  content: \"\\F082\";\n}\n.fa-camera-retro:before {\n  content: \"\\F083\";\n}\n.fa-key:before {\n  content: \"\\F084\";\n}\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\\F085\";\n}\n.fa-comments:before {\n  content: \"\\F086\";\n}\n.fa-thumbs-o-up:before {\n  content: \"\\F087\";\n}\n.fa-thumbs-o-down:before {\n  content: \"\\F088\";\n}\n.fa-star-half:before {\n  content: \"\\F089\";\n}\n.fa-heart-o:before {\n  content: \"\\F08A\";\n}\n.fa-sign-out:before {\n  content: \"\\F08B\";\n}\n.fa-linkedin-square:before {\n  content: \"\\F08C\";\n}\n.fa-thumb-tack:before {\n  content: \"\\F08D\";\n}\n.fa-external-link:before {\n  content: \"\\F08E\";\n}\n.fa-sign-in:before {\n  content: \"\\F090\";\n}\n.fa-trophy:before {\n  content: \"\\F091\";\n}\n.fa-github-square:before {\n  content: \"\\F092\";\n}\n.fa-upload:before {\n  content: \"\\F093\";\n}\n.fa-lemon-o:before {\n  content: \"\\F094\";\n}\n.fa-phone:before {\n  content: \"\\F095\";\n}\n.fa-square-o:before {\n  content: \"\\F096\";\n}\n.fa-bookmark-o:before {\n  content: \"\\F097\";\n}\n.fa-phone-square:before {\n  content: \"\\F098\";\n}\n.fa-twitter:before {\n  content: \"\\F099\";\n}\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\\F09A\";\n}\n.fa-github:before {\n  content: \"\\F09B\";\n}\n.fa-unlock:before {\n  content: \"\\F09C\";\n}\n.fa-credit-card:before {\n  content: \"\\F09D\";\n}\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\\F09E\";\n}\n.fa-hdd-o:before {\n  content: \"\\F0A0\";\n}\n.fa-bullhorn:before {\n  content: \"\\F0A1\";\n}\n.fa-bell:before {\n  content: \"\\F0F3\";\n}\n.fa-certificate:before {\n  content: \"\\F0A3\";\n}\n.fa-hand-o-right:before {\n  content: \"\\F0A4\";\n}\n.fa-hand-o-left:before {\n  content: \"\\F0A5\";\n}\n.fa-hand-o-up:before {\n  content: \"\\F0A6\";\n}\n.fa-hand-o-down:before {\n  content: \"\\F0A7\";\n}\n.fa-arrow-circle-left:before {\n  content: \"\\F0A8\";\n}\n.fa-arrow-circle-right:before {\n  content: \"\\F0A9\";\n}\n.fa-arrow-circle-up:before {\n  content: \"\\F0AA\";\n}\n.fa-arrow-circle-down:before {\n  content: \"\\F0AB\";\n}\n.fa-globe:before {\n  content: \"\\F0AC\";\n}\n.fa-wrench:before {\n  content: \"\\F0AD\";\n}\n.fa-tasks:before {\n  content: \"\\F0AE\";\n}\n.fa-filter:before {\n  content: \"\\F0B0\";\n}\n.fa-briefcase:before {\n  content: \"\\F0B1\";\n}\n.fa-arrows-alt:before {\n  content: \"\\F0B2\";\n}\n.fa-group:before,\n.fa-users:before {\n  content: \"\\F0C0\";\n}\n.fa-chain:before,\n.fa-link:before {\n  content: \"\\F0C1\";\n}\n.fa-cloud:before {\n  content: \"\\F0C2\";\n}\n.fa-flask:before {\n  content: \"\\F0C3\";\n}\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\\F0C4\";\n}\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\\F0C5\";\n}\n.fa-paperclip:before {\n  content: \"\\F0C6\";\n}\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\\F0C7\";\n}\n.fa-square:before {\n  content: \"\\F0C8\";\n}\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\\F0C9\";\n}\n.fa-list-ul:before {\n  content: \"\\F0CA\";\n}\n.fa-list-ol:before {\n  content: \"\\F0CB\";\n}\n.fa-strikethrough:before {\n  content: \"\\F0CC\";\n}\n.fa-underline:before {\n  content: \"\\F0CD\";\n}\n.fa-table:before {\n  content: \"\\F0CE\";\n}\n.fa-magic:before {\n  content: \"\\F0D0\";\n}\n.fa-truck:before {\n  content: \"\\F0D1\";\n}\n.fa-pinterest:before {\n  content: \"\\F0D2\";\n}\n.fa-pinterest-square:before {\n  content: \"\\F0D3\";\n}\n.fa-google-plus-square:before {\n  content: \"\\F0D4\";\n}\n.fa-google-plus:before {\n  content: \"\\F0D5\";\n}\n.fa-money:before {\n  content: \"\\F0D6\";\n}\n.fa-caret-down:before {\n  content: \"\\F0D7\";\n}\n.fa-caret-up:before {\n  content: \"\\F0D8\";\n}\n.fa-caret-left:before {\n  content: \"\\F0D9\";\n}\n.fa-caret-right:before {\n  content: \"\\F0DA\";\n}\n.fa-columns:before {\n  content: \"\\F0DB\";\n}\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\\F0DC\";\n}\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\\F0DD\";\n}\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\\F0DE\";\n}\n.fa-envelope:before {\n  content: \"\\F0E0\";\n}\n.fa-linkedin:before {\n  content: \"\\F0E1\";\n}\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\\F0E2\";\n}\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\\F0E3\";\n}\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\\F0E4\";\n}\n.fa-comment-o:before {\n  content: \"\\F0E5\";\n}\n.fa-comments-o:before {\n  content: \"\\F0E6\";\n}\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\\F0E7\";\n}\n.fa-sitemap:before {\n  content: \"\\F0E8\";\n}\n.fa-umbrella:before {\n  content: \"\\F0E9\";\n}\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\\F0EA\";\n}\n.fa-lightbulb-o:before {\n  content: \"\\F0EB\";\n}\n.fa-exchange:before {\n  content: \"\\F0EC\";\n}\n.fa-cloud-download:before {\n  content: \"\\F0ED\";\n}\n.fa-cloud-upload:before {\n  content: \"\\F0EE\";\n}\n.fa-user-md:before {\n  content: \"\\F0F0\";\n}\n.fa-stethoscope:before {\n  content: \"\\F0F1\";\n}\n.fa-suitcase:before {\n  content: \"\\F0F2\";\n}\n.fa-bell-o:before {\n  content: \"\\F0A2\";\n}\n.fa-coffee:before {\n  content: \"\\F0F4\";\n}\n.fa-cutlery:before {\n  content: \"\\F0F5\";\n}\n.fa-file-text-o:before {\n  content: \"\\F0F6\";\n}\n.fa-building-o:before {\n  content: \"\\F0F7\";\n}\n.fa-hospital-o:before {\n  content: \"\\F0F8\";\n}\n.fa-ambulance:before {\n  content: \"\\F0F9\";\n}\n.fa-medkit:before {\n  content: \"\\F0FA\";\n}\n.fa-fighter-jet:before {\n  content: \"\\F0FB\";\n}\n.fa-beer:before {\n  content: \"\\F0FC\";\n}\n.fa-h-square:before {\n  content: \"\\F0FD\";\n}\n.fa-plus-square:before {\n  content: \"\\F0FE\";\n}\n.fa-angle-double-left:before {\n  content: \"\\F100\";\n}\n.fa-angle-double-right:before {\n  content: \"\\F101\";\n}\n.fa-angle-double-up:before {\n  content: \"\\F102\";\n}\n.fa-angle-double-down:before {\n  content: \"\\F103\";\n}\n.fa-angle-left:before {\n  content: \"\\F104\";\n}\n.fa-angle-right:before {\n  content: \"\\F105\";\n}\n.fa-angle-up:before {\n  content: \"\\F106\";\n}\n.fa-angle-down:before {\n  content: \"\\F107\";\n}\n.fa-desktop:before {\n  content: \"\\F108\";\n}\n.fa-laptop:before {\n  content: \"\\F109\";\n}\n.fa-tablet:before {\n  content: \"\\F10A\";\n}\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\\F10B\";\n}\n.fa-circle-o:before {\n  content: \"\\F10C\";\n}\n.fa-quote-left:before {\n  content: \"\\F10D\";\n}\n.fa-quote-right:before {\n  content: \"\\F10E\";\n}\n.fa-spinner:before {\n  content: \"\\F110\";\n}\n.fa-circle:before {\n  content: \"\\F111\";\n}\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\\F112\";\n}\n.fa-github-alt:before {\n  content: \"\\F113\";\n}\n.fa-folder-o:before {\n  content: \"\\F114\";\n}\n.fa-folder-open-o:before {\n  content: \"\\F115\";\n}\n.fa-smile-o:before {\n  content: \"\\F118\";\n}\n.fa-frown-o:before {\n  content: \"\\F119\";\n}\n.fa-meh-o:before {\n  content: \"\\F11A\";\n}\n.fa-gamepad:before {\n  content: \"\\F11B\";\n}\n.fa-keyboard-o:before {\n  content: \"\\F11C\";\n}\n.fa-flag-o:before {\n  content: \"\\F11D\";\n}\n.fa-flag-checkered:before {\n  content: \"\\F11E\";\n}\n.fa-terminal:before {\n  content: \"\\F120\";\n}\n.fa-code:before {\n  content: \"\\F121\";\n}\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\\F122\";\n}\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\\F123\";\n}\n.fa-location-arrow:before {\n  content: \"\\F124\";\n}\n.fa-crop:before {\n  content: \"\\F125\";\n}\n.fa-code-fork:before {\n  content: \"\\F126\";\n}\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\\F127\";\n}\n.fa-question:before {\n  content: \"\\F128\";\n}\n.fa-info:before {\n  content: \"\\F129\";\n}\n.fa-exclamation:before {\n  content: \"\\F12A\";\n}\n.fa-superscript:before {\n  content: \"\\F12B\";\n}\n.fa-subscript:before {\n  content: \"\\F12C\";\n}\n.fa-eraser:before {\n  content: \"\\F12D\";\n}\n.fa-puzzle-piece:before {\n  content: \"\\F12E\";\n}\n.fa-microphone:before {\n  content: \"\\F130\";\n}\n.fa-microphone-slash:before {\n  content: \"\\F131\";\n}\n.fa-shield:before {\n  content: \"\\F132\";\n}\n.fa-calendar-o:before {\n  content: \"\\F133\";\n}\n.fa-fire-extinguisher:before {\n  content: \"\\F134\";\n}\n.fa-rocket:before {\n  content: \"\\F135\";\n}\n.fa-maxcdn:before {\n  content: \"\\F136\";\n}\n.fa-chevron-circle-left:before {\n  content: \"\\F137\";\n}\n.fa-chevron-circle-right:before {\n  content: \"\\F138\";\n}\n.fa-chevron-circle-up:before {\n  content: \"\\F139\";\n}\n.fa-chevron-circle-down:before {\n  content: \"\\F13A\";\n}\n.fa-html5:before {\n  content: \"\\F13B\";\n}\n.fa-css3:before {\n  content: \"\\F13C\";\n}\n.fa-anchor:before {\n  content: \"\\F13D\";\n}\n.fa-unlock-alt:before {\n  content: \"\\F13E\";\n}\n.fa-bullseye:before {\n  content: \"\\F140\";\n}\n.fa-ellipsis-h:before {\n  content: \"\\F141\";\n}\n.fa-ellipsis-v:before {\n  content: \"\\F142\";\n}\n.fa-rss-square:before {\n  content: \"\\F143\";\n}\n.fa-play-circle:before {\n  content: \"\\F144\";\n}\n.fa-ticket:before {\n  content: \"\\F145\";\n}\n.fa-minus-square:before {\n  content: \"\\F146\";\n}\n.fa-minus-square-o:before {\n  content: \"\\F147\";\n}\n.fa-level-up:before {\n  content: \"\\F148\";\n}\n.fa-level-down:before {\n  content: \"\\F149\";\n}\n.fa-check-square:before {\n  content: \"\\F14A\";\n}\n.fa-pencil-square:before {\n  content: \"\\F14B\";\n}\n.fa-external-link-square:before {\n  content: \"\\F14C\";\n}\n.fa-share-square:before {\n  content: \"\\F14D\";\n}\n.fa-compass:before {\n  content: \"\\F14E\";\n}\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\\F150\";\n}\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\\F151\";\n}\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\\F152\";\n}\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\\F153\";\n}\n.fa-gbp:before {\n  content: \"\\F154\";\n}\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\\F155\";\n}\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\\F156\";\n}\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\\F157\";\n}\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\\F158\";\n}\n.fa-won:before,\n.fa-krw:before {\n  content: \"\\F159\";\n}\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\\F15A\";\n}\n.fa-file:before {\n  content: \"\\F15B\";\n}\n.fa-file-text:before {\n  content: \"\\F15C\";\n}\n.fa-sort-alpha-asc:before {\n  content: \"\\F15D\";\n}\n.fa-sort-alpha-desc:before {\n  content: \"\\F15E\";\n}\n.fa-sort-amount-asc:before {\n  content: \"\\F160\";\n}\n.fa-sort-amount-desc:before {\n  content: \"\\F161\";\n}\n.fa-sort-numeric-asc:before {\n  content: \"\\F162\";\n}\n.fa-sort-numeric-desc:before {\n  content: \"\\F163\";\n}\n.fa-thumbs-up:before {\n  content: \"\\F164\";\n}\n.fa-thumbs-down:before {\n  content: \"\\F165\";\n}\n.fa-youtube-square:before {\n  content: \"\\F166\";\n}\n.fa-youtube:before {\n  content: \"\\F167\";\n}\n.fa-xing:before {\n  content: \"\\F168\";\n}\n.fa-xing-square:before {\n  content: \"\\F169\";\n}\n.fa-youtube-play:before {\n  content: \"\\F16A\";\n}\n.fa-dropbox:before {\n  content: \"\\F16B\";\n}\n.fa-stack-overflow:before {\n  content: \"\\F16C\";\n}\n.fa-instagram:before {\n  content: \"\\F16D\";\n}\n.fa-flickr:before {\n  content: \"\\F16E\";\n}\n.fa-adn:before {\n  content: \"\\F170\";\n}\n.fa-bitbucket:before {\n  content: \"\\F171\";\n}\n.fa-bitbucket-square:before {\n  content: \"\\F172\";\n}\n.fa-tumblr:before {\n  content: \"\\F173\";\n}\n.fa-tumblr-square:before {\n  content: \"\\F174\";\n}\n.fa-long-arrow-down:before {\n  content: \"\\F175\";\n}\n.fa-long-arrow-up:before {\n  content: \"\\F176\";\n}\n.fa-long-arrow-left:before {\n  content: \"\\F177\";\n}\n.fa-long-arrow-right:before {\n  content: \"\\F178\";\n}\n.fa-apple:before {\n  content: \"\\F179\";\n}\n.fa-windows:before {\n  content: \"\\F17A\";\n}\n.fa-android:before {\n  content: \"\\F17B\";\n}\n.fa-linux:before {\n  content: \"\\F17C\";\n}\n.fa-dribbble:before {\n  content: \"\\F17D\";\n}\n.fa-skype:before {\n  content: \"\\F17E\";\n}\n.fa-foursquare:before {\n  content: \"\\F180\";\n}\n.fa-trello:before {\n  content: \"\\F181\";\n}\n.fa-female:before {\n  content: \"\\F182\";\n}\n.fa-male:before {\n  content: \"\\F183\";\n}\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\\F184\";\n}\n.fa-sun-o:before {\n  content: \"\\F185\";\n}\n.fa-moon-o:before {\n  content: \"\\F186\";\n}\n.fa-archive:before {\n  content: \"\\F187\";\n}\n.fa-bug:before {\n  content: \"\\F188\";\n}\n.fa-vk:before {\n  content: \"\\F189\";\n}\n.fa-weibo:before {\n  content: \"\\F18A\";\n}\n.fa-renren:before {\n  content: \"\\F18B\";\n}\n.fa-pagelines:before {\n  content: \"\\F18C\";\n}\n.fa-stack-exchange:before {\n  content: \"\\F18D\";\n}\n.fa-arrow-circle-o-right:before {\n  content: \"\\F18E\";\n}\n.fa-arrow-circle-o-left:before {\n  content: \"\\F190\";\n}\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\\F191\";\n}\n.fa-dot-circle-o:before {\n  content: \"\\F192\";\n}\n.fa-wheelchair:before {\n  content: \"\\F193\";\n}\n.fa-vimeo-square:before {\n  content: \"\\F194\";\n}\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\\F195\";\n}\n.fa-plus-square-o:before {\n  content: \"\\F196\";\n}\n.fa-space-shuttle:before {\n  content: \"\\F197\";\n}\n.fa-slack:before {\n  content: \"\\F198\";\n}\n.fa-envelope-square:before {\n  content: \"\\F199\";\n}\n.fa-wordpress:before {\n  content: \"\\F19A\";\n}\n.fa-openid:before {\n  content: \"\\F19B\";\n}\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\\F19C\";\n}\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\\F19D\";\n}\n.fa-yahoo:before {\n  content: \"\\F19E\";\n}\n.fa-google:before {\n  content: \"\\F1A0\";\n}\n.fa-reddit:before {\n  content: \"\\F1A1\";\n}\n.fa-reddit-square:before {\n  content: \"\\F1A2\";\n}\n.fa-stumbleupon-circle:before {\n  content: \"\\F1A3\";\n}\n.fa-stumbleupon:before {\n  content: \"\\F1A4\";\n}\n.fa-delicious:before {\n  content: \"\\F1A5\";\n}\n.fa-digg:before {\n  content: \"\\F1A6\";\n}\n.fa-pied-piper-pp:before {\n  content: \"\\F1A7\";\n}\n.fa-pied-piper-alt:before {\n  content: \"\\F1A8\";\n}\n.fa-drupal:before {\n  content: \"\\F1A9\";\n}\n.fa-joomla:before {\n  content: \"\\F1AA\";\n}\n.fa-language:before {\n  content: \"\\F1AB\";\n}\n.fa-fax:before {\n  content: \"\\F1AC\";\n}\n.fa-building:before {\n  content: \"\\F1AD\";\n}\n.fa-child:before {\n  content: \"\\F1AE\";\n}\n.fa-paw:before {\n  content: \"\\F1B0\";\n}\n.fa-spoon:before {\n  content: \"\\F1B1\";\n}\n.fa-cube:before {\n  content: \"\\F1B2\";\n}\n.fa-cubes:before {\n  content: \"\\F1B3\";\n}\n.fa-behance:before {\n  content: \"\\F1B4\";\n}\n.fa-behance-square:before {\n  content: \"\\F1B5\";\n}\n.fa-steam:before {\n  content: \"\\F1B6\";\n}\n.fa-steam-square:before {\n  content: \"\\F1B7\";\n}\n.fa-recycle:before {\n  content: \"\\F1B8\";\n}\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\\F1B9\";\n}\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\\F1BA\";\n}\n.fa-tree:before {\n  content: \"\\F1BB\";\n}\n.fa-spotify:before {\n  content: \"\\F1BC\";\n}\n.fa-deviantart:before {\n  content: \"\\F1BD\";\n}\n.fa-soundcloud:before {\n  content: \"\\F1BE\";\n}\n.fa-database:before {\n  content: \"\\F1C0\";\n}\n.fa-file-pdf-o:before {\n  content: \"\\F1C1\";\n}\n.fa-file-word-o:before {\n  content: \"\\F1C2\";\n}\n.fa-file-excel-o:before {\n  content: \"\\F1C3\";\n}\n.fa-file-powerpoint-o:before {\n  content: \"\\F1C4\";\n}\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\\F1C5\";\n}\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\\F1C6\";\n}\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\\F1C7\";\n}\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\\F1C8\";\n}\n.fa-file-code-o:before {\n  content: \"\\F1C9\";\n}\n.fa-vine:before {\n  content: \"\\F1CA\";\n}\n.fa-codepen:before {\n  content: \"\\F1CB\";\n}\n.fa-jsfiddle:before {\n  content: \"\\F1CC\";\n}\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\\F1CD\";\n}\n.fa-circle-o-notch:before {\n  content: \"\\F1CE\";\n}\n.fa-ra:before,\n.fa-resistance:before,\n.fa-rebel:before {\n  content: \"\\F1D0\";\n}\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\\F1D1\";\n}\n.fa-git-square:before {\n  content: \"\\F1D2\";\n}\n.fa-git:before {\n  content: \"\\F1D3\";\n}\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\\F1D4\";\n}\n.fa-tencent-weibo:before {\n  content: \"\\F1D5\";\n}\n.fa-qq:before {\n  content: \"\\F1D6\";\n}\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\\F1D7\";\n}\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\\F1D8\";\n}\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\\F1D9\";\n}\n.fa-history:before {\n  content: \"\\F1DA\";\n}\n.fa-circle-thin:before {\n  content: \"\\F1DB\";\n}\n.fa-header:before {\n  content: \"\\F1DC\";\n}\n.fa-paragraph:before {\n  content: \"\\F1DD\";\n}\n.fa-sliders:before {\n  content: \"\\F1DE\";\n}\n.fa-share-alt:before {\n  content: \"\\F1E0\";\n}\n.fa-share-alt-square:before {\n  content: \"\\F1E1\";\n}\n.fa-bomb:before {\n  content: \"\\F1E2\";\n}\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\\F1E3\";\n}\n.fa-tty:before {\n  content: \"\\F1E4\";\n}\n.fa-binoculars:before {\n  content: \"\\F1E5\";\n}\n.fa-plug:before {\n  content: \"\\F1E6\";\n}\n.fa-slideshare:before {\n  content: \"\\F1E7\";\n}\n.fa-twitch:before {\n  content: \"\\F1E8\";\n}\n.fa-yelp:before {\n  content: \"\\F1E9\";\n}\n.fa-newspaper-o:before {\n  content: \"\\F1EA\";\n}\n.fa-wifi:before {\n  content: \"\\F1EB\";\n}\n.fa-calculator:before {\n  content: \"\\F1EC\";\n}\n.fa-paypal:before {\n  content: \"\\F1ED\";\n}\n.fa-google-wallet:before {\n  content: \"\\F1EE\";\n}\n.fa-cc-visa:before {\n  content: \"\\F1F0\";\n}\n.fa-cc-mastercard:before {\n  content: \"\\F1F1\";\n}\n.fa-cc-discover:before {\n  content: \"\\F1F2\";\n}\n.fa-cc-amex:before {\n  content: \"\\F1F3\";\n}\n.fa-cc-paypal:before {\n  content: \"\\F1F4\";\n}\n.fa-cc-stripe:before {\n  content: \"\\F1F5\";\n}\n.fa-bell-slash:before {\n  content: \"\\F1F6\";\n}\n.fa-bell-slash-o:before {\n  content: \"\\F1F7\";\n}\n.fa-trash:before {\n  content: \"\\F1F8\";\n}\n.fa-copyright:before {\n  content: \"\\F1F9\";\n}\n.fa-at:before {\n  content: \"\\F1FA\";\n}\n.fa-eyedropper:before {\n  content: \"\\F1FB\";\n}\n.fa-paint-brush:before {\n  content: \"\\F1FC\";\n}\n.fa-birthday-cake:before {\n  content: \"\\F1FD\";\n}\n.fa-area-chart:before {\n  content: \"\\F1FE\";\n}\n.fa-pie-chart:before {\n  content: \"\\F200\";\n}\n.fa-line-chart:before {\n  content: \"\\F201\";\n}\n.fa-lastfm:before {\n  content: \"\\F202\";\n}\n.fa-lastfm-square:before {\n  content: \"\\F203\";\n}\n.fa-toggle-off:before {\n  content: \"\\F204\";\n}\n.fa-toggle-on:before {\n  content: \"\\F205\";\n}\n.fa-bicycle:before {\n  content: \"\\F206\";\n}\n.fa-bus:before {\n  content: \"\\F207\";\n}\n.fa-ioxhost:before {\n  content: \"\\F208\";\n}\n.fa-angellist:before {\n  content: \"\\F209\";\n}\n.fa-cc:before {\n  content: \"\\F20A\";\n}\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\\F20B\";\n}\n.fa-meanpath:before {\n  content: \"\\F20C\";\n}\n.fa-buysellads:before {\n  content: \"\\F20D\";\n}\n.fa-connectdevelop:before {\n  content: \"\\F20E\";\n}\n.fa-dashcube:before {\n  content: \"\\F210\";\n}\n.fa-forumbee:before {\n  content: \"\\F211\";\n}\n.fa-leanpub:before {\n  content: \"\\F212\";\n}\n.fa-sellsy:before {\n  content: \"\\F213\";\n}\n.fa-shirtsinbulk:before {\n  content: \"\\F214\";\n}\n.fa-simplybuilt:before {\n  content: \"\\F215\";\n}\n.fa-skyatlas:before {\n  content: \"\\F216\";\n}\n.fa-cart-plus:before {\n  content: \"\\F217\";\n}\n.fa-cart-arrow-down:before {\n  content: \"\\F218\";\n}\n.fa-diamond:before {\n  content: \"\\F219\";\n}\n.fa-ship:before {\n  content: \"\\F21A\";\n}\n.fa-user-secret:before {\n  content: \"\\F21B\";\n}\n.fa-motorcycle:before {\n  content: \"\\F21C\";\n}\n.fa-street-view:before {\n  content: \"\\F21D\";\n}\n.fa-heartbeat:before {\n  content: \"\\F21E\";\n}\n.fa-venus:before {\n  content: \"\\F221\";\n}\n.fa-mars:before {\n  content: \"\\F222\";\n}\n.fa-mercury:before {\n  content: \"\\F223\";\n}\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\\F224\";\n}\n.fa-transgender-alt:before {\n  content: \"\\F225\";\n}\n.fa-venus-double:before {\n  content: \"\\F226\";\n}\n.fa-mars-double:before {\n  content: \"\\F227\";\n}\n.fa-venus-mars:before {\n  content: \"\\F228\";\n}\n.fa-mars-stroke:before {\n  content: \"\\F229\";\n}\n.fa-mars-stroke-v:before {\n  content: \"\\F22A\";\n}\n.fa-mars-stroke-h:before {\n  content: \"\\F22B\";\n}\n.fa-neuter:before {\n  content: \"\\F22C\";\n}\n.fa-genderless:before {\n  content: \"\\F22D\";\n}\n.fa-facebook-official:before {\n  content: \"\\F230\";\n}\n.fa-pinterest-p:before {\n  content: \"\\F231\";\n}\n.fa-whatsapp:before {\n  content: \"\\F232\";\n}\n.fa-server:before {\n  content: \"\\F233\";\n}\n.fa-user-plus:before {\n  content: \"\\F234\";\n}\n.fa-user-times:before {\n  content: \"\\F235\";\n}\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\\F236\";\n}\n.fa-viacoin:before {\n  content: \"\\F237\";\n}\n.fa-train:before {\n  content: \"\\F238\";\n}\n.fa-subway:before {\n  content: \"\\F239\";\n}\n.fa-medium:before {\n  content: \"\\F23A\";\n}\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\\F23B\";\n}\n.fa-optin-monster:before {\n  content: \"\\F23C\";\n}\n.fa-opencart:before {\n  content: \"\\F23D\";\n}\n.fa-expeditedssl:before {\n  content: \"\\F23E\";\n}\n.fa-battery-4:before,\n.fa-battery:before,\n.fa-battery-full:before {\n  content: \"\\F240\";\n}\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\\F241\";\n}\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\\F242\";\n}\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\\F243\";\n}\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\\F244\";\n}\n.fa-mouse-pointer:before {\n  content: \"\\F245\";\n}\n.fa-i-cursor:before {\n  content: \"\\F246\";\n}\n.fa-object-group:before {\n  content: \"\\F247\";\n}\n.fa-object-ungroup:before {\n  content: \"\\F248\";\n}\n.fa-sticky-note:before {\n  content: \"\\F249\";\n}\n.fa-sticky-note-o:before {\n  content: \"\\F24A\";\n}\n.fa-cc-jcb:before {\n  content: \"\\F24B\";\n}\n.fa-cc-diners-club:before {\n  content: \"\\F24C\";\n}\n.fa-clone:before {\n  content: \"\\F24D\";\n}\n.fa-balance-scale:before {\n  content: \"\\F24E\";\n}\n.fa-hourglass-o:before {\n  content: \"\\F250\";\n}\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\\F251\";\n}\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\\F252\";\n}\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\\F253\";\n}\n.fa-hourglass:before {\n  content: \"\\F254\";\n}\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\\F255\";\n}\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\\F256\";\n}\n.fa-hand-scissors-o:before {\n  content: \"\\F257\";\n}\n.fa-hand-lizard-o:before {\n  content: \"\\F258\";\n}\n.fa-hand-spock-o:before {\n  content: \"\\F259\";\n}\n.fa-hand-pointer-o:before {\n  content: \"\\F25A\";\n}\n.fa-hand-peace-o:before {\n  content: \"\\F25B\";\n}\n.fa-trademark:before {\n  content: \"\\F25C\";\n}\n.fa-registered:before {\n  content: \"\\F25D\";\n}\n.fa-creative-commons:before {\n  content: \"\\F25E\";\n}\n.fa-gg:before {\n  content: \"\\F260\";\n}\n.fa-gg-circle:before {\n  content: \"\\F261\";\n}\n.fa-tripadvisor:before {\n  content: \"\\F262\";\n}\n.fa-odnoklassniki:before {\n  content: \"\\F263\";\n}\n.fa-odnoklassniki-square:before {\n  content: \"\\F264\";\n}\n.fa-get-pocket:before {\n  content: \"\\F265\";\n}\n.fa-wikipedia-w:before {\n  content: \"\\F266\";\n}\n.fa-safari:before {\n  content: \"\\F267\";\n}\n.fa-chrome:before {\n  content: \"\\F268\";\n}\n.fa-firefox:before {\n  content: \"\\F269\";\n}\n.fa-opera:before {\n  content: \"\\F26A\";\n}\n.fa-internet-explorer:before {\n  content: \"\\F26B\";\n}\n.fa-tv:before,\n.fa-television:before {\n  content: \"\\F26C\";\n}\n.fa-contao:before {\n  content: \"\\F26D\";\n}\n.fa-500px:before {\n  content: \"\\F26E\";\n}\n.fa-amazon:before {\n  content: \"\\F270\";\n}\n.fa-calendar-plus-o:before {\n  content: \"\\F271\";\n}\n.fa-calendar-minus-o:before {\n  content: \"\\F272\";\n}\n.fa-calendar-times-o:before {\n  content: \"\\F273\";\n}\n.fa-calendar-check-o:before {\n  content: \"\\F274\";\n}\n.fa-industry:before {\n  content: \"\\F275\";\n}\n.fa-map-pin:before {\n  content: \"\\F276\";\n}\n.fa-map-signs:before {\n  content: \"\\F277\";\n}\n.fa-map-o:before {\n  content: \"\\F278\";\n}\n.fa-map:before {\n  content: \"\\F279\";\n}\n.fa-commenting:before {\n  content: \"\\F27A\";\n}\n.fa-commenting-o:before {\n  content: \"\\F27B\";\n}\n.fa-houzz:before {\n  content: \"\\F27C\";\n}\n.fa-vimeo:before {\n  content: \"\\F27D\";\n}\n.fa-black-tie:before {\n  content: \"\\F27E\";\n}\n.fa-fonticons:before {\n  content: \"\\F280\";\n}\n.fa-reddit-alien:before {\n  content: \"\\F281\";\n}\n.fa-edge:before {\n  content: \"\\F282\";\n}\n.fa-credit-card-alt:before {\n  content: \"\\F283\";\n}\n.fa-codiepie:before {\n  content: \"\\F284\";\n}\n.fa-modx:before {\n  content: \"\\F285\";\n}\n.fa-fort-awesome:before {\n  content: \"\\F286\";\n}\n.fa-usb:before {\n  content: \"\\F287\";\n}\n.fa-product-hunt:before {\n  content: \"\\F288\";\n}\n.fa-mixcloud:before {\n  content: \"\\F289\";\n}\n.fa-scribd:before {\n  content: \"\\F28A\";\n}\n.fa-pause-circle:before {\n  content: \"\\F28B\";\n}\n.fa-pause-circle-o:before {\n  content: \"\\F28C\";\n}\n.fa-stop-circle:before {\n  content: \"\\F28D\";\n}\n.fa-stop-circle-o:before {\n  content: \"\\F28E\";\n}\n.fa-shopping-bag:before {\n  content: \"\\F290\";\n}\n.fa-shopping-basket:before {\n  content: \"\\F291\";\n}\n.fa-hashtag:before {\n  content: \"\\F292\";\n}\n.fa-bluetooth:before {\n  content: \"\\F293\";\n}\n.fa-bluetooth-b:before {\n  content: \"\\F294\";\n}\n.fa-percent:before {\n  content: \"\\F295\";\n}\n.fa-gitlab:before {\n  content: \"\\F296\";\n}\n.fa-wpbeginner:before {\n  content: \"\\F297\";\n}\n.fa-wpforms:before {\n  content: \"\\F298\";\n}\n.fa-envira:before {\n  content: \"\\F299\";\n}\n.fa-universal-access:before {\n  content: \"\\F29A\";\n}\n.fa-wheelchair-alt:before {\n  content: \"\\F29B\";\n}\n.fa-question-circle-o:before {\n  content: \"\\F29C\";\n}\n.fa-blind:before {\n  content: \"\\F29D\";\n}\n.fa-audio-description:before {\n  content: \"\\F29E\";\n}\n.fa-volume-control-phone:before {\n  content: \"\\F2A0\";\n}\n.fa-braille:before {\n  content: \"\\F2A1\";\n}\n.fa-assistive-listening-systems:before {\n  content: \"\\F2A2\";\n}\n.fa-asl-interpreting:before,\n.fa-american-sign-language-interpreting:before {\n  content: \"\\F2A3\";\n}\n.fa-deafness:before,\n.fa-hard-of-hearing:before,\n.fa-deaf:before {\n  content: \"\\F2A4\";\n}\n.fa-glide:before {\n  content: \"\\F2A5\";\n}\n.fa-glide-g:before {\n  content: \"\\F2A6\";\n}\n.fa-signing:before,\n.fa-sign-language:before {\n  content: \"\\F2A7\";\n}\n.fa-low-vision:before {\n  content: \"\\F2A8\";\n}\n.fa-viadeo:before {\n  content: \"\\F2A9\";\n}\n.fa-viadeo-square:before {\n  content: \"\\F2AA\";\n}\n.fa-snapchat:before {\n  content: \"\\F2AB\";\n}\n.fa-snapchat-ghost:before {\n  content: \"\\F2AC\";\n}\n.fa-snapchat-square:before {\n  content: \"\\F2AD\";\n}\n.fa-pied-piper:before {\n  content: \"\\F2AE\";\n}\n.fa-first-order:before {\n  content: \"\\F2B0\";\n}\n.fa-yoast:before {\n  content: \"\\F2B1\";\n}\n.fa-themeisle:before {\n  content: \"\\F2B2\";\n}\n.fa-google-plus-circle:before,\n.fa-google-plus-official:before {\n  content: \"\\F2B3\";\n}\n.fa-fa:before,\n.fa-font-awesome:before {\n  content: \"\\F2B4\";\n}\n.fa-handshake-o:before {\n  content: \"\\F2B5\";\n}\n.fa-envelope-open:before {\n  content: \"\\F2B6\";\n}\n.fa-envelope-open-o:before {\n  content: \"\\F2B7\";\n}\n.fa-linode:before {\n  content: \"\\F2B8\";\n}\n.fa-address-book:before {\n  content: \"\\F2B9\";\n}\n.fa-address-book-o:before {\n  content: \"\\F2BA\";\n}\n.fa-vcard:before,\n.fa-address-card:before {\n  content: \"\\F2BB\";\n}\n.fa-vcard-o:before,\n.fa-address-card-o:before {\n  content: \"\\F2BC\";\n}\n.fa-user-circle:before {\n  content: \"\\F2BD\";\n}\n.fa-user-circle-o:before {\n  content: \"\\F2BE\";\n}\n.fa-user-o:before {\n  content: \"\\F2C0\";\n}\n.fa-id-badge:before {\n  content: \"\\F2C1\";\n}\n.fa-drivers-license:before,\n.fa-id-card:before {\n  content: \"\\F2C2\";\n}\n.fa-drivers-license-o:before,\n.fa-id-card-o:before {\n  content: \"\\F2C3\";\n}\n.fa-quora:before {\n  content: \"\\F2C4\";\n}\n.fa-free-code-camp:before {\n  content: \"\\F2C5\";\n}\n.fa-telegram:before {\n  content: \"\\F2C6\";\n}\n.fa-thermometer-4:before,\n.fa-thermometer:before,\n.fa-thermometer-full:before {\n  content: \"\\F2C7\";\n}\n.fa-thermometer-3:before,\n.fa-thermometer-three-quarters:before {\n  content: \"\\F2C8\";\n}\n.fa-thermometer-2:before,\n.fa-thermometer-half:before {\n  content: \"\\F2C9\";\n}\n.fa-thermometer-1:before,\n.fa-thermometer-quarter:before {\n  content: \"\\F2CA\";\n}\n.fa-thermometer-0:before,\n.fa-thermometer-empty:before {\n  content: \"\\F2CB\";\n}\n.fa-shower:before {\n  content: \"\\F2CC\";\n}\n.fa-bathtub:before,\n.fa-s15:before,\n.fa-bath:before {\n  content: \"\\F2CD\";\n}\n.fa-podcast:before {\n  content: \"\\F2CE\";\n}\n.fa-window-maximize:before {\n  content: \"\\F2D0\";\n}\n.fa-window-minimize:before {\n  content: \"\\F2D1\";\n}\n.fa-window-restore:before {\n  content: \"\\F2D2\";\n}\n.fa-times-rectangle:before,\n.fa-window-close:before {\n  content: \"\\F2D3\";\n}\n.fa-times-rectangle-o:before,\n.fa-window-close-o:before {\n  content: \"\\F2D4\";\n}\n.fa-bandcamp:before {\n  content: \"\\F2D5\";\n}\n.fa-grav:before {\n  content: \"\\F2D6\";\n}\n.fa-etsy:before {\n  content: \"\\F2D7\";\n}\n.fa-imdb:before {\n  content: \"\\F2D8\";\n}\n.fa-ravelry:before {\n  content: \"\\F2D9\";\n}\n.fa-eercast:before {\n  content: \"\\F2DA\";\n}\n.fa-microchip:before {\n  content: \"\\F2DB\";\n}\n.fa-snowflake-o:before {\n  content: \"\\F2DC\";\n}\n.fa-superpowers:before {\n  content: \"\\F2DD\";\n}\n.fa-wpexplorer:before {\n  content: \"\\F2DE\";\n}\n.fa-meetup:before {\n  content: \"\\F2E0\";\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n.sr-only-focusable:active, .sr-only-focusable:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  clip: auto;\n}\n\n/*\n __   __     ______     ______     __    __     ______     __         __     ______     ______     ______\n/\\ \"-.\\ \\   /\\  __ \\   /\\  == \\   /\\ \"-./  \\   /\\  __ \\   /\\ \\       /\\ \\   /\\___  \\   /\\  ___\\   /\\  == \\ \\ \\-.  \\  \\ \\ \\/\\ \\  \\ \\  __<   \\ \\ \\-./\\ \\  \\ \\  __ \\  \\ \\ \\____  \\ \\ \\  \\/_/  /__  \\ \\  __\\   \\ \\  __<\n \\ \\_\\\\\"\\_\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_\\ \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_\\   /\\_____\\  \\ \\_____\\  \\ \\_\\ \\_  \\/_/ \\/_/   \\/_____/   \\/_/ /_/   \\/_/  \\/_/   \\/_/\\/_/   \\/_____/   \\/_/   \\/_____/   \\/_____/   \\/_/ /_/\n\n*/\nhtml, body {\n  height: auto;\n}\nhtml {\n  height: 100%;\n}\nhtml, body, h1, h2, h3, h4, h5, h6, p, div, blockquote {\n  margin: 0;\n  -webkit-margin-before: 0;\n  -webkit-margin-after: 0;\n}\nul {\n  cursor: default;\n  -webkit-margin-before: 0px;\n  -webkit-margin-after: 0px;\n  -webkit-margin-start: 0px;\n  -webkit-margin-end: 0px;\n  -webkit-padding-start: 0px;\n}\n:focus {\n  outline: 0;\n}\na, a:focus, a:hover, a:visited {\n  color: #a0a083;\n  text-decoration: none;\n  cursor: pointer;\n}\n* {\n  box-sizing: border-box;\n}\n*::selection {\n  background: #a0a083;\n  color: #fff;\n}\n\n/*\n ______     __         ______     ______     ______     __\n/\\  ___\\   /\\ \\       /\\  __ \\   /\\  == \\   /\\  __ \\   /\\ \\ \\ \\__ \\  \\ \\ \\____  \\ \\ \\/\\ \\  \\ \\  __<   \\ \\  __ \\  \\ \\ \\____\n \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_____  \\/_____/   \\/_____/   \\/_____/   \\/_____/   \\/_/\\/_/   \\/_____/\n\n*/\n#app {\n  height: 100%;\n}\n#app h1 {\n    color: #fff;\n    font-size: 72px;\n}\n#app h2 {\n    color: #2a2a2a;\n    font-size: 32px;\n    padding-bottom: 40px;\n}\n#app h4 {\n    font-size: 14px;\n    font-weight: 300;\n}\nbody {\n  font-family: 'Montserrat', sans-serif;\n}\np {\n  color: #787878;\n  cursor: default;\n}\n.container {\n  width: 1320px;\n  margin: 0 auto;\n}\n.underline {\n  color: #fff;\n  font-size: 16px;\n  position: relative;\n  -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n  -moz-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n}\n.underline::before {\n    content: \"\";\n    position: absolute;\n    background: #a0a083;\n    left: 0;\n    bottom: -6px;\n    height: 4px;\n    right: 100%;\n    -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n    -moz-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n    transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n    overflow: hidden;\n}\n.underline:hover, .underline.active {\n    color: #a0a083;\n}\n.underline:hover::before, .underline.active::before {\n      right: 0;\n}\nsection {\n  display: block;\n  width: 100%;\n}\nsection .left, section .right {\n    display: inline-block;\n    width: 50%;\n    vertical-align: top;\n}\na.under {\n  position: relative;\n  padding-bottom: 6px;\n}\na.under::before, a.under::after {\n    content: \"\";\n    position: absolute;\n    background: #a0a083;\n    left: 0;\n    right: 0;\n    margin-top: 2px;\n    bottom: 0;\n    height: 4px;\n}\na.under::after {\n    background: #fff;\n    left: -80px;\n    width: 80px;\n    visibility: hidden;\n}\na.under:hover::after {\n    pointer-events: none;\n    left: 100%;\n    transition: all 0.375s;\n    visibility: visible;\n}\n.btn {\n  background: transparent;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 20px;\n  border: 4px solid #a0a083;\n  color: #a0a083;\n  padding: 0.5em 3em;\n  min-width: 240px;\n  min-height: 60px;\n  cursor: pointer;\n  position: relative;\n  z-index: 0;\n  -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n  -moz-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n}\n.btn::before {\n    content: \"\";\n    right: 100%;\n    background: #a0a083;\n    left: 0;\n    bottom: 0;\n    top: 0;\n    overflow: hidden;\n    position: absolute;\n    -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n    -moz-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n    z-index: -1;\n}\n.btn:hover {\n    color: #fff;\n    z-index: 0;\n}\n.btn:hover::before {\n      right: 0;\n      z-index: -1;\n}\n.btn-white {\n  border-color: #fff;\n  color: #fff;\n}\n.btn-white::before {\n    background: #fff;\n}\n.btn-white:hover {\n    color: #a0a083;\n}\n.btn-square {\n  height: 60px;\n  min-height: 60px;\n  width: 60px;\n  min-width: 60px;\n  padding: 0;\n}\n.background-2 {\n  background: #e2e2e2;\n}\n.valign {\n  display: -webkit-box;\n  display: -moz-box;\n  display: box;\n  display: -webkit-flex;\n  display: -moz-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -moz-box-orient: vertical;\n  box-orient: vertical;\n  -webkit-box-direction: normal;\n  -moz-box-direction: normal;\n  box-direction: normal;\n  -webkit-flex-direction: column;\n  -moz-flex-direction: column;\n  flex-direction: column;\n  -ms-flex-direction: column;\n  height: 100%;\n}\n.valign::before, .valign::after {\n    content: \"\";\n    -webkit-flex-grow: 1;\n    -moz-flex-grow: 1;\n    flex-grow: 1;\n    -ms-flex-positive: 1;\n}\n.blink {\n  -webkit-animation: blinker 1.2s linear infinite;\n  -moz-animation: blinker 1.2s linear infinite;\n  animation: blinker 1.2s linear infinite;\n  font-weight: 300;\n  float: left;\n}\n@-webkit-keyframes blinker {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-moz-keyframes blinker {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes blinker {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@media screen and (max-width: 1320px) {\nbody {\n    overflow: hidden;\n}\n.container {\n    width: 90%;\n}\nsection {\n    display: block;\n}\n}\n\n/*\n ______   ______     ______     __   __     ______     __     ______   __     ______     __   __     ______\n/\\__  _\\ /\\  == \\   /\\  __ \\   /\\ \"-.\\ \\   /\\  ___\\   /\\ \\   /\\__  _\\ /\\ \\   /\\  __ \\   /\\ \"-.\\ \\   /\\  ___\\/_/\\ \\/ \\ \\  __<   \\ \\  __ \\  \\ \\ \\-.  \\  \\ \\___  \\  \\ \\ \\  \\/_/\\ \\/ \\ \\ \\  \\ \\ \\/\\ \\  \\ \\ \\-.  \\  \\ \\___    \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\\\\"\\_\\  \\/\\_____\\  \\ \\_\\    \\ \\_\\  \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\/\\_____   \\/_/   \\/_/ /_/   \\/_/\\/_/   \\/_/ \\/_/   \\/_____/   \\/_/     \\/_/   \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/\n\n*/\n.slide-leave-active .left {\n  transform: translateX(-130%);\n  transition-duration: 0.5s;\n  transition-property: all;\n}\n.slide-leave-active .right {\n  transform: translateX(130%);\n  transition-duration: 0.5s;\n  transition-property: all;\n}\n.slide-leave-active .hello-text {\n  -webkit-animation: fade-out 0.5s;\n  -moz-animation: fade-out 0.5s;\n  animation: fade-out 0.5s;\n}\n.slide-leave-active.project {\n  -webkit-animation: slide-to-bottom 0.5s;\n  -moz-animation: slide-to-bottom 0.5s;\n  animation: slide-to-bottom 0.5s;\n}\n.slide-leave-to .hello-text {\n  opacity: 0;\n}\n@-webkit-keyframes slide-from-left {\n0% {\n    transform: translateX(-130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-moz-keyframes slide-from-left {\n0% {\n    transform: translateX(-130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@keyframes slide-from-left {\n0% {\n    transform: translateX(-130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-webkit-keyframes slide-from-right {\n0% {\n    transform: translateX(130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-moz-keyframes slide-from-right {\n0% {\n    transform: translateX(130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@keyframes slide-from-right {\n0% {\n    transform: translateX(130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-webkit-keyframes slide-from-bottom {\n0% {\n    transform: translateY(130%);\n}\n100% {\n    transform: translateY(0%);\n}\n}\n@-moz-keyframes slide-from-bottom {\n0% {\n    transform: translateY(130%);\n}\n100% {\n    transform: translateY(0%);\n}\n}\n@keyframes slide-from-bottom {\n0% {\n    transform: translateY(130%);\n}\n100% {\n    transform: translateY(0%);\n}\n}\n@-webkit-keyframes slide-to-bottom {\n0% {\n    transform: translateY(0%);\n}\n100% {\n    transform: translateY(130%);\n}\n}\n@-moz-keyframes slide-to-bottom {\n0% {\n    transform: translateY(0%);\n}\n100% {\n    transform: translateY(130%);\n}\n}\n@keyframes slide-to-bottom {\n0% {\n    transform: translateY(0%);\n}\n100% {\n    transform: translateY(130%);\n}\n}\n@-webkit-keyframes fade-in {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-moz-keyframes fade-in {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes fade-in {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-webkit-keyframes fade-out {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n@-moz-keyframes fade-out {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n@keyframes fade-out {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n.slide-enter-active {\n  transform-style: preserve-3d;\n}\n.slide-enter-active .left {\n    -webkit-animation: slide-from-left 0.5s;\n    -moz-animation: slide-from-left 0.5s;\n    animation: slide-from-left 0.5s;\n}\n.slide-enter-active .right {\n    -webkit-animation: slide-from-right 0.5s;\n    -moz-animation: slide-from-right 0.5s;\n    animation: slide-from-right 0.5s;\n}\n.slide-enter-active .hello-text {\n    -webkit-animation: fade-in 0.5s;\n    -moz-animation: fade-in 0.5s;\n    animation: fade-in 0.5s;\n}\n.slide-enter-active.project {\n    -webkit-animation: slide-from-bottom 0.5s;\n    -moz-animation: slide-from-bottom 0.5s;\n    animation: slide-from-bottom 0.5s;\n}\n\n/*\n ______   ______     ______       __     ______     ______     ______   ______\n/\\  == \\ /\\  == \\   /\\  __ \\     /\\ \\   /\\  ___\\   /\\  ___\\   /\\__  _\\ /\\  ___\\ \\  _-/ \\ \\  __<   \\ \\ \\/\\ \\   _\\_\\ \\  \\ \\  __\\   \\ \\ \\____  \\/_/\\ \\/ \\ \\___   \\ \\_\\    \\ \\_\\ \\_\\  \\ \\_____\\ /\\_____\\  \\ \\_____\\  \\ \\_____\\    \\ \\_\\  \\/\\_____  \\/_/     \\/_/ /_/   \\/_____/ \\/_____/   \\/_____/   \\/_____/     \\/_/   \\/_____/\n\n*/\n.project-return {\n  text-align: center;\n  padding: 80px 0;\n  background: #a0a083;\n}\n.project-return a {\n    color: #fff;\n}\n.project .p-heading {\n  height: 60vh;\n  background-size: cover !important;\n  background-position-y: 0px;\n}\n.project .p-heading .p-title {\n    display: -webkit-box;\n    display: -moz-box;\n    display: box;\n    display: -webkit-flex;\n    display: -moz-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -moz-box-orient: vertical;\n    box-orient: vertical;\n    -webkit-box-direction: normal;\n    -moz-box-direction: normal;\n    box-direction: normal;\n    -webkit-flex-direction: column;\n    -moz-flex-direction: column;\n    flex-direction: column;\n    -ms-flex-direction: column;\n    height: 100%;\n    width: 1320px;\n    margin: 0 auto;\n}\n.project .p-heading .p-title::before, .project .p-heading .p-title::after {\n      content: \"\";\n      -webkit-flex-grow: 1;\n      -moz-flex-grow: 1;\n      flex-grow: 1;\n      -ms-flex-positive: 1;\n}\n.project .p-heading .p-title h4 {\n      color: #fff;\n      font-size: 24px !important;\n      opacity: 0.8;\n}\n.project .p-text {\n  padding: 80px;\n  background: #fff;\n  text-align: center;\n}\n.project .p-text p {\n    width: 960px;\n    margin: 0 auto;\n    font-size: 20px;\n    line-height: 1.8;\n    margin-bottom: 40px;\n    text-align: left;\n}\n.project .p-text img {\n    width: 50%;\n    display: block;\n    margin: 0 auto;\n}\n.project .p-text span {\n    color: #bdbdbd;\n    text-align: center;\n    display: block;\n    font-style: italic;\n    padding: 40px;\n}\n@media screen and (max-width: 1320px) {\n.project .p-heading .p-title {\n    width: 90%;\n    margin: 0 auto;\n}\n}\n@media screen and (max-width: 1024px) {\n.project .p-text {\n    padding: 80px 0;\n}\n.project .p-text p, .project .p-text img {\n      width: 90%;\n}\n}\nbody {\n  background: url(" + __webpack_require__(12) + ") top left no-repeat;\n  background-size: cover;\n  background-attachment: fixed;\n  overflow-y: scroll;\n}\nbody .underbg {\n    position: fixed;\n    display: none;\n    top: 0;\n    left: 0;\n    width: 100%;\n    z-index: -1;\n}\n", ""]);
+exports.push([module.i, "\n@charset \"UTF-8\";\n/*!\n *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome\n *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)\n */\n/* FONT PATH\n * -------------------------- */\n@font-face {\n  font-family: 'FontAwesome';\n  src: url(" + __webpack_require__(71) + ");\n  src: url(" + __webpack_require__(72) + "?#iefix&v=4.7.0) format(\"embedded-opentype\"), url(" + __webpack_require__(73) + ") format(\"woff2\"), url(" + __webpack_require__(74) + ") format(\"woff\"), url(" + __webpack_require__(75) + ") format(\"truetype\"), url(" + __webpack_require__(76) + "#fontawesomeregular) format(\"svg\");\n  font-weight: normal;\n  font-style: normal;\n}\n.fa {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n/* makes the font 33% larger relative to the icon container */\n.fa-lg {\n  font-size: 1.33333em;\n  line-height: 0.75em;\n  vertical-align: -15%;\n}\n.fa-2x {\n  font-size: 2em;\n}\n.fa-3x {\n  font-size: 3em;\n}\n.fa-4x {\n  font-size: 4em;\n}\n.fa-5x {\n  font-size: 5em;\n}\n.fa-fw {\n  width: 1.28571em;\n  text-align: center;\n}\n.fa-ul {\n  padding-left: 0;\n  margin-left: 2.14286em;\n  list-style-type: none;\n}\n.fa-ul > li {\n    position: relative;\n}\n.fa-li {\n  position: absolute;\n  left: -2.14286em;\n  width: 2.14286em;\n  top: 0.14286em;\n  text-align: center;\n}\n.fa-li.fa-lg {\n    left: -1.85714em;\n}\n.fa-border {\n  padding: .2em .25em .15em;\n  border: solid 0.08em #eee;\n  border-radius: .1em;\n}\n.fa-pull-left {\n  float: left;\n}\n.fa-pull-right {\n  float: right;\n}\n.fa.fa-pull-left {\n  margin-right: .3em;\n}\n.fa.fa-pull-right {\n  margin-left: .3em;\n}\n\n/* Deprecated as of 4.4.0 */\n.pull-right {\n  float: right;\n}\n.pull-left {\n  float: left;\n}\n.fa.pull-left {\n  margin-right: .3em;\n}\n.fa.pull-right {\n  margin-left: .3em;\n}\n.fa-spin {\n  -webkit-animation: fa-spin 2s infinite linear;\n  animation: fa-spin 2s infinite linear;\n}\n.fa-pulse {\n  -webkit-animation: fa-spin 1s infinite steps(8);\n  animation: fa-spin 1s infinite steps(8);\n}\n@-webkit-keyframes fa-spin {\n0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n}\n}\n@keyframes fa-spin {\n0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n}\n100% {\n    -webkit-transform: rotate(359deg);\n    transform: rotate(359deg);\n}\n}\n.fa-rotate-90 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=1)\";\n  -webkit-transform: rotate(90deg);\n  -ms-transform: rotate(90deg);\n  transform: rotate(90deg);\n}\n.fa-rotate-180 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2)\";\n  -webkit-transform: rotate(180deg);\n  -ms-transform: rotate(180deg);\n  transform: rotate(180deg);\n}\n.fa-rotate-270 {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=3)\";\n  -webkit-transform: rotate(270deg);\n  -ms-transform: rotate(270deg);\n  transform: rotate(270deg);\n}\n.fa-flip-horizontal {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)\";\n  -webkit-transform: scale(-1, 1);\n  -ms-transform: scale(-1, 1);\n  transform: scale(-1, 1);\n}\n.fa-flip-vertical {\n  -ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)\";\n  -webkit-transform: scale(1, -1);\n  -ms-transform: scale(1, -1);\n  transform: scale(1, -1);\n}\n:root .fa-rotate-90,\n:root .fa-rotate-180,\n:root .fa-rotate-270,\n:root .fa-flip-horizontal,\n:root .fa-flip-vertical {\n  filter: none;\n}\n.fa-stack {\n  position: relative;\n  display: inline-block;\n  width: 2em;\n  height: 2em;\n  line-height: 2em;\n  vertical-align: middle;\n}\n.fa-stack-1x, .fa-stack-2x {\n  position: absolute;\n  left: 0;\n  width: 100%;\n  text-align: center;\n}\n.fa-stack-1x {\n  line-height: inherit;\n}\n.fa-stack-2x {\n  font-size: 2em;\n}\n.fa-inverse {\n  color: #fff;\n}\n\n/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen\n   readers do not read off random characters that represent icons */\n.fa-glass:before {\n  content: \"\\F000\";\n}\n.fa-music:before {\n  content: \"\\F001\";\n}\n.fa-search:before {\n  content: \"\\F002\";\n}\n.fa-envelope-o:before {\n  content: \"\\F003\";\n}\n.fa-heart:before {\n  content: \"\\F004\";\n}\n.fa-star:before {\n  content: \"\\F005\";\n}\n.fa-star-o:before {\n  content: \"\\F006\";\n}\n.fa-user:before {\n  content: \"\\F007\";\n}\n.fa-film:before {\n  content: \"\\F008\";\n}\n.fa-th-large:before {\n  content: \"\\F009\";\n}\n.fa-th:before {\n  content: \"\\F00A\";\n}\n.fa-th-list:before {\n  content: \"\\F00B\";\n}\n.fa-check:before {\n  content: \"\\F00C\";\n}\n.fa-remove:before,\n.fa-close:before,\n.fa-times:before {\n  content: \"\\F00D\";\n}\n.fa-search-plus:before {\n  content: \"\\F00E\";\n}\n.fa-search-minus:before {\n  content: \"\\F010\";\n}\n.fa-power-off:before {\n  content: \"\\F011\";\n}\n.fa-signal:before {\n  content: \"\\F012\";\n}\n.fa-gear:before,\n.fa-cog:before {\n  content: \"\\F013\";\n}\n.fa-trash-o:before {\n  content: \"\\F014\";\n}\n.fa-home:before {\n  content: \"\\F015\";\n}\n.fa-file-o:before {\n  content: \"\\F016\";\n}\n.fa-clock-o:before {\n  content: \"\\F017\";\n}\n.fa-road:before {\n  content: \"\\F018\";\n}\n.fa-download:before {\n  content: \"\\F019\";\n}\n.fa-arrow-circle-o-down:before {\n  content: \"\\F01A\";\n}\n.fa-arrow-circle-o-up:before {\n  content: \"\\F01B\";\n}\n.fa-inbox:before {\n  content: \"\\F01C\";\n}\n.fa-play-circle-o:before {\n  content: \"\\F01D\";\n}\n.fa-rotate-right:before,\n.fa-repeat:before {\n  content: \"\\F01E\";\n}\n.fa-refresh:before {\n  content: \"\\F021\";\n}\n.fa-list-alt:before {\n  content: \"\\F022\";\n}\n.fa-lock:before {\n  content: \"\\F023\";\n}\n.fa-flag:before {\n  content: \"\\F024\";\n}\n.fa-headphones:before {\n  content: \"\\F025\";\n}\n.fa-volume-off:before {\n  content: \"\\F026\";\n}\n.fa-volume-down:before {\n  content: \"\\F027\";\n}\n.fa-volume-up:before {\n  content: \"\\F028\";\n}\n.fa-qrcode:before {\n  content: \"\\F029\";\n}\n.fa-barcode:before {\n  content: \"\\F02A\";\n}\n.fa-tag:before {\n  content: \"\\F02B\";\n}\n.fa-tags:before {\n  content: \"\\F02C\";\n}\n.fa-book:before {\n  content: \"\\F02D\";\n}\n.fa-bookmark:before {\n  content: \"\\F02E\";\n}\n.fa-print:before {\n  content: \"\\F02F\";\n}\n.fa-camera:before {\n  content: \"\\F030\";\n}\n.fa-font:before {\n  content: \"\\F031\";\n}\n.fa-bold:before {\n  content: \"\\F032\";\n}\n.fa-italic:before {\n  content: \"\\F033\";\n}\n.fa-text-height:before {\n  content: \"\\F034\";\n}\n.fa-text-width:before {\n  content: \"\\F035\";\n}\n.fa-align-left:before {\n  content: \"\\F036\";\n}\n.fa-align-center:before {\n  content: \"\\F037\";\n}\n.fa-align-right:before {\n  content: \"\\F038\";\n}\n.fa-align-justify:before {\n  content: \"\\F039\";\n}\n.fa-list:before {\n  content: \"\\F03A\";\n}\n.fa-dedent:before,\n.fa-outdent:before {\n  content: \"\\F03B\";\n}\n.fa-indent:before {\n  content: \"\\F03C\";\n}\n.fa-video-camera:before {\n  content: \"\\F03D\";\n}\n.fa-photo:before,\n.fa-image:before,\n.fa-picture-o:before {\n  content: \"\\F03E\";\n}\n.fa-pencil:before {\n  content: \"\\F040\";\n}\n.fa-map-marker:before {\n  content: \"\\F041\";\n}\n.fa-adjust:before {\n  content: \"\\F042\";\n}\n.fa-tint:before {\n  content: \"\\F043\";\n}\n.fa-edit:before,\n.fa-pencil-square-o:before {\n  content: \"\\F044\";\n}\n.fa-share-square-o:before {\n  content: \"\\F045\";\n}\n.fa-check-square-o:before {\n  content: \"\\F046\";\n}\n.fa-arrows:before {\n  content: \"\\F047\";\n}\n.fa-step-backward:before {\n  content: \"\\F048\";\n}\n.fa-fast-backward:before {\n  content: \"\\F049\";\n}\n.fa-backward:before {\n  content: \"\\F04A\";\n}\n.fa-play:before {\n  content: \"\\F04B\";\n}\n.fa-pause:before {\n  content: \"\\F04C\";\n}\n.fa-stop:before {\n  content: \"\\F04D\";\n}\n.fa-forward:before {\n  content: \"\\F04E\";\n}\n.fa-fast-forward:before {\n  content: \"\\F050\";\n}\n.fa-step-forward:before {\n  content: \"\\F051\";\n}\n.fa-eject:before {\n  content: \"\\F052\";\n}\n.fa-chevron-left:before {\n  content: \"\\F053\";\n}\n.fa-chevron-right:before {\n  content: \"\\F054\";\n}\n.fa-plus-circle:before {\n  content: \"\\F055\";\n}\n.fa-minus-circle:before {\n  content: \"\\F056\";\n}\n.fa-times-circle:before {\n  content: \"\\F057\";\n}\n.fa-check-circle:before {\n  content: \"\\F058\";\n}\n.fa-question-circle:before {\n  content: \"\\F059\";\n}\n.fa-info-circle:before {\n  content: \"\\F05A\";\n}\n.fa-crosshairs:before {\n  content: \"\\F05B\";\n}\n.fa-times-circle-o:before {\n  content: \"\\F05C\";\n}\n.fa-check-circle-o:before {\n  content: \"\\F05D\";\n}\n.fa-ban:before {\n  content: \"\\F05E\";\n}\n.fa-arrow-left:before {\n  content: \"\\F060\";\n}\n.fa-arrow-right:before {\n  content: \"\\F061\";\n}\n.fa-arrow-up:before {\n  content: \"\\F062\";\n}\n.fa-arrow-down:before {\n  content: \"\\F063\";\n}\n.fa-mail-forward:before,\n.fa-share:before {\n  content: \"\\F064\";\n}\n.fa-expand:before {\n  content: \"\\F065\";\n}\n.fa-compress:before {\n  content: \"\\F066\";\n}\n.fa-plus:before {\n  content: \"\\F067\";\n}\n.fa-minus:before {\n  content: \"\\F068\";\n}\n.fa-asterisk:before {\n  content: \"\\F069\";\n}\n.fa-exclamation-circle:before {\n  content: \"\\F06A\";\n}\n.fa-gift:before {\n  content: \"\\F06B\";\n}\n.fa-leaf:before {\n  content: \"\\F06C\";\n}\n.fa-fire:before {\n  content: \"\\F06D\";\n}\n.fa-eye:before {\n  content: \"\\F06E\";\n}\n.fa-eye-slash:before {\n  content: \"\\F070\";\n}\n.fa-warning:before,\n.fa-exclamation-triangle:before {\n  content: \"\\F071\";\n}\n.fa-plane:before {\n  content: \"\\F072\";\n}\n.fa-calendar:before {\n  content: \"\\F073\";\n}\n.fa-random:before {\n  content: \"\\F074\";\n}\n.fa-comment:before {\n  content: \"\\F075\";\n}\n.fa-magnet:before {\n  content: \"\\F076\";\n}\n.fa-chevron-up:before {\n  content: \"\\F077\";\n}\n.fa-chevron-down:before {\n  content: \"\\F078\";\n}\n.fa-retweet:before {\n  content: \"\\F079\";\n}\n.fa-shopping-cart:before {\n  content: \"\\F07A\";\n}\n.fa-folder:before {\n  content: \"\\F07B\";\n}\n.fa-folder-open:before {\n  content: \"\\F07C\";\n}\n.fa-arrows-v:before {\n  content: \"\\F07D\";\n}\n.fa-arrows-h:before {\n  content: \"\\F07E\";\n}\n.fa-bar-chart-o:before,\n.fa-bar-chart:before {\n  content: \"\\F080\";\n}\n.fa-twitter-square:before {\n  content: \"\\F081\";\n}\n.fa-facebook-square:before {\n  content: \"\\F082\";\n}\n.fa-camera-retro:before {\n  content: \"\\F083\";\n}\n.fa-key:before {\n  content: \"\\F084\";\n}\n.fa-gears:before,\n.fa-cogs:before {\n  content: \"\\F085\";\n}\n.fa-comments:before {\n  content: \"\\F086\";\n}\n.fa-thumbs-o-up:before {\n  content: \"\\F087\";\n}\n.fa-thumbs-o-down:before {\n  content: \"\\F088\";\n}\n.fa-star-half:before {\n  content: \"\\F089\";\n}\n.fa-heart-o:before {\n  content: \"\\F08A\";\n}\n.fa-sign-out:before {\n  content: \"\\F08B\";\n}\n.fa-linkedin-square:before {\n  content: \"\\F08C\";\n}\n.fa-thumb-tack:before {\n  content: \"\\F08D\";\n}\n.fa-external-link:before {\n  content: \"\\F08E\";\n}\n.fa-sign-in:before {\n  content: \"\\F090\";\n}\n.fa-trophy:before {\n  content: \"\\F091\";\n}\n.fa-github-square:before {\n  content: \"\\F092\";\n}\n.fa-upload:before {\n  content: \"\\F093\";\n}\n.fa-lemon-o:before {\n  content: \"\\F094\";\n}\n.fa-phone:before {\n  content: \"\\F095\";\n}\n.fa-square-o:before {\n  content: \"\\F096\";\n}\n.fa-bookmark-o:before {\n  content: \"\\F097\";\n}\n.fa-phone-square:before {\n  content: \"\\F098\";\n}\n.fa-twitter:before {\n  content: \"\\F099\";\n}\n.fa-facebook-f:before,\n.fa-facebook:before {\n  content: \"\\F09A\";\n}\n.fa-github:before {\n  content: \"\\F09B\";\n}\n.fa-unlock:before {\n  content: \"\\F09C\";\n}\n.fa-credit-card:before {\n  content: \"\\F09D\";\n}\n.fa-feed:before,\n.fa-rss:before {\n  content: \"\\F09E\";\n}\n.fa-hdd-o:before {\n  content: \"\\F0A0\";\n}\n.fa-bullhorn:before {\n  content: \"\\F0A1\";\n}\n.fa-bell:before {\n  content: \"\\F0F3\";\n}\n.fa-certificate:before {\n  content: \"\\F0A3\";\n}\n.fa-hand-o-right:before {\n  content: \"\\F0A4\";\n}\n.fa-hand-o-left:before {\n  content: \"\\F0A5\";\n}\n.fa-hand-o-up:before {\n  content: \"\\F0A6\";\n}\n.fa-hand-o-down:before {\n  content: \"\\F0A7\";\n}\n.fa-arrow-circle-left:before {\n  content: \"\\F0A8\";\n}\n.fa-arrow-circle-right:before {\n  content: \"\\F0A9\";\n}\n.fa-arrow-circle-up:before {\n  content: \"\\F0AA\";\n}\n.fa-arrow-circle-down:before {\n  content: \"\\F0AB\";\n}\n.fa-globe:before {\n  content: \"\\F0AC\";\n}\n.fa-wrench:before {\n  content: \"\\F0AD\";\n}\n.fa-tasks:before {\n  content: \"\\F0AE\";\n}\n.fa-filter:before {\n  content: \"\\F0B0\";\n}\n.fa-briefcase:before {\n  content: \"\\F0B1\";\n}\n.fa-arrows-alt:before {\n  content: \"\\F0B2\";\n}\n.fa-group:before,\n.fa-users:before {\n  content: \"\\F0C0\";\n}\n.fa-chain:before,\n.fa-link:before {\n  content: \"\\F0C1\";\n}\n.fa-cloud:before {\n  content: \"\\F0C2\";\n}\n.fa-flask:before {\n  content: \"\\F0C3\";\n}\n.fa-cut:before,\n.fa-scissors:before {\n  content: \"\\F0C4\";\n}\n.fa-copy:before,\n.fa-files-o:before {\n  content: \"\\F0C5\";\n}\n.fa-paperclip:before {\n  content: \"\\F0C6\";\n}\n.fa-save:before,\n.fa-floppy-o:before {\n  content: \"\\F0C7\";\n}\n.fa-square:before {\n  content: \"\\F0C8\";\n}\n.fa-navicon:before,\n.fa-reorder:before,\n.fa-bars:before {\n  content: \"\\F0C9\";\n}\n.fa-list-ul:before {\n  content: \"\\F0CA\";\n}\n.fa-list-ol:before {\n  content: \"\\F0CB\";\n}\n.fa-strikethrough:before {\n  content: \"\\F0CC\";\n}\n.fa-underline:before {\n  content: \"\\F0CD\";\n}\n.fa-table:before {\n  content: \"\\F0CE\";\n}\n.fa-magic:before {\n  content: \"\\F0D0\";\n}\n.fa-truck:before {\n  content: \"\\F0D1\";\n}\n.fa-pinterest:before {\n  content: \"\\F0D2\";\n}\n.fa-pinterest-square:before {\n  content: \"\\F0D3\";\n}\n.fa-google-plus-square:before {\n  content: \"\\F0D4\";\n}\n.fa-google-plus:before {\n  content: \"\\F0D5\";\n}\n.fa-money:before {\n  content: \"\\F0D6\";\n}\n.fa-caret-down:before {\n  content: \"\\F0D7\";\n}\n.fa-caret-up:before {\n  content: \"\\F0D8\";\n}\n.fa-caret-left:before {\n  content: \"\\F0D9\";\n}\n.fa-caret-right:before {\n  content: \"\\F0DA\";\n}\n.fa-columns:before {\n  content: \"\\F0DB\";\n}\n.fa-unsorted:before,\n.fa-sort:before {\n  content: \"\\F0DC\";\n}\n.fa-sort-down:before,\n.fa-sort-desc:before {\n  content: \"\\F0DD\";\n}\n.fa-sort-up:before,\n.fa-sort-asc:before {\n  content: \"\\F0DE\";\n}\n.fa-envelope:before {\n  content: \"\\F0E0\";\n}\n.fa-linkedin:before {\n  content: \"\\F0E1\";\n}\n.fa-rotate-left:before,\n.fa-undo:before {\n  content: \"\\F0E2\";\n}\n.fa-legal:before,\n.fa-gavel:before {\n  content: \"\\F0E3\";\n}\n.fa-dashboard:before,\n.fa-tachometer:before {\n  content: \"\\F0E4\";\n}\n.fa-comment-o:before {\n  content: \"\\F0E5\";\n}\n.fa-comments-o:before {\n  content: \"\\F0E6\";\n}\n.fa-flash:before,\n.fa-bolt:before {\n  content: \"\\F0E7\";\n}\n.fa-sitemap:before {\n  content: \"\\F0E8\";\n}\n.fa-umbrella:before {\n  content: \"\\F0E9\";\n}\n.fa-paste:before,\n.fa-clipboard:before {\n  content: \"\\F0EA\";\n}\n.fa-lightbulb-o:before {\n  content: \"\\F0EB\";\n}\n.fa-exchange:before {\n  content: \"\\F0EC\";\n}\n.fa-cloud-download:before {\n  content: \"\\F0ED\";\n}\n.fa-cloud-upload:before {\n  content: \"\\F0EE\";\n}\n.fa-user-md:before {\n  content: \"\\F0F0\";\n}\n.fa-stethoscope:before {\n  content: \"\\F0F1\";\n}\n.fa-suitcase:before {\n  content: \"\\F0F2\";\n}\n.fa-bell-o:before {\n  content: \"\\F0A2\";\n}\n.fa-coffee:before {\n  content: \"\\F0F4\";\n}\n.fa-cutlery:before {\n  content: \"\\F0F5\";\n}\n.fa-file-text-o:before {\n  content: \"\\F0F6\";\n}\n.fa-building-o:before {\n  content: \"\\F0F7\";\n}\n.fa-hospital-o:before {\n  content: \"\\F0F8\";\n}\n.fa-ambulance:before {\n  content: \"\\F0F9\";\n}\n.fa-medkit:before {\n  content: \"\\F0FA\";\n}\n.fa-fighter-jet:before {\n  content: \"\\F0FB\";\n}\n.fa-beer:before {\n  content: \"\\F0FC\";\n}\n.fa-h-square:before {\n  content: \"\\F0FD\";\n}\n.fa-plus-square:before {\n  content: \"\\F0FE\";\n}\n.fa-angle-double-left:before {\n  content: \"\\F100\";\n}\n.fa-angle-double-right:before {\n  content: \"\\F101\";\n}\n.fa-angle-double-up:before {\n  content: \"\\F102\";\n}\n.fa-angle-double-down:before {\n  content: \"\\F103\";\n}\n.fa-angle-left:before {\n  content: \"\\F104\";\n}\n.fa-angle-right:before {\n  content: \"\\F105\";\n}\n.fa-angle-up:before {\n  content: \"\\F106\";\n}\n.fa-angle-down:before {\n  content: \"\\F107\";\n}\n.fa-desktop:before {\n  content: \"\\F108\";\n}\n.fa-laptop:before {\n  content: \"\\F109\";\n}\n.fa-tablet:before {\n  content: \"\\F10A\";\n}\n.fa-mobile-phone:before,\n.fa-mobile:before {\n  content: \"\\F10B\";\n}\n.fa-circle-o:before {\n  content: \"\\F10C\";\n}\n.fa-quote-left:before {\n  content: \"\\F10D\";\n}\n.fa-quote-right:before {\n  content: \"\\F10E\";\n}\n.fa-spinner:before {\n  content: \"\\F110\";\n}\n.fa-circle:before {\n  content: \"\\F111\";\n}\n.fa-mail-reply:before,\n.fa-reply:before {\n  content: \"\\F112\";\n}\n.fa-github-alt:before {\n  content: \"\\F113\";\n}\n.fa-folder-o:before {\n  content: \"\\F114\";\n}\n.fa-folder-open-o:before {\n  content: \"\\F115\";\n}\n.fa-smile-o:before {\n  content: \"\\F118\";\n}\n.fa-frown-o:before {\n  content: \"\\F119\";\n}\n.fa-meh-o:before {\n  content: \"\\F11A\";\n}\n.fa-gamepad:before {\n  content: \"\\F11B\";\n}\n.fa-keyboard-o:before {\n  content: \"\\F11C\";\n}\n.fa-flag-o:before {\n  content: \"\\F11D\";\n}\n.fa-flag-checkered:before {\n  content: \"\\F11E\";\n}\n.fa-terminal:before {\n  content: \"\\F120\";\n}\n.fa-code:before {\n  content: \"\\F121\";\n}\n.fa-mail-reply-all:before,\n.fa-reply-all:before {\n  content: \"\\F122\";\n}\n.fa-star-half-empty:before,\n.fa-star-half-full:before,\n.fa-star-half-o:before {\n  content: \"\\F123\";\n}\n.fa-location-arrow:before {\n  content: \"\\F124\";\n}\n.fa-crop:before {\n  content: \"\\F125\";\n}\n.fa-code-fork:before {\n  content: \"\\F126\";\n}\n.fa-unlink:before,\n.fa-chain-broken:before {\n  content: \"\\F127\";\n}\n.fa-question:before {\n  content: \"\\F128\";\n}\n.fa-info:before {\n  content: \"\\F129\";\n}\n.fa-exclamation:before {\n  content: \"\\F12A\";\n}\n.fa-superscript:before {\n  content: \"\\F12B\";\n}\n.fa-subscript:before {\n  content: \"\\F12C\";\n}\n.fa-eraser:before {\n  content: \"\\F12D\";\n}\n.fa-puzzle-piece:before {\n  content: \"\\F12E\";\n}\n.fa-microphone:before {\n  content: \"\\F130\";\n}\n.fa-microphone-slash:before {\n  content: \"\\F131\";\n}\n.fa-shield:before {\n  content: \"\\F132\";\n}\n.fa-calendar-o:before {\n  content: \"\\F133\";\n}\n.fa-fire-extinguisher:before {\n  content: \"\\F134\";\n}\n.fa-rocket:before {\n  content: \"\\F135\";\n}\n.fa-maxcdn:before {\n  content: \"\\F136\";\n}\n.fa-chevron-circle-left:before {\n  content: \"\\F137\";\n}\n.fa-chevron-circle-right:before {\n  content: \"\\F138\";\n}\n.fa-chevron-circle-up:before {\n  content: \"\\F139\";\n}\n.fa-chevron-circle-down:before {\n  content: \"\\F13A\";\n}\n.fa-html5:before {\n  content: \"\\F13B\";\n}\n.fa-css3:before {\n  content: \"\\F13C\";\n}\n.fa-anchor:before {\n  content: \"\\F13D\";\n}\n.fa-unlock-alt:before {\n  content: \"\\F13E\";\n}\n.fa-bullseye:before {\n  content: \"\\F140\";\n}\n.fa-ellipsis-h:before {\n  content: \"\\F141\";\n}\n.fa-ellipsis-v:before {\n  content: \"\\F142\";\n}\n.fa-rss-square:before {\n  content: \"\\F143\";\n}\n.fa-play-circle:before {\n  content: \"\\F144\";\n}\n.fa-ticket:before {\n  content: \"\\F145\";\n}\n.fa-minus-square:before {\n  content: \"\\F146\";\n}\n.fa-minus-square-o:before {\n  content: \"\\F147\";\n}\n.fa-level-up:before {\n  content: \"\\F148\";\n}\n.fa-level-down:before {\n  content: \"\\F149\";\n}\n.fa-check-square:before {\n  content: \"\\F14A\";\n}\n.fa-pencil-square:before {\n  content: \"\\F14B\";\n}\n.fa-external-link-square:before {\n  content: \"\\F14C\";\n}\n.fa-share-square:before {\n  content: \"\\F14D\";\n}\n.fa-compass:before {\n  content: \"\\F14E\";\n}\n.fa-toggle-down:before,\n.fa-caret-square-o-down:before {\n  content: \"\\F150\";\n}\n.fa-toggle-up:before,\n.fa-caret-square-o-up:before {\n  content: \"\\F151\";\n}\n.fa-toggle-right:before,\n.fa-caret-square-o-right:before {\n  content: \"\\F152\";\n}\n.fa-euro:before,\n.fa-eur:before {\n  content: \"\\F153\";\n}\n.fa-gbp:before {\n  content: \"\\F154\";\n}\n.fa-dollar:before,\n.fa-usd:before {\n  content: \"\\F155\";\n}\n.fa-rupee:before,\n.fa-inr:before {\n  content: \"\\F156\";\n}\n.fa-cny:before,\n.fa-rmb:before,\n.fa-yen:before,\n.fa-jpy:before {\n  content: \"\\F157\";\n}\n.fa-ruble:before,\n.fa-rouble:before,\n.fa-rub:before {\n  content: \"\\F158\";\n}\n.fa-won:before,\n.fa-krw:before {\n  content: \"\\F159\";\n}\n.fa-bitcoin:before,\n.fa-btc:before {\n  content: \"\\F15A\";\n}\n.fa-file:before {\n  content: \"\\F15B\";\n}\n.fa-file-text:before {\n  content: \"\\F15C\";\n}\n.fa-sort-alpha-asc:before {\n  content: \"\\F15D\";\n}\n.fa-sort-alpha-desc:before {\n  content: \"\\F15E\";\n}\n.fa-sort-amount-asc:before {\n  content: \"\\F160\";\n}\n.fa-sort-amount-desc:before {\n  content: \"\\F161\";\n}\n.fa-sort-numeric-asc:before {\n  content: \"\\F162\";\n}\n.fa-sort-numeric-desc:before {\n  content: \"\\F163\";\n}\n.fa-thumbs-up:before {\n  content: \"\\F164\";\n}\n.fa-thumbs-down:before {\n  content: \"\\F165\";\n}\n.fa-youtube-square:before {\n  content: \"\\F166\";\n}\n.fa-youtube:before {\n  content: \"\\F167\";\n}\n.fa-xing:before {\n  content: \"\\F168\";\n}\n.fa-xing-square:before {\n  content: \"\\F169\";\n}\n.fa-youtube-play:before {\n  content: \"\\F16A\";\n}\n.fa-dropbox:before {\n  content: \"\\F16B\";\n}\n.fa-stack-overflow:before {\n  content: \"\\F16C\";\n}\n.fa-instagram:before {\n  content: \"\\F16D\";\n}\n.fa-flickr:before {\n  content: \"\\F16E\";\n}\n.fa-adn:before {\n  content: \"\\F170\";\n}\n.fa-bitbucket:before {\n  content: \"\\F171\";\n}\n.fa-bitbucket-square:before {\n  content: \"\\F172\";\n}\n.fa-tumblr:before {\n  content: \"\\F173\";\n}\n.fa-tumblr-square:before {\n  content: \"\\F174\";\n}\n.fa-long-arrow-down:before {\n  content: \"\\F175\";\n}\n.fa-long-arrow-up:before {\n  content: \"\\F176\";\n}\n.fa-long-arrow-left:before {\n  content: \"\\F177\";\n}\n.fa-long-arrow-right:before {\n  content: \"\\F178\";\n}\n.fa-apple:before {\n  content: \"\\F179\";\n}\n.fa-windows:before {\n  content: \"\\F17A\";\n}\n.fa-android:before {\n  content: \"\\F17B\";\n}\n.fa-linux:before {\n  content: \"\\F17C\";\n}\n.fa-dribbble:before {\n  content: \"\\F17D\";\n}\n.fa-skype:before {\n  content: \"\\F17E\";\n}\n.fa-foursquare:before {\n  content: \"\\F180\";\n}\n.fa-trello:before {\n  content: \"\\F181\";\n}\n.fa-female:before {\n  content: \"\\F182\";\n}\n.fa-male:before {\n  content: \"\\F183\";\n}\n.fa-gittip:before,\n.fa-gratipay:before {\n  content: \"\\F184\";\n}\n.fa-sun-o:before {\n  content: \"\\F185\";\n}\n.fa-moon-o:before {\n  content: \"\\F186\";\n}\n.fa-archive:before {\n  content: \"\\F187\";\n}\n.fa-bug:before {\n  content: \"\\F188\";\n}\n.fa-vk:before {\n  content: \"\\F189\";\n}\n.fa-weibo:before {\n  content: \"\\F18A\";\n}\n.fa-renren:before {\n  content: \"\\F18B\";\n}\n.fa-pagelines:before {\n  content: \"\\F18C\";\n}\n.fa-stack-exchange:before {\n  content: \"\\F18D\";\n}\n.fa-arrow-circle-o-right:before {\n  content: \"\\F18E\";\n}\n.fa-arrow-circle-o-left:before {\n  content: \"\\F190\";\n}\n.fa-toggle-left:before,\n.fa-caret-square-o-left:before {\n  content: \"\\F191\";\n}\n.fa-dot-circle-o:before {\n  content: \"\\F192\";\n}\n.fa-wheelchair:before {\n  content: \"\\F193\";\n}\n.fa-vimeo-square:before {\n  content: \"\\F194\";\n}\n.fa-turkish-lira:before,\n.fa-try:before {\n  content: \"\\F195\";\n}\n.fa-plus-square-o:before {\n  content: \"\\F196\";\n}\n.fa-space-shuttle:before {\n  content: \"\\F197\";\n}\n.fa-slack:before {\n  content: \"\\F198\";\n}\n.fa-envelope-square:before {\n  content: \"\\F199\";\n}\n.fa-wordpress:before {\n  content: \"\\F19A\";\n}\n.fa-openid:before {\n  content: \"\\F19B\";\n}\n.fa-institution:before,\n.fa-bank:before,\n.fa-university:before {\n  content: \"\\F19C\";\n}\n.fa-mortar-board:before,\n.fa-graduation-cap:before {\n  content: \"\\F19D\";\n}\n.fa-yahoo:before {\n  content: \"\\F19E\";\n}\n.fa-google:before {\n  content: \"\\F1A0\";\n}\n.fa-reddit:before {\n  content: \"\\F1A1\";\n}\n.fa-reddit-square:before {\n  content: \"\\F1A2\";\n}\n.fa-stumbleupon-circle:before {\n  content: \"\\F1A3\";\n}\n.fa-stumbleupon:before {\n  content: \"\\F1A4\";\n}\n.fa-delicious:before {\n  content: \"\\F1A5\";\n}\n.fa-digg:before {\n  content: \"\\F1A6\";\n}\n.fa-pied-piper-pp:before {\n  content: \"\\F1A7\";\n}\n.fa-pied-piper-alt:before {\n  content: \"\\F1A8\";\n}\n.fa-drupal:before {\n  content: \"\\F1A9\";\n}\n.fa-joomla:before {\n  content: \"\\F1AA\";\n}\n.fa-language:before {\n  content: \"\\F1AB\";\n}\n.fa-fax:before {\n  content: \"\\F1AC\";\n}\n.fa-building:before {\n  content: \"\\F1AD\";\n}\n.fa-child:before {\n  content: \"\\F1AE\";\n}\n.fa-paw:before {\n  content: \"\\F1B0\";\n}\n.fa-spoon:before {\n  content: \"\\F1B1\";\n}\n.fa-cube:before {\n  content: \"\\F1B2\";\n}\n.fa-cubes:before {\n  content: \"\\F1B3\";\n}\n.fa-behance:before {\n  content: \"\\F1B4\";\n}\n.fa-behance-square:before {\n  content: \"\\F1B5\";\n}\n.fa-steam:before {\n  content: \"\\F1B6\";\n}\n.fa-steam-square:before {\n  content: \"\\F1B7\";\n}\n.fa-recycle:before {\n  content: \"\\F1B8\";\n}\n.fa-automobile:before,\n.fa-car:before {\n  content: \"\\F1B9\";\n}\n.fa-cab:before,\n.fa-taxi:before {\n  content: \"\\F1BA\";\n}\n.fa-tree:before {\n  content: \"\\F1BB\";\n}\n.fa-spotify:before {\n  content: \"\\F1BC\";\n}\n.fa-deviantart:before {\n  content: \"\\F1BD\";\n}\n.fa-soundcloud:before {\n  content: \"\\F1BE\";\n}\n.fa-database:before {\n  content: \"\\F1C0\";\n}\n.fa-file-pdf-o:before {\n  content: \"\\F1C1\";\n}\n.fa-file-word-o:before {\n  content: \"\\F1C2\";\n}\n.fa-file-excel-o:before {\n  content: \"\\F1C3\";\n}\n.fa-file-powerpoint-o:before {\n  content: \"\\F1C4\";\n}\n.fa-file-photo-o:before,\n.fa-file-picture-o:before,\n.fa-file-image-o:before {\n  content: \"\\F1C5\";\n}\n.fa-file-zip-o:before,\n.fa-file-archive-o:before {\n  content: \"\\F1C6\";\n}\n.fa-file-sound-o:before,\n.fa-file-audio-o:before {\n  content: \"\\F1C7\";\n}\n.fa-file-movie-o:before,\n.fa-file-video-o:before {\n  content: \"\\F1C8\";\n}\n.fa-file-code-o:before {\n  content: \"\\F1C9\";\n}\n.fa-vine:before {\n  content: \"\\F1CA\";\n}\n.fa-codepen:before {\n  content: \"\\F1CB\";\n}\n.fa-jsfiddle:before {\n  content: \"\\F1CC\";\n}\n.fa-life-bouy:before,\n.fa-life-buoy:before,\n.fa-life-saver:before,\n.fa-support:before,\n.fa-life-ring:before {\n  content: \"\\F1CD\";\n}\n.fa-circle-o-notch:before {\n  content: \"\\F1CE\";\n}\n.fa-ra:before,\n.fa-resistance:before,\n.fa-rebel:before {\n  content: \"\\F1D0\";\n}\n.fa-ge:before,\n.fa-empire:before {\n  content: \"\\F1D1\";\n}\n.fa-git-square:before {\n  content: \"\\F1D2\";\n}\n.fa-git:before {\n  content: \"\\F1D3\";\n}\n.fa-y-combinator-square:before,\n.fa-yc-square:before,\n.fa-hacker-news:before {\n  content: \"\\F1D4\";\n}\n.fa-tencent-weibo:before {\n  content: \"\\F1D5\";\n}\n.fa-qq:before {\n  content: \"\\F1D6\";\n}\n.fa-wechat:before,\n.fa-weixin:before {\n  content: \"\\F1D7\";\n}\n.fa-send:before,\n.fa-paper-plane:before {\n  content: \"\\F1D8\";\n}\n.fa-send-o:before,\n.fa-paper-plane-o:before {\n  content: \"\\F1D9\";\n}\n.fa-history:before {\n  content: \"\\F1DA\";\n}\n.fa-circle-thin:before {\n  content: \"\\F1DB\";\n}\n.fa-header:before {\n  content: \"\\F1DC\";\n}\n.fa-paragraph:before {\n  content: \"\\F1DD\";\n}\n.fa-sliders:before {\n  content: \"\\F1DE\";\n}\n.fa-share-alt:before {\n  content: \"\\F1E0\";\n}\n.fa-share-alt-square:before {\n  content: \"\\F1E1\";\n}\n.fa-bomb:before {\n  content: \"\\F1E2\";\n}\n.fa-soccer-ball-o:before,\n.fa-futbol-o:before {\n  content: \"\\F1E3\";\n}\n.fa-tty:before {\n  content: \"\\F1E4\";\n}\n.fa-binoculars:before {\n  content: \"\\F1E5\";\n}\n.fa-plug:before {\n  content: \"\\F1E6\";\n}\n.fa-slideshare:before {\n  content: \"\\F1E7\";\n}\n.fa-twitch:before {\n  content: \"\\F1E8\";\n}\n.fa-yelp:before {\n  content: \"\\F1E9\";\n}\n.fa-newspaper-o:before {\n  content: \"\\F1EA\";\n}\n.fa-wifi:before {\n  content: \"\\F1EB\";\n}\n.fa-calculator:before {\n  content: \"\\F1EC\";\n}\n.fa-paypal:before {\n  content: \"\\F1ED\";\n}\n.fa-google-wallet:before {\n  content: \"\\F1EE\";\n}\n.fa-cc-visa:before {\n  content: \"\\F1F0\";\n}\n.fa-cc-mastercard:before {\n  content: \"\\F1F1\";\n}\n.fa-cc-discover:before {\n  content: \"\\F1F2\";\n}\n.fa-cc-amex:before {\n  content: \"\\F1F3\";\n}\n.fa-cc-paypal:before {\n  content: \"\\F1F4\";\n}\n.fa-cc-stripe:before {\n  content: \"\\F1F5\";\n}\n.fa-bell-slash:before {\n  content: \"\\F1F6\";\n}\n.fa-bell-slash-o:before {\n  content: \"\\F1F7\";\n}\n.fa-trash:before {\n  content: \"\\F1F8\";\n}\n.fa-copyright:before {\n  content: \"\\F1F9\";\n}\n.fa-at:before {\n  content: \"\\F1FA\";\n}\n.fa-eyedropper:before {\n  content: \"\\F1FB\";\n}\n.fa-paint-brush:before {\n  content: \"\\F1FC\";\n}\n.fa-birthday-cake:before {\n  content: \"\\F1FD\";\n}\n.fa-area-chart:before {\n  content: \"\\F1FE\";\n}\n.fa-pie-chart:before {\n  content: \"\\F200\";\n}\n.fa-line-chart:before {\n  content: \"\\F201\";\n}\n.fa-lastfm:before {\n  content: \"\\F202\";\n}\n.fa-lastfm-square:before {\n  content: \"\\F203\";\n}\n.fa-toggle-off:before {\n  content: \"\\F204\";\n}\n.fa-toggle-on:before {\n  content: \"\\F205\";\n}\n.fa-bicycle:before {\n  content: \"\\F206\";\n}\n.fa-bus:before {\n  content: \"\\F207\";\n}\n.fa-ioxhost:before {\n  content: \"\\F208\";\n}\n.fa-angellist:before {\n  content: \"\\F209\";\n}\n.fa-cc:before {\n  content: \"\\F20A\";\n}\n.fa-shekel:before,\n.fa-sheqel:before,\n.fa-ils:before {\n  content: \"\\F20B\";\n}\n.fa-meanpath:before {\n  content: \"\\F20C\";\n}\n.fa-buysellads:before {\n  content: \"\\F20D\";\n}\n.fa-connectdevelop:before {\n  content: \"\\F20E\";\n}\n.fa-dashcube:before {\n  content: \"\\F210\";\n}\n.fa-forumbee:before {\n  content: \"\\F211\";\n}\n.fa-leanpub:before {\n  content: \"\\F212\";\n}\n.fa-sellsy:before {\n  content: \"\\F213\";\n}\n.fa-shirtsinbulk:before {\n  content: \"\\F214\";\n}\n.fa-simplybuilt:before {\n  content: \"\\F215\";\n}\n.fa-skyatlas:before {\n  content: \"\\F216\";\n}\n.fa-cart-plus:before {\n  content: \"\\F217\";\n}\n.fa-cart-arrow-down:before {\n  content: \"\\F218\";\n}\n.fa-diamond:before {\n  content: \"\\F219\";\n}\n.fa-ship:before {\n  content: \"\\F21A\";\n}\n.fa-user-secret:before {\n  content: \"\\F21B\";\n}\n.fa-motorcycle:before {\n  content: \"\\F21C\";\n}\n.fa-street-view:before {\n  content: \"\\F21D\";\n}\n.fa-heartbeat:before {\n  content: \"\\F21E\";\n}\n.fa-venus:before {\n  content: \"\\F221\";\n}\n.fa-mars:before {\n  content: \"\\F222\";\n}\n.fa-mercury:before {\n  content: \"\\F223\";\n}\n.fa-intersex:before,\n.fa-transgender:before {\n  content: \"\\F224\";\n}\n.fa-transgender-alt:before {\n  content: \"\\F225\";\n}\n.fa-venus-double:before {\n  content: \"\\F226\";\n}\n.fa-mars-double:before {\n  content: \"\\F227\";\n}\n.fa-venus-mars:before {\n  content: \"\\F228\";\n}\n.fa-mars-stroke:before {\n  content: \"\\F229\";\n}\n.fa-mars-stroke-v:before {\n  content: \"\\F22A\";\n}\n.fa-mars-stroke-h:before {\n  content: \"\\F22B\";\n}\n.fa-neuter:before {\n  content: \"\\F22C\";\n}\n.fa-genderless:before {\n  content: \"\\F22D\";\n}\n.fa-facebook-official:before {\n  content: \"\\F230\";\n}\n.fa-pinterest-p:before {\n  content: \"\\F231\";\n}\n.fa-whatsapp:before {\n  content: \"\\F232\";\n}\n.fa-server:before {\n  content: \"\\F233\";\n}\n.fa-user-plus:before {\n  content: \"\\F234\";\n}\n.fa-user-times:before {\n  content: \"\\F235\";\n}\n.fa-hotel:before,\n.fa-bed:before {\n  content: \"\\F236\";\n}\n.fa-viacoin:before {\n  content: \"\\F237\";\n}\n.fa-train:before {\n  content: \"\\F238\";\n}\n.fa-subway:before {\n  content: \"\\F239\";\n}\n.fa-medium:before {\n  content: \"\\F23A\";\n}\n.fa-yc:before,\n.fa-y-combinator:before {\n  content: \"\\F23B\";\n}\n.fa-optin-monster:before {\n  content: \"\\F23C\";\n}\n.fa-opencart:before {\n  content: \"\\F23D\";\n}\n.fa-expeditedssl:before {\n  content: \"\\F23E\";\n}\n.fa-battery-4:before,\n.fa-battery:before,\n.fa-battery-full:before {\n  content: \"\\F240\";\n}\n.fa-battery-3:before,\n.fa-battery-three-quarters:before {\n  content: \"\\F241\";\n}\n.fa-battery-2:before,\n.fa-battery-half:before {\n  content: \"\\F242\";\n}\n.fa-battery-1:before,\n.fa-battery-quarter:before {\n  content: \"\\F243\";\n}\n.fa-battery-0:before,\n.fa-battery-empty:before {\n  content: \"\\F244\";\n}\n.fa-mouse-pointer:before {\n  content: \"\\F245\";\n}\n.fa-i-cursor:before {\n  content: \"\\F246\";\n}\n.fa-object-group:before {\n  content: \"\\F247\";\n}\n.fa-object-ungroup:before {\n  content: \"\\F248\";\n}\n.fa-sticky-note:before {\n  content: \"\\F249\";\n}\n.fa-sticky-note-o:before {\n  content: \"\\F24A\";\n}\n.fa-cc-jcb:before {\n  content: \"\\F24B\";\n}\n.fa-cc-diners-club:before {\n  content: \"\\F24C\";\n}\n.fa-clone:before {\n  content: \"\\F24D\";\n}\n.fa-balance-scale:before {\n  content: \"\\F24E\";\n}\n.fa-hourglass-o:before {\n  content: \"\\F250\";\n}\n.fa-hourglass-1:before,\n.fa-hourglass-start:before {\n  content: \"\\F251\";\n}\n.fa-hourglass-2:before,\n.fa-hourglass-half:before {\n  content: \"\\F252\";\n}\n.fa-hourglass-3:before,\n.fa-hourglass-end:before {\n  content: \"\\F253\";\n}\n.fa-hourglass:before {\n  content: \"\\F254\";\n}\n.fa-hand-grab-o:before,\n.fa-hand-rock-o:before {\n  content: \"\\F255\";\n}\n.fa-hand-stop-o:before,\n.fa-hand-paper-o:before {\n  content: \"\\F256\";\n}\n.fa-hand-scissors-o:before {\n  content: \"\\F257\";\n}\n.fa-hand-lizard-o:before {\n  content: \"\\F258\";\n}\n.fa-hand-spock-o:before {\n  content: \"\\F259\";\n}\n.fa-hand-pointer-o:before {\n  content: \"\\F25A\";\n}\n.fa-hand-peace-o:before {\n  content: \"\\F25B\";\n}\n.fa-trademark:before {\n  content: \"\\F25C\";\n}\n.fa-registered:before {\n  content: \"\\F25D\";\n}\n.fa-creative-commons:before {\n  content: \"\\F25E\";\n}\n.fa-gg:before {\n  content: \"\\F260\";\n}\n.fa-gg-circle:before {\n  content: \"\\F261\";\n}\n.fa-tripadvisor:before {\n  content: \"\\F262\";\n}\n.fa-odnoklassniki:before {\n  content: \"\\F263\";\n}\n.fa-odnoklassniki-square:before {\n  content: \"\\F264\";\n}\n.fa-get-pocket:before {\n  content: \"\\F265\";\n}\n.fa-wikipedia-w:before {\n  content: \"\\F266\";\n}\n.fa-safari:before {\n  content: \"\\F267\";\n}\n.fa-chrome:before {\n  content: \"\\F268\";\n}\n.fa-firefox:before {\n  content: \"\\F269\";\n}\n.fa-opera:before {\n  content: \"\\F26A\";\n}\n.fa-internet-explorer:before {\n  content: \"\\F26B\";\n}\n.fa-tv:before,\n.fa-television:before {\n  content: \"\\F26C\";\n}\n.fa-contao:before {\n  content: \"\\F26D\";\n}\n.fa-500px:before {\n  content: \"\\F26E\";\n}\n.fa-amazon:before {\n  content: \"\\F270\";\n}\n.fa-calendar-plus-o:before {\n  content: \"\\F271\";\n}\n.fa-calendar-minus-o:before {\n  content: \"\\F272\";\n}\n.fa-calendar-times-o:before {\n  content: \"\\F273\";\n}\n.fa-calendar-check-o:before {\n  content: \"\\F274\";\n}\n.fa-industry:before {\n  content: \"\\F275\";\n}\n.fa-map-pin:before {\n  content: \"\\F276\";\n}\n.fa-map-signs:before {\n  content: \"\\F277\";\n}\n.fa-map-o:before {\n  content: \"\\F278\";\n}\n.fa-map:before {\n  content: \"\\F279\";\n}\n.fa-commenting:before {\n  content: \"\\F27A\";\n}\n.fa-commenting-o:before {\n  content: \"\\F27B\";\n}\n.fa-houzz:before {\n  content: \"\\F27C\";\n}\n.fa-vimeo:before {\n  content: \"\\F27D\";\n}\n.fa-black-tie:before {\n  content: \"\\F27E\";\n}\n.fa-fonticons:before {\n  content: \"\\F280\";\n}\n.fa-reddit-alien:before {\n  content: \"\\F281\";\n}\n.fa-edge:before {\n  content: \"\\F282\";\n}\n.fa-credit-card-alt:before {\n  content: \"\\F283\";\n}\n.fa-codiepie:before {\n  content: \"\\F284\";\n}\n.fa-modx:before {\n  content: \"\\F285\";\n}\n.fa-fort-awesome:before {\n  content: \"\\F286\";\n}\n.fa-usb:before {\n  content: \"\\F287\";\n}\n.fa-product-hunt:before {\n  content: \"\\F288\";\n}\n.fa-mixcloud:before {\n  content: \"\\F289\";\n}\n.fa-scribd:before {\n  content: \"\\F28A\";\n}\n.fa-pause-circle:before {\n  content: \"\\F28B\";\n}\n.fa-pause-circle-o:before {\n  content: \"\\F28C\";\n}\n.fa-stop-circle:before {\n  content: \"\\F28D\";\n}\n.fa-stop-circle-o:before {\n  content: \"\\F28E\";\n}\n.fa-shopping-bag:before {\n  content: \"\\F290\";\n}\n.fa-shopping-basket:before {\n  content: \"\\F291\";\n}\n.fa-hashtag:before {\n  content: \"\\F292\";\n}\n.fa-bluetooth:before {\n  content: \"\\F293\";\n}\n.fa-bluetooth-b:before {\n  content: \"\\F294\";\n}\n.fa-percent:before {\n  content: \"\\F295\";\n}\n.fa-gitlab:before {\n  content: \"\\F296\";\n}\n.fa-wpbeginner:before {\n  content: \"\\F297\";\n}\n.fa-wpforms:before {\n  content: \"\\F298\";\n}\n.fa-envira:before {\n  content: \"\\F299\";\n}\n.fa-universal-access:before {\n  content: \"\\F29A\";\n}\n.fa-wheelchair-alt:before {\n  content: \"\\F29B\";\n}\n.fa-question-circle-o:before {\n  content: \"\\F29C\";\n}\n.fa-blind:before {\n  content: \"\\F29D\";\n}\n.fa-audio-description:before {\n  content: \"\\F29E\";\n}\n.fa-volume-control-phone:before {\n  content: \"\\F2A0\";\n}\n.fa-braille:before {\n  content: \"\\F2A1\";\n}\n.fa-assistive-listening-systems:before {\n  content: \"\\F2A2\";\n}\n.fa-asl-interpreting:before,\n.fa-american-sign-language-interpreting:before {\n  content: \"\\F2A3\";\n}\n.fa-deafness:before,\n.fa-hard-of-hearing:before,\n.fa-deaf:before {\n  content: \"\\F2A4\";\n}\n.fa-glide:before {\n  content: \"\\F2A5\";\n}\n.fa-glide-g:before {\n  content: \"\\F2A6\";\n}\n.fa-signing:before,\n.fa-sign-language:before {\n  content: \"\\F2A7\";\n}\n.fa-low-vision:before {\n  content: \"\\F2A8\";\n}\n.fa-viadeo:before {\n  content: \"\\F2A9\";\n}\n.fa-viadeo-square:before {\n  content: \"\\F2AA\";\n}\n.fa-snapchat:before {\n  content: \"\\F2AB\";\n}\n.fa-snapchat-ghost:before {\n  content: \"\\F2AC\";\n}\n.fa-snapchat-square:before {\n  content: \"\\F2AD\";\n}\n.fa-pied-piper:before {\n  content: \"\\F2AE\";\n}\n.fa-first-order:before {\n  content: \"\\F2B0\";\n}\n.fa-yoast:before {\n  content: \"\\F2B1\";\n}\n.fa-themeisle:before {\n  content: \"\\F2B2\";\n}\n.fa-google-plus-circle:before,\n.fa-google-plus-official:before {\n  content: \"\\F2B3\";\n}\n.fa-fa:before,\n.fa-font-awesome:before {\n  content: \"\\F2B4\";\n}\n.fa-handshake-o:before {\n  content: \"\\F2B5\";\n}\n.fa-envelope-open:before {\n  content: \"\\F2B6\";\n}\n.fa-envelope-open-o:before {\n  content: \"\\F2B7\";\n}\n.fa-linode:before {\n  content: \"\\F2B8\";\n}\n.fa-address-book:before {\n  content: \"\\F2B9\";\n}\n.fa-address-book-o:before {\n  content: \"\\F2BA\";\n}\n.fa-vcard:before,\n.fa-address-card:before {\n  content: \"\\F2BB\";\n}\n.fa-vcard-o:before,\n.fa-address-card-o:before {\n  content: \"\\F2BC\";\n}\n.fa-user-circle:before {\n  content: \"\\F2BD\";\n}\n.fa-user-circle-o:before {\n  content: \"\\F2BE\";\n}\n.fa-user-o:before {\n  content: \"\\F2C0\";\n}\n.fa-id-badge:before {\n  content: \"\\F2C1\";\n}\n.fa-drivers-license:before,\n.fa-id-card:before {\n  content: \"\\F2C2\";\n}\n.fa-drivers-license-o:before,\n.fa-id-card-o:before {\n  content: \"\\F2C3\";\n}\n.fa-quora:before {\n  content: \"\\F2C4\";\n}\n.fa-free-code-camp:before {\n  content: \"\\F2C5\";\n}\n.fa-telegram:before {\n  content: \"\\F2C6\";\n}\n.fa-thermometer-4:before,\n.fa-thermometer:before,\n.fa-thermometer-full:before {\n  content: \"\\F2C7\";\n}\n.fa-thermometer-3:before,\n.fa-thermometer-three-quarters:before {\n  content: \"\\F2C8\";\n}\n.fa-thermometer-2:before,\n.fa-thermometer-half:before {\n  content: \"\\F2C9\";\n}\n.fa-thermometer-1:before,\n.fa-thermometer-quarter:before {\n  content: \"\\F2CA\";\n}\n.fa-thermometer-0:before,\n.fa-thermometer-empty:before {\n  content: \"\\F2CB\";\n}\n.fa-shower:before {\n  content: \"\\F2CC\";\n}\n.fa-bathtub:before,\n.fa-s15:before,\n.fa-bath:before {\n  content: \"\\F2CD\";\n}\n.fa-podcast:before {\n  content: \"\\F2CE\";\n}\n.fa-window-maximize:before {\n  content: \"\\F2D0\";\n}\n.fa-window-minimize:before {\n  content: \"\\F2D1\";\n}\n.fa-window-restore:before {\n  content: \"\\F2D2\";\n}\n.fa-times-rectangle:before,\n.fa-window-close:before {\n  content: \"\\F2D3\";\n}\n.fa-times-rectangle-o:before,\n.fa-window-close-o:before {\n  content: \"\\F2D4\";\n}\n.fa-bandcamp:before {\n  content: \"\\F2D5\";\n}\n.fa-grav:before {\n  content: \"\\F2D6\";\n}\n.fa-etsy:before {\n  content: \"\\F2D7\";\n}\n.fa-imdb:before {\n  content: \"\\F2D8\";\n}\n.fa-ravelry:before {\n  content: \"\\F2D9\";\n}\n.fa-eercast:before {\n  content: \"\\F2DA\";\n}\n.fa-microchip:before {\n  content: \"\\F2DB\";\n}\n.fa-snowflake-o:before {\n  content: \"\\F2DC\";\n}\n.fa-superpowers:before {\n  content: \"\\F2DD\";\n}\n.fa-wpexplorer:before {\n  content: \"\\F2DE\";\n}\n.fa-meetup:before {\n  content: \"\\F2E0\";\n}\n.sr-only {\n  position: absolute;\n  width: 1px;\n  height: 1px;\n  padding: 0;\n  margin: -1px;\n  overflow: hidden;\n  clip: rect(0, 0, 0, 0);\n  border: 0;\n}\n.sr-only-focusable:active, .sr-only-focusable:focus {\n  position: static;\n  width: auto;\n  height: auto;\n  margin: 0;\n  overflow: visible;\n  clip: auto;\n}\n\n/*\n __   __     ______     ______     __    __     ______     __         __     ______     ______     ______\n/\\ \"-.\\ \\   /\\  __ \\   /\\  == \\   /\\ \"-./  \\   /\\  __ \\   /\\ \\       /\\ \\   /\\___  \\   /\\  ___\\   /\\  == \\ \\ \\-.  \\  \\ \\ \\/\\ \\  \\ \\  __<   \\ \\ \\-./\\ \\  \\ \\  __ \\  \\ \\ \\____  \\ \\ \\  \\/_/  /__  \\ \\  __\\   \\ \\  __<\n \\ \\_\\\\\"\\_\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_\\ \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_\\   /\\_____\\  \\ \\_____\\  \\ \\_\\ \\_  \\/_/ \\/_/   \\/_____/   \\/_/ /_/   \\/_/  \\/_/   \\/_/\\/_/   \\/_____/   \\/_/   \\/_____/   \\/_____/   \\/_/ /_/\n\n*/\nhtml, body {\n  height: auto;\n}\nhtml {\n  height: 100%;\n}\nhtml, body, h1, h2, h3, h4, h5, h6, p, div, blockquote {\n  margin: 0;\n  -webkit-margin-before: 0;\n  -webkit-margin-after: 0;\n}\nul {\n  cursor: default;\n  -webkit-margin-before: 0px;\n  -webkit-margin-after: 0px;\n  -webkit-margin-start: 0px;\n  -webkit-margin-end: 0px;\n  -webkit-padding-start: 0px;\n}\n:focus {\n  outline: 0;\n}\na, a:focus, a:hover, a:visited {\n  color: #a0a083;\n  text-decoration: none;\n  cursor: pointer;\n}\n* {\n  box-sizing: border-box;\n}\n*::selection {\n  background: #a0a083;\n  color: #fff;\n}\n\n/*\n ______     __         ______     ______     ______     __\n/\\  ___\\   /\\ \\       /\\  __ \\   /\\  == \\   /\\  __ \\   /\\ \\ \\ \\__ \\  \\ \\ \\____  \\ \\ \\/\\ \\  \\ \\  __<   \\ \\  __ \\  \\ \\ \\____\n \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_____  \\/_____/   \\/_____/   \\/_____/   \\/_____/   \\/_/\\/_/   \\/_____/\n\n*/\n#app {\n  height: 100%;\n}\n#app h1 {\n    color: #fff;\n    font-size: 72px;\n}\n#app h2 {\n    color: #2a2a2a;\n    font-size: 32px;\n    padding-bottom: 40px;\n}\n#app h4 {\n    font-size: 14px;\n    font-weight: 300;\n}\nbody {\n  font-family: 'Montserrat', sans-serif;\n}\np {\n  color: #787878;\n  cursor: default;\n}\n.container {\n  width: 1320px;\n  margin: 0 auto;\n}\n.underline {\n  color: #fff;\n  font-size: 16px;\n  position: relative;\n  -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n  -moz-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n  transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n}\n.underline::before {\n    content: \"\";\n    position: absolute;\n    background: #a0a083;\n    left: 0;\n    bottom: -6px;\n    height: 4px;\n    right: 100%;\n    -webkit-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n    -moz-transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n    transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);\n    overflow: hidden;\n}\n.underline:hover, .underline.active {\n    color: #a0a083;\n}\n.underline:hover::before, .underline.active::before {\n      right: 0;\n}\nsection {\n  display: block;\n  width: 100%;\n}\nsection .left, section .right {\n    display: inline-block;\n    width: 50%;\n    vertical-align: top;\n}\na.under {\n  position: relative;\n  padding-bottom: 6px;\n}\na.under::before, a.under::after {\n    content: \"\";\n    position: absolute;\n    background: #a0a083;\n    left: 0;\n    right: 0;\n    margin-top: 2px;\n    bottom: 0;\n    height: 4px;\n}\na.under::after {\n    background: #fff;\n    left: -80px;\n    width: 80px;\n    visibility: hidden;\n}\na.under:hover::after {\n    pointer-events: none;\n    left: 100%;\n    transition: all 0.375s;\n    visibility: visible;\n}\n.btn {\n  background: transparent;\n  font-family: 'Montserrat', sans-serif;\n  font-size: 20px;\n  border: 4px solid #a0a083;\n  color: #a0a083;\n  padding: 0.5em 3em;\n  min-width: 240px;\n  min-height: 60px;\n  cursor: pointer;\n  position: relative;\n  z-index: 0;\n  -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n  -moz-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n}\n.btn::before {\n    content: \"\";\n    right: 100%;\n    background: #a0a083;\n    left: 0;\n    bottom: 0;\n    top: 0;\n    overflow: hidden;\n    position: absolute;\n    -webkit-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n    -moz-transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);\n    z-index: -1;\n}\n.btn:hover {\n    color: #fff;\n    z-index: 0;\n}\n.btn:hover::before {\n      right: 0;\n      z-index: -1;\n}\n.btn-white {\n  border-color: #fff;\n  color: #fff;\n}\n.btn-white::before {\n    background: #fff;\n}\n.btn-white:hover {\n    color: #a0a083;\n}\n.btn-square {\n  height: 60px;\n  min-height: 60px;\n  width: 60px;\n  min-width: 60px;\n  padding: 0;\n}\n.background-2 {\n  background: #e2e2e2;\n}\n.valign {\n  display: -webkit-box;\n  display: -moz-box;\n  display: box;\n  display: -webkit-flex;\n  display: -moz-flex;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -moz-box-orient: vertical;\n  box-orient: vertical;\n  -webkit-box-direction: normal;\n  -moz-box-direction: normal;\n  box-direction: normal;\n  -webkit-flex-direction: column;\n  -moz-flex-direction: column;\n  flex-direction: column;\n  -ms-flex-direction: column;\n  height: 100%;\n}\n.valign::before, .valign::after {\n    content: \"\";\n    -webkit-flex-grow: 1;\n    -moz-flex-grow: 1;\n    flex-grow: 1;\n    -ms-flex-positive: 1;\n}\n.blink {\n  -webkit-animation: blinker 1.2s linear infinite;\n  -moz-animation: blinker 1.2s linear infinite;\n  animation: blinker 1.2s linear infinite;\n  font-weight: 300;\n  float: left;\n}\n@-webkit-keyframes blinker {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-moz-keyframes blinker {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes blinker {\n0% {\n    opacity: 1;\n}\n50% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@media screen and (max-width: 1320px) {\nbody {\n    overflow: hidden;\n}\n.container {\n    width: 90%;\n}\nsection {\n    display: block;\n}\n}\n\n/*\n ______   ______     ______     __   __     ______     __     ______   __     ______     __   __     ______\n/\\__  _\\ /\\  == \\   /\\  __ \\   /\\ \"-.\\ \\   /\\  ___\\   /\\ \\   /\\__  _\\ /\\ \\   /\\  __ \\   /\\ \"-.\\ \\   /\\  ___\\/_/\\ \\/ \\ \\  __<   \\ \\  __ \\  \\ \\ \\-.  \\  \\ \\___  \\  \\ \\ \\  \\/_/\\ \\/ \\ \\ \\  \\ \\ \\/\\ \\  \\ \\ \\-.  \\  \\ \\___    \\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\ \\_\\  \\ \\_\\\\\"\\_\\  \\/\\_____\\  \\ \\_\\    \\ \\_\\  \\ \\_\\  \\ \\_____\\  \\ \\_\\\\\"\\_\\  \\/\\_____   \\/_/   \\/_/ /_/   \\/_/\\/_/   \\/_/ \\/_/   \\/_____/   \\/_/     \\/_/   \\/_/   \\/_____/   \\/_/ \\/_/   \\/_____/\n\n*/\n.slide-leave-active .left {\n  transform: translateX(-130%);\n  transition-duration: 0.5s;\n  transition-property: all;\n}\n.slide-leave-active .right {\n  transform: translateX(130%);\n  transition-duration: 0.5s;\n  transition-property: all;\n}\n.slide-leave-active .hello-text {\n  -webkit-animation: fade-out 0.5s;\n  -moz-animation: fade-out 0.5s;\n  animation: fade-out 0.5s;\n}\n.slide-leave-active.project {\n  -webkit-animation: slide-to-bottom 0.5s;\n  -moz-animation: slide-to-bottom 0.5s;\n  animation: slide-to-bottom 0.5s;\n}\n.slide-leave-to .hello-text {\n  opacity: 0;\n}\n@-webkit-keyframes slide-from-left {\n0% {\n    transform: translateX(-130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-moz-keyframes slide-from-left {\n0% {\n    transform: translateX(-130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@keyframes slide-from-left {\n0% {\n    transform: translateX(-130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-webkit-keyframes slide-from-right {\n0% {\n    transform: translateX(130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-moz-keyframes slide-from-right {\n0% {\n    transform: translateX(130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@keyframes slide-from-right {\n0% {\n    transform: translateX(130%);\n}\n100% {\n    transform: translateX(0%);\n}\n}\n@-webkit-keyframes slide-from-bottom {\n0% {\n    transform: translateY(130%);\n}\n100% {\n    transform: translateY(0%);\n}\n}\n@-moz-keyframes slide-from-bottom {\n0% {\n    transform: translateY(130%);\n}\n100% {\n    transform: translateY(0%);\n}\n}\n@keyframes slide-from-bottom {\n0% {\n    transform: translateY(130%);\n}\n100% {\n    transform: translateY(0%);\n}\n}\n@-webkit-keyframes slide-to-bottom {\n0% {\n    transform: translateY(0%);\n}\n100% {\n    transform: translateY(130%);\n}\n}\n@-moz-keyframes slide-to-bottom {\n0% {\n    transform: translateY(0%);\n}\n100% {\n    transform: translateY(130%);\n}\n}\n@keyframes slide-to-bottom {\n0% {\n    transform: translateY(0%);\n}\n100% {\n    transform: translateY(130%);\n}\n}\n@-webkit-keyframes fade-in {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-moz-keyframes fade-in {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@keyframes fade-in {\n0% {\n    opacity: 0;\n}\n100% {\n    opacity: 1;\n}\n}\n@-webkit-keyframes fade-out {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n@-moz-keyframes fade-out {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n@keyframes fade-out {\n0% {\n    opacity: 1;\n}\n100% {\n    opacity: 0;\n}\n}\n.slide-enter-active {\n  transform-style: preserve-3d;\n}\n.slide-enter-active .left {\n    -webkit-animation: slide-from-left 0.5s;\n    -moz-animation: slide-from-left 0.5s;\n    animation: slide-from-left 0.5s;\n}\n.slide-enter-active .right {\n    -webkit-animation: slide-from-right 0.5s;\n    -moz-animation: slide-from-right 0.5s;\n    animation: slide-from-right 0.5s;\n}\n.slide-enter-active .hello-text {\n    -webkit-animation: fade-in 0.5s;\n    -moz-animation: fade-in 0.5s;\n    animation: fade-in 0.5s;\n}\n.slide-enter-active.project {\n    -webkit-animation: slide-from-bottom 0.5s;\n    -moz-animation: slide-from-bottom 0.5s;\n    animation: slide-from-bottom 0.5s;\n}\n\n/*\n ______   ______     ______       __     ______     ______     ______   ______\n/\\  == \\ /\\  == \\   /\\  __ \\     /\\ \\   /\\  ___\\   /\\  ___\\   /\\__  _\\ /\\  ___\\ \\  _-/ \\ \\  __<   \\ \\ \\/\\ \\   _\\_\\ \\  \\ \\  __\\   \\ \\ \\____  \\/_/\\ \\/ \\ \\___   \\ \\_\\    \\ \\_\\ \\_\\  \\ \\_____\\ /\\_____\\  \\ \\_____\\  \\ \\_____\\    \\ \\_\\  \\/\\_____  \\/_/     \\/_/ /_/   \\/_____/ \\/_____/   \\/_____/   \\/_____/     \\/_/   \\/_____/\n\n*/\n.project-return {\n  text-align: center;\n  padding: 80px 0;\n  background: #a0a083;\n}\n.project-return a {\n    color: #fff;\n}\n.project .p-heading {\n  height: 60vh;\n  background-size: cover !important;\n  background-position-y: 0px;\n}\n.project .p-heading .p-title {\n    display: -webkit-box;\n    display: -moz-box;\n    display: box;\n    display: -webkit-flex;\n    display: -moz-flex;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -moz-box-orient: vertical;\n    box-orient: vertical;\n    -webkit-box-direction: normal;\n    -moz-box-direction: normal;\n    box-direction: normal;\n    -webkit-flex-direction: column;\n    -moz-flex-direction: column;\n    flex-direction: column;\n    -ms-flex-direction: column;\n    height: 100%;\n    width: 1320px;\n    margin: 0 auto;\n}\n.project .p-heading .p-title::before, .project .p-heading .p-title::after {\n      content: \"\";\n      -webkit-flex-grow: 1;\n      -moz-flex-grow: 1;\n      flex-grow: 1;\n      -ms-flex-positive: 1;\n}\n.project .p-heading .p-title h4 {\n      color: #fff;\n      font-size: 24px !important;\n      opacity: 0.8;\n}\n.project .p-text {\n  padding: 80px;\n  background: #fff;\n  text-align: center;\n}\n.project .p-text p {\n    width: 960px;\n    margin: 0 auto;\n    font-size: 20px;\n    line-height: 1.8;\n    margin-bottom: 40px;\n    text-align: left;\n}\n.project .p-text img {\n    width: 50%;\n    display: block;\n    margin: 0 auto;\n}\n.project .p-text span {\n    color: #bdbdbd;\n    text-align: center;\n    display: block;\n    font-style: italic;\n    padding: 40px;\n}\n@media screen and (max-width: 1320px) {\n.project .p-heading .p-title {\n    width: 90%;\n    margin: 0 auto;\n}\n}\n@media screen and (max-width: 1024px) {\n.project .p-text {\n    padding: 80px 0;\n}\n.project .p-text p, .project .p-text img {\n      width: 90%;\n}\n}\nbody {\n  background: url(" + __webpack_require__(6) + ") top left no-repeat;\n  background-size: cover;\n  background-attachment: fixed;\n  overflow-y: scroll;\n}\nbody .underbg {\n    position: fixed;\n    display: none;\n    top: 0;\n    left: 0;\n    width: 100%;\n    z-index: -1;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 65 */
+/* 71 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/fontawesome-webfont.eot?674f50d287a8c48dc19ba404d20fe713";
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/fontawesome-webfont.eot?674f50d287a8c48dc19ba404d20fe713";
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/fontawesome-webfont.woff2?af7ae505a9eed503f8b8e6982036873e";
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/fontawesome-webfont.woff?fee66e712a8a08eef5805a46892932ad";
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/fontawesome-webfont.ttf?b06871f281fee6b241d60582ae9369b9";
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/fontawesome-webfont.svg?912ec66d7572ff821749319396470bde";
+
+/***/ }),
+/* 77 */
 /***/ (function(module, exports) {
 
 /**
@@ -3238,12 +3386,12 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 66 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navbar__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navbar__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_Navbar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_Navbar__);
 //
 //
@@ -3342,19 +3490,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 67 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(68)
+  __webpack_require__(80)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(70),
+  __webpack_require__(82),
   /* template */
-  __webpack_require__(71),
+  __webpack_require__(83),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -3386,17 +3534,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 68 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(69);
+var content = __webpack_require__(81);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("40138718", content, false);
+var update = __webpack_require__(2)("40138718", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -3412,10 +3560,10 @@ if(false) {
 }
 
 /***/ }),
-/* 69 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -3426,7 +3574,7 @@ exports.push([module.i, "\n.nav[data-v-570696dc] {\n  overflow-y: auto;\n  overf
 
 
 /***/ }),
-/* 70 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3515,7 +3663,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 71 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3538,7 +3686,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       'home': _vm.homeScreen
     }],
     attrs: {
-      "src": __webpack_require__(11)
+      "src": __webpack_require__(14)
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "nav-links"
@@ -3645,7 +3793,7 @@ if (false) {
 }
 
 /***/ }),
-/* 72 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3662,7 +3810,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('router-view')], 1), _vm._v(" "), _c('img', {
     staticClass: "underbg",
     attrs: {
-      "src": __webpack_require__(12)
+      "src": __webpack_require__(6)
     }
   })], 1)
 },staticRenderFns: []}
@@ -3675,61 +3823,61 @@ if (false) {
 }
 
 /***/ }),
-/* 73 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(15);
 
 
 var routes = [{
     path: '/',
     name: 'Home',
-    component: __webpack_require__(74)
+    component: __webpack_require__(86)
 }, {
     path: '/about',
     name: 'About',
-    component: __webpack_require__(80)
+    component: __webpack_require__(91)
 }, {
     path: '/projects',
-    component: __webpack_require__(85),
+    component: __webpack_require__(96),
     children: [{
         path: '',
         name: 'Projects',
-        component: __webpack_require__(88)
+        component: __webpack_require__(99)
     }, {
         path: 'bvc',
         name: 'Bonne Vie Café',
-        component: __webpack_require__(115)
+        component: __webpack_require__(121)
     }, {
         path: 'rogue',
         name: 'Rogue',
-        component: __webpack_require__(120)
+        component: __webpack_require__(126)
     }, {
         path: 'feedshare',
         name: 'Feedshare',
-        component: __webpack_require__(129)
+        component: __webpack_require__(135)
     }, {
         path: 'flipster',
         name: 'Flipster',
-        component: __webpack_require__(134)
+        component: __webpack_require__(140)
     }, {
         path: 'sthacks',
         name: 'Sthacks',
-        component: __webpack_require__(139)
+        component: __webpack_require__(145)
     }, {
         path: 'myneu',
         name: 'Modern MyNEU',
-        component: __webpack_require__(144)
+        component: __webpack_require__(150)
     }]
 }, {
     path: '/contact',
     name: 'Contact',
-    component: __webpack_require__(149)
+    component: __webpack_require__(155)
 }, {
     path: '*',
     name: 'Page Not Found',
-    component: __webpack_require__(171)
+    component: __webpack_require__(166)
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
@@ -3738,19 +3886,19 @@ var routes = [{
 }));
 
 /***/ }),
-/* 74 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(75)
+  __webpack_require__(87)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(78),
+  __webpack_require__(89),
   /* template */
-  __webpack_require__(79),
+  __webpack_require__(90),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -3782,17 +3930,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 75 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(76);
+var content = __webpack_require__(88);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("2288730c", content, false);
+var update = __webpack_require__(2)("2288730c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -3808,10 +3956,10 @@ if(false) {
 }
 
 /***/ }),
-/* 76 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -3822,89 +3970,7 @@ exports.push([module.i, "\n#app .content[data-v-13cbff3e] {\n  height: 100vh;\n}
 
 
 /***/ }),
-/* 77 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 78 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3934,7 +4000,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 79 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -3965,19 +4031,19 @@ if (false) {
 }
 
 /***/ }),
-/* 80 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(81)
+  __webpack_require__(92)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(83),
+  __webpack_require__(94),
   /* template */
-  __webpack_require__(84),
+  __webpack_require__(95),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -4009,17 +4075,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 81 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(82);
+var content = __webpack_require__(93);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("eac68e76", content, false);
+var update = __webpack_require__(2)("eac68e76", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -4035,10 +4101,10 @@ if(false) {
 }
 
 /***/ }),
-/* 82 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -4049,7 +4115,7 @@ exports.push([module.i, "\n#app .content[data-v-01ab747b] {\n  overflow-x: hidde
 
 
 /***/ }),
-/* 83 */
+/* 94 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4121,7 +4187,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'About',
     data: function data() {
         return {
-            skills: [{ name: 'HTML5, CSS3', quality: 'Expert', pct: '97' }, { name: 'jQuery/JS', quality: 'Expert', pct: '87' }, { name: 'Java, Python, PHP, Lisp', quality: 'Advanced', pct: '75' }],
+            skills: [{ name: 'Node/NPM, HTML5, CSS3', quality: 'Expert', pct: '97' }, { name: 'jQuery/JS', quality: 'Expert', pct: '87' }, { name: 'Java, Python, PHP, Lisp', quality: 'Advanced', pct: '75' }],
             baseWidths: [{ width: 0 }, { width: 0 }, { width: 0 }]
         };
     },
@@ -4146,7 +4212,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 84 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4255,15 +4321,15 @@ if (false) {
 }
 
 /***/ }),
-/* 85 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(86),
+  __webpack_require__(97),
   /* template */
-  __webpack_require__(87),
+  __webpack_require__(98),
   /* styles */
   null,
   /* scopeId */
@@ -4295,7 +4361,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 86 */
+/* 97 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4335,7 +4401,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 87 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4363,19 +4429,19 @@ if (false) {
 }
 
 /***/ }),
-/* 88 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(89)
+  __webpack_require__(100)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(91),
+  __webpack_require__(102),
   /* template */
-  __webpack_require__(114),
+  __webpack_require__(120),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -4407,17 +4473,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 89 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(90);
+var content = __webpack_require__(101);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("56923d26", content, false);
+var update = __webpack_require__(2)("56923d26", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -4433,10 +4499,10 @@ if(false) {
 }
 
 /***/ }),
-/* 90 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -4447,7 +4513,7 @@ exports.push([module.i, "\n.project-return[data-v-660c7e88] {\n  display: none;\
 
 
 /***/ }),
-/* 91 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4484,7 +4550,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'projects',
     data: function data() {
         return {
-            img: __webpack_require__(14),
+            img: __webpack_require__(7),
             activeProject: 0,
             windowHeight: 0,
             preview: '',
@@ -4502,7 +4568,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         projectCheck: function projectCheck(arg) {
             this.activeProject = arg;
-            var newImg = __webpack_require__(92)("./" + this.projects[arg].image);
+            var newImg = __webpack_require__(103)("./" + this.projects[arg].image);
             this.$nextTick(function () {
                 this.img = newImg;
             });
@@ -4536,57 +4602,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 92 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./backgrounds/bg1.jpg": 93,
-	"./backgrounds/bg2.jpg": 94,
-	"./backgrounds/bg3.jpg": 95,
-	"./backgrounds/bg4.jpg": 96,
-	"./backgrounds/bg5.jpg": 97,
-	"./backgrounds/bg6.jpg": 98,
-	"./bg.jpg": 12,
-	"./bonne/b1.jpg": 15,
-	"./bonne/b2.jpg": 16,
-	"./bonne/b3.jpg": 17,
-	"./bvc.jpg": 99,
-	"./favicon.ico": 100,
-	"./feedshare.jpg": 101,
-	"./feedshare/f1.png": 18,
-	"./feedshare/f2.png": 19,
-	"./flipster.jpg": 14,
-	"./flipster/f1.jpg": 20,
-	"./flipster/f2.jpg": 21,
-	"./flipster/f3.jpg": 22,
-	"./flipster/f4.jpg": 23,
-	"./fullsize_images/bg.png": 102,
-	"./fullsize_images/fullbvc.png": 103,
-	"./fullsize_images/fullflipster.png": 104,
-	"./fullsize_images/fullmyneu.png": 105,
-	"./fullsize_images/fullrogue.png": 106,
-	"./fullsize_images/fullsth.png": 107,
-	"./fullsize_images/logo_small_black.png": 108,
-	"./fullsize_images/logo_small_white.png": 109,
-	"./fullsize_images/peter.png": 110,
-	"./logo.svg": 11,
-	"./myneu.jpg": 111,
-	"./myneu/m1.jpg": 24,
-	"./myneu/m1.png": 25,
-	"./myneu/m2.png": 26,
-	"./myneu/m3.png": 27,
-	"./peter.png": 28,
-	"./rogue.jpg": 112,
-	"./rogue/r1.png": 29,
-	"./rogue/r2.png": 30,
-	"./rogue/r3.png": 31,
-	"./rogue/r4.png": 32,
-	"./sth.jpg": 113,
-	"./sthacks/s1.gif": 33,
-	"./sthacks/s2.gif": 34,
-	"./sthacks/s3.gif": 35,
-	"./sthacks/s4.gif": 36,
-	"./sthacks/s5.gif": 37
+	"./backgrounds/bg1.jpg": 104,
+	"./backgrounds/bg2.jpg": 105,
+	"./backgrounds/bg3.jpg": 106,
+	"./backgrounds/bg4.jpg": 107,
+	"./backgrounds/bg5.jpg": 108,
+	"./backgrounds/bg6.jpg": 109,
+	"./bg.jpg": 6,
+	"./bonne/b1.jpg": 16,
+	"./bonne/b2.jpg": 17,
+	"./bonne/b3.jpg": 18,
+	"./bvc.jpg": 19,
+	"./favicon.ico": 110,
+	"./feedshare.jpg": 20,
+	"./feedshare/f1.png": 21,
+	"./feedshare/f2.png": 22,
+	"./flipster.jpg": 7,
+	"./flipster/f1.jpg": 23,
+	"./flipster/f2.jpg": 24,
+	"./flipster/f3.jpg": 25,
+	"./flipster/f4.jpg": 26,
+	"./fullsize_images/bg.png": 111,
+	"./fullsize_images/fullbvc.png": 112,
+	"./fullsize_images/fullflipster.png": 113,
+	"./fullsize_images/fullmyneu.png": 114,
+	"./fullsize_images/fullrogue.png": 115,
+	"./fullsize_images/fullsth.png": 116,
+	"./fullsize_images/logo_small_black.png": 117,
+	"./fullsize_images/logo_small_white.png": 118,
+	"./fullsize_images/peter.png": 119,
+	"./logo.svg": 14,
+	"./myneu.jpg": 27,
+	"./myneu/m1.jpg": 28,
+	"./myneu/m1.png": 29,
+	"./myneu/m2.png": 30,
+	"./myneu/m3.png": 31,
+	"./peter.png": 32,
+	"./rogue.jpg": 33,
+	"./rogue/r1.png": 34,
+	"./rogue/r2.png": 35,
+	"./rogue/r3.png": 36,
+	"./rogue/r4.png": 37,
+	"./sth.jpg": 38,
+	"./sthacks/s1.gif": 39,
+	"./sthacks/s2.gif": 40,
+	"./sthacks/s3.gif": 41,
+	"./sthacks/s4.gif": 42,
+	"./sthacks/s5.gif": 43
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -4602,136 +4668,106 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 92;
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg1.jpg?b0dbb382b1db1b7d30e501aee4f6f5bd";
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg2.jpg?35a82d9a0e7612bb7755dcf859c324da";
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg3.jpg?0462e5d3e7eb458451f3435653323faf";
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg4.jpg?44f6b2e32ca704c5e012ae0838d11337";
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg5.jpg?2148bdff73c1894c9389f310b28b1ec7";
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg6.jpg?f466734d5f38643d763846334c9da9f3";
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bvc.jpg?30608f50f5aa7f08c402354b98cf92ed";
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports) {
-
-throw new Error("Module parse failed: /mnt/d/Users/PeterA/Documents/Git/Laravel/vue-app/resources/assets/img/favicon.ico Unexpected character '\u0000' (1:0)\nYou may need an appropriate loader to handle this file type.\n(Source code omitted for this binary file)");
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/feedshare.jpg?6a25876c5adf680d1bf078669e45786e";
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/bg.png?205c4bc66f2bce6c429450c693040dea";
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports) {
-
-module.exports = "/images/fullbvc.png?f1fc0501b02ee8806b38d558c92a41cf";
+webpackContext.id = 103;
 
 /***/ }),
 /* 104 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/fullflipster.png?6de56a260718684c7c2849e418be942f";
+module.exports = "/images/bg1.jpg?b0dbb382b1db1b7d30e501aee4f6f5bd";
 
 /***/ }),
 /* 105 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/fullmyneu.png?4b7742b27ba48fa8584d0fe17271622c";
+module.exports = "/images/bg2.jpg?35a82d9a0e7612bb7755dcf859c324da";
 
 /***/ }),
 /* 106 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/fullrogue.png?a74a4e4b1e67d0d4044486bf46ab9976";
+module.exports = "/images/bg3.jpg?0462e5d3e7eb458451f3435653323faf";
 
 /***/ }),
 /* 107 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/fullsth.png?ad22eb2744b774fdf66a79560b1326c1";
+module.exports = "/images/bg4.jpg?44f6b2e32ca704c5e012ae0838d11337";
 
 /***/ }),
 /* 108 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/logo_small_black.png?6335da15e76d23b96471faa417c39667";
+module.exports = "/images/bg5.jpg?2148bdff73c1894c9389f310b28b1ec7";
 
 /***/ }),
 /* 109 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/logo_small_white.png?0165b89e64e0d9aee53540b9321d6c19";
+module.exports = "/images/bg6.jpg?f466734d5f38643d763846334c9da9f3";
 
 /***/ }),
 /* 110 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/peter.png?a18feb6d1fe5197686f6c53489a4d965";
+throw new Error("Module parse failed: /mnt/d/Users/PeterA/Documents/Git/Laravel/vue-app/resources/assets/img/favicon.ico Unexpected character '\u0000' (1:0)\nYou may need an appropriate loader to handle this file type.\n(Source code omitted for this binary file)");
 
 /***/ }),
 /* 111 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/myneu.jpg?74a43d7ea4b466b8216e9f290cdfb400";
+module.exports = "/images/bg.png?205c4bc66f2bce6c429450c693040dea";
 
 /***/ }),
 /* 112 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/rogue.jpg?a4edb9704e12b286be13aee8070ff761";
+module.exports = "/images/fullbvc.png?f1fc0501b02ee8806b38d558c92a41cf";
 
 /***/ }),
 /* 113 */
 /***/ (function(module, exports) {
 
-module.exports = "/images/sth.jpg?18ce43b25ab09a8513a9ddb68e273a31";
+module.exports = "/images/fullflipster.png?6de56a260718684c7c2849e418be942f";
 
 /***/ }),
 /* 114 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/fullmyneu.png?4b7742b27ba48fa8584d0fe17271622c";
+
+/***/ }),
+/* 115 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/fullrogue.png?a74a4e4b1e67d0d4044486bf46ab9976";
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/fullsth.png?ad22eb2744b774fdf66a79560b1326c1";
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/logo_small_black.png?6335da15e76d23b96471faa417c39667";
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/logo_small_white.png?0165b89e64e0d9aee53540b9321d6c19";
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports) {
+
+module.exports = "/images/peter.png?a18feb6d1fe5197686f6c53489a4d965";
+
+/***/ }),
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4791,19 +4827,19 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(116)
+  __webpack_require__(122)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(118),
+  __webpack_require__(124),
   /* template */
-  __webpack_require__(119),
+  __webpack_require__(125),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -4835,17 +4871,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 116 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(117);
+var content = __webpack_require__(123);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("43ddfbf0", content, false);
+var update = __webpack_require__(2)("43ddfbf0", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -4861,21 +4897,21 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.project .p-heading[data-v-2d038645] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(99) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-2d038645] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-2d038645] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-2d038645]:last-child {\n  margin-top: -300px;\n}\n", ""]);
+exports.push([module.i, "\n.project .p-heading[data-v-2d038645] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(19) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-2d038645] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-2d038645] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-2d038645]:last-child {\n  margin-top: -300px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 118 */
+/* 124 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4909,7 +4945,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 119 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -4928,18 +4964,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', [_vm._v("Bonne Vie Café began as a mockup design made for a college student. He had very little requirements, other than to satisfy a number of sections. When he came to me, I knew just how to build the perfect site.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(15)
+      "src": __webpack_require__(16)
     }
   }), _vm._v(" "), _c('span', [_vm._v("Stylesheet and index side-by-side")]), _vm._v(" "), _c('p', [_vm._v("I started by designing a wireframe and various slides in Adobe Photoshop and InDesign. The customer instantly fell in love and we went from there. I built the site from scratch using various amounts of PHP and Javascript to handle contact/review forms and table reservations. Everything else was made using HTML and CSS.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(16)
+      "src": __webpack_require__(17)
     }
   }), _vm._v(" "), _c('img', {
     staticStyle: {
       "padding": "40px 0"
     },
     attrs: {
-      "src": __webpack_require__(17)
+      "src": __webpack_require__(18)
     }
   }), _vm._v(" "), _c('p', [_vm._v("Users can book a reservation in just a few clicks. I utilized Zapla's table management API to allow potential restaurant-goers to see what number of tables are available. Users could also view a number of informative canvases that displayed restaurant location and contact details.")]), _vm._v(" "), _c('a', {
     attrs: {
@@ -4958,19 +4994,19 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(121)
+  __webpack_require__(127)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(123),
+  __webpack_require__(129),
   /* template */
-  __webpack_require__(128),
+  __webpack_require__(134),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -5002,17 +5038,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 121 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(122);
+var content = __webpack_require__(128);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("ee65d912", content, false);
+var update = __webpack_require__(2)("ee65d912", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -5028,26 +5064,26 @@ if(false) {
 }
 
 /***/ }),
-/* 122 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.project .p-heading[data-v-0af0c3e7] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(112) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-0af0c3e7] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-0af0c3e7] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-0af0c3e7]:last-child {\n  margin-top: -300px;\n}\n.project .p-text .image-slider[data-v-0af0c3e7] {\n  margin-bottom: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.project .p-heading[data-v-0af0c3e7] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(33) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-0af0c3e7] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-0af0c3e7] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-0af0c3e7]:last-child {\n  margin-top: -300px;\n}\n.project .p-text .image-slider[data-v-0af0c3e7] {\n  margin-bottom: 40px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 123 */
+/* 129 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageSlider__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageSlider__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageSlider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ImageSlider__);
 //
 //
@@ -5077,7 +5113,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'rogue',
     data: function data() {
         return {
-            imageArray: [__webpack_require__(29), __webpack_require__(30), __webpack_require__(31), __webpack_require__(32)]
+            imageArray: [__webpack_require__(34), __webpack_require__(35), __webpack_require__(36), __webpack_require__(37)]
         };
     },
     components: {
@@ -5086,17 +5122,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 124 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(125);
+var content = __webpack_require__(131);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("02cf4db1", content, false);
+var update = __webpack_require__(2)("02cf4db1", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -5112,10 +5148,10 @@ if(false) {
 }
 
 /***/ }),
-/* 125 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -5126,7 +5162,7 @@ exports.push([module.i, "\nbody {\n  overflow-x: hidden;\n}\n.image-slider {\n  
 
 
 /***/ }),
-/* 126 */
+/* 132 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5263,7 +5299,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 127 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5317,7 +5353,7 @@ if (false) {
 }
 
 /***/ }),
-/* 128 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5359,19 +5395,19 @@ if (false) {
 }
 
 /***/ }),
-/* 129 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(130)
+  __webpack_require__(136)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(132),
+  __webpack_require__(138),
   /* template */
-  __webpack_require__(133),
+  __webpack_require__(139),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -5403,17 +5439,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 130 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(131);
+var content = __webpack_require__(137);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("c7c10214", content, false);
+var update = __webpack_require__(2)("c7c10214", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -5429,21 +5465,21 @@ if(false) {
 }
 
 /***/ }),
-/* 131 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.project .p-heading[data-v-83cd1624] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(101) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-83cd1624] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-83cd1624] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-83cd1624]:last-child {\n  margin-top: -300px;\n}\n", ""]);
+exports.push([module.i, "\n.project .p-heading[data-v-83cd1624] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(20) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-83cd1624] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-83cd1624] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-83cd1624]:last-child {\n  margin-top: -300px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 132 */
+/* 138 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5477,7 +5513,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 133 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5496,11 +5532,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', [_vm._v("FeedShare began as a collaborative project between two other Northeastern students and myself. My responsibility was to design a new interface and implement said interface as an application built with React Native.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(18)
+      "src": __webpack_require__(21)
     }
   }), _vm._v(" "), _c('span', [_vm._v("Detail view, home view, and new item view respectively. Taken directly from the app")]), _vm._v(" "), _c('p', [_vm._v("The project is ongoing and under continuous development. These screenshots are all from my new design as part of Feedshare 2.0. Everything you see here is being tweaked and fine-tuned inside the application build. The beta version leading up to Feedshare 2.0 is functional and features much of the design displayed here. Since the new version has not been released publically, these views only exist here.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(19)
+      "src": __webpack_require__(22)
     }
   }), _vm._v(" "), _c('span', [_vm._v("Login page prototype on Android device")]), _vm._v(" "), _c('p', [_vm._v("Every design element of the application was met with heavy testing and as a result, showcases the best of what we created. Every view was built as a wireframe, then brought into Photoshop for color tweaking. Eventually, I built a protoyped version; first in  InVision, then in Sketch. From there, the design was implemented using a mixture of React Native, Swift, and Java.")]), _vm._v(" "), _c('a', {
     attrs: {
@@ -5519,19 +5555,19 @@ if (false) {
 }
 
 /***/ }),
-/* 134 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(135)
+  __webpack_require__(141)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(137),
+  __webpack_require__(143),
   /* template */
-  __webpack_require__(138),
+  __webpack_require__(144),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -5563,17 +5599,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 135 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(136);
+var content = __webpack_require__(142);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("5d31c1a3", content, false);
+var update = __webpack_require__(2)("5d31c1a3", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -5589,21 +5625,21 @@ if(false) {
 }
 
 /***/ }),
-/* 136 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.project .p-heading[data-v-1859053e] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(14) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-1859053e] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-1859053e] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-1859053e]:last-child {\n  margin-top: -300px;\n}\n", ""]);
+exports.push([module.i, "\n.project .p-heading[data-v-1859053e] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(7) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-1859053e] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-1859053e] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-1859053e]:last-child {\n  margin-top: -300px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 137 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5639,7 +5675,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 138 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5658,21 +5694,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', [_vm._v("Flipster came to be when I was contacted by a client out in Australia, Nihkil, looking to innovate the trading market. I was tasked with creating page-by-page mockups from the landing screen to the confirmation of a trade.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(20)
+      "src": __webpack_require__(23)
     }
   }), _vm._v(" "), _c('span', [_vm._v("Screenshot from the PSD mockup of the landing page")]), _vm._v(" "), _c('p', [_vm._v("His idea was a cross between Craiglist and eBay, where users could select to negotiate trades via the online interface and then meet in person to exchange. Users maintained rankings through their reputation, and all sales and purchases were handled by a proximity search.")]), _vm._v(" "), _c('p', [_vm._v("In order to design the concepts, I utilized Adobe’s Photoshop and Illustrator to deliver what Nihkil was looking for. Photoshop allowed me to make small tweaks without having to change code. Illustrator gave me the power to design various visual elements from mockups to the logo itself. Each page of the project was extensively designed to match a given color scheme specificed by Nihkil. Every page was well documented in addition to the design to describe how the platform was to be built to accompany the design.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(21)
+      "src": __webpack_require__(24)
     }
   }), _vm._v(" "), _c('img', {
     staticClass: "block-1",
     attrs: {
-      "src": __webpack_require__(22)
+      "src": __webpack_require__(25)
     }
   }), _vm._v(" "), _c('img', {
     staticClass: "block-2",
     attrs: {
-      "src": __webpack_require__(23)
+      "src": __webpack_require__(26)
     }
   }), _vm._v(" "), _c('p', [_vm._v("You can view the full suite of screenshots by following the button below. Each shot features the full-size mock-up of the pages commissioned for the project.")]), _vm._v(" "), _c('a', {
     attrs: {
@@ -5692,19 +5728,19 @@ if (false) {
 }
 
 /***/ }),
-/* 139 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(140)
+  __webpack_require__(146)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(142),
+  __webpack_require__(148),
   /* template */
-  __webpack_require__(143),
+  __webpack_require__(149),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -5736,17 +5772,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 140 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(141);
+var content = __webpack_require__(147);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("43a69fc8", content, false);
+var update = __webpack_require__(2)("43a69fc8", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -5762,26 +5798,26 @@ if(false) {
 }
 
 /***/ }),
-/* 141 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.project .p-heading[data-v-3e5db604] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(113) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-3e5db604] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-3e5db604] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-3e5db604]:last-child {\n  margin-top: -300px;\n}\n", ""]);
+exports.push([module.i, "\n.project .p-heading[data-v-3e5db604] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(38) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-3e5db604] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-3e5db604] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-3e5db604]:last-child {\n  margin-top: -300px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 142 */
+/* 148 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageSlider__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageSlider__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ImageSlider___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ImageSlider__);
 //
 //
@@ -5812,7 +5848,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: 'sthacks',
     data: function data() {
         return {
-            imageArray: [__webpack_require__(37), __webpack_require__(34), __webpack_require__(35), __webpack_require__(36), __webpack_require__(33)]
+            imageArray: [__webpack_require__(43), __webpack_require__(40), __webpack_require__(41), __webpack_require__(42), __webpack_require__(39)]
         };
     },
     components: {
@@ -5821,7 +5857,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 143 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -5863,19 +5899,19 @@ if (false) {
 }
 
 /***/ }),
-/* 144 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(145)
+  __webpack_require__(151)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(147),
+  __webpack_require__(153),
   /* template */
-  __webpack_require__(148),
+  __webpack_require__(154),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -5907,17 +5943,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 145 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(146);
+var content = __webpack_require__(152);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("8051458a", content, false);
+var update = __webpack_require__(2)("8051458a", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -5933,21 +5969,21 @@ if(false) {
 }
 
 /***/ }),
-/* 146 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "\n.project .p-heading[data-v-66415640] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(111) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-66415640] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-66415640] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-66415640]:last-child {\n  margin-top: -300px;\n}\n", ""]);
+exports.push([module.i, "\n.project .p-heading[data-v-66415640] {\n  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(" + __webpack_require__(27) + ") no-repeat;\n}\n.project .p-text .block-1[data-v-66415640] {\n  width: 40%;\n  margin: 80px 20% 0 10%;\n}\n.project .p-text .block-2[data-v-66415640] {\n  width: 60%;\n  margin: 100px 0 0 30%;\n}\n.project .p-text p[data-v-66415640]:last-child {\n  margin-top: -300px;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 147 */
+/* 153 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5985,7 +6021,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 148 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -6004,19 +6040,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('p', [_vm._v("Modern MyNEU is a fully functional Google Chrome extension, available in the webstore, that completely redesigns Northeastern University's outdated and ill-designed MyNEU portal. Originally designed as a weekend project, this extension has evolved into a widely-used application across campus, inspiring both students and administration at Northeastern to support the reconstruction of a new, user-friendly portal.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(25)
+      "src": __webpack_require__(29)
     }
   }), _vm._v(" "), _c('span', [_vm._v("Old login page")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(24)
+      "src": __webpack_require__(28)
     }
   }), _vm._v(" "), _c('span', [_vm._v("New login page that cycles 20 different backgrounds from all around campus")]), _vm._v(" "), _c('p', [_vm._v("Large amounts of features and reimplementations of the old site have been added to the extension. A freshly designed login portal allows users to take advantage of password storage apps where the old site would prevent. A search bar that narrows down specific widgets within the portal has also been added. Enhanced drop-down menus add to the capabilities that the vanilla site is unable to provide.")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(26)
+      "src": __webpack_require__(30)
     }
   }), _vm._v(" "), _c('span', [_vm._v("Old \"Self-Service\" page")]), _vm._v(" "), _c('img', {
     attrs: {
-      "src": __webpack_require__(27)
+      "src": __webpack_require__(31)
     }
   }), _vm._v(" "), _c('span', [_vm._v("New \"Self-Service\" page")]), _vm._v(" "), _c('p', [_vm._v("Since the plugin is still in beta stages, new features are getting added that will allow users to customize layouts and themes from within the options pop-out. Everything down to the individual colors of elements and the ability to export custom preferences will give users the full control they desire from MyNEU.")]), _vm._v(" "), _c('a', {
     attrs: {
@@ -6035,19 +6071,19 @@ if (false) {
 }
 
 /***/ }),
-/* 149 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(150)
+  __webpack_require__(156)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(152),
+  __webpack_require__(158),
   /* template */
-  __webpack_require__(159),
+  __webpack_require__(165),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -6079,17 +6115,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 150 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(151);
+var content = __webpack_require__(157);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("b8dca390", content, false);
+var update = __webpack_require__(2)("b8dca390", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -6105,10 +6141,10 @@ if(false) {
 }
 
 /***/ }),
-/* 151 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -6119,16 +6155,16 @@ exports.push([module.i, "\n#app .content[data-v-471d160e] {\n  overflow-x: hidde
 
 
 /***/ }),
-/* 152 */
+/* 158 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate__ = __webpack_require__(159);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vee_validate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vee_validate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modal__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modal__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Modal__);
 //
 //
@@ -6241,7 +6277,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vee_
 });
 
 /***/ }),
-/* 153 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -9932,19 +9968,19 @@ return index;
 
 
 /***/ }),
-/* 154 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(155)
+  __webpack_require__(161)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(157),
+  __webpack_require__(163),
   /* template */
-  __webpack_require__(158),
+  __webpack_require__(164),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -9976,17 +10012,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 155 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(156);
+var content = __webpack_require__(162);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(1)("1d4a74f4", content, false);
+var update = __webpack_require__(2)("1d4a74f4", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -10002,10 +10038,10 @@ if(false) {
 }
 
 /***/ }),
-/* 156 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(77)(undefined);
+exports = module.exports = __webpack_require__(1)(undefined);
 // imports
 
 
@@ -10016,7 +10052,7 @@ exports.push([module.i, "\n.modal-mask[data-v-5a4c88ca] {\n  position: fixed;\n 
 
 
 /***/ }),
-/* 157 */
+/* 163 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10058,7 +10094,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 158 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10099,7 +10135,7 @@ if (false) {
 }
 
 /***/ }),
-/* 159 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10115,7 +10151,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticClass: "portrait",
     attrs: {
-      "src": __webpack_require__(28)
+      "src": __webpack_require__(32)
     }
   }), _vm._v(" "), _c('div', {
     staticClass: "text-block"
@@ -10275,65 +10311,19 @@ if (false) {
 }
 
 /***/ }),
-/* 160 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/fontawesome-webfont.eot?674f50d287a8c48dc19ba404d20fe713";
-
-/***/ }),
 /* 166 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/fontawesome-webfont.eot?674f50d287a8c48dc19ba404d20fe713";
-
-/***/ }),
-/* 167 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/fontawesome-webfont.woff2?af7ae505a9eed503f8b8e6982036873e";
-
-/***/ }),
-/* 168 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/fontawesome-webfont.woff?fee66e712a8a08eef5805a46892932ad";
-
-/***/ }),
-/* 169 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/fontawesome-webfont.ttf?b06871f281fee6b241d60582ae9369b9";
-
-/***/ }),
-/* 170 */
-/***/ (function(module, exports) {
-
-module.exports = "/fonts/fontawesome-webfont.svg?912ec66d7572ff821749319396470bde";
-
-/***/ }),
-/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(174)
+  __webpack_require__(167)
 }
 var Component = __webpack_require__(0)(
   /* script */
-  __webpack_require__(172),
+  __webpack_require__(169),
   /* template */
-  __webpack_require__(173),
+  __webpack_require__(170),
   /* styles */
   injectStyle,
   /* scopeId */
@@ -10365,7 +10355,47 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 172 */
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(168);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("761db59c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-562ef246\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-562ef246\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n#app .content[data-v-562ef246] {\n  height: 100vh;\n}\n#app .content a[data-v-562ef246] {\n    text-align: center;\n}\n#app .content .hello-text[data-v-562ef246] {\n    text-align: center;\n}\n#app .content .hello-text h1[data-v-562ef246], #app .content .hello-text h2[data-v-562ef246] {\n      color: #fff;\n      cursor: default;\n      pointer-events: none;\n}\n#app .content .hello-text h1[data-v-562ef246] {\n      font-size: 96px;\n}\n#app .content .hello-text h2[data-v-562ef246] {\n      font-weight: 300;\n      font-size: 40px;\n      padding-bottom: 48px;\n}\n@media screen and (max-width: 1360px) {\n#app .content .hello-text h1[data-v-562ef246] {\n    font-size: 40px;\n    white-space: normal;\n}\n#app .content .hello-text h2[data-v-562ef246] {\n    font-size: 20px;\n    padding-bottom: 24px;\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 169 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10392,7 +10422,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 173 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10423,44 +10453,10 @@ if (false) {
 }
 
 /***/ }),
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 171 */
+/***/ (function(module, exports) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(175);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(1)("761db59c", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-562ef246\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-562ef246\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./404.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 175 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(77)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n#app .content[data-v-562ef246] {\n  height: 100vh;\n}\n#app .content a[data-v-562ef246] {\n    text-align: center;\n}\n#app .content .hello-text[data-v-562ef246] {\n    text-align: center;\n}\n#app .content .hello-text h1[data-v-562ef246], #app .content .hello-text h2[data-v-562ef246] {\n      color: #fff;\n      cursor: default;\n      pointer-events: none;\n}\n#app .content .hello-text h1[data-v-562ef246] {\n      font-size: 96px;\n}\n#app .content .hello-text h2[data-v-562ef246] {\n      font-weight: 300;\n      font-size: 40px;\n      padding-bottom: 48px;\n}\n@media screen and (max-width: 1360px) {\n#app .content .hello-text h1[data-v-562ef246] {\n    font-size: 40px;\n    white-space: normal;\n}\n#app .content .hello-text h2[data-v-562ef246] {\n    font-size: 20px;\n    padding-bottom: 24px;\n}\n}\n", ""]);
-
-// exports
-
+// removed by extract-text-webpack-plugin
 
 /***/ })
-],[39]);
+],[45]);
