@@ -255,7 +255,7 @@
                                   <table border="0" cellpadding="0" cellspacing="0">
                                       <tr>
                                           <td>
-                                              <p>Sent by: {{ $name }} <{{ $email }}></p>
+                                              <p>Sent by: {{ $name }} &lt;<a href="mailto:{{ $email }}">{{ $email }}</a>&gt;</p>
                                               <p>Message Body: </p>
                                               <p>{{ $msg }}</p>
                                           </td>
