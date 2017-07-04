@@ -54,7 +54,7 @@ export default {
     methods: {
         projectCheck (arg) {
             this.activeProject = arg
-            let newImg = require('../../../img/' + this.projects[arg].image)
+            let newImg = require('@assets/img/' + this.projects[arg].image)
             this.$nextTick(function () {
                 this.img = newImg
             })
@@ -158,6 +158,7 @@ section {
         z-index: 1;
 	    img {
             cursor: pointer;
+            min-width: 100%;
             &.expand {
                 height: 100vh;
             }

@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="ua-google-key" content="{{ env('GOOGLE_UA_KEY') }}">
         <meta name="description" content="I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.">
         <meta name="keywords" content="graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics">
         <link rel="icon" href="{{ asset('favicon.ico') }}">
