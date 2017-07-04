@@ -134,7 +134,7 @@ section {
                         font-size: 24px;
                         font-weight: 600;
                         color: $textcolor2;
-                        @include transition( all $anim / 2 $ease-out-quint );
+                        transition: all $anim / 2 $ease-out-quint ;
                     }
                     span {
                         color: $primary;

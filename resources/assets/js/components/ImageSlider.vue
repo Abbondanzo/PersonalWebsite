@@ -141,7 +141,7 @@ body {
     overflow-x: hidden;
     position: relative;
     .image-wrapper.animated {
-        @include transition(all $anim * 2 $ease-out-quint)
+        transition: all $anim * 2 $ease-out-quint;
     }
     .image {
         height: 450px;
@@ -154,7 +154,7 @@ body {
         font-size: 0;
         display: inline-block;
         position: absolute;
-        @include transition(opacity $anim * 2 $ease-out-quint)
+        transition: opacity $anim * 2 $ease-out-quint;
         &.active {
             opacity: 1;
         }
@@ -165,7 +165,7 @@ body {
         font-size: 36px;
         cursor: pointer;
         z-index: 3;
-        @include transform ( translateY(-50%) );
+        transform: translateY(-50%);
         &.fa-chevron-left {
             left: 12.5%;
         }

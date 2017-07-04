@@ -3305,33 +3305,26 @@ a.under:hover::after {
 
 .valign {
   display: -webkit-box;
-  display: -moz-box;
-  display: box;
-  display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
-  box-orient: vertical;
   -webkit-box-direction: normal;
-  box-direction: normal;
-  -moz-flex-direction: column;
-  flex-direction: column;
-  -ms-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   height: 100%;
 }
 
 .valign::before,
 .valign::after {
   content: "";
-  -moz-flex-grow: 1;
   -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
           flex-grow: 1;
-  -ms-flex-positive: 1;
 }
 
 .blink {
   -webkit-animation: blinker 1.2s linear infinite;
-  animation: blinker 1.2s linear infinite;
+          animation: blinker 1.2s linear infinite;
   font-weight: 300;
   float: left;
 }
@@ -3404,12 +3397,12 @@ a.under:hover::after {
 
 .slide-leave-active .hello-text {
   -webkit-animation: fade-out 0.5s;
-  animation: fade-out 0.5s;
+          animation: fade-out 0.5s;
 }
 
 .slide-leave-active.project {
   -webkit-animation: slide-to-bottom 0.5s;
-  animation: slide-to-bottom 0.5s;
+          animation: slide-to-bottom 0.5s;
 }
 
 .slide-leave-to .hello-text {
@@ -3559,22 +3552,22 @@ a.under:hover::after {
 
 .slide-enter-active .left {
   -webkit-animation: slide-from-left 0.5s;
-  animation: slide-from-left 0.5s;
+          animation: slide-from-left 0.5s;
 }
 
 .slide-enter-active .right {
   -webkit-animation: slide-from-right 0.5s;
-  animation: slide-from-right 0.5s;
+          animation: slide-from-right 0.5s;
 }
 
 .slide-enter-active .hello-text {
   -webkit-animation: fade-in 0.5s;
-  animation: fade-in 0.5s;
+          animation: fade-in 0.5s;
 }
 
 .slide-enter-active.project {
   -webkit-animation: slide-from-bottom 0.5s;
-  animation: slide-from-bottom 0.5s;
+          animation: slide-from-bottom 0.5s;
 }
 
 /*
@@ -3601,18 +3594,12 @@ a.under:hover::after {
 
 .project .p-heading .p-title {
   display: -webkit-box;
-  display: -moz-box;
-  display: box;
-  display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
-  box-orient: vertical;
   -webkit-box-direction: normal;
-  box-direction: normal;
-  -moz-flex-direction: column;
-  flex-direction: column;
-  -ms-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   height: 100%;
   width: 1320px;
   margin: 0 auto;
@@ -3621,10 +3608,9 @@ a.under:hover::after {
 .project .p-heading .p-title::before,
 .project .p-heading .p-title::after {
   content: "";
-  -moz-flex-grow: 1;
   -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
           flex-grow: 1;
-  -ms-flex-positive: 1;
 }
 
 .project .p-heading .p-title h4 {

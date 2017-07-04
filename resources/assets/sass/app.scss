@@ -91,7 +91,7 @@ p {
     color: #fff;
     font-size: 16px;
     position: relative;
-    @include transition( all $anim $ease-out-quint );
+    transition: all $anim $ease-out-quint;
     &::before {
         content: "";
         position: absolute;
@@ -100,7 +100,7 @@ p {
         bottom: -6px;
         height: 4px;
         right: 100%;
-        @include transition( all $anim $ease-out-quint );
+        transition: all $anim $ease-out-quint;
         overflow: hidden;
     }
     &:hover, &.active {
@@ -159,7 +159,7 @@ a.under {
     cursor: pointer;
     position: relative;
     z-index: 0;
-    @include transition( all $anim*2 $ease-out-quint );
+    transition: all $anim*2 $ease-out-quint;
     &::before {
         content: "";
         right: 100%;
@@ -169,7 +169,7 @@ a.under {
         top: 0;
         overflow: hidden;
         position: absolute;
-        @include transition( all $anim*2 $ease-out-quint );
+        transition: all $anim*2 $ease-out-quint;
         z-index: -1;
     }
     &:hover {
@@ -202,20 +202,20 @@ a.under {
     background: $bgcolor2;
 }
 .valign {
-    @include display(flex);
-    @include flex-direction(column);
+    display: flex;
+    flex-direction: column;
     &::before, &::after {
         content: "";
-        @include flex-grow(1);
+        flex-grow: 1;
     }
     height: 100%;
 }
 .blink {
-    @include animation(blinker 1.2s linear infinite);
+    animation: blinker 1.2s linear infinite;
     font-weight: 300;
     float: left;
 }
-@include keyframes(blinker) {
+@keyframes blinker {
     0% { opacity: 1; }
     50% { opacity: 0; }
     100% { opacity: 1; }
@@ -253,10 +253,10 @@ a.under {
         transition-property: all;
     }
     .hello-text {
-        @include animation(fade-out $anim * 2);
+        animation: fade-out $anim * 2;
     }
     &.project {
-        @include animation(slide-to-bottom $anim * 2);
+        animation: slide-to-bottom $anim * 2;
     }
 }
 .slide-leave-to {
@@ -264,43 +264,43 @@ a.under {
         opacity: 0;
     }
 }
-@include keyframes(slide-from-left) {
+@keyframes slide-from-left {
     0% { transform: translateX(-130%);}
     100% { transform: translateX(0%); }
 }
-@include keyframes(slide-from-right) {
+@keyframes slide-from-right {
     0% { transform: translateX(130%); }
     100% { transform: translateX(0%); }
 }
-@include keyframes(slide-from-bottom) {
+@keyframes slide-from-bottom {
     0% { transform: translateY(130%); }
     100% { transform: translateY(0%); }
 }
-@include keyframes(slide-to-bottom) {
+@keyframes slide-to-bottom {
     0% { transform: translateY(0%); }
     100% { transform: translateY(130%); }
 }
-@include keyframes(fade-in) {
+@keyframes fade-in {
     0% { opacity: 0;}
     100% { opacity: 1;}
 }
-@include keyframes(fade-out) {
+@keyframes fade-out {
     0% { opacity: 1;}
     100% { opacity: 0; }
 }
 .slide-enter-active {
     transform-style: preserve-3d;
     .left {
-        @include animation(slide-from-left $anim * 2);
+        animation: slide-from-left $anim * 2;
     }
     .right {
-        @include animation(slide-from-right $anim * 2);
+        animation: slide-from-right $anim * 2;
     }
     .hello-text {
-        @include animation(fade-in $anim * 2);
+        animation: fade-in $anim * 2;
     }
     &.project {
-        @include animation(slide-from-bottom $anim * 2);
+        animation: slide-from-bottom $anim * 2;
     }
 }
 
@@ -326,11 +326,11 @@ a.under {
         background-size: cover!important;
         background-position-y: 0px;
         .p-title {
-            @include display(flex);
-            @include flex-direction(column);
+            display: flex;
+            flex-direction: column;
             &::before, &::after {
                 content: "";
-                @include flex-grow(1);
+                flex-grow: 1;
             }
             height: 100%;
             width: $container;

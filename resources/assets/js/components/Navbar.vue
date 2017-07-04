@@ -101,8 +101,7 @@ export default {
         }
     }
     .nav-logo {
-        // background: url('../assets/img/logo_small_white.png') center center no-repeat;
-        @include filter(invert(1));
+        filter: invert(1);
         fill: #fff;
         width: 80px;
         height: $navbarheight * 0.8;
@@ -121,7 +120,7 @@ export default {
         }
     }
     .logo-black {
-        @include filter(invert(0));
+        filter: invert(0);
     }
     .nav-links {
         float: right;
@@ -158,7 +157,7 @@ export default {
             bottom: 0px;
             width: 100vw;
             left: 100%;
-            @include transition( all $anim*2 $ease-out-quint );
+            transition: all $anim*2 $ease-out-quint;
             background: $primary;
             text-align: center;
             font-size: 28px;

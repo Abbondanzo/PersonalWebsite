@@ -30,7 +30,7 @@
                     <p>
                         Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
                         </p>
-                    <a href="http://abbondanzo.com/content/resume.pdf">
+                    <a href="/content/resume.pdf">
                         <button title="View PDF resume" class="btn">Résumé</button>
                     </a>
                 </div>
@@ -244,22 +244,14 @@ export default {
             }
         }
     }
-    @media screen and (max-width: 1440px) {
-        section {
-            &.about-info {
-                .greeting, .experience, .info-block {
-                    // width: 50%;
-                }
-                .greeting {
-                    // padding-left: $padding;
-                }
-            }
-        }
-    }
     @media screen and (max-width: 1320px) {
             section {
                 &.about-info .greeting {
-                    right: 0;
+                    width: 80%;
+                    right: $padding;
+                    h1 {
+                        font-size: 60px;
+                    }
                 }
                 .right {
                     margin-left: 0;
@@ -286,9 +278,11 @@ export default {
                     position: relative;
                 }
                 .greeting {
+                    right: 0;
                     margin-top: $navbarheight;
                     h1 {
                         text-align: center;
+                        font-size: 72px;
                     }
                 }
                 .info-block {
@@ -332,7 +326,7 @@ export default {
                 .info-block, .more-info-block, .contact-cta, .experience {
                     padding: 15%;
                 }
-                h1 {
+                .greeting h1 {
                     font-size: 48px;
                 }
             }
