@@ -14,12 +14,12 @@ export default {
     name: 'app',
     methods: {
         parallax () {
-            var bodyHeight = document.body.offsetHeight
+            let bodyHeight = document.body.offsetHeight
             // "Percent" of page that has been scrolled through
-            var down = document.body.scrollTop / (bodyHeight - window.innerHeight)
+            let down = document.body.scrollTop / (bodyHeight - window.innerHeight)
             // Parallax for background
-            var img = document.querySelector('.underbg')
-            var imgHeight = img.offsetHeight - window.innerHeight
+            let img = document.querySelector('.underbg')
+            let imgHeight = img.offsetHeight - window.innerHeight
             // Make sure background isn't being modified in a projects environment
             if (this.$route.path.indexOf('about') !== -1) {
                 // Display parallax image
@@ -37,24 +37,24 @@ export default {
                 }
             }
             // Z1 elements
-            var block1 = document.querySelectorAll('.block-1')
-            for (var i = 0; i < block1.length; i++) {
-                var block1Height = block1[i].offsetHeight / 4
+            let block1 = document.querySelectorAll('.block-1')
+            for (let i = 0; i < block1.length; i++) {
+                let block1Height = block1[i].offsetHeight / 4
                 block1[i].style.transform = 'translateY(-' + (block1Height * down) + 'px)'
             }
             // Z2 elements
-            var block2 = document.querySelectorAll('.block-2')
-            for (var idx = 0; idx < block2.length; idx++) {
-                var block2Height = block2[idx].offsetHeight / 2
+            let block2 = document.querySelectorAll('.block-2')
+            for (let idx = 0; idx < block2.length; idx++) {
+                let block2Height = block2[idx].offsetHeight / 2
                 block2[idx].style.transform = 'translateY(-' + (block2Height * down) + 'px)'
             }
         },
         backgroundHeight () {
             // Get the height of the user's window
-            var windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight
-            var windowWidth = document.body.offsetWidth || document.documentElement.offsetWidth // Using window's width ignores scrollbar
+            let windowHeight = 'innerHeight' in window ? window.innerHeight : document.documentElement.offsetHeight
+            let windowWidth = document.body.offsetWidth || document.documentElement.offsetWidth // Using window's width ignores scrollbar
             // Select image
-            var img = document.querySelector('.underbg')
+            let img = document.querySelector('.underbg')
             // Maintain aspect ratio
             // TODO: Fix bug where img initializes with height 0
             if (img.offsetWidth < windowWidth) { // If the image width should ever exist less than document width
@@ -68,8 +68,14 @@ export default {
             }
         },
         metaData () {
-            var title = this.$route.name + ' | Peter V. Abbondanzo'
+            let title = this.$route.name + ' | Peter V. Abbondanzo'
             document.title = title
+            let desc = this.$route.meta.description
+            if (!desc) {
+                document.querySelector('meta[name=description]').content = 'I design websites and mobile applications for people and have a long last name. Come check out the cool projects I\'ve made.'
+            } else {
+                document.querySelector('meta[name=description]').content = desc
+            }
         }
     },
     created () {

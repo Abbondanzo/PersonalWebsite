@@ -10,7 +10,7 @@
             <p>Flipster came to be when I was contacted by a client out in Australia, Nihkil, looking to innovate the trading market. I was tasked with creating page-by-page mockups from the landing screen to the confirmation of a trade.</p>
             <img src="~@assets/img/flipster/f1.jpg">
             <span>Screenshot from the PSD mockup of the landing page</span>
-            <p>His idea was a cross between Craiglist and eBay, where users could select to negotiate trades via the online interface and then meet in person to exchange. Users maintained rankings through their reputation, and all sales and purchases were handled by a proximity search.</p>
+            <p>His idea was a cross between Craigslist and eBay, where users could select to negotiate trades via the online interface and then meet in person to exchange. Users maintained rankings through their reputation, and all sales and purchases were handled by a proximity search.</p>
             <p>In order to design the concepts, I utilized Adobe’s Photoshop and Illustrator to deliver what Nihkil was looking for. Photoshop allowed me to make small tweaks without having to change code. Illustrator gave me the power to design various visual elements from mockups to the logo itself. Each page of the project was extensively designed to match a given color scheme specificed by Nihkil. Every page was well documented in addition to the design to describe how the platform was to be built to accompany the design.</p>
             <img src="~@assets/img/flipster/f2.jpg">
             <img class="block-1" src="~@assets/img/flipster/f3.jpg">
