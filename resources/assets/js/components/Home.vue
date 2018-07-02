@@ -4,7 +4,7 @@
     		<div class="container">
     			<div class="hello-text">
     				<h1>Peter Abbondanzo</h1>
-    				<h2>UI/UX Developer</h2>
+    				<h2>Software Developer</h2>
                     <router-link :to="{ path: 'about' }">
                         <button class="btn btn-white">About</button>
                     </router-link>
