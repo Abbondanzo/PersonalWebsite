@@ -2,6 +2,10 @@
 
 The current entirety of my personal website (in progress/under construction). This site is built using [Vue](https://vuejs.org/). Since the current site-in-progress is more of an experiment than a working webpage, proper edits to this Readme will be added in the future.
 
+## Env Information
+
+Inside the `static` folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. Even if you have no IDs, you should still perform this test or Webpack will fail to build.
+
 ## Build Setup
 
 ```bash

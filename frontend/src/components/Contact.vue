@@ -86,7 +86,10 @@ export default {
             this.$validator
                 .validateAll()
                 .then(() => {
-                    var endpoint = process.env.NODE_ENV === 'production' ? 'mail' : 'devmail'
+                    var endpoint =
+                        process.env.NODE_ENV === 'production'
+                            ? 'mail'
+                            : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
 
                     axios
                         .post(endpoint, {
@@ -96,7 +99,11 @@ export default {
                         })
                         .then(response => {
                             this.showSuccess = true
-                            this.emptyForm()
+                            if (process.env.NODE_ENV === 'production') {
+                                this.emptyForm()
+                            } else {
+                                console.log('Response: ', response)
+                            }
                         })
                         .catch(error => {
                             this.showError = true
