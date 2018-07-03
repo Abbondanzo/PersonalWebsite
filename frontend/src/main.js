@@ -10,11 +10,17 @@ Vue.config.productionTip = false
 // Google Analytics tracking tag
 function analytics() {
     let docSelector = document.head.querySelector('[name=ua-google-key]')
-    if (!docSelector) {
-        return
+    if (!docSelector && process.env.GOOGLE_UA_KEY) {
+        let meta = document.createElement('meta')
+        meta.name = 'ua-google-key'
+        meta.content = process.env.NODE_ENV === 'production' ? (
+            process.env.GOOGLE_UA_KEY) : process.env.GOOGLE_UA_KEY_DEV
+        docSelector = meta
+        document.head.appendChild(meta)
     }
-    let uaKey = document.head.querySelector('[name=ua-google-key]').content
+    let uaKey = docSelector.content
     if (uaKey && uaKey !== '') {
+        console.log('Loading analytics...')
         Vue.use(VueAnalytics, {
             id: uaKey,
             router

@@ -3,6 +3,7 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const Dotenv = require('dotenv-webpack')
 
 /* eslint-disable space-before-function-paren */
 function resolve(dir) {
@@ -88,5 +89,13 @@ module.exports = {
         net: 'empty',
         tls: 'empty',
         child_process: 'empty'
-    }
+    },
+    plugins: [
+        new Dotenv({
+            path: './static/.env', // load this now instead of the ones in '.env'
+            safe: './static/.env.example', // load '.env.example' to verify the '.env' variables are all set
+            systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+            silent: false // hide any errors
+        })
+    ]
 }
