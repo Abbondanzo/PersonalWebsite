@@ -31,7 +31,7 @@
                     <p>
                         Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at <a href="http://www.northeastern.edu/" class="under" title="Northeastern">Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called <a class="under" href="http://titusdesign.org/" title="Titus Design">Titus&nbsp;Design</a> out of my dorm room.
                         </p>
-                    <a href="/content/resume.pdf">
+                    <a href="/static/resume.pdf">
                         <button title="View PDF resume" class="btn">Résumé</button>
                     </a>
                 </div>

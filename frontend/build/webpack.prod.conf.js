@@ -119,12 +119,16 @@ const webpackConfig = merge(baseWebpackConfig, {
         new CopyWebpackPlugin([{
                 from: path.resolve(__dirname, '../static'),
                 to: config.build.assetsSubDirectory,
-                ignore: ['.*', 'robots.txt']
+                ignore: ['.*', 'robots.txt', 'firebase_404.html']
             },
             // carry robots.txt over correctly inside dist main folder
             {
                 from: 'static/robots.txt',
                 to: 'robots.txt'
+            },
+            {
+                from: 'static/firebase_404.html',
+                to: '404.html'
             }
         ])
     ]

@@ -33,6 +33,10 @@
             <h2 slot="header">Success!</h2>
             <p slot="body">Your contact form has been submitted successfully.</p>
         </modal>
+        <modal v-if="showError" @close="showError = false">
+            <h2 slot="header">Uh-oh!</h2>
+            <p slot="body">There was an issue with your request. Please try again later or reach out to me directly by <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a>.</p>
+        </modal>
     </div>
 </template>
 
@@ -61,7 +65,8 @@ export default {
             name: '',
             email: '',
             message: '',
-            showSuccess: false
+            showSuccess: false,
+            showError: false
         }
     },
     components: {
@@ -81,8 +86,10 @@ export default {
             this.$validator
                 .validateAll()
                 .then(() => {
+                    var endpoint = process.env.NODE_ENV === 'production' ? 'mail' : 'devmail'
+
                     axios
-                        .post('mail', {
+                        .post(endpoint, {
                             name: this.name,
                             email: this.email,
                             message: this.message
@@ -92,7 +99,8 @@ export default {
                             this.emptyForm()
                         })
                         .catch(error => {
-                            alert('There was an error sending your message', error)
+                            this.showError = true
+                            console.log('There was an error sending your message', error)
                         })
                 })
                 .catch(err => {

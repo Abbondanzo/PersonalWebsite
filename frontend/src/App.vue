@@ -23,7 +23,6 @@ export default {
             let img = document.querySelector('.underbg')
             let imgHeight = img.offsetHeight - window.innerHeight
             // Make sure background isn't being modified in a projects environment
-            console.log(imgHeight, down, img.offsetHeight, window.innerHeight, scrollTop)
             if (this.$route.path.indexOf('about') !== -1) {
                 // Display parallax image
                 img.style.display = 'block'
