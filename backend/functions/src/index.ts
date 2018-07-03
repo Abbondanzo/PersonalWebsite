@@ -1,6 +1,7 @@
+import mail from './mail'
 import devmail from './devmail'
 
-export { devmail }
+export { mail, devmail }
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript

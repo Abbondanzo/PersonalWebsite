@@ -7,6 +7,9 @@
             "**/node_modules/**"
         ],
         "rewrites": [{
+            "source": "/mail",
+            "function": "mail"
+        }, {
             "source": "**",
             "destination": "/index.html"
         }]
