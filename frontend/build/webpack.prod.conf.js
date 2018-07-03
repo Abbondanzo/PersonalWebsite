@@ -115,11 +115,18 @@ const webpackConfig = merge(baseWebpackConfig, {
         }),
 
         // copy custom static assets
+        /* eslint-disable indent */
         new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, '../static'),
-            to: config.build.assetsSubDirectory,
-            ignore: ['.*']
-        }])
+                from: path.resolve(__dirname, '../static'),
+                to: config.build.assetsSubDirectory,
+                ignore: ['.*', 'robots.txt']
+            },
+            // carry robots.txt over correctly inside dist main folder
+            {
+                from: 'static/robots.txt',
+                to: 'robots.txt'
+            }
+        ])
     ]
 })
 

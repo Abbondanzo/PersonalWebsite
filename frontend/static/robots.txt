@@ -1,3 +1,3 @@
 User-agent: *
-Sitemap: https://abbondanzo.com/sitemap.xml
+Sitemap: https://abbondanzo.com/static/sitemap.xml
 Disallow:
