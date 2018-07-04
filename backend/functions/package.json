@@ -13,9 +13,12 @@
 	"dependencies": {
 		"cors": "^2.8.4",
 		"firebase-admin": "~5.12.1",
-		"firebase-functions": "^1.0.3"
+		"firebase-functions": "^1.0.3",
+		"handlebars": "^4.0.11",
+		"nodemailer": "^4.6.7"
 	},
 	"devDependencies": {
+		"@types/promise.prototype.finally": "^2.0.2",
 		"tslint": "^5.8.0",
 		"typescript": "^2.5.3"
 	},
