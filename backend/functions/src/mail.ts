@@ -1,8 +1,8 @@
 'use strict'
 import * as functions from 'firebase-functions'
+import * as express from 'express'
+import * as exphbs from 'express-handlebars'
 import * as nodemailer from 'nodemailer'
-import * as fs from 'fs'
-import * as Handlebars from 'handlebars'
 
 // Configure the email transport using the default SMTP transport and a gmail account.
 // For Gmail, enable these:
@@ -26,56 +26,32 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-/**
- * Reads from HTML file via fs
- *
- * @param callback easy way to send error or HTML response
- */
-const getFile = (callback: (error: any, html?: string) => void) => {
-    console.log('Reading file...')
-    fs.readFile(__dirname + '/template.html', 'utf8', (error, html) => {
-        if (error) {
-            console.error(`File reading error: ${error}`)
-            callback(error)
-        }
-        callback(null, html)
-    })
+interface EmailData {
+    name: string
+    email: string
+    msg: string
+    ip: string
+    userAgent: string
 }
 
 /**
  * Generates an HTML template using the given user information for sending via email.
  *
- * @param name Name of the user who filled the contact form
- * @param email Email of the user
- * @param msg Message the user sent
- * @param ip IP Address of the user
- * @param userAgent Browser user agent of the user
+ * @param emailData Required data to build HTML form
+ * @param response Express response required to render HTML template
+ *
  * @returns {Promise} if resolves correctly, returns HTML template. If rejects, returns the message
  */
-const getTemplate = (
-    name: string,
-    email: string,
-    msg: string,
-    ip: string,
-    userAgent: string
-): Promise<String> => {
-    const data = {
-        name: name,
-        email: email,
-        msg: msg,
-        ip: ip,
-        userAgent: userAgent
-    }
+const buildTemplate = (emailData: EmailData, response: functions.Response): Promise<String> => {
     console.log('Generating HTML template...')
     return new Promise((resolve, reject) => {
-        getFile((error: any, html?: string) => {
+        response.render('template', emailData, (error: any, html: string) => {
             if (error) {
-                // If we end up rejecting as a failure of building a template, just return the message
-                reject(msg)
+                console.error('Error building HTML template', error)
+                reject(emailData.msg)
                 return
             }
-            const template = Handlebars.compile(html)
-            resolve(template(data))
+            resolve(html)
         })
     })
 }
@@ -86,18 +62,42 @@ const getTemplate = (
  * @param name Name of the contact form user
  * @param email Email of the contact form user
  * @param message Message to be sent
+ * @param ip IP Address of the user
+ * @param userAgent Browser user agent of the user
+ *
+ * @returns {Promise} if resolves correctly, returns email message ID. If rejects, returns error
  */
-const sendEmail = (name: string, email: string, message: string): Promise<String> => {
+const sendEmail = (
+    name: string,
+    email: string,
+    message: string,
+    request: functions.Request,
+    response: functions.Response
+): Promise<String> => {
     const mailOptions = {
         from: `"${name}" <${email}>`, // Sender address
         to: `${receiverEmail}`, // Receiver address(s)
         subject: 'Contact Form'
     }
 
+    let ip = ''
+    if (request.headers['x-forwarded-for']) {
+        ip = request.headers['x-forwarded-for'].length
+            ? request.headers['x-forwarded-for'][0]
+            : request.headers['x-forwarded-for'].toString()
+    }
+
+    const data: EmailData = {
+        name: name,
+        email: email,
+        msg: message,
+        ip: ip,
+        userAgent: request.get('User-Agent')
+    }
+
     // First, build the template
     return new Promise((resolve, reject) => {
-        // tslint:disable-next-line:no-unsafe-any
-        getTemplate(name, email, message, '', '')
+        buildTemplate(data, response)
             .then((template: String) => {
                 console.log('Successfully generated HTML template')
                 mailOptions['html'] = template
@@ -106,7 +106,7 @@ const sendEmail = (name: string, email: string, message: string): Promise<String
                 console.log('Failed to generate HTML template. Defaulting to text')
                 mailOptions['text'] = msg
             })
-            .finally(() => {
+            .then(() => {
                 console.log('Sending email...')
                 // Send mail with defined transport object
                 transporter.sendMail(mailOptions, (error, info) => {
@@ -124,7 +124,12 @@ const sendEmail = (name: string, email: string, message: string): Promise<String
     })
 }
 
-export default functions.https.onRequest((request, response) => {
+// Express output
+const app = express()
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
+app.post('/', (request: functions.Request, response: functions.Response) => {
     if (!request.body) {
         response.status(403).send('Missing request body')
     }
@@ -142,7 +147,7 @@ export default functions.https.onRequest((request, response) => {
             )
     }
 
-    return sendEmail(name, email, message)
+    return sendEmail(name, email, message, request, response)
         .then((result: any) => {
             return response.status(200).send(result)
         })
@@ -150,3 +155,5 @@ export default functions.https.onRequest((request, response) => {
             return response.status(403).send(error)
         })
 })
+
+export default functions.https.onRequest(app)

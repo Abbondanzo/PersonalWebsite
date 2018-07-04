@@ -88,7 +88,7 @@ export default {
                 .then(() => {
                     var endpoint =
                         process.env.NODE_ENV === 'production'
-                            ? 'mail'
+                            ? 'mail/'
                             : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
 
                     axios
