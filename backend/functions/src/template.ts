@@ -15,9 +15,10 @@ app.get('/', (req: functions.Request, res: functions.Response) => {
         userAgent: req.body.userAgent || req.get('User-Agent')
     }
     console.log('Rendering template...', data)
-    res.render('template', data, (err: Error, html: string) => {
+    res.render('template', data, (err: any, html: string) => {
         console.log('Error', err)
         console.log('HTML', html)
+        return
     })
 })
 

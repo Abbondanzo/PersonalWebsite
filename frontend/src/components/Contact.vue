@@ -29,13 +29,17 @@
                 </div>
             </div>
         </section>
-        <modal v-if="showSuccess" @close="showSuccess = false">
-            <h2 slot="header">Success!</h2>
-            <p slot="body">Your contact form has been submitted successfully.</p>
-        </modal>
-        <modal v-if="showError" @close="showError = false">
-            <h2 slot="header">Uh-oh!</h2>
-            <p slot="body">There was an issue with your request. Please try again later or reach out to me directly by <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a>.</p>
+        <modal v-if="showModal" @close="hideModal">
+            <h2 slot="header">
+                <span v-if="showSuccess">Success!</span>
+                <span v-else-if="showError">Uh-oh!</span>
+                <span v-else>Sending your information...</span>
+            </h2>
+            <p slot="body">
+                <span v-if="showSuccess">Your contact form has been submitted successfully.</span>
+                <span v-else-if="showError">There was an issue with your request. Please try again later or reach out to me directly by <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a>.</span>
+                <span v-else>Hang tight while your contact form gets sent.</span>
+            </p>
         </modal>
     </div>
 </template>
@@ -65,6 +69,7 @@ export default {
             name: '',
             email: '',
             message: '',
+            showModal: false,
             showSuccess: false,
             showError: false
         }
@@ -90,7 +95,7 @@ export default {
                         process.env.NODE_ENV === 'production'
                             ? 'mail/'
                             : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
-
+                    this.showModal = true
                     axios
                         .post(endpoint, {
                             name: this.name,
@@ -122,6 +127,11 @@ export default {
             Vue.nextTick(() => {
                 this.errors.clear()
             })
+        },
+        hideModal() {
+            this.showModal = false
+            this.showSuccess = false
+            this.showError = false
         }
     },
     mounted() {

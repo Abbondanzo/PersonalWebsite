@@ -17,15 +17,6 @@ const gmailEmail = functions.config().gmail.email
 const gmailPassword = functions.config().gmail.password
 const receiverEmail = functions.config().contact.receiver
 
-// Nodemailer transporter with required credentials
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: gmailEmail,
-        pass: gmailPassword
-    }
-})
-
 interface EmailData {
     name: string
     email: string
@@ -49,9 +40,9 @@ const buildTemplate = (emailData: EmailData, response: functions.Response): Prom
             if (error) {
                 console.error('Error building HTML template', error)
                 reject(emailData.msg)
-                return
             }
             resolve(html)
+            return
         })
     })
 }
@@ -82,7 +73,8 @@ const sendEmail = (
 
     let ip = ''
     if (request.headers['x-forwarded-for']) {
-        ip = request.headers['x-forwarded-for'].length
+        console.log('Request headers', request.headers['x-forwarded-for'])
+        ip = Array.isArray(request.headers['x-forwarded-for'])
             ? request.headers['x-forwarded-for'][0]
             : request.headers['x-forwarded-for'].toString()
     }
@@ -108,13 +100,26 @@ const sendEmail = (
             })
             .then(() => {
                 console.log('Sending email...')
+                // Nodemailer transporter with required credentials
+                let transporter
+                try {
+                    transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                            user: gmailEmail,
+                            pass: gmailPassword
+                        }
+                    })
+                } catch (error) {
+                    reject(`Unable to create transporter: ${error}`)
+                    return
+                }
                 // Send mail with defined transport object
                 transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
+                    if (error || !info.messageId) {
                         console.error(error)
-                        reject(`Error with sendmailer: ${error}`)
+                        reject(`${error || info.messageId}`)
                     }
-                    console.log('Message sent: %s', info.messageId)
                     resolve(`Message sent: ${info.messageId}`)
                 })
             })
@@ -129,7 +134,7 @@ const app = express()
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-app.post('/', (request: functions.Request, response: functions.Response) => {
+app.post('*', (request: functions.Request, response: functions.Response) => {
     if (!request.body) {
         response.status(403).send('Missing request body')
     }
@@ -149,11 +154,19 @@ app.post('/', (request: functions.Request, response: functions.Response) => {
 
     return sendEmail(name, email, message, request, response)
         .then((result: any) => {
-            return response.status(200).send(result)
+            console.log(result)
+            return response.status(200).send('Message sent successfully!')
         })
         .catch((error: any) => {
             return response.status(403).send(error)
         })
 })
 
-export default functions.https.onRequest(app)
+export default functions.https.onRequest((req, res) => {
+    // Hitting the endpoint without a trailing "/" with cause the path to be null. Prepending the
+    // trailing "/" lets us match the POST request
+    if (!req.path) {
+        req.url = `/${req.url}`
+    }
+    return app(req, res)
+})
