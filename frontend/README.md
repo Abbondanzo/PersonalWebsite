@@ -1,4 +1,4 @@
-# Personal Website
+# Personal Website Frontend
 
 The current entirety of my personal website (in progress/under construction). This site is built using [Vue](https://vuejs.org/). Since the current site-in-progress is more of an experiment than a working webpage, proper edits to this Readme will be added in the future.
 
