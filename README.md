@@ -4,7 +4,7 @@ The current entirety of my personal website (in progress/under construction). De
 
 ## Deploy
 
-This project is broken up into two folders: [frontend](/frontend) and [backend](/backend). Both live and deploy very easily on Google's [Firebase](https://firebase.google.com/). The frontend is designed to live inside [Firebase Hosting](https://firebase.google.com/docs/hosting/) while the backend is designed to live inside [Firebase Functions](https://firebase.google.com/docs/functions/).
+This project is broken up into two folders: [frontend](/frontend) and [backend](/backend). Both live and deploy very easily on Google's [Firebase](https://firebase.google.com/). The frontend is designed to live inside [Firebase Hosting](https://firebase.google.com/docs/hosting/) while the backend is designed to live inside [Firebase functions](https://firebase.google.com/docs/functions/).
 
 You should create a Firebase project before proceeding. That can be done [here](https://console.firebase.google.com/u/0/).
 
