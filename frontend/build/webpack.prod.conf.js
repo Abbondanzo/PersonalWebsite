@@ -131,6 +131,10 @@ const webpackConfig = merge(baseWebpackConfig, {
                 to: 'keybase.txt'
             },
             {
+                from: 'static/wfd.html',
+                to: 'wfd.html'
+            },
+            {
                 from: 'static/firebase_404.html',
                 to: '404.html'
             }
