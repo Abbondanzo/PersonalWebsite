@@ -13,6 +13,19 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = require('../config/prod.env')
 
+const files = {
+    'firebase_404.html': '404.html',
+    'robots.txt': 'robots.txt',
+    'keybase.txt': 'keybase.txt',
+    'wfd.html': 'wfd.html'
+}
+const copies = Object.keys(files).map(key => {
+    return {
+        from: `static/${key}`,
+        to: files[key]
+    }
+})
+
 const webpackConfig = merge(baseWebpackConfig, {
     module: {
         rules: utils.styleLoaders({
@@ -119,25 +132,9 @@ const webpackConfig = merge(baseWebpackConfig, {
         new CopyWebpackPlugin([{
                 from: path.resolve(__dirname, '../static'),
                 to: config.build.assetsSubDirectory,
-                ignore: ['.*', 'robots.txt', 'firebase_404.html']
+                ignore: ['.*', ...Object.keys(files)]
             },
-            // carry robots.txt over correctly inside dist main folder
-            {
-                from: 'static/robots.txt',
-                to: 'robots.txt'
-            },
-            {
-                from: 'static/keybase.txt',
-                to: 'keybase.txt'
-            },
-            {
-                from: 'static/wfd.html',
-                to: 'wfd.html'
-            },
-            {
-                from: 'static/firebase_404.html',
-                to: '404.html'
-            }
+            ...copies
         ])
     ]
 })
