@@ -16,11 +16,10 @@
                     <transition appear v-on:after-appear="afterEnter">
                         <ul>
                             <li v-for="(skill, index) in skills"
-                            v-bind:key="index"
-                            v-bind:index="index">
+                                v-bind:key="index"
+                                v-bind:index="index">
                                 <h3>{{ skill.name }}</h3>
-                                <h4>{{ skill.quality }}</h4>
-                                <span class="exp-bar"><div v-bind:style="{ width: baseWidths[index].width + '%' }" class="exp-width"></div></span>
+                                <h4>{{ skill.skills.join(', ') }}</h4>
                             </li>
                         </ul>
                     </transition>
@@ -42,10 +41,10 @@
                 <div class="more-info-block">
                     <h2>... and what I do</h2>
                     <p>
-                        I have experience with Adobe's Creative Suite, most commonly Photoshop, Illustrator, and InDesign. I utilize these programs in tandem with my background in computer science to build a wide variety of web and mobile applications (as those that can be seen <router-link class="under" :to="{ path: '/projects' }">here</router-link>).
+                        I'm a computer scientist who likes to tinker with VR and web development in my spare time. I've helped write code for <a href="https://github.com/SaltieRL/DistributedReplays">replaying Rocket League games in the browser</a> and made a <a href="https://github.com/NUVR/Magic-Mover">small VR rehabilitation game</a>. You can check out some of my older projects <router-link class="under" :to="{ path: '/projects' }">here</router-link>.
                     </p>
                     <p>
-                        I'm a full-stack developer, building applications from the ground, up. I strive to create perfection where others do not look.
+                        I'm a full-stack developer, building applications from the ground, up. If I'm not working on a project, you can find me bicycling around the Boston area or working on finishing my basement at home.
                     </p>
                 </div>
             </div><div class="right">
@@ -66,9 +65,9 @@ export default {
     data() {
         return {
             skills: [
-                { name: 'Node/NPM, HTML5, CSS3', quality: 'Expert', pct: '97' },
-                { name: 'jQuery/JS', quality: 'Expert', pct: '87' },
-                { name: 'Java, Python, PHP, Lisp', quality: 'Advanced', pct: '75' }
+                { name: 'Languages', skills: ['JavaScript/TypeScript', 'Java/Kotlin', 'Python', 'HTML', 'CSS (Sass/SCSS & Less)', 'PHP', 'Lisp', 'Racket', 'Go', 'C/C++', 'C#' ]},
+                { name: 'Frameworks', skills: ['React', 'React Native', 'Angular', 'Vue', 'jQuery', 'Express', 'ThreeJS'] },
+                { name: 'Tools', skills: ['Node (Webpack & Babel)', 'WordPress', 'MongoDB', 'Bootstrap', 'Squarespace (Plugins)', 'Android Studio', 'MSCP Certified', 'Linux (Ubuntu, Fedora)', 'Azure', 'Amazon AWS/Lambda', 'Google Firebase', 'Heroku'] }
             ],
             baseWidths: [{ width: 0 }, { width: 0 }, { width: 0 }]
         }
@@ -152,7 +151,7 @@ export default {
             .experience {
                 right: -$padding;
                 background: $primary;
-                bottom: -$padding * 2;
+                bottom: -$padding * 2.5;
                 margin-right: -$padding;
                 color: #fff;
                 padding: $padding;
@@ -167,29 +166,12 @@ export default {
                             margin-bottom: 0;
                         }
                         h3 {
-                            font-size: 18px;
-                            float: left;
-                            clear: both;
+                            font-size: 20px;
                             font-weight: 300;
                         }
                         h4 {
-                            font-size: 12px;
-                            float: right;
+                            font-size: 16px;
                             opacity: 0.8;
-                        }
-                        span.exp-bar {
-                            height: 4px;
-                            width: 100%;
-                            background: darken($primary, 20);
-                            display: block;
-                            position: absolute;
-                            bottom: 0;
-                            .exp-width {
-                                transition: width $anim * 4;
-                                width: 0%;
-                                height: 100%;
-                                background: #fff;
-                            }
                         }
                     }
                 }
