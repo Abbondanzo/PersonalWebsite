@@ -2,7 +2,7 @@ install:
 	yarn
 
 build:
-	yarn run build
+	@yarn run build
 
 deploy:
 	firebase deploy --only hosting

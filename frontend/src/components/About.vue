@@ -65,9 +65,51 @@ export default {
     data() {
         return {
             skills: [
-                { name: 'Languages', skills: ['JavaScript/TypeScript', 'Java/Kotlin', 'Python', 'HTML', 'CSS (Sass/SCSS & Less)', 'PHP', 'Lisp', 'Racket', 'Go', 'C/C++', 'C#' ]},
-                { name: 'Frameworks', skills: ['React', 'React Native', 'Angular', 'Vue', 'jQuery', 'Express', 'ThreeJS'] },
-                { name: 'Tools', skills: ['Node (Webpack & Babel)', 'WordPress', 'MongoDB', 'Bootstrap', 'Squarespace (Plugins)', 'Android Studio', 'MSCP Certified', 'Linux (Ubuntu, Fedora)', 'Azure', 'Amazon AWS/Lambda', 'Google Firebase', 'Heroku'] }
+                {
+                    name: 'Languages',
+                    skills: [
+                        'JavaScript/TypeScript',
+                        'Java/Kotlin',
+                        'Python',
+                        'HTML',
+                        'CSS (Sass/SCSS & Less)',
+                        'PHP',
+                        'Lisp',
+                        'Racket',
+                        'Go',
+                        'C/C++',
+                        'C#'
+                    ]
+                },
+                {
+                    name: 'Frameworks',
+                    skills: [
+                        'React',
+                        'React Native',
+                        'Angular',
+                        'Vue',
+                        'jQuery',
+                        'Express',
+                        'ThreeJS'
+                    ]
+                },
+                {
+                    name: 'Tools',
+                    skills: [
+                        'Node (Webpack & Babel)',
+                        'WordPress',
+                        'MongoDB',
+                        'Bootstrap',
+                        'Squarespace (Plugins)',
+                        'Android Studio',
+                        'MSCP Certified',
+                        'Linux (Ubuntu, Fedora)',
+                        'Azure',
+                        'Amazon AWS/Lambda',
+                        'Google Firebase',
+                        'Heroku'
+                    ]
+                }
             ],
             baseWidths: [{ width: 0 }, { width: 0 }, { width: 0 }]
         }
