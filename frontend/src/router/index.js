@@ -98,6 +98,15 @@ let routes = [
           description:
             'Rehabilitation AR game and research using the Microsoft Hololens.'
         }
+      },
+      {
+        path: 'replay-viewer',
+        name: 'Replay Viewer',
+        component: require('@/components/Projects/ReplayViewer').default,
+        meta: {
+          description:
+            'A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS.'
+        }
       }
     ]
   },

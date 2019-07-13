@@ -58,6 +58,11 @@ export default {
           source: 'magic-mover',
           image: 'magic-mover.jpg'
         },
+        {
+          title: 'Replay Viewer',
+          source: 'replay-viewer',
+          image: 'replay-viewer.jpg'
+        },
         { title: 'Flipster', source: 'flipster', image: 'flipster.jpg' },
         { title: 'Bonne Vie Cafe', source: 'bvc', image: 'bvc.jpg' },
         { title: 'Rogue', source: 'rogue', image: 'rogue.jpg' },
