@@ -47,7 +47,7 @@ export default {
   name: 'projects',
   data() {
     return {
-      img: require('@assets/img/flipster.jpg'),
+      img: require('@assets/img/magic-mover.jpg'),
       activeProject: 0,
       windowHeight: 0,
       preview: '',
