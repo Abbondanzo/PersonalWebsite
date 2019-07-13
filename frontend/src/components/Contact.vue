@@ -71,7 +71,10 @@
         <span v-if="showSuccess">Your contact form has been submitted successfully.</span>
         <span v-else-if="showError">
           There was an issue with your request. Please try again later or reach out to me directly by
-          <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a>.
+          <a
+            class="under"
+            href="mailto:peter@abbondanzo.com"
+          >clicking here</a>.
         </span>
         <span v-else>Hang tight while your contact form gets sent.</span>
       </p>
@@ -266,10 +269,7 @@ export default {
           }
         }
         input,
-        textarea,
-        input:-webkit-autofill,
-        textarea:-webkit-autofill,
-        select:-webkit-autofill {
+        textarea {
           width: 100%;
           padding-top: 40px;
           margin-bottom: 20px;
