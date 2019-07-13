@@ -74,18 +74,5 @@ export default {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
       url('~@assets/img/magic-mover.jpg') no-repeat;
   }
-  .p-text {
-    .block-1 {
-      width: 40%;
-      margin: 80px 20% 0 10%;
-    }
-    .block-2 {
-      width: 60%;
-      margin: 100px 0 0 30%;
-    }
-    p:last-child {
-      margin-top: -300px;
-    }
-  }
 }
 </style>
