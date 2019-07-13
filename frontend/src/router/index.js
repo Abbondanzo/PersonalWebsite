@@ -89,6 +89,15 @@ let routes = [
           description:
             "Full-fledged Chrome extension designed to overhaul the look and flow of Northeastern's student portal."
         }
+      },
+      {
+        path: 'magic-mover',
+        name: 'Magic Mover',
+        component: require('@/components/Projects/MagicMover').default,
+        meta: {
+          description:
+            'Rehabilitation AR game and research using the Microsoft Hololens.'
+        }
       }
     ]
   },

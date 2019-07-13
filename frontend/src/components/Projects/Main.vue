@@ -53,6 +53,11 @@ export default {
       preview: '',
       previewHeight: 0,
       projects: [
+        {
+          title: 'Magic Mover',
+          source: 'magic-mover',
+          image: 'magic-mover.jpg'
+        },
         { title: 'Flipster', source: 'flipster', image: 'flipster.jpg' },
         { title: 'Bonne Vie Cafe', source: 'bvc', image: 'bvc.jpg' },
         { title: 'Rogue', source: 'rogue', image: 'rogue.jpg' },
