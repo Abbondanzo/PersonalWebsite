@@ -34,7 +34,10 @@ const routes = [
       {
         path: '',
         name: 'Projects',
-        component: require('@/components/Projects/Main').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Main.vue'
+          ),
         meta: {
           description:
             "Recent projects, both personal and for work. You can only know what's here if you take a look."
@@ -43,7 +46,10 @@ const routes = [
       {
         path: 'bvc',
         name: 'Bonne Vie Café',
-        component: require('@/components/Projects/Bonne').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Bonne.vue'
+          ),
         meta: {
           description:
             'Wireframing and mock-up designs for a mock bakery. Utilizes Zapla API for table reservations and more.'
@@ -52,7 +58,10 @@ const routes = [
       {
         path: 'rogue',
         name: 'Rogue',
-        component: require('@/components/Projects/Rogue').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Rogue.vue'
+          ),
         meta: {
           description:
             'Simple one-page site for advertising Counter Strike: Global Offensive software.'
@@ -61,7 +70,10 @@ const routes = [
       {
         path: 'feedshare',
         name: 'Feedshare',
-        component: require('@/components/Projects/FeedShare').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/FeedShare.vue'
+          ),
         meta: {
           description:
             'Complete product design and development project for a food sharing mobile application.'
@@ -70,7 +82,10 @@ const routes = [
       {
         path: 'flipster',
         name: 'Flipster',
-        component: require('@/components/Projects/Flipster').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Flipster.vue'
+          ),
         meta: {
           description:
             'Mock-up designs for an E-Commerce/user trading website. Cross-breed of Craigslist and eBay.'
@@ -79,7 +94,10 @@ const routes = [
       {
         path: 'sthacks',
         name: 'Sthacks',
-        component: require('@/components/Projects/Sthacks').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Sthacks.vue'
+          ),
         meta: {
           description:
             'Unique in-browser terminal designed to display pre-defined information only to tech-savvy users.'
@@ -88,7 +106,10 @@ const routes = [
       {
         path: 'myneu',
         name: 'Modern MyNEU',
-        component: require('@/components/Projects/ModernMyNEU').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/ModernMyNEU.vue'
+          ),
         meta: {
           description:
             "Full-fledged Chrome extension designed to overhaul the look and flow of Northeastern's student portal."
@@ -97,7 +118,10 @@ const routes = [
       {
         path: 'magic-mover',
         name: 'Magic Mover',
-        component: require('@/components/Projects/MagicMover').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/MagicMover.vue'
+          ),
         meta: {
           description:
             'Rehabilitation AR game and research using the Microsoft Hololens.'
@@ -106,7 +130,10 @@ const routes = [
       {
         path: 'replay-viewer',
         name: 'Replay Viewer',
-        component: require('@/components/Projects/ReplayViewer').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/ReplayViewer.vue'
+          ),
         meta: {
           description:
             'A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS.'
