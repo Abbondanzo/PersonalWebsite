@@ -111,15 +111,14 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import { extend, ValidationObserver, ValidationProvider } from 'vee-validate'
 import {
   alpha_spaces as alphaSpaces,
   email,
   required
 } from 'vee-validate/dist/rules'
-import Modal from './Modal'
 import axios from 'axios'
+import Modal from './Modal'
 
 extend('required', {
   ...required,

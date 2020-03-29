@@ -1,28 +1,17 @@
+import FourOhFour from '@/components/404.vue'
+import About from '@/components/About.vue'
+import Contact from '@/components/Contact.vue'
+import Home from '@/components/Home.vue'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //     path: "/",
-  //     name: "Home",
-  //     component: Home
-  // },
-  // {
-  //     path: "/about",
-  //     name: "About",
-  //     // route level code-splitting
-  //     // this generates a separate chunk (about.[hash].js) for this route
-  //     // which is lazy-loaded when the route is visited.
-  //     component: () =>
-  //         import(/* webpackChunkName: "about" */ "../views/About.vue")
-  // },
   {
     path: '/',
     name: 'Home',
-    component: require('@/components/Home').default,
+    component: Home,
     meta: {
       description:
         "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made."
@@ -31,7 +20,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: require('@/components/About').default,
+    component: About,
     meta: {
       description:
         "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite"
@@ -128,7 +117,7 @@ const routes = [
   {
     path: '/contact',
     name: 'Contact',
-    component: require('@/components/Contact').default,
+    component: Contact,
     meta: {
       description:
         'Use this form to send me an email or follow any of my social profiles.'
@@ -137,7 +126,7 @@ const routes = [
   {
     path: '*',
     name: 'Page Not Found',
-    component: require('@/components/404').default,
+    component: FourOhFour,
     meta: {
       description: 'The page you are looking for does not exist.'
     }
