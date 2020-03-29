@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/bhdm
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://abbondanzo.com
+  * I am bhdm (https://keybase.io/bhdm) on keybase.
+  * I have a public key ASCZKJow0mTDKL4DC4nQBi1Wm7BkEgvyglFRESE6-16C2go
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "012099289a30d264c328be030b89d0062d569bb064120bf282515111213afb5e82da0a",
+      "host": "keybase.io",
+      "kid": "012099289a30d264c328be030b89d0062d569bb064120bf282515111213afb5e82da0a",
+      "uid": "96f88cd82cb04061df95ee31e7c5ff19",
+      "username": "bhdm"
+    },
+    "merkle_root": {
+      "ctime": 1542250548,
+      "hash": "0240dd32f314d79d539740f5b8832c288a67dfd38aad7f300502de03121aa9ea27bc3fa125eccf71b442e1dea51a1f4b7853d1d7634c9c93a2a3acd6135cab8b",
+      "hash_meta": "ac835d8647dc2b1810eede0fb29e279c09b2154147db3fb089a1ced9c280cc09",
+      "seqno": 3955316
+    },
+    "service": {
+      "entropy": "vlI8mYj7y4abJG5WXo8/hzOX",
+      "hostname": "abbondanzo.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.9.0"
+  },
+  "ctime": 1542250552,
+  "expire_in": 504576000,
+  "prev": "d879190cd12c328cb8d3bad1548f55b9e9ad48a7a8e0ba504547ef2b35dcbfeb",
+  "seqno": 18,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgmSiaMNJkwyi+AwuJ0AYtVpuwZBIL8oJRUREhOvtegtoKp3BheWxvYWTESpcCEsQg2HkZDNEsMoy407rRVI9VuemtSKeo4LpQRUfvKzXcv+vEILkKflExYA7OvOaSkYc9HS06KZd81kYQBFq9J6zVlDCHAgHCo3NpZ8RA4fYV7FPv+Bx6zsDBdSAmhnuVy+gSuBdW/SMNsksSWWYEotfZi95bPjrUvF0dhexR7puuHbsBfHgHBTeaBQPEDahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIKvzgFZI4wrcWQ7fJos7tyVj8FX9YoQY6G9RP2Crh+zKo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/bhdm
+
+==================================================================

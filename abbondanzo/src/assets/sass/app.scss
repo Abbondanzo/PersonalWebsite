@@ -1,0 +1,436 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,600');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
+
+// Imports
+@import 'variables';
+@import './font-awesome/font-awesome';
+
+/*
+ __   __     ______     ______     __    __     ______     __         __     ______     ______     ______
+/\ "-.\ \   /\  __ \   /\  == \   /\ "-./  \   /\  __ \   /\ \       /\ \   /\___  \   /\  ___\   /\  == \
+\ \ \-.  \  \ \ \/\ \  \ \  __<   \ \ \-./\ \  \ \  __ \  \ \ \____  \ \ \  \/_/  /__  \ \  __\   \ \  __<
+ \ \_\\"\_\  \ \_____\  \ \_\ \_\  \ \_\ \ \_\  \ \_\ \_\  \ \_____\  \ \_\   /\_____\  \ \_____\  \ \_\ \_\
+  \/_/ \/_/   \/_____/   \/_/ /_/   \/_/  \/_/   \/_/\/_/   \/_____/   \/_/   \/_____/   \/_____/   \/_/ /_/
+
+*/
+
+html,
+body {
+  height: auto;
+}
+html {
+  height: 100%;
+}
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div,
+blockquote {
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+ul {
+  cursor: default;
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-start: 0px;
+}
+:focus {
+  outline: 0;
+}
+a,
+a:focus,
+a:hover,
+a:visited {
+  color: $primary;
+  text-decoration: none;
+  cursor: pointer;
+}
+* {
+  box-sizing: border-box;
+}
+*::selection {
+  background: $primary;
+  color: #fff;
+}
+
+/*
+ ______     __         ______     ______     ______     __
+/\  ___\   /\ \       /\  __ \   /\  == \   /\  __ \   /\ \
+\ \ \__ \  \ \ \____  \ \ \/\ \  \ \  __<   \ \  __ \  \ \ \____
+ \ \_____\  \ \_____\  \ \_____\  \ \_____\  \ \_\ \_\  \ \_____\
+  \/_____/   \/_____/   \/_____/   \/_____/   \/_/\/_/   \/_____/
+
+*/
+#app {
+  height: 100%;
+  h1 {
+    color: #fff;
+    font-size: 72px;
+  }
+  h2 {
+    color: #2a2a2a;
+    font-size: 32px;
+    padding-bottom: $padding/2;
+  }
+  h4 {
+    font-size: 14px;
+    font-weight: 300;
+  }
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+p {
+  color: $textcolor2;
+  cursor: default;
+}
+.container {
+  width: $container;
+  margin: 0 auto;
+}
+// Underline hover effect
+.underline {
+  color: #fff;
+  font-size: 16px;
+  position: relative;
+  transition: all $anim $ease-out-quint;
+  &::before {
+    content: '';
+    position: absolute;
+    background: $primary;
+    left: 0;
+    bottom: -6px;
+    height: 4px;
+    right: 100%;
+    transition: all $anim $ease-out-quint;
+    overflow: hidden;
+  }
+  &:hover,
+  &.active {
+    color: $primary;
+    &::before {
+      right: 0;
+    }
+  }
+}
+section {
+  display: flex;
+  width: 100%;
+  .left,
+  .right {
+    flex: 1;
+    vertical-align: top;
+  }
+  @media screen and (max-width: $mobile) {
+    & {
+      display: block;
+    }
+  }
+}
+a.under {
+  position: relative;
+  padding-bottom: 6px;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background: $primary;
+    left: 0;
+    right: 0;
+    margin-top: 2px;
+    bottom: 0;
+    height: 4px;
+  }
+  &::after {
+    background: #fff;
+    left: -$padding;
+    width: $padding;
+    visibility: hidden;
+  }
+  &:hover {
+    &::after {
+      pointer-events: none;
+      left: 100%;
+      transition: all $anim * 1.5;
+      visibility: visible;
+    }
+  }
+}
+.btn {
+  background: transparent;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  border: 4px solid $primary;
+  color: $primary;
+  padding: 0.5em 3em;
+  min-width: 240px;
+  min-height: 60px;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  transition: all $anim * 2 $ease-out-quint;
+  &::before {
+    content: '';
+    right: 100%;
+    background: $primary;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    overflow: hidden;
+    position: absolute;
+    transition: all $anim * 2 $ease-out-quint;
+    z-index: -1;
+  }
+  &:hover {
+    color: #fff;
+    z-index: 0;
+    &::before {
+      right: 0;
+      z-index: -1;
+    }
+  }
+}
+.btn-white {
+  border-color: #fff;
+  color: #fff;
+  &::before {
+    background: #fff;
+  }
+  &:hover {
+    color: $primary;
+  }
+}
+.btn-square {
+  height: 60px;
+  min-height: 60px;
+  width: 60px;
+  min-width: 60px;
+  padding: 0;
+}
+.background-2 {
+  background: $bgcolor2;
+}
+.valign {
+  display: flex;
+  flex-direction: column;
+  &::before,
+  &::after {
+    content: '';
+    flex-grow: 1;
+  }
+  height: 100%;
+}
+.blink {
+  animation: blinker 1.2s linear infinite;
+  font-weight: 300;
+  float: left;
+}
+@keyframes blinker {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@media screen and (max-width: $container) {
+  body {
+    overflow: hidden;
+  }
+  .container {
+    width: 90%;
+  }
+}
+
+/*
+ ______   ______     ______     __   __     ______     __     ______   __     ______     __   __     ______
+/\__  _\ /\  == \   /\  __ \   /\ "-.\ \   /\  ___\   /\ \   /\__  _\ /\ \   /\  __ \   /\ "-.\ \   /\  ___\
+\/_/\ \/ \ \  __<   \ \  __ \  \ \ \-.  \  \ \___  \  \ \ \  \/_/\ \/ \ \ \  \ \ \/\ \  \ \ \-.  \  \ \___  \
+  \ \_\  \ \_\ \_\  \ \_\ \_\  \ \_\\"\_\  \/\_____\  \ \_\    \ \_\  \ \_\  \ \_____\  \ \_\\"\_\  \/\_____\
+   \/_/   \/_/ /_/   \/_/\/_/   \/_/ \/_/   \/_____/   \/_/     \/_/   \/_/   \/_____/   \/_/ \/_/   \/_____/
+
+*/
+
+.slide-leave-active {
+  .left {
+    transform: translateX(-130%);
+    transition-duration: $anim * 2;
+    transition-property: all;
+  }
+  .right {
+    transform: translateX(130%);
+    transition-duration: $anim * 2;
+    transition-property: all;
+  }
+  .hello-text {
+    animation: fade-out $anim * 2;
+  }
+  &.project {
+    animation: slide-to-bottom $anim * 2;
+  }
+}
+.slide-leave-to {
+  .hello-text {
+    opacity: 0;
+  }
+}
+@keyframes slide-from-left {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes slide-from-right {
+  0% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes slide-from-bottom {
+  0% {
+    transform: translateY(130%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+@keyframes slide-to-bottom {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(130%);
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.slide-enter-active {
+  transform-style: preserve-3d;
+  .left {
+    animation: slide-from-left $anim * 2;
+  }
+  .right {
+    animation: slide-from-right $anim * 2;
+  }
+  .hello-text {
+    animation: fade-in $anim * 2;
+  }
+  &.project {
+    animation: slide-from-bottom $anim * 2;
+  }
+}
+
+/*
+ ______   ______     ______       __     ______     ______     ______   ______
+/\  == \ /\  == \   /\  __ \     /\ \   /\  ___\   /\  ___\   /\__  _\ /\  ___\
+\ \  _-/ \ \  __<   \ \ \/\ \   _\_\ \  \ \  __\   \ \ \____  \/_/\ \/ \ \___  \
+ \ \_\    \ \_\ \_\  \ \_____\ /\_____\  \ \_____\  \ \_____\    \ \_\  \/\_____\
+  \/_/     \/_/ /_/   \/_____/ \/_____/   \/_____/   \/_____/     \/_/   \/_____/
+
+*/
+.project-return {
+  text-align: center;
+  padding: $padding 0;
+  background: $primary;
+  a {
+    color: #fff;
+  }
+}
+.project {
+  .p-heading {
+    height: 60vh;
+    background-size: cover !important;
+    background-position-y: 0px;
+    .p-title {
+      display: flex;
+      flex-direction: column;
+      &::before,
+      &::after {
+        content: '';
+        flex-grow: 1;
+      }
+      height: 100%;
+      width: $container;
+      margin: 0 auto;
+      h4 {
+        color: #fff;
+        font-size: 24px !important;
+        opacity: 0.8;
+      }
+    }
+  }
+  .p-text {
+    padding: $padding;
+    background: #fff;
+    text-align: center;
+    p {
+      width: 960px;
+      margin: 0 auto;
+      font-size: 20px;
+      line-height: 1.8;
+      margin-bottom: $padding / 2;
+      text-align: left;
+    }
+    img {
+      width: 50%;
+      display: block;
+      margin: 0 auto;
+    }
+    span {
+      color: #bdbdbd;
+      text-align: center;
+      display: block;
+      font-style: italic;
+      padding: $padding / 2;
+    }
+  }
+  @media screen and (max-width: $container) {
+    .p-heading {
+      .p-title {
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
+  }
+  @media screen and (max-width: $mobile) {
+    .p-text {
+      padding: $padding 0;
+      p,
+      img {
+        width: 90%;
+      }
+    }
+  }
+}
