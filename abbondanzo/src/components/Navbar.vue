@@ -87,12 +87,9 @@ export default {
   },
   methods: {
     showMenu: function() {
-      // this.$set(this, 'show', !this.show)
       this.show = !this.show
     },
     escapeMenu: function(event) {
-      console.log('pressed')
-      console.log(event)
       if (this.show) {
         this.show = !this.show
       }
@@ -129,7 +126,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '~@assets/sass/variables';
 .nav {
   overflow-y: auto;
   overflow-x: hidden;

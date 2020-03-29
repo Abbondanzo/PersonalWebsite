@@ -31,7 +31,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '~@assets/sass/variables';
 .modal-mask {
   position: fixed;
   z-index: 9998;

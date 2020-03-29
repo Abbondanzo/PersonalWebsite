@@ -55,7 +55,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import '~@assets/sass/variables';
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),

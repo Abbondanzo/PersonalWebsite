@@ -18,13 +18,12 @@
 export default {
     name: 'Home',
     mounted() {
-        console.log('Mounted Home component') // a.k.a. Working
+        console.log('Hey, welcome to my site!')
     }
 }
 </script>
 
 <style lang="scss" scoped>
-// @import 'global';
 #app {
     .content {
         height: 100vh;
@@ -33,7 +32,6 @@ export default {
         }
         .hello-text {
             text-align: center;
-            // overflow: auto;
             h1,
             h2 {
                 color: #fff;
@@ -42,7 +40,6 @@ export default {
             }
             h1 {
                 font-size: 96px;
-                // white-space: nowrap;
             }
             h2 {
                 font-weight: 300;
