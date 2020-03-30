@@ -1,6 +1,8 @@
 {
   "name": "abbondanzo",
   "version": "2.0.0",
+  "description": "Vue project for personal website at abbondanzo.com",
+  "author": "Peter Abbondanzo <peter@abbondanzo.com>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
