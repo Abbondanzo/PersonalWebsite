@@ -20,13 +20,15 @@
         </div>
         <div class="popup info-block">
           <p>
-            Want to see the code behind these projects? Check out my Github profile at
+            Want to see the code behind these projects? Check out my Github
+            profile at
             <a
               class="under"
               target="_blank"
               title="Github Profile"
               href="https://github.com/Abbondanzo"
-            >this link</a>.
+              >this link</a
+            >.
           </p>
         </div>
       </div>
@@ -47,7 +49,7 @@ export default {
   name: 'projects',
   data() {
     return {
-      img: require('@assets/img/magic-mover.jpg'),
+      img: require('@/assets/img/magic-mover.jpg'),
       activeProject: 0,
       windowHeight: 0,
       preview: '',
@@ -79,11 +81,11 @@ export default {
     })
   },
   methods: {
-    projectCheck(arg) {
+    async projectCheck(arg) {
       this.activeProject = arg
-      let newImg = require('@assets/img/' + this.projects[arg].image)
+      const newImg = await import('@/assets/img/' + this.projects[arg].image)
       this.$nextTick(function() {
-        this.img = newImg
+        this.img = newImg.default
       })
     },
     isActive(arg) {
@@ -93,11 +95,11 @@ export default {
         }
       }
     },
-    getWindowHeight(event) {
+    getWindowHeight() {
       this.windowHeight = document.documentElement.clientHeight
-      let left = document.querySelector('.left')
+      const left = document.querySelector('.left')
       if (left) {
-        let leftHeight = left.clientHeight
+        const leftHeight = left.clientHeight
         if (this.windowHeight < leftHeight) {
           this.preview = 'contract'
           this.previewHeight = leftHeight
@@ -115,7 +117,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '~@assets/sass/variables';
 .project-return {
   display: none;
 }
