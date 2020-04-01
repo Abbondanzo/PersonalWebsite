@@ -4,22 +4,30 @@ The current entirety of my personal website (in progress/under construction). Th
 
 ## Env Information
 
-Inside the `static` folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. Even if you have no IDs, you should still perform this test or Webpack will fail to build.
+Inside this folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. Even if you have no IDs, you should still perform this test or Webpack will fail to build.
 
-## Build Setup
+## Project setup
 
-```bash
-# install dependencies
-yarn
+```
+yarn install
+```
 
-# serve with hot reload at localhost:8080
-yarn run dev
+### Compiles and hot-reloads for development
 
-# build for production with minification
-yarn run build
+```
+yarn serve
+```
 
-# build for production and view the bundle analyzer report
-yarn run build --report
+### Compiles and minifies for production
+
+```
+yarn build
+```
+
+### Lints and fixes files
+
+```
+yarn lint
 ```
 
 [You can view the currently live here](http://abbondanzo.com)

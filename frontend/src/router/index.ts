@@ -1,14 +1,17 @@
+import FourOhFour from '@/components/404.vue'
+import About from '@/components/About.vue'
+import Contact from '@/components/Contact.vue'
+import Home from '@/components/Home.vue'
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-/* eslint-disable indent */
-let routes = [
+const routes = [
   {
     path: '/',
     name: 'Home',
-    component: require('@/components/Home').default,
+    component: Home,
     meta: {
       description:
         "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made."
@@ -17,7 +20,7 @@ let routes = [
   {
     path: '/about',
     name: 'About',
-    component: require('@/components/About').default,
+    component: About,
     meta: {
       description:
         "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite"
@@ -25,12 +28,16 @@ let routes = [
   },
   {
     path: '/projects',
-    component: require('@/components/Projects').default,
+    component: () =>
+      import(/* webpackChunkName: "projects" */ '@/components/Projects.vue'),
     children: [
       {
         path: '',
         name: 'Projects',
-        component: require('@/components/Projects/Main').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Main.vue'
+          ),
         meta: {
           description:
             "Recent projects, both personal and for work. You can only know what's here if you take a look."
@@ -39,7 +46,10 @@ let routes = [
       {
         path: 'bvc',
         name: 'Bonne Vie Café',
-        component: require('@/components/Projects/Bonne').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Bonne.vue'
+          ),
         meta: {
           description:
             'Wireframing and mock-up designs for a mock bakery. Utilizes Zapla API for table reservations and more.'
@@ -48,7 +58,10 @@ let routes = [
       {
         path: 'rogue',
         name: 'Rogue',
-        component: require('@/components/Projects/Rogue').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Rogue.vue'
+          ),
         meta: {
           description:
             'Simple one-page site for advertising Counter Strike: Global Offensive software.'
@@ -57,7 +70,10 @@ let routes = [
       {
         path: 'feedshare',
         name: 'Feedshare',
-        component: require('@/components/Projects/FeedShare').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/FeedShare.vue'
+          ),
         meta: {
           description:
             'Complete product design and development project for a food sharing mobile application.'
@@ -66,7 +82,10 @@ let routes = [
       {
         path: 'flipster',
         name: 'Flipster',
-        component: require('@/components/Projects/Flipster').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Flipster.vue'
+          ),
         meta: {
           description:
             'Mock-up designs for an E-Commerce/user trading website. Cross-breed of Craigslist and eBay.'
@@ -75,7 +94,10 @@ let routes = [
       {
         path: 'sthacks',
         name: 'Sthacks',
-        component: require('@/components/Projects/Sthacks').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/Sthacks.vue'
+          ),
         meta: {
           description:
             'Unique in-browser terminal designed to display pre-defined information only to tech-savvy users.'
@@ -84,7 +106,10 @@ let routes = [
       {
         path: 'myneu',
         name: 'Modern MyNEU',
-        component: require('@/components/Projects/ModernMyNEU').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/ModernMyNEU.vue'
+          ),
         meta: {
           description:
             "Full-fledged Chrome extension designed to overhaul the look and flow of Northeastern's student portal."
@@ -93,7 +118,10 @@ let routes = [
       {
         path: 'magic-mover',
         name: 'Magic Mover',
-        component: require('@/components/Projects/MagicMover').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/MagicMover.vue'
+          ),
         meta: {
           description:
             'Rehabilitation AR game and research using the Microsoft Hololens.'
@@ -102,7 +130,10 @@ let routes = [
       {
         path: 'replay-viewer',
         name: 'Replay Viewer',
-        component: require('@/components/Projects/ReplayViewer').default,
+        component: () =>
+          import(
+            /* webpackChunkName: "projects" */ '@/components/Projects/ReplayViewer.vue'
+          ),
         meta: {
           description:
             'A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS.'
@@ -113,7 +144,7 @@ let routes = [
   {
     path: '/contact',
     name: 'Contact',
-    component: require('@/components/Contact').default,
+    component: Contact,
     meta: {
       description:
         'Use this form to send me an email or follow any of my social profiles.'
@@ -122,14 +153,17 @@ let routes = [
   {
     path: '*',
     name: 'Page Not Found',
-    component: require('@/components/404').default,
+    component: FourOhFour,
     meta: {
       description: 'The page you are looking for does not exist.'
     }
   }
 ]
 
-export default new Router({
+const router = new VueRouter({
   mode: 'history',
+  base: process.env.BASE_URL,
   routes
 })
+
+export default router

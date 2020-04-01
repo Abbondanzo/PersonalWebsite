@@ -13,7 +13,9 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button class="btn modal-default-button" @click="$emit('close')">OK</button>
+              <button class="btn modal-default-button" @click="$emit('close')">
+                OK
+              </button>
             </slot>
           </div>
         </div>
@@ -29,7 +31,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@assets/sass/variables';
 .modal-mask {
   position: fixed;
   z-index: 9998;

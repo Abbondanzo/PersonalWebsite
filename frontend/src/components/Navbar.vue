@@ -4,31 +4,44 @@
       <router-link class="underline" :to="{ path: '/' }">
         <img
           class="nav-logo"
-          src="@assets/img/logo.svg"
-          v-bind:class="[{ 'logo-black': lightBackground }, { 'home': homeScreen }]"
+          src="@/assets/img/logo.svg"
+          v-bind:class="[
+            { 'logo-black': lightBackground },
+            { home: homeScreen }
+          ]"
         />
       </router-link>
       <div class="nav-links">
         <ul>
           <li>
-            <router-link class="underline" :to="{ path: '/about' }">About</router-link>
+            <router-link class="underline" :to="{ path: '/about' }"
+              >About</router-link
+            >
           </li>
           <li>
-            <router-link class="underline" :to="{ path: '/projects' }">Projects</router-link>
+            <router-link class="underline" :to="{ path: '/projects' }"
+              >Projects</router-link
+            >
           </li>
           <li>
-            <router-link class="underline" :to="{ path: '/contact' }">Contact</router-link>
+            <router-link class="underline" :to="{ path: '/contact' }"
+              >Contact</router-link
+            >
           </li>
         </ul>
       </div>
-      <div id="mobile-links" class="mobile-links" v-bind:class="{ active: show }">
+      <div
+        id="mobile-links"
+        class="mobile-links"
+        v-bind:class="{ active: show }"
+      >
         <div @keyup.esc="escapeMenu">
           <i
             @click="showMenu"
             class="fa fa-bars"
             aria-hidden="true"
             v-bind:class="{ 'logo-black': lightBackground }"
-          ></i>
+          />
           <ul v-bind:class="{ active: show }">
             <li>
               <router-link class="underline" :to="{ path: '/about' }">
@@ -45,7 +58,11 @@
                 <span @click="showMenu">Contact</span>
               </router-link>
             </li>
-            <i @click="showMenu" class="fa fa-times menu-close" aria-hidden="true"></i>
+            <i
+              @click="showMenu"
+              class="fa fa-times menu-close"
+              aria-hidden="true"
+            />
           </ul>
         </div>
       </div>
@@ -69,22 +86,19 @@ export default {
     window.addEventListener('resize', this.updateLogo)
   },
   methods: {
-    showMenu: function(event) {
-      // this.$set(this, 'show', !this.show)
+    showMenu: function() {
       this.show = !this.show
     },
     escapeMenu: function(event) {
-      console.log('pressed')
-      console.log(event)
       if (this.show) {
         this.show = !this.show
       }
     },
-    colorBackground: function(event) {
+    colorBackground: function() {
       this.lightBackground = !this.lightBackground
     },
     updateLogo: function() {
-      var width = document.body.offsetWidth
+      const width = document.body.offsetWidth
       if (
         (this.$route.path === '/projects' && width > 960) ||
         this.$route.path === '/contact'
@@ -112,7 +126,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@assets/sass/variables';
 .nav {
   overflow-y: auto;
   overflow-x: hidden;

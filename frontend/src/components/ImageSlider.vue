@@ -4,7 +4,7 @@
     @mousedown="startTrack"
     @mousemove="track"
     @mouseup="endTrack"
-    @mouseleave="mouseDown=false"
+    @mouseleave="mouseDown = false"
   >
     <div class="image-wrapper">
       <div
@@ -12,9 +12,11 @@
         v-for="(image, index) in images"
         v-bind:key="index"
         v-bind:index="index"
-        v-bind:style="{ 'background-image': 'url(' + images[index] + ')',
-            'transform': 'translateX(' + (index * 100) + '%)' }"
-      ></div>
+        v-bind:style="{
+          'background-image': 'url(' + images[index] + ')',
+          transform: 'translateX(' + index * 100 + '%)'
+        }"
+      />
     </div>
     <i class="fa fa-chevron-left" aria-hidden="true" v-on:click="moveRight"></i>
     <i class="fa fa-chevron-right" aria-hidden="true" v-on:click="moveLeft"></i>
@@ -49,12 +51,12 @@ export default {
   methods: {
     track: function(e) {
       if (this.mouseDown) {
-        var sliderWidth = document.querySelector('.image-slider').offsetWidth
-        var wrapper = document.querySelector('.image-wrapper')
-        var cursor = this.cursorPos
+        const sliderWidth = document.querySelector('.image-slider').offsetWidth
+        const wrapper = document.querySelector('.image-wrapper')
+        const cursor = this.cursorPos
         // Percentage-based change
-        var change = (100 * (e.clientX - cursor)) / sliderWidth
-        var currentPos = parseFloat(this.imagePos)
+        const change = (100 * (e.clientX - cursor)) / sliderWidth
+        const currentPos = parseFloat(this.imagePos)
         wrapper.style.transform = 'translateX(' + (change + currentPos) + '%)'
       }
     },
@@ -65,7 +67,7 @@ export default {
       this.mouseDown = true
     },
     endTrack: function(e) {
-      var movement = e.clientX - this.cursorPos
+      const movement = e.clientX - this.cursorPos
       if (movement < -100) {
         this.moveLeft()
         this.setState()
@@ -79,8 +81,8 @@ export default {
     },
     setState: function() {
       // Stored as percentage
-      var wrapper = document.querySelector('.image-wrapper')
-      var position = wrapper.style.transform.split(/[(%)]/)[1]
+      const wrapper = document.querySelector('.image-wrapper')
+      let position = wrapper.style.transform.split(/[(%)]/)[1]
       if (!position) {
         position = 0
       }
@@ -88,15 +90,15 @@ export default {
     },
     shiftPosition: function() {
       this.updateActive()
-      var wrapper = document.querySelector('.image-wrapper')
-      var imgWidth = document.querySelectorAll('.image-slider .image')[0]
+      const wrapper = document.querySelector('.image-wrapper')
+      const imgWidth = document.querySelectorAll('.image-slider .image')[0]
         .offsetWidth
-      var offset =
+      const offset =
         parseInt(
           (imgWidth / document.querySelector('.image-slider').offsetWidth) * 100
         ) + 1
       wrapper.className = 'image-wrapper animated'
-      var shift = -this.active * offset
+      const shift = -this.active * offset
       // "Hide" all images
       wrapper.style.transform = 'translateX(' + shift + '%)'
       // TODO: Fix timing issue when multiple shifts happen in under 0.5s
@@ -105,7 +107,7 @@ export default {
       }, 500)
     },
     moveLeft: function() {
-      var newActive = this.active + 1
+      let newActive = this.active + 1
       if (newActive >= this.images.length) {
         newActive = (newActive + this.images.length) % this.images.length
       }
@@ -113,7 +115,7 @@ export default {
       this.shiftPosition()
     },
     moveRight: function() {
-      var newActive = this.active - 1
+      let newActive = this.active - 1
       if (newActive < 0) {
         newActive = (newActive + this.images.length) % this.images.length
       }
@@ -121,10 +123,10 @@ export default {
       this.shiftPosition()
     },
     updateActive: function() {
-      var images = document.querySelectorAll('.image-slider .image')
-      var current = this.active
+      const images = document.querySelectorAll('.image-slider .image')
+      const current = this.active
       images.forEach(function(img) {
-        var idx = parseInt(img.getAttribute('index'))
+        const idx = parseInt(img.getAttribute('index'))
         if (idx === current) {
           img.className = 'image active'
         } else {
@@ -143,7 +145,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@assets/sass/variables';
 body {
   overflow-x: hidden;
 }

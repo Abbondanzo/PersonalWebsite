@@ -15,7 +15,11 @@
           <h2>Experience</h2>
           <transition appear v-on:after-appear="afterEnter">
             <ul>
-              <li v-for="(skill, index) in skills" v-bind:key="index" v-bind:index="index">
+              <li
+                v-for="(skill, index) in skills"
+                v-bind:key="index"
+                v-bind:index="index"
+              >
                 <h3>{{ skill.name }}</h3>
                 <h4>{{ skill.skills.join(', ') }}</h4>
               </li>
@@ -27,19 +31,22 @@
         <div class="info-block block-2">
           <h2>A little bit about me...</h2>
           <p>
-            Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of web and mobile applications. Currently, I am studying at
+            Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of
+            web and mobile applications. Currently, I am studying at
             <a
               href="http://www.northeastern.edu/"
               class="under"
               title="Northeastern"
-            >Northeastern University</a> up in Boston, Massachusetts. I’ve got a passion for creating, innovating, and coffee. I also run this small company called
-            <a
-              class="under"
-              href="http://titusdesign.org/"
-              title="Titus Design"
-            >Titus&nbsp;Design</a> out of my dorm room.
+              >Northeastern University</a
+            >
+            up in Boston, Massachusetts. I’ve got a passion for creating,
+            innovating, and coffee. I also run this small company called
+            <a class="under" href="http://titusdesign.org/" title="Titus Design"
+              >Titus&nbsp;Design</a
+            >
+            out of my dorm room.
           </p>
-          <a href="/static/resume.pdf">
+          <a href="/resume.pdf">
             <button title="View PDF resume" class="btn">Résumé</button>
           </a>
         </div>
@@ -50,14 +57,24 @@
         <div class="more-info-block">
           <h2>... and what I do</h2>
           <p>
-            I'm a computer scientist who likes to tinker with VR and web development in my spare time. I've helped write code for
-            <a
-              href="https://github.com/SaltieRL/DistributedReplays"
-            >replaying Rocket League games in the browser</a> and made a
-            <a href="https://github.com/NUVR/Magic-Mover">small VR rehabilitation game</a>. You can check out some of my older projects
-            <router-link class="under" :to="{ path: '/projects' }">here</router-link>.
+            I'm a computer scientist who likes to tinker with VR and web
+            development in my spare time. I've helped write code for
+            <a href="https://github.com/SaltieRL/DistributedReplays"
+              >replaying Rocket League games in the browser</a
+            >
+            and made a
+            <a href="https://github.com/NUVR/Magic-Mover"
+              >small VR rehabilitation game</a
+            >. You can check out some of my older projects
+            <router-link class="under" :to="{ path: '/projects' }"
+              >here</router-link
+            >.
           </p>
-          <p>I'm a full-stack developer, building applications from the ground, up. If I'm not working on a project, you can find me bicycling around the Boston area or working on finishing my basement at home.</p>
+          <p>
+            I'm a full-stack developer, building applications from the ground,
+            up. If I'm not working on a project, you can find me bicycling
+            around the Boston area or working on finishing my basement at home.
+          </p>
         </div>
       </div>
       <div class="right">
@@ -131,9 +148,9 @@ export default {
   },
   methods: {
     getAge: function() {
-      var bday = new Date('1998-05-21').getTime()
-      var today = new Date().getTime()
-      var age = Math.floor((today - bday) / 1000 / 60 / 60 / 24 / 365.25)
+      const bday = new Date('1998-05-21').getTime()
+      const today = new Date().getTime()
+      const age = Math.floor((today - bday) / 1000 / 60 / 60 / 24 / 365.25)
       if (age === 18 || (age >= 80 && age <= 89)) {
         return 'an ' + age
       } else {
@@ -141,7 +158,7 @@ export default {
       }
     },
     afterEnter: function() {
-      for (var i = 0; i < this.baseWidths.length; i++) {
+      for (let i = 0; i < this.baseWidths.length; i++) {
         this.baseWidths[i].width = this.skills[i].pct
       }
     }
@@ -150,7 +167,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@assets/sass/variables';
 #app {
   .content {
     overflow-x: hidden;

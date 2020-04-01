@@ -1,4 +1,4 @@
 {
-  "prettier.tabWidth": 2,
-  "editor.wordWrap": "on"
+    "prettier.tabWidth": 4,
+    "editor.wordWrap": "on"
 }

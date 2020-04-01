@@ -2,13 +2,17 @@
   <div class="content">
     <section id="contact" class="about-contact">
       <div class="left">
-        <img class="portrait" src="~@assets/img/peter.png" />
+        <img class="portrait" src="~@/assets/img/peter.png" />
         <div class="text-block">
           <h2>Let's Chat!</h2>
           <p>
             Fill out that beautiful form
             <span v-if="mobile">below</span>
-            <span v-else>to the right</span> and we'll get in touch! Or, if email is too outdated for you to use, I've linked several social media profiles below. I love posting about my projects on Twitter, and I keep the LinkedIn fresh with all sorts of content. Use whatever floats your boat.
+            <span v-else>to the right</span> and we'll get in touch! Or, if
+            email is too outdated for you to use, I've linked several social
+            media profiles below. I love posting about my projects on Twitter,
+            and I keep the LinkedIn fresh with all sorts of content. Use
+            whatever floats your boat.
           </p>
           <a
             v-for="(social, index) in socials"
@@ -26,38 +30,62 @@
       <div class="right">
         <div class="contact-form">
           <h2>Contact Me</h2>
-          <form method="POST" @submit.prevent="submitForm">
-            <h4>Name</h4>
-            <input
-              type="text"
-              v-model="name"
-              name="name"
-              class="input"
-              v-validate="'required|alpha_spaces'"
-              :class="{ 'is-danger': errors.has('name') }"
-              required="required"
-            />
-            <span v-show="errors.has('name')" class="help is-danger">{{ errors.first('name') }}</span>
-            <h4>Email</h4>
-            <input
-              type="email"
-              v-model="email"
-              name="email"
-              class="input"
-              v-validate="'required|email'"
-              :class="{ 'is-danger': errors.has('email') }"
-              required="required"
-            />
-            <span v-show="errors.has('email')" class="help is-danger">{{ errors.first('email') }}</span>
-            <h4>Message</h4>
-            <textarea type="text" v-model="message" rows="4" name="message" required></textarea>
-            <button
-              type="submit"
-              name="submit"
-              value="Send Message"
-              class="btn btn-white"
-            >Send Message</button>
-          </form>
+          <ValidationObserver v-slot="{ handleSubmit }">
+            <form method="POST" @submit.prevent="handleSubmit(submitForm)">
+              <h4>Name</h4>
+              <ValidationProvider
+                name="name"
+                rules="required|alpha_spaces"
+                v-slot="{ errors }"
+              >
+                <input
+                  type="text"
+                  v-model="name"
+                  class="input"
+                  :class="{ 'is-danger': errors.length }"
+                  required="required"
+                />
+                <span v-show="errors.length" class="help is-danger">
+                  {{ errors[0] }}
+                </span>
+              </ValidationProvider>
+
+              <h4>Email</h4>
+              <ValidationProvider
+                name="email"
+                rules="required|email"
+                v-slot="{ errors }"
+              >
+                <input
+                  type="email"
+                  v-model="email"
+                  class="input"
+                  :class="{ 'is-danger': errors.length }"
+                  required="required"
+                />
+                <span v-show="errors.length" class="help is-danger">
+                  {{ errors[0] }}
+                </span>
+              </ValidationProvider>
+
+              <h4>Message</h4>
+              <textarea
+                type="text"
+                v-model="message"
+                rows="4"
+                name="message"
+                required
+              />
+              <button
+                type="submit"
+                name="submit"
+                value="Send Message"
+                class="btn btn-white"
+              >
+                Send Message
+              </button>
+            </form>
+          </ValidationObserver>
         </div>
       </div>
     </section>
@@ -68,13 +96,13 @@
         <span v-else>Sending your information...</span>
       </h2>
       <p slot="body">
-        <span v-if="showSuccess">Your contact form has been submitted successfully.</span>
+        <span v-if="showSuccess"
+          >Your contact form has been submitted successfully.</span
+        >
         <span v-else-if="showError">
-          There was an issue with your request. Please try again later or reach out to me directly by
-          <a
-            class="under"
-            href="mailto:peter@abbondanzo.com"
-          >clicking here</a>.
+          There was an issue with your request. Please try again later or reach
+          out to me directly by
+          <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a>.
         </span>
         <span v-else>Hang tight while your contact form gets sent.</span>
       </p>
@@ -83,12 +111,27 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import VeeValidate from 'vee-validate'
-import Modal from './Modal'
+import { extend, ValidationObserver, ValidationProvider } from 'vee-validate'
+import {
+  alpha_spaces as alphaSpaces,
+  email,
+  required
+} from 'vee-validate/dist/rules'
 import axios from 'axios'
+import Modal from './Modal'
 
-Vue.use(VeeValidate)
+extend('required', {
+  ...required,
+  message: 'This field cannot be left blank.'
+})
+extend('email', {
+  ...email,
+  message: 'Please enter a valid email address.'
+})
+extend('alpha_spaces', {
+  ...alphaSpaces,
+  message: 'Please use alpha [A-z] characters only.'
+})
 
 export default {
   name: 'contact',
@@ -121,58 +164,48 @@ export default {
     }
   },
   components: {
-    Modal
+    Modal,
+    ValidationObserver,
+    ValidationProvider
   },
   methods: {
     mobileCheck() {
-      var width = document.body.offsetWidth
+      const width = document.body.offsetWidth
       if (width > 960) {
         this.mobile = false
       } else {
         this.mobile = true
       }
     },
-    submitForm(e) {
-      e.preventDefault()
-      this.$validator
-        .validateAll()
-        .then(() => {
-          var endpoint =
-            process.env.NODE_ENV === 'production'
-              ? 'mail/'
-              : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
-          this.showModal = true
-          axios
-            .post(endpoint, {
-              name: this.name,
-              email: this.email,
-              message: this.message
-            })
-            .then(response => {
-              this.showSuccess = true
-              if (process.env.NODE_ENV === 'production') {
-                this.emptyForm()
-              } else {
-                console.log('Response: ', response)
-              }
-            })
-            .catch(error => {
-              this.showError = true
-              console.log('There was an error sending your message', error)
-            })
+    submitForm() {
+      const endpoint =
+        process.env.NODE_ENV === 'production'
+          ? 'mail/'
+          : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
+      this.showModal = true
+      axios
+        .post(endpoint, {
+          name: this.name,
+          email: this.email,
+          message: this.message
         })
-        .catch(err => {
-          console.log(err)
-          alert('There are errors in your form, please correct them')
+        .then(response => {
+          this.showSuccess = true
+          if (process.env.NODE_ENV === 'production') {
+            this.emptyForm()
+          } else {
+            console.log('Response: ', response)
+          }
+        })
+        .catch(error => {
+          this.showError = true
+          console.log('There was an error sending your message', error)
         })
     },
     emptyForm() {
       this.name = ''
       this.email = ''
       this.message = ''
-      Vue.nextTick(() => {
-        this.errors.clear()
-      })
     },
     hideModal() {
       this.showModal = false
@@ -190,7 +223,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@assets/sass/variables';
 #app {
   .content {
     overflow-x: hidden;
@@ -280,6 +312,7 @@ export default {
           font-size: 18px;
           font-family: 'Montserrat', sans-serif;
           color: #fff;
+          box-shadow: 0 0 0px 1000px $primary inset;
           -webkit-box-shadow: 0 0 0px 1000px $primary inset;
           -webkit-text-fill-color: white !important;
           &.is-danger {

@@ -1,8 +1,10 @@
 <template>
   <div>
-    <router-view transition="slide" mode="out-in" :duration="500"></router-view>
+    <router-view transition="slide" mode="out-in" :duration="500" />
     <div v-if="notRoot" class="project-return">
-      <router-link class="btn btn-white" to="/projects">Return to projects</router-link>
+      <router-link class="btn btn-white" to="/projects"
+        >Return to projects</router-link
+      >
     </div>
   </div>
 </template>
