@@ -174,7 +174,7 @@ app.post(
       })
       .catch((error: any) => {
         console.error(error)
-        return response.status(403).send(error)
+        return response.status(403).send('Unable to send message')
       })
   }
 )
