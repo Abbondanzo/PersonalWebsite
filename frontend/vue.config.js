@@ -4,7 +4,7 @@ module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        prependData: `@import "~@/assets/sass/variables"; @import "~@/assets/sass/app";`
+        additionalData: `@import "~@/assets/sass/variables"; @import "~@/assets/sass/app";`
       }
     }
   },
