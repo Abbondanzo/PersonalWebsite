@@ -1,34 +1,34 @@
 {
-    "name": "abbondanzo-functions",
-    "scripts": {
-        "lint": "tslint --project tsconfig.json",
-        "build": "tsc",
-        "serve": "npm run build && firebase serve --only functions",
-        "shell": "npm run build && npm run config && firebase functions:shell",
-        "start": "npm run shell",
-        "deploy": "firebase deploy --only functions",
-        "logs": "firebase functions:log",
-        "config": "firebase functions:config:get > .runtimeconfig.json"
-    },
-    "main": "lib/index.js",
-    "dependencies": {
-        "cors": "^2.8.5",
-        "express": "^4.17.1",
-        "express-handlebars": "^5.1.0",
-        "firebase-admin": "^9.2.0",
-        "firebase-functions": "^3.11.0",
-        "handlebars": "^4.7.6",
-        "nodemailer": "^6.4.11"
-    },
-    "devDependencies": {
-        "@types/express-handlebars": "^3.1.0",
-        "@types/nodemailer": "^6.4.0",
-        "@types/promise.prototype.finally": "^2.0.4",
-        "tslint": "^6.1.3",
-        "typescript": "^4.0.2"
-    },
-    "private": true,
-    "engines": {
-        "node": "12"
-    }
+  "name": "abbondanzo-functions",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && npm run config && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "config": "firebase functions:config:get > .runtimeconfig.json"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "firebase-admin": "^9.2.0",
+    "firebase-functions": "^3.11.0",
+    "handlebars": "^4.7.6",
+    "nodemailer": "^6.4.11"
+  },
+  "devDependencies": {
+    "@types/express-handlebars": "^3.1.0",
+    "@types/nodemailer": "^6.4.0",
+    "@types/promise.prototype.finally": "^2.0.4",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.2"
+  },
+  "private": true,
+  "engines": {
+    "node": "12"
+  }
 }

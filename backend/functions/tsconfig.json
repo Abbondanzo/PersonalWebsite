@@ -1,14 +1,12 @@
 {
-	"compilerOptions": {
-		"lib": ["es6"],
-		"module": "commonjs",
-		"noImplicitReturns": true,
-		"outDir": "lib",
-		"sourceMap": true,
-		"target": "ESNEXT"
-	},
-	"compileOnSave": true,
-	"include": [
-		"src"
-	]
+  "compilerOptions": {
+    "lib": ["es6"],
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "outDir": "lib",
+    "sourceMap": true,
+    "target": "ESNEXT"
+  },
+  "compileOnSave": true,
+  "include": ["src"]
 }
