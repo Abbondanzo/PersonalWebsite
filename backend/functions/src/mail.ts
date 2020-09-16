@@ -1,7 +1,8 @@
 'use strict'
-import * as functions from 'firebase-functions'
+
 import * as express from 'express'
 import * as exphbs from 'express-handlebars'
+import * as functions from 'firebase-functions'
 import * as nodemailer from 'nodemailer'
 
 // Configure the email transport using the default SMTP transport and a gmail account.
@@ -18,11 +19,11 @@ const gmailPassword = functions.config().gmail.password
 const receiverEmail = functions.config().contact.receiver
 
 interface EmailData {
-    name: string
-    email: string
-    msg: string
-    ip: string
-    userAgent: string
+  name: string
+  email: string
+  msg: string
+  ip: string
+  userAgent: string
 }
 
 /**
@@ -33,18 +34,42 @@ interface EmailData {
  *
  * @returns {Promise} if resolves correctly, returns HTML template. If rejects, returns the message
  */
-const buildTemplate = (emailData: EmailData, response: functions.Response): Promise<String> => {
-    console.log('Generating HTML template...')
-    return new Promise((resolve, reject) => {
-        response.render('template', emailData, (error: any, html: string) => {
-            if (error) {
-                console.error('Error building HTML template', error)
-                reject(emailData.msg)
-            }
-            resolve(html)
-            return
-        })
+const buildTemplate = (
+  emailData: EmailData,
+  response: functions.Response
+): Promise<String> => {
+  console.log('Generating HTML template...')
+  return new Promise((resolve, reject) => {
+    response.render('template', emailData, (error: any, html: string) => {
+      if (error) {
+        console.error('Error building HTML template', error)
+        reject(emailData.msg)
+      }
+      resolve(html)
+      return
     })
+  })
+}
+
+/**
+ * Construct a node mailer with the config login credentials
+ *
+ * @returns {Mail} mail transporter
+ */
+const buildTransporter = (): nodemailer.Transporter => {
+  try {
+    return nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: gmailEmail,
+        pass: gmailPassword
+      }
+    })
+  } catch (error) {
+    const message = `Unable to create transporter: ${error}`
+    console.error(message)
+    throw new Error(message)
+  }
 }
 
 /**
@@ -59,74 +84,62 @@ const buildTemplate = (emailData: EmailData, response: functions.Response): Prom
  * @returns {Promise} if resolves correctly, returns email message ID. If rejects, returns error
  */
 const sendEmail = (
-    name: string,
-    email: string,
-    message: string,
-    request: functions.Request,
-    response: functions.Response
+  name: string,
+  email: string,
+  message: string,
+  request: functions.Request,
+  response: functions.Response
 ): Promise<String> => {
-    const mailOptions = {
-        from: `"${name}" <${email}>`, // Sender address
-        to: `${receiverEmail}`, // Receiver address(s)
-        subject: 'Contact Form'
-    }
+  const mailOptions = {
+    from: `"${name}" <${email}>`, // Sender address
+    to: `${receiverEmail}`, // Receiver address(s)
+    subject: 'Contact Form'
+  }
 
-    let ip = ''
-    if (request.headers['x-forwarded-for']) {
-        console.log('Request headers', request.headers['x-forwarded-for'])
-        ip = Array.isArray(request.headers['x-forwarded-for'])
-            ? request.headers['x-forwarded-for'][0]
-            : request.headers['x-forwarded-for'].toString()
-    }
+  let ip = ''
+  if (request.headers['x-forwarded-for']) {
+    console.log('Request headers', request.headers['x-forwarded-for'])
+    ip = Array.isArray(request.headers['x-forwarded-for'])
+      ? request.headers['x-forwarded-for'][0]
+      : request.headers['x-forwarded-for'].toString()
+  }
 
-    const data: EmailData = {
-        name: name,
-        email: email,
-        msg: message,
-        ip: ip,
-        userAgent: request.get('User-Agent')
-    }
+  const data: EmailData = {
+    name: name,
+    email: email,
+    msg: message,
+    ip: ip,
+    userAgent: request.get('User-Agent')
+  }
 
-    // First, build the template
-    return new Promise((resolve, reject) => {
-        buildTemplate(data, response)
-            .then((template: String) => {
-                console.log('Successfully generated HTML template')
-                mailOptions['html'] = template
-            })
-            .catch((msg: string) => {
-                console.log('Failed to generate HTML template. Defaulting to text')
-                mailOptions['text'] = msg
-            })
-            .then(() => {
-                console.log('Sending email...')
-                // Nodemailer transporter with required credentials
-                let transporter
-                try {
-                    transporter = nodemailer.createTransport({
-                        service: 'gmail',
-                        auth: {
-                            user: gmailEmail,
-                            pass: gmailPassword
-                        }
-                    })
-                } catch (error) {
-                    reject(`Unable to create transporter: ${error}`)
-                    return
-                }
-                // Send mail with defined transport object
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error || !info.messageId) {
-                        console.error(error)
-                        reject(`${error || info.messageId}`)
-                    }
-                    resolve(`Message sent: ${info.messageId}`)
-                })
-            })
-            .catch((error: any) => {
-                reject(`Error with template: ${error}`)
-            })
-    })
+  // First, build the template
+  return new Promise((resolve, reject) => {
+    buildTemplate(data, response)
+      .then((template: String) => {
+        console.log('Successfully generated HTML template')
+        mailOptions['html'] = template
+      })
+      .catch((msg: string) => {
+        console.log('Failed to generate HTML template. Defaulting to text')
+        mailOptions['text'] = msg
+      })
+      .then(() => {
+        console.log('Sending email...')
+        const transporter = buildTransporter()
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            reject(error)
+          } else if (!info) {
+            reject(new Error('Unable to send mail'))
+          } else {
+            resolve(`Message sent: ${info.messageId}`)
+          }
+        })
+      })
+      .catch((error: any) => {
+        reject(error)
+      })
+  })
 }
 
 // Express output
@@ -134,39 +147,43 @@ const app = express()
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-app.post('*', (request: functions.Request, response: functions.Response) => {
+app.post(
+  '*',
+  async (request: functions.Request, response: functions.Response) => {
     if (!request.body) {
-        response.status(403).send('Missing request body')
+      response.status(403).send('Missing request body')
     }
 
     const name = request.body.name,
-        email = request.body.email,
-        message = request.body.message
+      email = request.body.email,
+      message = request.body.message
 
     if (!name || !email || !message) {
-        response
-            .status(403)
-            .send(
-                'Missing required body fields. Please check request: ' +
-                    JSON.stringify(request.body)
-            )
+      response
+        .status(403)
+        .send(
+          'Missing required body fields. Please check request: ' +
+            JSON.stringify(request.body)
+        )
     }
 
     return sendEmail(name, email, message, request, response)
-        .then((result: any) => {
-            console.log(result)
-            return response.status(200).send('Message sent successfully!')
-        })
-        .catch((error: any) => {
-            return response.status(403).send(error)
-        })
-})
+      .then((result: any) => {
+        console.log(result)
+        return response.status(200).send('Message sent successfully!')
+      })
+      .catch((error: any) => {
+        console.error(error)
+        return response.status(403).send(error)
+      })
+  }
+)
 
 export default functions.https.onRequest((req, res) => {
-    // Hitting the endpoint without a trailing "/" with cause the path to be null. Prepending the
-    // trailing "/" lets us match the POST request
-    if (!req.path) {
-        req.url = `/${req.url}`
-    }
-    return app(req, res)
+  // Hitting the endpoint without a trailing "/" with cause the path to be null. Prepending the
+  // trailing "/" lets us match the POST request
+  if (!req.path) {
+    req.url = `/${req.url}`
+  }
+  return app(req, res)
 })
