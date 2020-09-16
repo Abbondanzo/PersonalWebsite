@@ -37,7 +37,7 @@ import ImageSlider from '../ImageSlider'
 
 export default {
   name: 'sthacks',
-  data: function() {
+  data: function () {
     return {
       imageArray: [
         require('@/assets/img/sthacks/s5.gif'),

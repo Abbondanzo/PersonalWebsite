@@ -18,7 +18,7 @@ export default {
     }
   },
   methods: {
-    checkRoot: function() {
+    checkRoot: function () {
       this.notRoot = !(this.$route.name === 'Projects')
     }
   },
@@ -26,7 +26,7 @@ export default {
     this.checkRoot()
   },
   watch: {
-    $route: function() {
+    $route: function () {
       this.checkRoot()
     }
   }

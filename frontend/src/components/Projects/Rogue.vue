@@ -38,7 +38,7 @@ import ImageSlider from '../ImageSlider'
 
 export default {
   name: 'rogue',
-  data: function() {
+  data: function () {
     return {
       imageArray: [
         require('@/assets/img/rogue/r1.png'),

@@ -22,7 +22,7 @@
         Everything else was made using HTML and CSS.
       </p>
       <img src="@/assets/img/bonne/b2.jpg" />
-      <img style="padding:40px 0;" src="@/assets/img/bonne/b3.jpg" />
+      <img style="padding: 40px 0" src="@/assets/img/bonne/b3.jpg" />
       <p>
         Users can book a reservation in just a few clicks. I utilized Zapla's
         table management API to allow potential restaurant-goers to see what

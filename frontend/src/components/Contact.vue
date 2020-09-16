@@ -189,7 +189,7 @@ export default {
           email: this.email,
           message: this.message
         })
-        .then(response => {
+        .then((response) => {
           this.showSuccess = true
           if (process.env.NODE_ENV === 'production') {
             this.emptyForm()
@@ -197,7 +197,7 @@ export default {
             console.log('Response: ', response)
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.showError = true
           console.log('There was an error sending your message', error)
         })

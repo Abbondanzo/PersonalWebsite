@@ -162,7 +162,7 @@
       <p>
         <iframe
           height="253"
-          style="width: 100%;"
+          style="width: 100%"
           scrolling="no"
           title="Frames Elapsed"
           src="//codepen.io/abbondanzo/embed/wLbzqx/?height=253&theme-id=dark&default-tab=result"
@@ -177,7 +177,7 @@
           <a href="https://codepen.io">CodePen</a>.
         </iframe>
       </p>
-      <span style="margin-top: -48px;"
+      <span style="margin-top: -48px"
         >Run an example of converting deltas to elapsed frames</span
       >
 
@@ -291,7 +291,7 @@ import ImageSlider from '../ImageSlider'
 
 export default {
   name: 'replay-viewer',
-  data: function() {
+  data: function () {
     return {
       imageArray: [
         require('@/assets/img/replay-viewer/rv10.png'),

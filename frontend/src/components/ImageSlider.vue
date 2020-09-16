@@ -26,7 +26,7 @@
 <script>
 export default {
   name: 'image-slider',
-  data: function() {
+  data: function () {
     return {
       active: 0,
       cursorPos: 0,
@@ -49,7 +49,7 @@ export default {
     }
   },
   methods: {
-    track: function(e) {
+    track: function (e) {
       if (this.mouseDown) {
         const sliderWidth = document.querySelector('.image-slider').offsetWidth
         const wrapper = document.querySelector('.image-wrapper')
@@ -60,13 +60,13 @@ export default {
         wrapper.style.transform = 'translateX(' + (change + currentPos) + '%)'
       }
     },
-    startTrack: function(e) {
+    startTrack: function (e) {
       e.preventDefault()
       this.cursorPos = e.clientX
       this.setState()
       this.mouseDown = true
     },
-    endTrack: function(e) {
+    endTrack: function (e) {
       const movement = e.clientX - this.cursorPos
       if (movement < -100) {
         this.moveLeft()
@@ -79,7 +79,7 @@ export default {
       }
       this.mouseDown = false
     },
-    setState: function() {
+    setState: function () {
       // Stored as percentage
       const wrapper = document.querySelector('.image-wrapper')
       let position = wrapper.style.transform.split(/[(%)]/)[1]
@@ -88,7 +88,7 @@ export default {
       }
       this.imagePos = position
     },
-    shiftPosition: function() {
+    shiftPosition: function () {
       this.updateActive()
       const wrapper = document.querySelector('.image-wrapper')
       const imgWidth = document.querySelectorAll('.image-slider .image')[0]
@@ -102,11 +102,11 @@ export default {
       // "Hide" all images
       wrapper.style.transform = 'translateX(' + shift + '%)'
       // TODO: Fix timing issue when multiple shifts happen in under 0.5s
-      setTimeout(function() {
+      setTimeout(function () {
         wrapper.className = wrapper.className.split(' animated')[0]
       }, 500)
     },
-    moveLeft: function() {
+    moveLeft: function () {
       let newActive = this.active + 1
       if (newActive >= this.images.length) {
         newActive = (newActive + this.images.length) % this.images.length
@@ -114,7 +114,7 @@ export default {
       this.active = newActive
       this.shiftPosition()
     },
-    moveRight: function() {
+    moveRight: function () {
       let newActive = this.active - 1
       if (newActive < 0) {
         newActive = (newActive + this.images.length) % this.images.length
@@ -122,10 +122,10 @@ export default {
       this.active = newActive
       this.shiftPosition()
     },
-    updateActive: function() {
+    updateActive: function () {
       const images = document.querySelectorAll('.image-slider .image')
       const current = this.active
-      images.forEach(function(img) {
+      images.forEach(function (img) {
         const idx = parseInt(img.getAttribute('index'))
         if (idx === current) {
           img.className = 'image active'

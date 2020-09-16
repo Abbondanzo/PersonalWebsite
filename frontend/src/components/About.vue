@@ -147,7 +147,7 @@ export default {
     }
   },
   methods: {
-    getAge: function() {
+    getAge: function () {
       const bday = new Date('1998-05-21').getTime()
       const today = new Date().getTime()
       const age = Math.floor((today - bday) / 1000 / 60 / 60 / 24 / 365.25)
@@ -157,7 +157,7 @@ export default {
         return 'a ' + age
       }
     },
-    afterEnter: function() {
+    afterEnter: function () {
       for (let i = 0; i < this.baseWidths.length; i++) {
         this.baseWidths[i].width = this.skills[i].pct
       }

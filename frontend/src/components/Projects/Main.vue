@@ -75,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       window.addEventListener('resize', this.getWindowHeight)
       this.getWindowHeight()
     })
@@ -84,7 +84,7 @@ export default {
     async projectCheck(arg) {
       this.activeProject = arg
       const newImg = await import('@/assets/img/' + this.projects[arg].image)
-      this.$nextTick(function() {
+      this.$nextTick(function () {
         this.img = newImg.default
       })
     },

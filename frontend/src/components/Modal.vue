@@ -3,7 +3,7 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-          <div class="modal-header" style="padding:0;">
+          <div class="modal-header" style="padding: 0">
             <slot name="header">Default Header</slot>
           </div>
 

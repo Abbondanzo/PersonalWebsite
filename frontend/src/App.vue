@@ -108,7 +108,7 @@ export default {
     this.metaData()
   },
   watch: {
-    $route: function() {
+    $route: function () {
       this.metaData()
       this.parallax()
     }

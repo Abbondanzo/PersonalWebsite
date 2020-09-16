@@ -80,24 +80,24 @@ export default {
       homeScreen: false
     }
   },
-  created: function() {
+  created: function () {
     this.updateLogo()
     this.isHome()
     window.addEventListener('resize', this.updateLogo)
   },
   methods: {
-    showMenu: function() {
+    showMenu: function () {
       this.show = !this.show
     },
-    escapeMenu: function(event) {
+    escapeMenu: function () {
       if (this.show) {
         this.show = !this.show
       }
     },
-    colorBackground: function() {
+    colorBackground: function () {
       this.lightBackground = !this.lightBackground
     },
-    updateLogo: function() {
+    updateLogo: function () {
       const width = document.body.offsetWidth
       if (
         (this.$route.path === '/projects' && width > 960) ||
@@ -108,7 +108,7 @@ export default {
         this.lightBackground = false
       }
     },
-    isHome: function() {
+    isHome: function () {
       if (this.$route.path === '/') {
         this.homeScreen = true
       } else {
