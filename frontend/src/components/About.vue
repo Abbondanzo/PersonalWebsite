@@ -71,9 +71,9 @@
             >.
           </p>
           <p>
-            I'm a full-stack developer, building applications from the ground,
-            up. If I'm not working on a project, you can find me bicycling
-            around the Boston area or working on finishing my basement at home.
+            I love everything related to web development. But I also love the
+            outdoors. If I'm not working on a project, you can find me bicycling
+            around the Boston area or refinishing my basement at home.
           </p>
         </div>
       </div>
@@ -110,7 +110,8 @@ export default {
             'Racket',
             'Go',
             'C/C++',
-            'C#'
+            'C#',
+            'English'
           ]
         },
         {
@@ -139,7 +140,10 @@ export default {
             'Azure',
             'Amazon AWS/Lambda',
             'Google Firebase',
-            'Heroku'
+            'Heroku',
+            'Hammer',
+            'Nail gun',
+            'Measuring tape'
           ]
         }
       ],
@@ -194,6 +198,10 @@ export default {
       .greeting {
         margin-top: $navbarheight + $padding;
         right: -$padding * 2;
+        h1 {
+          font-size: 60px;
+          margin-right: $padding * 2;
+        }
       }
       .info-block {
         background: #fff;
@@ -306,6 +314,7 @@ export default {
         right: $padding;
         h1 {
           font-size: 60px;
+          margin-right: 0px;
         }
       }
       .right {

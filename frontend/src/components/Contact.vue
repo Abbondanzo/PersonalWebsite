@@ -9,10 +9,10 @@
             Fill out that beautiful form
             <span v-if="mobile">below</span>
             <span v-else>to the right</span> and we'll get in touch! Or, if
-            email is too outdated for you to use, I've linked several social
-            media profiles below. I love posting about my projects on Twitter,
-            and I keep the LinkedIn fresh with all sorts of content. Use
-            whatever floats your boat.
+            email is too antiquated, I've linked several social media profiles
+            below. I love posting about my projects on Twitter, and I keep the
+            LinkedIn fresh with all sorts of content. Use whatever floats your
+            boat.
           </p>
           <a
             v-for="(social, index) in socials"
