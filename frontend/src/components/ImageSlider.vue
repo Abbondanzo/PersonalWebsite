@@ -147,6 +147,7 @@ export default {
 <style lang="scss">
 body {
   overflow-x: hidden;
+  overflow-y: auto;
 }
 .image-slider {
   height: 450px;

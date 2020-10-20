@@ -67,18 +67,14 @@ export default {
       // Select image
       const img = document.querySelector('.underbg')
       // Maintain aspect ratio
-      // TODO: Fix bug where img initializes with height 0
-      if (img.offsetWidth < windowWidth) {
+      if (img.offsetWidth < windowWidth && img.offsetWidth !== 0) {
         // If the image width should ever exist less than document width
         img.style.width = '100%'
         img.style.height = 'auto'
-      } else {
-        // If the image height should ever exist less than document height
-        if (img.offsetHeight < windowHeight && img.offsetHeight !== 0) {
-          // If the width of the image is smaller than the window's
-          img.style.width = 'auto'
-          img.style.height = '100%'
-        }
+      } else if (img.offsetHeight < windowHeight && img.offsetHeight !== 0) {
+        // If the width of the image is smaller than the window's
+        img.style.width = 'auto'
+        img.style.height = '100%'
       }
     },
     metaData() {
@@ -103,8 +99,9 @@ export default {
     window.addEventListener('resize', this.backgroundHeight)
   },
   mounted() {
-    this.parallax()
     this.backgroundHeight()
+    setTimeout(() => this.backgroundHeight(), 0)
+    this.parallax()
     this.metaData()
   },
   watch: {

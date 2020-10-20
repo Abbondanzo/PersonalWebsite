@@ -171,11 +171,7 @@ export default {
   methods: {
     mobileCheck() {
       const width = document.body.offsetWidth
-      if (width > 960) {
-        this.mobile = false
-      } else {
-        this.mobile = true
-      }
+      this.mobile = width <= 960
     },
     submitForm() {
       const endpoint =

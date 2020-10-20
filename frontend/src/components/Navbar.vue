@@ -14,19 +14,19 @@
       <div class="nav-links">
         <ul>
           <li>
-            <router-link class="underline" :to="{ path: '/about' }"
-              >About</router-link
-            >
+            <router-link class="underline" :to="{ path: '/about' }">
+              About
+            </router-link>
           </li>
           <li>
-            <router-link class="underline" :to="{ path: '/projects' }"
-              >Projects</router-link
-            >
+            <router-link class="underline" :to="{ path: '/projects' }">
+              Projects
+            </router-link>
           </li>
           <li>
-            <router-link class="underline" :to="{ path: '/contact' }"
-              >Contact</router-link
-            >
+            <router-link class="underline" :to="{ path: '/contact' }">
+              Contact
+            </router-link>
           </li>
         </ul>
       </div>
@@ -43,6 +43,11 @@
             v-bind:class="{ 'logo-black': lightBackground }"
           />
           <ul v-bind:class="{ active: show }">
+            <li v-if="mobile">
+              <router-link class="underline" :to="{ path: '/' }">
+                <span @click="showMenu">Home</span>
+              </router-link>
+            </li>
             <li>
               <router-link class="underline" :to="{ path: '/about' }">
                 <span @click="showMenu">About</span>
@@ -77,15 +82,24 @@ export default {
     return {
       show: false,
       lightBackground: false,
-      homeScreen: false
+      homeScreen: false,
+      mobile: false
     }
   },
   created: function () {
     this.updateLogo()
     this.isHome()
     window.addEventListener('resize', this.updateLogo)
+    window.addEventListener('resize', this.mobileCheck)
+  },
+  mounted: function () {
+    this.mobileCheck()
   },
   methods: {
+    mobileCheck: function () {
+      const width = document.body.offsetWidth
+      this.mobile = width <= 960
+    },
     showMenu: function () {
       this.show = !this.show
     },
@@ -99,21 +113,13 @@ export default {
     },
     updateLogo: function () {
       const width = document.body.offsetWidth
-      if (
-        (this.$route.path === '/projects' && width > 960) ||
-        this.$route.path === '/contact'
-      ) {
-        this.lightBackground = true
-      } else {
-        this.lightBackground = false
-      }
+      const isMobile = width <= 960
+      const splitProjects = this.$route.path === '/projects' && width > 960
+      const isContact = this.$route.path === '/contact'
+      this.lightBackground = splitProjects || isContact
     },
     isHome: function () {
-      if (this.$route.path === '/') {
-        this.homeScreen = true
-      } else {
-        this.homeScreen = false
-      }
+      this.homeScreen = this.$route.path === '/'
     }
   },
   watch: {
@@ -195,6 +201,8 @@ export default {
     }
     ul {
       position: fixed;
+      padding: 0;
+      margin: 0;
       top: 0;
       bottom: 0px;
       width: 100vw;
@@ -213,13 +221,20 @@ export default {
           font-size: 28px;
         }
       }
+
+      &.active {
+        left: 0;
+        display: block;
+      }
     }
-    ul.active {
-      left: 0;
-      display: block;
-    }
-    a.router-link-active {
-      color: #222;
+    a {
+      &.router-link-active {
+        color: #222 !important;
+      }
+      &:hover {
+        color: inherit;
+        opacity: 0.5;
+      }
     }
     .menu-close {
       position: absolute;

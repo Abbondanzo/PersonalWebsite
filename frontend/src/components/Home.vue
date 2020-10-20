@@ -18,7 +18,13 @@
 export default {
   name: 'Home',
   mounted() {
-    console.log('Mounted Home component') // a.k.a. Working
+    // Professional state management
+    if (!window.hello) {
+      window.hello = true
+      console.log(
+        "Thanks for visiting! I didn't put any easter eggs in here but I'll add one if you file an issue on my GH repository"
+      )
+    }
   }
 }
 </script>
