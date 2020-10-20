@@ -99,7 +99,6 @@ export default {
     window.addEventListener('resize', this.backgroundHeight)
   },
   mounted() {
-    this.backgroundHeight()
     setTimeout(() => this.backgroundHeight(), 0)
     this.parallax()
     this.metaData()
@@ -108,6 +107,7 @@ export default {
     $route: function () {
       this.metaData()
       this.parallax()
+      this.backgroundHeight()
     }
   }
 }
