@@ -31,7 +31,7 @@
         <div class="info-block block-2">
           <h2>A little bit about me...</h2>
           <p>
-            Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX designer of
+            Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX developer of
             web and mobile applications. Currently, I am studying at
             <a
               href="http://www.northeastern.edu/"
@@ -39,8 +39,9 @@
               title="Northeastern"
               >Northeastern University</a
             >
-            up in Boston, Massachusetts. I’ve got a passion for creating,
-            innovating, and coffee. I also run this small company called
+            up in Boston, Massachusetts. I’ve got a passion for building weird
+            things and drinking lots of coffee. I also run this small company
+            called
             <a class="under" href="http://titusdesign.org/" title="Titus Design"
               >Titus&nbsp;Design</a
             >
