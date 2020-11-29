@@ -113,7 +113,6 @@ export default {
     },
     updateLogo: function () {
       const width = document.body.offsetWidth
-      const isMobile = width <= 960
       const splitProjects = this.$route.path === '/projects' && width > 960
       const isContact = this.$route.path === '/contact'
       this.lightBackground = splitProjects || isContact
