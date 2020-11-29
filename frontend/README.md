@@ -1,6 +1,6 @@
 # Personal Website Frontend
 
-The current entirety of my personal website (in progress/under construction). This site is built using [Vue](https://vuejs.org/). Since the current site-in-progress is more of an experiment than a working webpage, proper edits to this Readme will be added in the future.
+This site is built using [Vue](https://vuejs.org/). Once upon a time, many years ago, I started this project and I will continue to maintain it until the day JavaScript is outlawed. Hence, it's always in progress even when my last commit was 12+ months ago. There's not much else to add besides head on over to https://abbondanzo.com and check it out.
 
 ## Env Information
 
@@ -9,25 +9,25 @@ Inside this folder, there is an `.env.example` file. This must be _copied_ and n
 ## Project setup
 
 ```
-yarn install
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 
 ```
-yarn serve
+npm run serve
 ```
 
 ### Compiles and minifies for production
 
 ```
-yarn build
+npm run build
 ```
 
 ### Lints and fixes files
 
 ```
-yarn lint
+npm run lint
 ```
 
 [You can view the currently live here](http://abbondanzo.com)
