@@ -52,6 +52,8 @@ export default {
     '@nuxtjs/style-resources',
     // https://google-analytics.nuxtjs.org/
     '@nuxtjs/google-analytics',
+    // https://google-fonts.nuxtjs.org/
+    ['@nuxtjs/google-fonts'],
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -77,6 +79,17 @@ export default {
   publicRuntimeConfig: {
     googleAnalytics: {
       id: googleAnalyticsId,
+    },
+  },
+
+  googleFonts: {
+    families: {
+      Montserrat: {
+        wght: [400, 600, 700],
+      },
+      Raleway: {
+        wght: [300, 400, 600],
+      },
     },
   },
 }

@@ -338,6 +338,7 @@ export default {
         .contact-form {
           width: 100%;
           left: 0;
+          position: relative;
         }
       }
     }
@@ -363,7 +364,7 @@ export default {
       }
       .left {
         height: auto !important;
-        min-height: inherit;
+        min-height: auto;
       }
       .right {
         margin-bottom: 0;
