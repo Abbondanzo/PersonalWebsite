@@ -221,6 +221,9 @@ export default {
     }
     a {
       &.nuxt-link-active {
+        color: inherit !important;
+      }
+      &.nuxt-link-exact-active {
         color: #222 !important;
       }
       &:hover {

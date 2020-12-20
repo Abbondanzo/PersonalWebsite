@@ -1,3 +1,8 @@
+const googleAnalyticsId =
+  process.env.NODE_ENV === 'production'
+    ? process.env.GOOGLE_UA_KEY
+    : process.env.GOOGLE_UA_KEY_DEV
+
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
@@ -16,6 +21,12 @@ export default {
         name: 'description',
         content:
           "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content:
+          'graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics',
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
@@ -39,6 +50,8 @@ export default {
     '@nuxt/typescript-build',
     // https://github.com/nuxt-community/style-resources-module
     '@nuxtjs/style-resources',
+    // https://google-analytics.nuxtjs.org/
+    '@nuxtjs/google-analytics',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -55,5 +68,15 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     transpile: ['vee-validate/dist/rules'],
+  },
+
+  googleAnalytics: {
+    id: googleAnalyticsId,
+  },
+
+  publicRuntimeConfig: {
+    googleAnalytics: {
+      id: googleAnalyticsId,
+    },
   },
 }
