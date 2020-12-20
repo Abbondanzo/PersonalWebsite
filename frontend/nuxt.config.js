@@ -1,7 +1,12 @@
-const googleAnalyticsId =
-  process.env.NODE_ENV === 'production'
-    ? process.env.GOOGLE_UA_KEY
-    : process.env.GOOGLE_UA_KEY_DEV
+const isProduction = process.env.NODE_ENV === 'production'
+
+const BASE_URL = isProduction
+  ? 'https://abbondanzo.com'
+  : 'http://localhost:3000'
+
+const googleAnalyticsId = isProduction
+  ? process.env.GOOGLE_UA_KEY
+  : process.env.GOOGLE_UA_KEY_DEV
 
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
@@ -36,7 +41,7 @@ export default {
         content:
           "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
       },
-      { hid: 'og:image', name: 'og:image', content: '/ogimage.jpg' },
+      { hid: 'og:image', name: 'og:image', content: `${BASE_URL}/ogimage.jpg` },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
