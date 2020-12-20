@@ -72,6 +72,8 @@ export default {
     transpile: ['vee-validate/dist/rules'],
   },
 
+  generate: { fallback: '404.html' },
+
   googleAnalytics: {
     id: googleAnalyticsId,
   },

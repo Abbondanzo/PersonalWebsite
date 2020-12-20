@@ -1,4 +1,4 @@
-# abbondanzo
+# Personal Website
 
 This site is built using [Vue](https://vuejs.org/). Once upon a time, many years ago, I started this project and I will continue to maintain it until the day JavaScript is outlawed. Hence, it's always in progress even when my last commit was 12+ months ago. There's not much else to add besides head on over to https://abbondanzo.com and check it out.
 

@@ -30,6 +30,16 @@ export default {
     },
   },
   layout: 'error',
+  head: {
+    title: '404',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: "This content doesn't exist!",
+      },
+    ],
+  },
 }
 </script>
 
