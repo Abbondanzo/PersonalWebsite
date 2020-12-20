@@ -3,11 +3,17 @@
     <div class="valign">
       <div class="container">
         <div class="hello-text">
-          <h1>Peter Abbondanzo</h1>
-          <h2>Software Developer</h2>
-          <NuxtLink :to="{ path: 'about' }">
-            <button class="btn btn-white">About</button>
-          </NuxtLink>
+          <div v-if="error.statusCode === 404">
+            <h1>404</h1>
+            <h2>That's not a page!</h2>
+          </div>
+          <div v-else class="hello-text">
+            <h1>Uh-oh</h1>
+            <h2>There was an error loading this page...</h2>
+          </div>
+          <router-link :to="{ path: '/' }">
+            <button class="btn btn-white">Go Home</button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -16,28 +22,14 @@
 
 <script>
 export default {
-  name: 'Home',
-  mounted() {
-    // Professional state management
-    if (!window.hello) {
-      window.hello = true
-      // eslint-disable-next-line no-console
-      console.log(
-        "Thanks for visiting! I didn't put any easter eggs in here but I'll add one if you file an issue on my GH repository"
-      )
-    }
+  name: 'Error',
+  props: {
+    error: {
+      type: Object,
+      default() {},
+    },
   },
-  head: {
-    title: 'Home',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
-      },
-    ],
-  },
+  layout: 'error',
 }
 </script>
 
@@ -50,6 +42,7 @@ export default {
     }
     .hello-text {
       text-align: center;
+      // overflow: auto;
       h1,
       h2 {
         color: #fff;
@@ -58,6 +51,7 @@ export default {
       }
       h1 {
         font-size: 96px;
+        // white-space: nowrap;
       }
       h2 {
         font-weight: 300;
@@ -66,7 +60,7 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 1360px) {
+  @media screen and (max-width: 720px) {
     .content {
       .hello-text {
         h1 {

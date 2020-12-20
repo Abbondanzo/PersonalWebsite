@@ -1,29 +1,29 @@
 <template>
   <nav class="nav">
     <div class="container">
-      <router-link class="underline" :to="{ path: '/' }">
+      <NuxtLink class="underline" :to="{ path: '/' }">
         <img
           class="nav-logo"
           src="~/assets/img/logo.svg"
           :class="[{ 'logo-black': lightBackground }, { home: homeScreen }]"
         />
-      </router-link>
+      </NuxtLink>
       <div class="nav-links">
         <ul>
           <li>
-            <router-link class="underline" :to="{ path: '/about' }">
+            <NuxtLink class="underline" :to="{ path: '/about' }">
               About
-            </router-link>
+            </NuxtLink>
           </li>
           <li>
-            <router-link class="underline" :to="{ path: '/projects' }">
+            <NuxtLink class="underline" :to="{ path: '/projects' }">
               Projects
-            </router-link>
+            </NuxtLink>
           </li>
           <li>
-            <router-link class="underline" :to="{ path: '/contact' }">
+            <NuxtLink class="underline" :to="{ path: '/contact' }">
               Contact
-            </router-link>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -37,24 +37,24 @@
           />
           <ul :class="{ active: show }">
             <li v-if="mobile">
-              <router-link class="underline" :to="{ path: '/' }">
+              <NuxtLink class="underline" :to="{ path: '/' }">
                 <span @click="showMenu">Home</span>
-              </router-link>
+              </NuxtLink>
             </li>
             <li>
-              <router-link class="underline" :to="{ path: '/about' }">
+              <NuxtLink class="underline" :to="{ path: '/about' }">
                 <span @click="showMenu">About</span>
-              </router-link>
+              </NuxtLink>
             </li>
             <li>
-              <router-link class="underline" :to="{ path: '/projects' }">
+              <NuxtLink class="underline" :to="{ path: '/projects' }">
                 <span @click="showMenu">Projects</span>
-              </router-link>
+              </NuxtLink>
             </li>
             <li>
-              <router-link class="underline" :to="{ path: '/contact' }">
+              <NuxtLink class="underline" :to="{ path: '/contact' }">
                 <span @click="showMenu">Contact</span>
-              </router-link>
+              </NuxtLink>
             </li>
             <i
               class="fa fa-times menu-close"
@@ -86,12 +86,12 @@ export default {
     },
   },
   beforeMount() {
-    this.updateLogo()
-    this.isHome()
     window.addEventListener('resize', this.updateLogo)
     window.addEventListener('resize', this.mobileCheck)
   },
   mounted() {
+    this.updateLogo()
+    this.isHome()
     this.mobileCheck()
   },
   methods: {
@@ -136,7 +136,7 @@ export default {
   a {
     color: #fff;
     cursor: pointer;
-    &.router-link-active {
+    &.nuxt-link-active {
       color: $primary;
     }
   }
@@ -220,7 +220,7 @@ export default {
       }
     }
     a {
-      &.router-link-active {
+      &.nuxt-link-active {
         color: #222 !important;
       }
       &:hover {

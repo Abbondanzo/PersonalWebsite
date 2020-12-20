@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <navbar></navbar>
+    <Navbar />
     <transition name="slide" mode="out-in" :duration="500">
       <Nuxt />
     </transition>
+    <ProjectsFooter />
     <img class="underbg" src="~/assets/img/bg.jpg" />
   </div>
 </template>
 
 <script>
-import Navbar from '~/components/Navbar'
-
 export default {
   name: 'Index',
-  components: { Navbar },
   watch: {
     $route() {
-      this.metaData()
       this.parallax()
       this.backgroundHeight()
     },
@@ -29,7 +26,6 @@ export default {
   mounted() {
     setTimeout(() => this.backgroundHeight(), 0)
     this.parallax()
-    this.metaData()
   },
   methods: {
     parallax() {
@@ -94,21 +90,6 @@ export default {
         // If the width of the image is smaller than the window's
         img.style.width = 'auto'
         img.style.height = '100%'
-      }
-    },
-    metaData() {
-      const title = this.$route.name + ' | Peter V. Abbondanzo'
-      document.title = title
-      const desc = this.$route.meta.description
-      const docSelector = document.querySelector('meta[name=description]')
-      if (!docSelector) {
-        return
-      }
-      if (!desc) {
-        docSelector.content =
-          "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made."
-      } else {
-        docSelector.content = desc
       }
     },
   },

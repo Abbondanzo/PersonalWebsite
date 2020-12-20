@@ -18,8 +18,8 @@
         }"
       />
     </div>
-    <i class="fa fa-chevron-left" aria-hidden="true" @:click="moveRight"></i>
-    <i class="fa fa-chevron-right" aria-hidden="true" @:click="moveLeft"></i>
+    <i class="fa fa-chevron-left" aria-hidden="true" @click="moveRight"></i>
+    <i class="fa fa-chevron-right" aria-hidden="true" @click="moveLeft"></i>
   </div>
 </template>
 

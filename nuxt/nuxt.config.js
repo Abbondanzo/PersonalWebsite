@@ -4,11 +4,19 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'abbondanzo',
+    // if no subcomponents specify a metaInfo.title, this title will be used
+    title: 'Home',
+    // all titles will be injected into this template
+    titleTemplate: '%s | Peter V. Abbondanzo',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
@@ -20,7 +28,7 @@ export default {
   },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: ['~/plugins/vee-validate'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -45,5 +53,7 @@ export default {
   axios: {},
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    transpile: ['vee-validate/dist/rules'],
+  },
 }

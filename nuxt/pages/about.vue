@@ -13,7 +13,7 @@
         </div>
         <div class="experience block-1">
           <h2>Experience</h2>
-          <transition appear @:after-appear="afterEnter">
+          <transition appear @fter-appear="afterEnter">
             <ul>
               <li v-for="(skill, index) in skills" :key="index" :index="index">
                 <h3>{{ skill.name }}</h3>
@@ -56,16 +56,14 @@
           <p>
             I'm a computer scientist who likes to tinker with VR and web
             development in my spare time. I've helped write code for
-            <a href="https://github.com/SaltieRL/DistributedReplays"
-              >replaying Rocket League games in the browser</a
-            >
+            <a href="https://github.com/SaltieRL/DistributedReplays">
+              replaying Rocket League games in the browser
+            </a>
             and made a
-            <a href="https://github.com/NUVR/Magic-Mover"
-              >small VR rehabilitation game</a
+            <a href="https://github.com/NUVR/Magic-Mover">
+              small VR rehabilitation game </a
             >. You can check out some of my older projects
-            <router-link class="under" :to="{ path: '/projects' }"
-              >here</router-link
-            >.
+            <NuxtLink class="under" :to="{ path: '/projects' }">here</NuxtLink>.
           </p>
           <p>
             I love everything related to web development. But I also love the
@@ -78,9 +76,9 @@
         <div class="valign">
           <div class="contact-cta">
             <h3>Send a message</h3>
-            <router-link :to="{ path: '/contact' }">
+            <NuxtLink :to="{ path: '/contact' }">
               <button class="btn">Contact Me</button>
-            </router-link>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -163,6 +161,17 @@ export default {
         this.baseWidths[i].width = this.skills[i].pct
       }
     },
+  },
+  head: {
+    title: 'About',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite",
+      },
+    ],
   },
 }
 </script>
