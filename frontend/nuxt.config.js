@@ -101,6 +101,10 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://github.com/nuxt-community/robots-module#readme
+    '@nuxtjs/robots',
+    // https://github.com/nuxt-community/sitemap-module#readme
+    '@nuxtjs/sitemap',
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
@@ -131,6 +135,15 @@ export default {
       Raleway: {
         wght: [300, 400, 600],
       },
+    },
+  },
+
+  sitemap: {
+    hostname: BASE_URL,
+    defaults: {
+      changefreq: 'monthly',
+      priority: 1,
+      lastmod: currentDate,
     },
   },
 }
