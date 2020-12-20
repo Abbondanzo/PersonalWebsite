@@ -28,6 +28,15 @@ export default {
         content:
           'graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics',
       },
+      { hid: 'og:title', name: 'og:title', content: 'Peter V. Abbondanzo' },
+      { hid: 'og:site_name', name: 'og:site_name', content: 'abbondanzo.com' },
+      {
+        hid: 'og:description',
+        name: 'og:description',
+        content:
+          "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
+      },
+      { hid: 'og:image', name: 'og:image', content: '/ogimage.jpg' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
