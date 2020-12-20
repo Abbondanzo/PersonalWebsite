@@ -4,6 +4,8 @@ const BASE_URL = isProduction
   ? 'https://abbondanzo.com'
   : 'http://localhost:3000'
 
+const currentDate = new Date().toISOString().split('T')[0]
+
 const googleAnalyticsId = isProduction
   ? process.env.GOOGLE_UA_KEY
   : process.env.GOOGLE_UA_KEY_DEV
@@ -41,7 +43,30 @@ export default {
         content:
           "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
       },
-      { hid: 'og:image', name: 'og:image', content: `${BASE_URL}/ogimage.jpg` },
+      {
+        hid: 'og:image',
+        name: 'og:image',
+        property: 'og:image',
+        content: `${BASE_URL}/ogimage.jpg`,
+      },
+      {
+        hid: 'image',
+        name: 'image',
+        property: 'image',
+        content: `${BASE_URL}/ogimage.jpg`,
+      },
+      {
+        hid: 'author',
+        name: 'author',
+        property: 'author',
+        content: 'Peter Abbondanzo',
+      },
+      {
+        hid: 'date',
+        name: 'date',
+        property: 'date',
+        content: currentDate,
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
