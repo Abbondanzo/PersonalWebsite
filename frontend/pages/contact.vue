@@ -254,7 +254,7 @@ export default {
         pointer-events: none;
       }
       .text-block {
-        width: $container/2;
+        width: math.div($container, 2);
         z-index: 1;
         float: right;
         clear: both;
@@ -264,7 +264,7 @@ export default {
         p {
           line-height: 1.8;
           font-size: 18px;
-          padding-bottom: $padding/2;
+          padding-bottom: math.div($padding, 2);
           &:last-child {
             padding-bottom: 0;
           }

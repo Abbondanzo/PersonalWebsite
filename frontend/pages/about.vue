@@ -217,7 +217,7 @@ export default {
         margin-top: $navbarheight;
         margin-left: -$padding;
         padding: $padding;
-        width: $container/2;
+        width: math.div($container, 2);
         p {
           line-height: 1.8;
           font-size: 18px;
