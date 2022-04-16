@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar />
+    <NavBar />
     <transition name="slide" mode="out-in" :duration="500">
       <Nuxt />
     </transition>
@@ -97,6 +97,19 @@ export default {
 </script>
 
 <style lang="scss">
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+html {
+  animation: fadeIn 2s;
+}
+
 body {
   background: url('~@/assets/img/bg.jpg') top left no-repeat;
   background-size: cover;
