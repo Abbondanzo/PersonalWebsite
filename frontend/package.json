@@ -8,7 +8,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "npm run lint:js"
+    "lint": "npm run lint:js",
+    "prepare": "cd .. && husky install"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
@@ -33,24 +34,24 @@
     "@nuxt/types": "2.15.8",
     "@nuxt/typescript-build": "2.1.0",
     "@nuxt/webpack": "2.15.8",
-    "@nuxtjs/eslint-config": "^3.1.0",
-    "@nuxtjs/eslint-config-typescript": "^3.0.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/eslint-config-typescript": "^8.0.0",
+    "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/google-fonts": "^1.2.0",
     "@nuxtjs/robots": "^2.4.2",
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.10.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-nuxt": "^3.1.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^8.2.0",
     "fibers": "^5.0.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.4.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
     "node-sass": "^5.0.0",
-    "prettier": "^2.1.2",
+    "prettier": "^2.5.1",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0"
   }
