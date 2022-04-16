@@ -129,6 +129,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 .project-return {
   display: none;
 }
@@ -165,7 +167,7 @@ section {
           cursor: pointer;
           margin-bottom: 24px;
           line-height: 36px;
-          margin-left: $padding / 2;
+          margin-left: math.div($padding, 2);
           h3,
           span {
             display: inline-block;
@@ -208,9 +210,9 @@ section {
   }
   .info-block {
     background: $primary;
-    padding: $padding / 2;
+    padding: math.div($padding, 2);
     position: absolute;
-    bottom: $padding / 2;
+    bottom: math.div($padding, 2);
     left: 90%;
     min-width: 200px;
     width: 320px;
@@ -247,7 +249,7 @@ section {
       top: 0;
     }
     .info-block {
-      right: $padding / 2;
+      right: math.div($padding, 2);
       left: inherit;
       bottom: 10px;
     }
@@ -255,9 +257,9 @@ section {
   @media screen and (max-width: 768px) {
     .left {
       .project-list {
-        margin: 0 ($padding / 2);
+        margin: 0 (math.div($padding, 2));
         ul {
-          padding: $padding / 2;
+          padding: math.div($padding, 2);
           text-align: center;
           li {
             margin-left: 0;

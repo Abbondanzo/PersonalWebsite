@@ -214,6 +214,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 #app {
   .content {
     overflow-x: hidden;
@@ -278,7 +280,7 @@ export default {
         }
       }
       .contact-form {
-        width: $container/2 - $padding;
+        width: math.div($container, 2) - $padding;
         padding: $padding;
         margin-top: $navbarheight;
         background: $primary;
@@ -286,7 +288,7 @@ export default {
         left: -$padding;
         h4 {
           color: #fff;
-          padding-top: $padding / 4;
+          padding-top: math.div($padding, 4);
           &:first-child {
             padding-top: 0;
           }
