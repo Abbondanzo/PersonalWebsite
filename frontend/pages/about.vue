@@ -145,6 +145,17 @@ export default {
       baseWidths: [{ width: 0 }, { width: 0 }, { width: 0 }],
     }
   },
+  head: {
+    title: 'About',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite",
+      },
+    ],
+  },
   methods: {
     getAge: () => {
       const bday = new Date('1998-05-21').getTime()
@@ -161,17 +172,6 @@ export default {
         this.baseWidths[i].width = this.skills[i].pct
       }
     },
-  },
-  head: {
-    title: 'About',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite",
-      },
-    ],
   },
 }
 </script>

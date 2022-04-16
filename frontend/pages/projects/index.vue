@@ -74,6 +74,17 @@ export default {
       ],
     }
   },
+  head: {
+    title: 'Projects',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          "Recent projects, both personal and for work. You can only know what's here if you take a look.",
+      },
+    ],
+  },
   mounted() {
     this.$nextTick(function () {
       window.addEventListener('resize', this.getWindowHeight)
@@ -113,17 +124,6 @@ export default {
         path: '/projects/' + this.projects[arg].source,
       })
     },
-  },
-  head: {
-    title: 'Projects',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "Recent projects, both personal and for work. You can only know what's here if you take a look.",
-      },
-    ],
   },
 }
 </script>

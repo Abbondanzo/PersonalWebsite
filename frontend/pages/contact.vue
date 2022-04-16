@@ -150,6 +150,17 @@ export default {
       showError: false,
     }
   },
+  head: {
+    title: 'Contact',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'Use this form to send me an email or follow any of my social profiles.',
+      },
+    ],
+  },
   mounted() {
     this.mobileCheck()
   },
@@ -198,17 +209,6 @@ export default {
       this.showSuccess = false
       this.showError = false
     },
-  },
-  head: {
-    title: 'Contact',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Use this form to send me an email or follow any of my social profiles.',
-      },
-    ],
   },
 }
 </script>

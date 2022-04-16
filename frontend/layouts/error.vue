@@ -23,13 +23,13 @@
 <script>
 export default {
   name: 'Error',
+  layout: 'error',
   props: {
     error: {
       type: Object,
       default() {},
     },
   },
-  layout: 'error',
   head: {
     title: '404',
     meta: [
