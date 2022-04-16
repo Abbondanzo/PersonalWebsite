@@ -177,6 +177,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 #app {
   .content {
     overflow-x: hidden;
@@ -219,7 +221,7 @@ export default {
         p {
           line-height: 1.8;
           font-size: 18px;
-          padding-bottom: $padding/2;
+          padding-bottom: math.div($padding, 2);
         }
       }
       .backgrounding {
@@ -235,7 +237,7 @@ export default {
       }
       .greeting,
       .experience {
-        width: $container/2 + $padding;
+        width: math.div($container, 2) + $padding;
         position: absolute;
       }
       .experience {
@@ -287,12 +289,12 @@ export default {
       }
       .more-info-block,
       .contact-cta {
-        width: $container/2 - $padding;
+        width: math.div($container, 2) - $padding;
         padding: $padding;
         p {
           line-height: 1.8;
           font-size: 18px;
-          padding-bottom: $padding/2;
+          padding-bottom: math.div($padding, 2);
           &:last-child {
             padding-bottom: 0;
           }
