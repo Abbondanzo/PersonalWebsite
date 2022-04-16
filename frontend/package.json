@@ -50,7 +50,7 @@
     "fibers": "5.0.1",
     "husky": "7.0.4",
     "lint-staged": "12.3.8",
-    "node-sass": "^5.0.0",
+    "node-sass": "6.0.1",
     "prettier": "^2.5.1",
     "sass": "^1.30.0",
     "sass-loader": "10.2.1"
