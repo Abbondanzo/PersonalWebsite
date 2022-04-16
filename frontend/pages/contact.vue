@@ -150,6 +150,17 @@ export default {
       showError: false,
     }
   },
+  head: {
+    title: 'Contact',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'Use this form to send me an email or follow any of my social profiles.',
+      },
+    ],
+  },
   mounted() {
     this.mobileCheck()
   },
@@ -199,21 +210,12 @@ export default {
       this.showError = false
     },
   },
-  head: {
-    title: 'Contact',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Use this form to send me an email or follow any of my social profiles.',
-      },
-    ],
-  },
 }
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 #app {
   .content {
     overflow-x: hidden;
@@ -252,7 +254,7 @@ export default {
         pointer-events: none;
       }
       .text-block {
-        width: $container/2;
+        width: math.div($container, 2);
         z-index: 1;
         float: right;
         clear: both;
@@ -262,7 +264,7 @@ export default {
         p {
           line-height: 1.8;
           font-size: 18px;
-          padding-bottom: $padding/2;
+          padding-bottom: math.div($padding, 2);
           &:last-child {
             padding-bottom: 0;
           }
@@ -278,7 +280,7 @@ export default {
         }
       }
       .contact-form {
-        width: $container/2 - $padding;
+        width: math.div($container, 2) - $padding;
         padding: $padding;
         margin-top: $navbarheight;
         background: $primary;
@@ -286,7 +288,7 @@ export default {
         left: -$padding;
         h4 {
           color: #fff;
-          padding-top: $padding / 4;
+          padding-top: math.div($padding, 4);
           &:first-child {
             padding-top: 0;
           }

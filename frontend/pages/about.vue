@@ -145,6 +145,17 @@ export default {
       baseWidths: [{ width: 0 }, { width: 0 }, { width: 0 }],
     }
   },
+  head: {
+    title: 'About',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite",
+      },
+    ],
+  },
   methods: {
     getAge: () => {
       const bday = new Date('1998-05-21').getTime()
@@ -162,21 +173,12 @@ export default {
       }
     },
   },
-  head: {
-    title: 'About',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite",
-      },
-    ],
-  },
 }
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 #app {
   .content {
     overflow-x: hidden;
@@ -215,11 +217,11 @@ export default {
         margin-top: $navbarheight;
         margin-left: -$padding;
         padding: $padding;
-        width: $container/2;
+        width: math.div($container, 2);
         p {
           line-height: 1.8;
           font-size: 18px;
-          padding-bottom: $padding/2;
+          padding-bottom: math.div($padding, 2);
         }
       }
       .backgrounding {
@@ -235,7 +237,7 @@ export default {
       }
       .greeting,
       .experience {
-        width: $container/2 + $padding;
+        width: math.div($container, 2) + $padding;
         position: absolute;
       }
       .experience {
@@ -287,12 +289,12 @@ export default {
       }
       .more-info-block,
       .contact-cta {
-        width: $container/2 - $padding;
+        width: math.div($container, 2) - $padding;
         padding: $padding;
         p {
           line-height: 1.8;
           font-size: 18px;
-          padding-bottom: $padding/2;
+          padding-bottom: math.div($padding, 2);
           &:last-child {
             padding-bottom: 0;
           }

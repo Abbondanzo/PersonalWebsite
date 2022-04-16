@@ -31,6 +31,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -62,7 +64,7 @@ export default {
 @media screen and (max-width: 400px) {
   .modal-container {
     width: 100%;
-    padding: $padding / 4;
+    padding: math.div($padding, 4);
   }
   .modal-default-button {
     float: right;

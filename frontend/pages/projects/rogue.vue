@@ -57,6 +57,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
@@ -75,7 +77,7 @@ export default {
       margin-top: -300px;
     }
     .image-slider {
-      margin-bottom: $padding / 2;
+      margin-bottom: math.div($padding, 2);
     }
   }
 }

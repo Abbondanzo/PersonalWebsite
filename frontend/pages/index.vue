@@ -17,16 +17,6 @@
 <script>
 export default {
   name: 'Home',
-  mounted() {
-    // Professional state management
-    if (!window.hello) {
-      window.hello = true
-      // eslint-disable-next-line no-console
-      console.log(
-        "Thanks for visiting! I didn't put any easter eggs in here but I'll add one if you file an issue on my GH repository"
-      )
-    }
-  },
   head: {
     title: 'Home',
     meta: [
@@ -37,6 +27,16 @@ export default {
           "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
       },
     ],
+  },
+  mounted() {
+    // Professional state management
+    if (!window.hello) {
+      window.hello = true
+      // eslint-disable-next-line no-console
+      console.log(
+        "Thanks for visiting! I didn't put any easter eggs in here but I'll add one if you file an issue on my GH repository"
+      )
+    }
   },
 }
 </script>
