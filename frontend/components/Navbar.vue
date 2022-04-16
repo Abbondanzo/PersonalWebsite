@@ -5,7 +5,11 @@
         <img
           class="nav-logo"
           src="~/assets/img/logo.svg"
-          :class="[{ 'logo-black': lightBackground }, { home: homeScreen }]"
+          :class="[
+            { 'logo-black': lightBackground, hidden: !showNavLogo },
+            { home: homeScreen },
+          ]"
+          @load="onNavLogoLoad"
         />
       </NuxtLink>
       <div class="nav-links">
@@ -74,6 +78,7 @@ export default {
   data() {
     return {
       show: false,
+      showNavLogo: false,
       lightBackground: false,
       homeScreen: false,
       mobile: false,
@@ -110,6 +115,9 @@ export default {
     colorBackground() {
       this.lightBackground = !this.lightBackground
     },
+    onNavLogoLoad() {
+      this.showNavLogo = true
+    },
     updateLogo() {
       const width = document.body.offsetWidth
       const splitProjects = this.$route.path === '/projects' && width > 960
@@ -141,13 +149,14 @@ export default {
     }
   }
   .nav-logo {
-    filter: invert(1);
-    fill: #fff;
     width: 80px;
     height: $navbarheight * 0.8;
     float: left;
     transition: all $anim * 4;
     pointer-events: all;
+    &.hidden {
+      display: none;
+    }
     &.home {
       position: fixed;
       pointer-events: none;
@@ -160,7 +169,7 @@ export default {
     }
   }
   .logo-black {
-    filter: invert(0);
+    filter: invert(1);
   }
   .nav-links {
     float: right;
