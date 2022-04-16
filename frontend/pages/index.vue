@@ -4,9 +4,9 @@
       <div class="container">
         <div class="hello-text">
           <h1>Peter Abbondanzo</h1>
-          <h2>Software Developer</h2>
+          <h2>Web &amp; Mobile Developer | Software Engineer | Pilot</h2>
           <NuxtLink :to="{ path: 'about' }">
-            <button class="btn btn-white">About</button>
+            <button class="btn btn-white">About Me</button>
           </NuxtLink>
         </div>
       </div>

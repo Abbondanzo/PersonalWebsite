@@ -68,7 +68,7 @@
           <p>
             I love everything related to web development. But I also love the
             outdoors. If I'm not working on a project, you can find me bicycling
-            around the Boston area or refinishing my basement at home.
+            around northern New Jersey or flying planes over the Hudson.
           </p>
         </div>
       </div>

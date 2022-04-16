@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar />
+    <NavBar />
     <transition name="slide" mode="out-in" :duration="500">
       <Nuxt />
     </transition>

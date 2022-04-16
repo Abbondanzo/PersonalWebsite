@@ -265,7 +265,6 @@ iframe {
    \/_/   \/_/ /_/   \/_/\/_/   \/_/ \/_/   \/_____/   \/_/     \/_/   \/_/   \/_____/   \/_/ \/_/   \/_____/
 
 */
-
 .slide-leave-active {
   .left {
     transform: translateX(-130%);
@@ -352,7 +351,9 @@ iframe {
     animation: slide-from-bottom $anim * 2;
   }
 }
-
+html {
+  animation: fade-in $anim * 4;
+}
 /*
  ______   ______     ______       __     ______     ______     ______   ______
 /\  == \ /\  == \   /\  __ \     /\ \   /\  ___\   /\  ___\   /\__  _\ /\  ___\
