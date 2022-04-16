@@ -9,7 +9,8 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint": "npm run lint:js",
-    "prepare": "cd .. && husky install"
+    "prepare": "cd .. && husky install",
+    "prettier": "prettier --write ."
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
