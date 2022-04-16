@@ -177,7 +177,7 @@ section {
             font-size: 24px;
             font-weight: 600;
             color: $textcolor2;
-            transition: all math.div($anim / 2) $ease-out-quint;
+            transition: all math.div($anim, 2) $ease-out-quint;
           }
           span {
             color: $primary;
