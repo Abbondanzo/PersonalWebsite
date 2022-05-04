@@ -27,7 +27,7 @@
       <span>Yes, they built an arena</span>
 
       <p>
-        Needless to say, there's a huge interest in this game. Unlike a modern
+        Needless to say, there's a huge interest in this game. Like a modern
         first-person shooter or generic sports game, Rocket League is heavily
         dependent on teamwork. Teams of 2 or 3 rely on their teammates to
         communicate, rotate, pass, and work together to win. Hence, large
@@ -103,7 +103,7 @@
         less with Three.js. I initially began work on this project during a
         12-hour hackathon with a few other members at a laboratory tucked away
         in a corner of Northeastern's library. We were able to get a very rough
-        prototype displaying some crudely design cars, an object that
+        prototype displaying some crudely-designed cars, an object that
         represented the ball, and a basic field and set of goals.
       </p>
       <img src="~/assets/img/replay-viewer/rv9.gif" />
@@ -190,10 +190,10 @@
       </p>
       <p>
         When playing the game, we can just set the delta of deltas, the "last
-        delta", to the current browser time with a call to performance.now().
+        delta", to the current browser time with a call to <code>performance.now()</code>.
         Each time we fire a frame update using the browser's built-in
-        `setInterval` function, the subscribers of a frame update call to the
-        clock's `getDelta` function. Tihs returns the difference between the
+        <code>setInterval</code> function, the subscribers of a frame update call to the
+        clock's <code>getDelta</code> function. This returns the difference between the
         last delta and the current time, computes if we have elapsed any more
         frames, and sets the "last delta" to that current time.
       </p>
