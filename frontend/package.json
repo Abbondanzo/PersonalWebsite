@@ -21,14 +21,15 @@
     }
   },
   "dependencies": {
+    "@abbo/nuxt-google-analytics": "^2.5.0",
     "@nuxtjs/axios": "5.13.6",
     "@nuxtjs/pwa": "3.3.5",
     "core-js": "3.22.0",
     "nuxt": "2.15.8",
+    "vee-validate": "3.4.14",
     "vue": "2.6.14",
     "vue-server-renderer": "2.6.14",
     "vue-template-compiler": "2.6.14",
-    "vee-validate": "3.4.14",
     "webpack": "4.46.0"
   },
   "devDependencies": {

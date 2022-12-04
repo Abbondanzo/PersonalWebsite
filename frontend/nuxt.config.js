@@ -90,7 +90,7 @@ export default {
     // https://github.com/nuxt-community/style-resources-module
     '@nuxtjs/style-resources',
     // https://google-analytics.nuxtjs.org/
-    '@nuxtjs/google-analytics',
+    '@abbo/nuxt-google-analytics',
     // https://google-fonts.nuxtjs.org/
     ['@nuxtjs/google-fonts'],
   ],
@@ -119,11 +119,13 @@ export default {
 
   googleAnalytics: {
     id: googleAnalyticsId,
+    useGtag: true,
   },
 
   publicRuntimeConfig: {
     googleAnalytics: {
       id: googleAnalyticsId,
+      useGtag: true,
     },
   },
 
