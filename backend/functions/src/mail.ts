@@ -5,17 +5,13 @@ import * as exphbs from 'express-handlebars'
 import * as functions from 'firebase-functions'
 import * as nodemailer from 'nodemailer'
 
-// Configure the email transport using the default SMTP transport and a gmail account.
-// For Gmail, enable these:
-// 1. https://www.google.com/settings/security/lesssecureapps
-// 2. https://accounts.google.com/DisplayUnlockCaptcha
-// For other types of transports such as Sendgrid see https://nodemailer.com/transports/
+// Grab a SendGrid API Key and follow these instructions
+// https://www.twilio.com/blog/send-smtp-emails-node-js-sendgrid
 
-// TODO: Before deploying, set the following environment data by running the following:
-// firebase functions:config:set gmail.email="EMAIL USERNAME" gmail.password="EMAIL PASSWORD"
-//      contact.receiver="YOUR_EMAIL_ADDRESS@DOMAIN.COM"
-const gmailEmail = functions.config().gmail.email
-const gmailPassword = functions.config().gmail.password
+// Before deploying, set the following environment data by running the following:
+// firebase functions:config:set sendgrid.api="API KEY" contact.receiver="YOUR_EMAIL_ADDRESS@DOMAIN.COM"
+const sendgridApiKey = functions.config().sendgrid.api
+const senderEmail = functions.config().contact.sender
 const receiverEmail = functions.config().contact.receiver
 
 interface EmailData {
@@ -59,10 +55,11 @@ const buildTemplate = (
 const buildTransporter = (): nodemailer.Transporter => {
   try {
     return nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.sendgrid.net',
+      port: 587,
       auth: {
-        user: gmailEmail,
-        pass: gmailPassword
+        user: 'apikey',
+        pass: sendgridApiKey
       }
     })
   } catch (error) {
@@ -91,8 +88,9 @@ const sendEmail = (
   response: functions.Response
 ): Promise<String> => {
   const mailOptions = {
-    from: `"${name}" <${email}>`, // Sender address
-    to: `${receiverEmail}`, // Receiver address(s)
+    from: `${senderEmail}`,
+    replyTo: `${name} <${email}>`,
+    to: `${receiverEmail}`,
     subject: 'Contact Form'
   }
 
@@ -151,7 +149,7 @@ app.post(
   '*',
   async (request: functions.Request, response: functions.Response) => {
     if (!request.body) {
-      response.status(403).send('Missing request body')
+      return response.status(403).send('Missing request body')
     }
 
     const name = request.body.name,
@@ -159,7 +157,7 @@ app.post(
       message = request.body.message
 
     if (!name || !email || !message) {
-      response
+      return response
         .status(403)
         .send(
           'Missing required body fields. Please check request: ' +
