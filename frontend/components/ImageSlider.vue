@@ -13,7 +13,7 @@
         class="image"
         :index="index"
         :style="{
-          'background-image': 'url(' + images[index] + ')',
+          'background-image': 'url(' + image + ')',
           transform: 'translateX(' + index * 100 + '%)',
         }"
       />

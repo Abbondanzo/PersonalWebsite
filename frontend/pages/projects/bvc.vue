@@ -12,7 +12,10 @@
         had very little requirements, other than to satisfy a number of
         sections. When he came to me, I knew just how to build the perfect site.
       </p>
-      <img src="~/assets/img/bonne/b1.jpg" />
+      <img
+        alt="Stylesheet and index side-by-side"
+        src="~/assets/img/bonne/b1.jpg"
+      />
       <span>Stylesheet and index side-by-side</span>
       <p>
         I started by designing a wireframe and various slides in Adobe Photoshop
@@ -21,8 +24,15 @@
         Javascript to handle contact/review forms and table reservations.
         Everything else was made using HTML and CSS.
       </p>
-      <img src="~/assets/img/bonne/b2.jpg" />
-      <img style="padding: 40px 0" src="~/assets/img/bonne/b3.jpg" />
+      <img
+        alt="Preview of the download section"
+        src="~/assets/img/bonne/b2.jpg"
+      />
+      <img
+        alt="Preview of the reservation section"
+        style="padding: 40px 0"
+        src="~/assets/img/bonne/b3.jpg"
+      />
       <p>
         Users can book a reservation in just a few clicks. I utilized Zapla's
         table management API to allow potential restaurant-goers to see what

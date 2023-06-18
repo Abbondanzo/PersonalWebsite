@@ -34,6 +34,7 @@
       </div>
       <div class="right">
         <img
+          alt="Project preview photo"
           :class="preview"
           :height="previewHeight"
           :src="img"

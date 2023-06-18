@@ -13,7 +13,10 @@
         creating page-by-page mockups from the landing screen to the
         confirmation of a trade.
       </p>
-      <img src="@/assets/img/flipster/f1.jpg" />
+      <img
+        alt="Screenshot from the PSD mockup of the landing page"
+        src="@/assets/img/flipster/f1.jpg"
+      />
       <span>Screenshot from the PSD mockup of the landing page</span>
       <p>
         His idea was a cross between Craigslist and eBay, where users could
@@ -31,9 +34,20 @@
         in addition to the design to describe how the platform was to be built
         to accompany the design.
       </p>
-      <img src="@/assets/img/flipster/f2.jpg" />
-      <img class="block-1" src="@/assets/img/flipster/f3.jpg" />
-      <img class="block-2" src="@/assets/img/flipster/f4.jpg" />
+      <img
+        alt="Wireframe of recent items section"
+        src="@/assets/img/flipster/f2.jpg"
+      />
+      <img
+        alt="Rendering of the home page on a laptop"
+        class="block-1"
+        src="@/assets/img/flipster/f3.jpg"
+      />
+      <img
+        alt="Preview of the buying page"
+        class="block-2"
+        src="@/assets/img/flipster/f4.jpg"
+      />
       <p>
         You can view the full suite of screenshots by following the button
         below. Each shot features the full-size mock-up of the pages

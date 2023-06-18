@@ -2,7 +2,11 @@
   <div class="content">
     <section id="contact" class="about-contact">
       <div class="left">
-        <img class="portrait" src="~@/assets/img/peter.png" />
+        <img
+          alt="Portrait photo"
+          class="portrait"
+          src="~@/assets/img/peter.png"
+        />
         <div class="text-block">
           <h2>Let's Chat!</h2>
           <p>

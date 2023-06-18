@@ -5,7 +5,7 @@
       <Nuxt />
     </transition>
     <ProjectsFooter />
-    <img class="underbg" src="~/assets/img/bg.jpg" />
+    <img alt="Background photo" class="underbg" src="~/assets/img/bg.jpg" />
   </div>
 </template>
 

@@ -3,6 +3,7 @@
     <div class="container">
       <NuxtLink class="underline" :to="{ path: '/' }">
         <img
+          alt="Logo"
           class="nav-logo"
           src="~/assets/img/logo.svg"
           :class="[

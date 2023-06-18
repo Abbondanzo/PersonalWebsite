@@ -13,7 +13,11 @@
         interface and implement said interface as an application built with
         React Native.
       </p>
-      <img src="@/assets/img/feedshare/f1.png" />
+      <img
+        alt="Detail view, home view, and new item view respectively. Taken directly
+        from the app"
+        src="@/assets/img/feedshare/f1.png"
+      />
       <span
         >Detail view, home view, and new item view respectively. Taken directly
         from the app</span
@@ -26,7 +30,10 @@
         functional and features much of the design displayed here. Since the new
         version has not been released publically, these views only exist here.
       </p>
-      <img src="@/assets/img/feedshare/f2.png" />
+      <img
+        alt="Login page prototype on Android device"
+        src="@/assets/img/feedshare/f2.png"
+      />
       <span>Login page prototype on Android device</span>
       <p>
         Every design element of the application was met with heavy testing and

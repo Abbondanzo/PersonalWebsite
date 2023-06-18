@@ -48,9 +48,15 @@
         user to move around the real space with increasing the complexity and
         magnitude of movements.
       </p>
-      <img src="~/assets/img/magic-mover/mm1.jpg" />
+      <img
+        alt="Taha Vasowalla trying out the Hololens"
+        src="~/assets/img/magic-mover/mm1.jpg"
+      />
       <span>Taha Vasowalla trying out the Hololens</span>
-      <img src="~/assets/img/magic-mover/mm2.jpg" />
+      <img
+        alt="Taha and I setting up the Hololens for the first time"
+        src="~/assets/img/magic-mover/mm2.jpg"
+      />
       <span>Taha and I setting up the Hololens for the first time</span>
       <p>
         The project has been developed with Unity 3D and targeted to Microsoft

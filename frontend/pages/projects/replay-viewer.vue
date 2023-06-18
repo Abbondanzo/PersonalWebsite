@@ -23,7 +23,10 @@
         >
         go head-to-head in a three-day extravaganza.
       </p>
-      <img src="@/assets/img/replay-viewer/rv5.jpg" />
+      <img
+        alt="Photo of the Prudential Center event"
+        src="@/assets/img/replay-viewer/rv5.jpg"
+      />
       <span>Yes, they built an arena</span>
 
       <p>
@@ -87,11 +90,20 @@
         playstyles and how you perform individual matches. But I digress; let
         the site speak for itself.
       </p>
-      <img src="~/assets/img/replay-viewer/rv2.png" />
+      <img
+        alt="The homepage of calculated.gg"
+        src="~/assets/img/replay-viewer/rv2.png"
+      />
       <span>The homepage of calculated.gg</span>
-      <img src="~/assets/img/replay-viewer/rv6.png" />
+      <img
+        alt="Preview of my play style"
+        src="~/assets/img/replay-viewer/rv6.png"
+      />
       <span>My play style</span>
-      <img src="~/assets/img/replay-viewer/rv7.png" />
+      <img
+        alt="Preview of my player stats"
+        src="~/assets/img/replay-viewer/rv7.png"
+      />
       <span
         >Just one of the many tabs of information about a single replay of
         mine</span
@@ -106,7 +118,10 @@
         prototype displaying some crudely-designed cars, an object that
         represented the ball, and a basic field and set of goals.
       </p>
-      <img src="~/assets/img/replay-viewer/rv9.gif" />
+      <img
+        alt="A very early version of the replay viewer"
+        src="~/assets/img/replay-viewer/rv9.gif"
+      />
       <span>A very early version of the replay viewer</span>
       <p>
         Since the site was early in development at this time, we spent more of
@@ -128,7 +143,10 @@
         the case for us, since we parsed replay data from the game into JSON and
         then had to animate it manually ourselves.
       </p>
-      <img src="~/assets/img/replay-viewer/rv8.png" />
+      <img
+        alt="Example of keyframes that are interpolated"
+        src="~/assets/img/replay-viewer/rv8.png"
+      />
       <span
         >Each of those little diamonds are keyframes and software like this
         (blender) interpolates it for you</span
@@ -190,10 +208,11 @@
       </p>
       <p>
         When playing the game, we can just set the delta of deltas, the "last
-        delta", to the current browser time with a call to <code>performance.now()</code>.
-        Each time we fire a frame update using the browser's built-in
-        <code>setInterval</code> function, the subscribers of a frame update call to the
-        clock's <code>getDelta</code> function. This returns the difference between the
+        delta", to the current browser time with a call to
+        <code>performance.now()</code>. Each time we fire a frame update using
+        the browser's built-in <code>setInterval</code> function, the
+        subscribers of a frame update call to the clock's
+        <code>getDelta</code> function. This returns the difference between the
         last delta and the current time, computes if we have elapsed any more
         frames, and sets the "last delta" to that current time.
       </p>
@@ -267,9 +286,15 @@
         NPM package below.
       </p>
 
-      <img src="~/assets/img/replay-viewer/rv1.png" />
+      <img
+        alt="Above-goal view of the replay viewer"
+        src="~/assets/img/replay-viewer/rv1.png"
+      />
       <span>Above-goal view of the replay viewer</span>
-      <img src="~/assets/img/replay-viewer/rv3.jpg" />
+      <img
+        alt="Orthographic view of the replay viewer"
+        src="~/assets/img/replay-viewer/rv3.jpg"
+      />
       <span>Orthographic view of the replay viewer</span>
 
       <a href="https://github.com/SaltieRL/WebReplayViewer">
