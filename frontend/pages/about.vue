@@ -161,7 +161,7 @@ export default {
       const bday = new Date('1998-05-21').getTime()
       const today = new Date().getTime()
       const age = Math.floor((today - bday) / 1000 / 60 / 60 / 24 / 365.25)
-      if (age === 18 || (age >= 80 && age <= 89)) {
+      if (age === 18 || age.toString().startsWith('8')) {
         return 'an ' + age
       } else {
         return 'a ' + age
