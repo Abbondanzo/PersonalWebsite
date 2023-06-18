@@ -27,15 +27,15 @@
         <div class="info-block block-2">
           <h2>A little bit about me...</h2>
           <p>
-            Hi! I’m Peter Abbondanzo, {{ getAge() }}-year-old UI/UX developer of
-            web and mobile applications. I'm an alumni of
+            Hi! I'm Peter Abbondanzo, {{ getAge() }}-year-old software developer
+            of web and mobile applications. I'm an alumni of
             <a
               href="http://www.northeastern.edu/"
               class="under"
               title="Northeastern"
               >Northeastern University</a
             >
-            up in Boston, Massachusetts. I’ve got a passion for building weird
+            up in Boston, Massachusetts. I've got a passion for building weird
             things and drinking lots of coffee. I also work for this fantastic
             company called
             <a class="under" href="https://hubspot.com/" title="HubSpot"
@@ -152,7 +152,7 @@ export default {
         hid: 'description',
         name: 'description',
         content:
-          "Experienced full-stack developer with a passion for creating, innovating, and coffee. Well versed in Adobe's Creative Suite",
+          'Experienced full-stack developer with a passion for creating, innovating, and coffee',
       },
     ],
   },
