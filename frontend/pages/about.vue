@@ -97,6 +97,8 @@ export default {
           skills: [
             'JavaScript/TypeScript',
             'Java/Kotlin',
+            'Swift/Objective-C',
+            'Dart',
             'Python',
             'HTML',
             'CSS (Sass/SCSS & Less)',
@@ -107,6 +109,7 @@ export default {
             'C/C++',
             'C#',
             'English',
+            '(In Progress) French',
           ],
         },
         {
@@ -114,8 +117,8 @@ export default {
           skills: [
             'React',
             'React Native',
-            'Angular',
             'Vue',
+            'Flutter',
             'jQuery',
             'Express',
             'ThreeJS',
@@ -130,6 +133,7 @@ export default {
             'Bootstrap',
             'Squarespace (Plugins)',
             'Android Studio',
+            'Xcode',
             'MSCP Certified',
             'Linux (Ubuntu, Fedora)',
             'Azure',
