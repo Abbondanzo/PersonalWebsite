@@ -1,5 +1,11 @@
 <template>
   <div class="content">
+    <Title>Projects</Title>
+    <Meta
+      name="description"
+      content="Recent projects, both personal and for work. You can only know what's here if you take a look."
+    />
+
     <section>
       <div class="left">
         <div class="project-list valign">
@@ -46,11 +52,20 @@
 </template>
 
 <script>
+import magicMover from '~/assets/img/magic-mover.jpg'
+import replayViewer from '~/assets/img/replay-viewer.jpg'
+import flipster from '~/assets/img/flipster.jpg'
+import bvc from '~/assets/img/bvc.jpg'
+import rogue from '~/assets/img/rogue.jpg'
+import feedshare from '~/assets/img/feedshare.jpg'
+import sth from '~/assets/img/sth.jpg'
+import myneu from '~/assets/img/myneu.jpg'
+
 export default {
   name: 'Projects',
   data() {
     return {
-      img: require('~/assets/img/magic-mover.jpg'),
+      img: magicMover,
       activeProject: 0,
       windowHeight: 0,
       preview: '',
@@ -59,32 +74,21 @@ export default {
         {
           title: 'Magic Mover',
           source: 'magic-mover',
-          image: 'magic-mover.jpg',
+          image: magicMover,
         },
         {
           title: 'Replay Viewer',
           source: 'replay-viewer',
-          image: 'replay-viewer.jpg',
+          image: replayViewer,
         },
-        { title: 'Flipster', source: 'flipster', image: 'flipster.jpg' },
-        { title: 'Bonne Vie Cafe', source: 'bvc', image: 'bvc.jpg' },
-        { title: 'Rogue', source: 'rogue', image: 'rogue.jpg' },
-        { title: 'FeedShare', source: 'feedshare', image: 'feedshare.jpg' },
-        { title: 'Sthacks', source: 'sthacks', image: 'sth.jpg' },
-        { title: 'Modern MyNEU', source: 'modern-myneu', image: 'myneu.jpg' },
+        { title: 'Flipster', source: 'flipster', image: flipster },
+        { title: 'Bonne Vie Cafe', source: 'bvc', image: bvc },
+        { title: 'Rogue', source: 'rogue', image: rogue },
+        { title: 'FeedShare', source: 'feedshare', image: feedshare },
+        { title: 'Sthacks', source: 'sthacks', image: sth },
+        { title: 'Modern MyNEU', source: 'modern-myneu', image: myneu },
       ],
     }
-  },
-  head: {
-    title: 'Projects',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "Recent projects, both personal and for work. You can only know what's here if you take a look.",
-      },
-    ],
   },
   mounted() {
     this.$nextTick(function () {
@@ -95,9 +99,8 @@ export default {
   methods: {
     async projectCheck(arg) {
       this.activeProject = arg
-      const newImg = await import('~/assets/img/' + this.projects[arg].image)
       this.$nextTick(function () {
-        this.img = newImg.default
+        this.img = this.projects[arg].image
       })
     },
     isActive(arg) {

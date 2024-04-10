@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Flipster</Title>
+    <Meta
+      name="description"
+      content="Mock-up designs for an E-Commerce/user trading website. Cross-breed of Craigslist and eBay."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Flipster</h1>
@@ -66,17 +72,6 @@
 <script>
 export default {
   name: 'Flipster',
-  head: {
-    title: 'Flipster',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Mock-up designs for an E-Commerce/user trading website. Cross-breed of Craigslist and eBay.',
-      },
-    ],
-  },
 }
 </script>
 
@@ -84,7 +79,7 @@ export default {
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-      url('~@/assets/img/flipster.jpg') no-repeat;
+      url('~/assets/img/flipster.jpg') no-repeat;
   }
   .p-text {
     .block-1 {

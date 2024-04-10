@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <div class="container">
-      <NuxtLink class="underline" :to="{ path: '/' }">
+      <NuxtLink class="underline" to="/">
         <img
           alt="Logo"
           class="nav-logo"
@@ -16,19 +16,13 @@
       <div class="nav-links">
         <ul>
           <li>
-            <NuxtLink class="underline" :to="{ path: '/about' }">
-              About
-            </NuxtLink>
+            <NuxtLink class="underline" to="/about">About</NuxtLink>
           </li>
           <li>
-            <NuxtLink class="underline" :to="{ path: '/projects' }">
-              Projects
-            </NuxtLink>
+            <NuxtLink class="underline" to="/projects">Projects</NuxtLink>
           </li>
           <li>
-            <NuxtLink class="underline" :to="{ path: '/contact' }">
-              Contact
-            </NuxtLink>
+            <NuxtLink class="underline" to="/contact">Contact</NuxtLink>
           </li>
         </ul>
       </div>
@@ -41,23 +35,23 @@
             @click="showMenu"
           />
           <ul :class="{ active: show }">
-            <li v-if="mobile">
-              <NuxtLink class="underline" :to="{ path: '/' }">
+            <li>
+              <NuxtLink class="underline" to="/">
                 <span @click="showMenu">Home</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink class="underline" :to="{ path: '/about' }">
+              <NuxtLink class="underline" to="/about">
                 <span @click="showMenu">About</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink class="underline" :to="{ path: '/projects' }">
+              <NuxtLink class="underline" to="/projects">
                 <span @click="showMenu">Projects</span>
               </NuxtLink>
             </li>
             <li>
-              <NuxtLink class="underline" :to="{ path: '/contact' }">
+              <NuxtLink class="underline" to="/contact">
                 <span @click="showMenu">Contact</span>
               </NuxtLink>
             </li>
@@ -79,10 +73,9 @@ export default {
   data() {
     return {
       show: false,
-      showNavLogo: false,
+      showNavLogo: true,
       lightBackground: false,
       homeScreen: false,
-      mobile: false,
     }
   },
   watch: {
@@ -93,18 +86,12 @@ export default {
   },
   beforeMount() {
     window.addEventListener('resize', this.updateLogo)
-    window.addEventListener('resize', this.mobileCheck)
   },
   mounted() {
     this.updateLogo()
     this.isHome()
-    this.mobileCheck()
   },
   methods: {
-    mobileCheck() {
-      const width = document.body.offsetWidth
-      this.mobile = width <= 960
-    },
     showMenu() {
       this.show = !this.show
     },
@@ -112,9 +99,6 @@ export default {
       if (this.show) {
         this.show = !this.show
       }
-    },
-    colorBackground() {
-      this.lightBackground = !this.lightBackground
     },
     onNavLogoLoad() {
       this.showNavLogo = true
@@ -145,7 +129,7 @@ export default {
   a {
     color: #fff;
     cursor: pointer;
-    &.nuxt-link-active {
+    &.router-link-active {
       color: $primary;
     }
   }
@@ -230,10 +214,10 @@ export default {
       }
     }
     a {
-      &.nuxt-link-active {
+      &.router-link-active {
         color: inherit !important;
       }
-      &.nuxt-link-exact-active {
+      &.router-link-exact-active {
         color: #222 !important;
       }
       &:hover {
@@ -257,9 +241,6 @@ export default {
     }
     .mobile-links {
       display: block;
-    }
-    .logo-black {
-      color: #000;
     }
   }
 }

@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Sthacks</Title>
+    <Meta
+      name="description"
+      content="Unique in-browser terminal designed to display pre-defined information only to tech-savvy users."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Sthacks</h1>
@@ -29,29 +35,18 @@
 </template>
 
 <script>
+import s1 from '~/assets/img/sthacks/s1.gif'
+import s2 from '~/assets/img/sthacks/s2.gif'
+import s3 from '~/assets/img/sthacks/s3.gif'
+import s4 from '~/assets/img/sthacks/s4.gif'
+import s5 from '~/assets/img/sthacks/s5.gif'
+
 export default {
   name: 'Sthacks',
   data() {
     return {
-      imageArray: [
-        require('@/assets/img/sthacks/s5.gif'),
-        require('@/assets/img/sthacks/s2.gif'),
-        require('@/assets/img/sthacks/s3.gif'),
-        require('@/assets/img/sthacks/s4.gif'),
-        require('@/assets/img/sthacks/s1.gif'),
-      ],
+      imageArray: [s5, s2, s3, s4, s1],
     }
-  },
-  head: {
-    title: 'Sthacks',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Unique in-browser terminal designed to display pre-defined information only to tech-savvy users.',
-      },
-    ],
   },
 }
 </script>
@@ -60,7 +55,7 @@ export default {
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-      url('~@/assets/img/sth.jpg') no-repeat;
+      url('~/assets/img/sth.jpg') no-repeat;
   }
   .p-text {
     .block-1 {

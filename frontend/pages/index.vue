@@ -1,11 +1,17 @@
 <template>
   <div class="content">
+    <Title>Home</Title>
+    <Meta
+      name="description"
+      content="I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made."
+    />
+
     <div class="valign">
       <div class="container">
         <div class="hello-text">
           <h1>Peter Abbondanzo</h1>
           <h2>Web &amp; Mobile Developer | Software Engineer | Pilot</h2>
-          <NuxtLink :to="{ path: 'about' }">
+          <NuxtLink to="/about">
             <button class="btn btn-white">About Me</button>
           </NuxtLink>
         </div>
@@ -14,24 +20,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+interface HelloObject {
+  hello: boolean
+}
+
 export default {
   name: 'Home',
-  head: {
-    title: 'Home',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
-      },
-    ],
-  },
   mounted() {
     // Professional state management
-    if (!window.hello) {
-      window.hello = true
+    const w = window as any as HelloObject
+    if (!w.hello) {
+      w.hello = true
       // eslint-disable-next-line no-console
       console.log(
         "Thanks for visiting! I didn't put any easter eggs in here but I'll add one if you file an issue on my GH repository"

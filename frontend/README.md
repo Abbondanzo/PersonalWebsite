@@ -20,13 +20,7 @@ $ npm run generate
 $ npm run start
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-### Lints and fixes files
-
-```
-npm run lint
-```
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxt.com/docs).
 
 [You can view the currently live here](http://abbondanzo.com)
 

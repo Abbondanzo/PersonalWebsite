@@ -4,11 +4,11 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header" style="padding: 0">
-            <slot name="header">Default Header</slot>
+            <slot name="header" />
           </div>
 
           <div class="modal-body">
-            <slot name="body">Default body</slot>
+            <slot name="body" />
           </div>
 
           <div class="modal-footer">
@@ -24,7 +24,16 @@
   </transition>
 </template>
 
-<script>
+<script setup lang="ts">
+defineSlots<{
+  header(): any
+  body(): any
+  footer(): any
+}>()
+defineEmits<{ close: [] }>()
+</script>
+
+<script lang="ts">
 export default {
   name: 'Modal',
 }

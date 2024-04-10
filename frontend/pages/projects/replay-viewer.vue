@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Replay Viewer</Title>
+    <Meta
+      name="description"
+      content="A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Replay Viewer</h1>
@@ -308,29 +314,18 @@
 </template>
 
 <script>
+import rv10 from '~/assets/img/replay-viewer/rv10.png'
+import rv11 from '~/assets/img/replay-viewer/rv11.png'
+import rv12 from '~/assets/img/replay-viewer/rv12.png'
+import rv13 from '~/assets/img/replay-viewer/rv13.png'
+import rv14 from '~/assets/img/replay-viewer/rv14.png'
+
 export default {
   name: 'ReplayViewer',
   data() {
     return {
-      imageArray: [
-        require('~/assets/img/replay-viewer/rv10.png'),
-        require('~/assets/img/replay-viewer/rv11.png'),
-        require('~/assets/img/replay-viewer/rv12.png'),
-        require('~/assets/img/replay-viewer/rv13.png'),
-        require('~/assets/img/replay-viewer/rv14.png'),
-      ],
+      imageArray: [rv10, rv11, rv12, rv13, rv14],
     }
-  },
-  head: {
-    title: 'Replay Viewer',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS.',
-      },
-    ],
   },
 }
 </script>
@@ -339,7 +334,7 @@ export default {
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-      url('~@/assets/img/replay-viewer/rv4.jpg') no-repeat;
+      url('~/assets/img/replay-viewer/rv4.jpg') no-repeat;
   }
 }
 </style>

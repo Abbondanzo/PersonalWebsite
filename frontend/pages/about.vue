@@ -1,5 +1,11 @@
 <template>
   <div class="content">
+    <Title>About</Title>
+    <Meta
+      name="description"
+      content="Experienced full-stack developer with a passion for creating, innovating, and coffee."
+    />
+
     <section class="about-info">
       <div class="right backgrounding">
         <div class="background-2"></div>
@@ -13,14 +19,12 @@
         </div>
         <div class="experience block-1">
           <h2>Experience</h2>
-          <transition appear @fter-appear="afterEnter">
-            <ul>
-              <li v-for="(skill, index) in skills" :key="index" :index="index">
-                <h3>{{ skill.name }}</h3>
-                <h4>{{ skill.skills.join(', ') }}</h4>
-              </li>
-            </ul>
-          </transition>
+          <ul>
+            <li v-for="(skill, index) in skills" :key="index" :index="index">
+              <h3>{{ skill.name }}</h3>
+              <h4>{{ skill.skills.join(', ') }}</h4>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="right">
@@ -63,7 +67,7 @@
             <a href="https://github.com/NUVR/Magic-Mover">
               small VR rehabilitation game </a
             >. You can check out some of my older projects
-            <NuxtLink class="under" :to="{ path: '/projects' }">here</NuxtLink>.
+            <NuxtLink class="under" to="/projects">here</NuxtLink>.
           </p>
           <p>
             I love everything related to web development. But I also love the
@@ -76,7 +80,7 @@
         <div class="valign">
           <div class="contact-cta">
             <h3>Send a message</h3>
-            <NuxtLink :to="{ path: '/contact' }">
+            <NuxtLink to="/contact">
               <button class="btn">Contact Me</button>
             </NuxtLink>
           </div>
@@ -86,7 +90,7 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: 'About',
   data() {
@@ -146,22 +150,10 @@ export default {
           ],
         },
       ],
-      baseWidths: [{ width: 0 }, { width: 0 }, { width: 0 }],
     }
   },
-  head: {
-    title: 'About',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Experienced full-stack developer with a passion for creating, innovating, and coffee',
-      },
-    ],
-  },
   methods: {
-    getAge: () => {
+    getAge: function () {
       const bday = new Date('1998-05-21').getTime()
       const today = new Date().getTime()
       const age = Math.floor((today - bday) / 1000 / 60 / 60 / 24 / 365.25)
@@ -169,11 +161,6 @@ export default {
         return 'an ' + age
       } else {
         return 'a ' + age
-      }
-    },
-    afterEnter: () => {
-      for (let i = 0; i < this.baseWidths.length; i++) {
-        this.baseWidths[i].width = this.skills[i].pct
       }
     },
   },

@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Rogue</Title>
+    <Meta
+      name="description"
+      content="Simple one-page site for advertising Counter Strike: Global Offensive software."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Rogue</h1>
@@ -30,28 +36,17 @@
 </template>
 
 <script>
+import r1 from '~/assets/img/rogue/r1.png'
+import r2 from '~/assets/img/rogue/r2.png'
+import r3 from '~/assets/img/rogue/r3.png'
+import r4 from '~/assets/img/rogue/r4.png'
+
 export default {
   name: 'Rogue',
   data() {
     return {
-      imageArray: [
-        require('~/assets/img/rogue/r1.png'),
-        require('~/assets/img/rogue/r2.png'),
-        require('~/assets/img/rogue/r3.png'),
-        require('~/assets/img/rogue/r4.png'),
-      ],
+      imageArray: [r1, r2, r3, r4],
     }
-  },
-  head: {
-    title: 'Rogue',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Simple one-page site for advertising Counter Strike: Global Offensive software.',
-      },
-    ],
   },
 }
 </script>
@@ -62,7 +57,7 @@ export default {
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-      url('~@/assets/img/rogue.jpg') no-repeat;
+      url('~/assets/img/rogue.jpg') no-repeat;
   }
   .p-text {
     .block-1 {

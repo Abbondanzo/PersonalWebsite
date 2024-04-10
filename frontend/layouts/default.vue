@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <NavBar />
-    <transition name="slide" mode="out-in" :duration="500">
-      <Nuxt />
-    </transition>
+    <main>
+      <slot />
+    </main>
     <ProjectsFooter />
     <img alt="Background photo" class="underbg" src="~/assets/img/bg.jpg" />
   </div>
@@ -98,7 +98,7 @@ export default {
 
 <style lang="scss">
 body {
-  background: url('~@/assets/img/bg.jpg') top left no-repeat;
+  background: url('~/assets/img/bg.jpg') top left no-repeat;
   background-size: cover;
   background-attachment: fixed;
   overflow-y: scroll;

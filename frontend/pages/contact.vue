@@ -1,11 +1,17 @@
 <template>
   <div class="content">
+    <Title>Contact</Title>
+    <Meta
+      name="description"
+      content="Use this form to send me an email or follow any of my social profiles."
+    />
+
     <section id="contact" class="about-contact">
       <div class="left">
         <img
           alt="Portrait photo"
           class="portrait"
-          src="~@/assets/img/peter.png"
+          src="~/assets/img/peter.png"
         />
         <div class="text-block">
           <h2>Let's Chat!</h2>
@@ -32,97 +38,117 @@
       <div class="right">
         <div class="contact-form">
           <h2>Contact Me</h2>
-          <ValidationObserver v-slot="{ handleSubmit }">
-            <form method="POST" @submit.prevent="handleSubmit(submitForm)">
-              <h4>Name</h4>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="name"
-                rules="required|alpha_spaces"
-              >
-                <input
-                  v-model="name"
-                  type="text"
-                  class="input"
-                  :class="{ 'is-danger': errors.length }"
-                  required="required"
-                />
-                <span v-show="errors.length" class="help is-danger">
-                  {{ errors[0] }}
-                </span>
-              </ValidationProvider>
+          <Form method="POST" @submit="submitForm">
+            <h4>Name</h4>
+            <Field
+              name="name"
+              rules="required|alpha_spaces"
+              type="text"
+              class="input"
+              required="required"
+            />
+            <span class="help">
+              <ErrorMessage name="name" />
+            </span>
 
-              <h4>Email</h4>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="email"
-                rules="required|email"
-              >
-                <input
-                  v-model="email"
-                  type="email"
-                  class="input"
-                  :class="{ 'is-danger': errors.length }"
-                  required="required"
-                />
-                <span v-show="errors.length" class="help is-danger">
-                  {{ errors[0] }}
-                </span>
-              </ValidationProvider>
+            <h4>Email</h4>
+            <Field
+              name="email"
+              rules="required|email"
+              type="text"
+              class="input"
+              required="required"
+            />
+            <span class="help">
+              <ErrorMessage name="email" />
+            </span>
 
-              <h4>Message</h4>
-              <textarea
-                v-model="message"
-                type="text"
-                rows="4"
-                name="message"
-                required
-              />
-              <button
-                type="submit"
-                name="submit"
-                value="Send Message"
-                class="btn btn-white"
-              >
-                Send Message
-              </button>
-            </form>
-          </ValidationObserver>
+            <h4>Message</h4>
+            <Field
+              as="textarea"
+              name="message"
+              type="text"
+              rows="4"
+              class="input"
+              required="required"
+              rules="required"
+            />
+            <span class="help">
+              <ErrorMessage name="message" />
+            </span>
+
+            <button
+              type="submit"
+              name="submit"
+              value="Send Message"
+              class="btn btn-white"
+            >
+              Send Message
+            </button>
+          </Form>
         </div>
       </div>
     </section>
     <Modal v-if="showModal" @close="hideModal">
-      <h2 slot="header">
-        <span v-if="showSuccess">Success!</span>
-        <span v-else-if="showError">Uh-oh!</span>
-        <span v-else>Sending your information...</span>
-      </h2>
-      <p slot="body">
-        <span v-if="showSuccess"
-          >Your contact form has been submitted successfully.</span
-        >
-        <span v-else-if="showError">
-          There was an issue with your request. Please try again later or reach
-          out to me directly by
-          <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a>.
-        </span>
-        <span v-else>Hang tight while your contact form gets sent.</span>
-      </p>
+      <template v-slot:header>
+        <h2 class="modal-header">
+          <span v-if="showSuccess">Success!</span>
+          <span v-else-if="showFailure">Uh-oh!</span>
+          <span v-else>Sending your information...</span>
+        </h2>
+      </template>
+      <template v-slot:body>
+        <p>
+          <span v-if="showSuccess"
+            >Your contact form has been submitted successfully.</span
+          >
+          <span v-else-if="showFailure">
+            There was an issue with your request. Please try again later or
+            reach out to me directly by
+            <a class="under" href="mailto:peter@abbondanzo.com">clicking here</a
+            >.
+          </span>
+          <span v-else>Hang tight while your contact form gets sent.</span>
+        </p>
+      </template>
     </Modal>
   </div>
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import axios from 'axios'
+import { defineRule, Form, Field, ErrorMessage } from 'vee-validate'
+import { alpha_spaces, required, email } from '@vee-validate/rules'
 import Modal from '~/components/Modal'
+
+defineRule('required', (...args) => {
+  const result = required(...args)
+  if (result === true) {
+    return true
+  }
+  return 'This field cannot be left blank.'
+})
+defineRule('email', (...args) => {
+  const result = email(...args)
+  if (result === true) {
+    return true
+  }
+  return 'Please enter a valid email address.'
+})
+defineRule('alpha_spaces', (...args) => {
+  const result = alpha_spaces(...args)
+  if (result === true) {
+    return true
+  }
+  return 'Please use alpha [A-z] characters only.'
+})
 
 export default {
   name: 'Contact',
   components: {
     Modal,
-    ValidationObserver,
-    ValidationProvider,
+    Form,
+    Field,
+    ErrorMessage,
   },
   data() {
     return {
@@ -144,24 +170,10 @@ export default {
         },
       ],
       mobile: false,
-      name: '',
-      email: '',
-      message: '',
       showModal: false,
       showSuccess: false,
-      showError: false,
+      showFailure: false,
     }
-  },
-  head: {
-    title: 'Contact',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Use this form to send me an email or follow any of my social profiles.',
-      },
-    ],
   },
   mounted() {
     this.mobileCheck()
@@ -174,42 +186,34 @@ export default {
       const width = document.body.offsetWidth
       this.mobile = width <= 960
     },
-    submitForm() {
+    submitForm(values, { resetForm }) {
       const endpoint =
         process.env.NODE_ENV === 'production'
           ? 'mail/'
           : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
       this.showModal = true
-      axios
-        .post(endpoint, {
-          name: this.name,
-          email: this.email,
-          message: this.message,
-        })
+      $fetch(endpoint, {
+        method: 'POST',
+        body: values,
+      })
         .then((response) => {
           this.showSuccess = true
-          if (process.env.NODE_ENV === 'production') {
-            this.emptyForm()
-          } else {
+          resetForm()
+          if (process.env.NODE_ENV !== 'production') {
             // eslint-disable-next-line no-console
             console.log('Response: ', response)
           }
         })
         .catch((error) => {
-          this.showError = true
+          this.showFailure = true
           // eslint-disable-next-line no-console
           console.error('There was an error sending your message', error)
         })
     },
-    emptyForm() {
-      this.name = ''
-      this.email = ''
-      this.message = ''
-    },
     hideModal() {
       this.showModal = false
       this.showSuccess = false
-      this.showError = false
+      this.showFailure = false
     },
   },
 }
@@ -330,6 +334,9 @@ export default {
         }
       }
     }
+  }
+  .modal-header {
+    padding-bottom: 0.5em;
   }
   @media screen and (max-width: 1440px) {
     section {

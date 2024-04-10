@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>FeedShare</Title>
+    <Meta
+      name="description"
+      content="Complete product design and development project for a food sharing mobile application."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>FeedShare</h1>
@@ -53,17 +59,6 @@
 <script>
 export default {
   name: 'FeedShare',
-  head: {
-    title: 'FeedShare',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Complete product design and development project for a food sharing mobile application.',
-      },
-    ],
-  },
 }
 </script>
 
@@ -71,7 +66,7 @@ export default {
 .project {
   .p-heading {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-      url('~@/assets/img/feedshare.jpg') no-repeat;
+      url('~/assets/img/feedshare.jpg') no-repeat;
   }
   .p-text {
     .block-1 {
