@@ -35,7 +35,7 @@
             @click="showMenu"
           />
           <ul :class="{ active: show }">
-            <li v-if="mobile">
+            <li>
               <NuxtLink class="underline" to="/">
                 <span @click="showMenu">Home</span>
               </NuxtLink>
@@ -76,7 +76,6 @@ export default {
       showNavLogo: true,
       lightBackground: false,
       homeScreen: false,
-      mobile: false,
     }
   },
   watch: {
@@ -87,18 +86,12 @@ export default {
   },
   beforeMount() {
     window.addEventListener('resize', this.updateLogo)
-    window.addEventListener('resize', this.mobileCheck)
   },
   mounted() {
     this.updateLogo()
     this.isHome()
-    this.mobileCheck()
   },
   methods: {
-    mobileCheck() {
-      const width = document.body.offsetWidth
-      this.mobile = width <= 960
-    },
     showMenu() {
       this.show = !this.show
     },
@@ -106,9 +99,6 @@ export default {
       if (this.show) {
         this.show = !this.show
       }
-    },
-    colorBackground() {
-      this.lightBackground = !this.lightBackground
     },
     onNavLogoLoad() {
       this.showNavLogo = true
@@ -251,9 +241,6 @@ export default {
     }
     .mobile-links {
       display: block;
-    }
-    .logo-black {
-      color: #000;
     }
   }
 }
