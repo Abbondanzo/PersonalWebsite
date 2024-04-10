@@ -152,7 +152,7 @@ export default {
         },
       ],
       mobile: false,
-      showModal: true,
+      showModal: false,
       showSuccess: false,
       showFailure: false,
     }
