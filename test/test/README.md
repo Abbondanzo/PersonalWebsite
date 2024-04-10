@@ -1,75 +1,39 @@
-# Nuxt 3 Minimal Starter
+# Personal Website
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This site is built using [Vue](https://vuejs.org/). Once upon a time, many years ago, I started this project and I will continue to maintain it until the day JavaScript is outlawed. Hence, it's always in progress even when my last commit was 12+ months ago. There's not much else to add besides head on over to https://abbondanzo.com and check it out.
 
-## Setup
+## Env Information
 
-Make sure to install the dependencies:
+Inside this folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. Even if you have no IDs, you should still perform this test or Webpack will fail to build.
 
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Build Setup
 
 ```bash
-# npm
-npm run dev
+# install dependencies
+$ npm install
 
-# pnpm
-pnpm run dev
+# serve with hot reload at localhost:3000
+$ npm run dev
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
+# generate static project and launch server
+$ npm run generate
+$ npm run start
 ```
 
-## Production
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxt.com/docs).
 
-Build the application for production:
+### Lints and fixes files
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+```
+npm run lint
 ```
 
-Locally preview production build:
+[You can view the currently live here](http://abbondanzo.com)
 
-```bash
-# npm
-npm run preview
+## Version Releases
 
-# pnpm
-pnpm run preview
+You can check out older versions of the site, or view major updates on the releases tab of this repository or by clicking [here](https://github.com/Abbondanzo/PersonalWebsite/releases).
 
-# yarn
-yarn preview
+## Notes
 
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+You can follow my Twitter for some random updates as to my progress on the site [here](https://twitter.com/PAbbondanzo)
