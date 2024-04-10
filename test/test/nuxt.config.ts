@@ -14,6 +14,15 @@ const googleAnalyticsId = isProduction
 export default defineNuxtConfig({
   devtools: { enabled: !isProduction },
 
+  ssr: true,
+  nitro: {
+    static: true,
+  },
+
+  typescript: {
+    typeCheck: true,
+  },
+
   // Global page headers (https://nuxt.com/docs/api/nuxt-config#head)
   app: {
     head: {
