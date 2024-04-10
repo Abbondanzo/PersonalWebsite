@@ -120,9 +120,27 @@ import { defineRule, Form, Field, ErrorMessage } from 'vee-validate'
 import { alpha_spaces, required, email } from '@vee-validate/rules'
 import Modal from '~/components/Modal'
 
-defineRule('required', required)
-defineRule('email', email)
-defineRule('alpha_spaces', alpha_spaces)
+defineRule('required', (...args) => {
+  const result = required(...args)
+  if (result === true) {
+    return true
+  }
+  return 'This field cannot be left blank.'
+})
+defineRule('email', (...args) => {
+  const result = email(...args)
+  if (result === true) {
+    return true
+  }
+  return 'Please enter a valid email address.'
+})
+defineRule('alpha_spaces', (...args) => {
+  const result = alpha_spaces(...args)
+  if (result === true) {
+    return true
+  }
+  return 'Please use alpha [A-z] characters only.'
+})
 
 export default {
   name: 'Contact',
