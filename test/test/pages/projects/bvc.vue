@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Bonne Vie Café</Title>
+    <Meta
+      name="description"
+      content="Wireframing and mock-up designs for a mock bakery. Utilizes Zapla API for table reservations and more."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Bonne Vie Café</h1>
@@ -50,17 +56,6 @@
 <script>
 export default {
   name: 'Bonne',
-  head: {
-    title: 'Bonne Vie Café',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Wireframing and mock-up designs for a mock bakery. Utilizes Zapla API for table reservations and more.',
-      },
-    ],
-  },
 }
 </script>
 

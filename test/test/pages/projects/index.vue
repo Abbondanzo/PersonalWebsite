@@ -1,5 +1,11 @@
 <template>
   <div class="content">
+    <Title>Projects</Title>
+    <Meta
+      name="description"
+      content="Recent projects, both personal and for work. You can only know what's here if you take a look."
+    />
+
     <section>
       <div class="left">
         <div class="project-list valign">
@@ -83,17 +89,6 @@ export default {
         { title: 'Modern MyNEU', source: 'modern-myneu', image: myneu },
       ],
     }
-  },
-  head: {
-    title: 'Projects',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "Recent projects, both personal and for work. You can only know what's here if you take a look.",
-      },
-    ],
   },
   mounted() {
     this.$nextTick(function () {

@@ -1,19 +1,21 @@
 <template>
-  <div class="content">
-    <div class="valign">
-      <div class="container">
-        <div class="hello-text">
-          <div v-if="error.statusCode === 404">
-            <h1>404</h1>
-            <h2>That's not a page!</h2>
+  <div id="app">
+    <div class="content">
+      <div class="valign">
+        <div class="container">
+          <div class="hello-text">
+            <div v-if="error.statusCode === 404">
+              <h1>404</h1>
+              <h2>That's not a page!</h2>
+            </div>
+            <div v-else class="hello-text">
+              <h1>Uh-oh</h1>
+              <h2>There was an error loading this page...</h2>
+            </div>
+            <NuxtLink to="/">
+              <button class="btn btn-white">Go Home</button>
+            </NuxtLink>
           </div>
-          <div v-else class="hello-text">
-            <h1>Uh-oh</h1>
-            <h2>There was an error loading this page...</h2>
-          </div>
-          <router-link :to="{ path: '/' }">
-            <button class="btn btn-white">Go Home</button>
-          </router-link>
         </div>
       </div>
     </div>
@@ -23,22 +25,16 @@
 <script>
 export default {
   name: 'Error',
-  layout: 'error',
   props: {
     error: {
       type: Object,
       default() {},
     },
   },
-  head: {
-    title: '404',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: "This content doesn't exist!",
-      },
-    ],
+  beforeMount() {
+    useHead({
+      title: this.error.statusCode?.toString(),
+    })
   },
 }
 </script>

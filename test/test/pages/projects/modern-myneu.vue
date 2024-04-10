@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Modern MyNEU</Title>
+    <Meta
+      name="description"
+      content="Full-fledged Chrome extension designed to overhaul the look and flow of Northeastern's student portal."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Modern MyNEU</h1>
@@ -61,17 +67,6 @@
 <script>
 export default {
   name: 'ModernMyNEU',
-  head: {
-    title: 'Modern MyNEU',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          "Full-fledged Chrome extension designed to overhaul the look and flow of Northeastern's student portal.",
-      },
-    ],
-  },
 }
 </script>
 

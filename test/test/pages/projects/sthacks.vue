@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Sthacks</Title>
+    <Meta
+      name="description"
+      content="Unique in-browser terminal designed to display pre-defined information only to tech-savvy users."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Sthacks</h1>
@@ -41,17 +47,6 @@ export default {
     return {
       imageArray: [s5, s2, s3, s4, s1],
     }
-  },
-  head: {
-    title: 'Sthacks',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Unique in-browser terminal designed to display pre-defined information only to tech-savvy users.',
-      },
-    ],
   },
 }
 </script>

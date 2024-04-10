@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Magic Mover</Title>
+    <Meta
+      name="description"
+      content="Rehabilitation AR game and research using the Microsoft Hololens."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Magic Mover</h1>
@@ -127,17 +133,6 @@
 <script>
 export default {
   name: 'MagicMover',
-  head: {
-    title: 'Magic Mover',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Rehabilitation AR game and research using the Microsoft Hololens.',
-      },
-    ],
-  },
 }
 </script>
 

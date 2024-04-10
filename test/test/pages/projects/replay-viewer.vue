@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Replay Viewer</Title>
+    <Meta
+      name="description"
+      content="A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Replay Viewer</h1>
@@ -320,17 +326,6 @@ export default {
     return {
       imageArray: [rv10, rv11, rv12, rv13, rv14],
     }
-  },
-  head: {
-    title: 'Replay Viewer',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'A Rocket League replay viewer in the browser written entirely in JavaScript using Three.JS.',
-      },
-    ],
   },
 }
 </script>

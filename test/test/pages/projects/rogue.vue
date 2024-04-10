@@ -1,5 +1,11 @@
 <template>
   <div class="content project">
+    <Title>Rogue</Title>
+    <Meta
+      name="description"
+      content="Simple one-page site for advertising Counter Strike: Global Offensive software."
+    />
+
     <div class="p-heading">
       <div class="p-title">
         <h1>Rogue</h1>
@@ -41,17 +47,6 @@ export default {
     return {
       imageArray: [r1, r2, r3, r4],
     }
-  },
-  head: {
-    title: 'Rogue',
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content:
-          'Simple one-page site for advertising Counter Strike: Global Offensive software.',
-      },
-    ],
   },
 }
 </script>
