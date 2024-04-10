@@ -26,19 +26,9 @@ export default defineNuxtConfig({
   // Global page headers (https://nuxt.com/docs/api/nuxt-config#head)
   app: {
     head: {
-      // if no subcomponents specify a metaInfo.title, this title will be used
-      title: 'Home',
-      // all titles will be injected into this template
-      titleTemplate: '%s | Peter V. Abbondanzo',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
-        },
         {
           hid: 'keywords',
           name: 'keywords',
@@ -118,6 +108,10 @@ export default defineNuxtConfig({
       Disallow: '',
       Sitemap: `${BASE_URL}/sitemap.xml`,
     },
+  },
+
+  site: {
+    url: BASE_URL,
   },
 
   sitemap: {
