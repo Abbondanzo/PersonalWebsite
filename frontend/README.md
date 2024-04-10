@@ -22,12 +22,6 @@ $ npm run start
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxt.com/docs).
 
-### Lints and fixes files
-
-```
-npm run lint
-```
-
 [You can view the currently live here](http://abbondanzo.com)
 
 ## Version Releases
