@@ -40,12 +40,7 @@
               >Northeastern University</a
             >
             up in Boston, Massachusetts. I've got a passion for building weird
-            things and drinking lots of coffee. I also work for this fantastic
-            company called
-            <a class="under" href="https://hubspot.com/" title="HubSpot"
-              >HubSpot</a
-            >
-            over in Cambridge.
+            things and drinking lots of coffee.
           </p>
           <a href="/resume.pdf">
             <button title="View PDF resume" class="btn">Résumé</button>
