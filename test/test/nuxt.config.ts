@@ -10,6 +10,10 @@ const googleAnalyticsId = isProduction
   ? process.env.GOOGLE_UA_KEY
   : process.env.GOOGLE_UA_KEY_DEV
 
+if (!googleAnalyticsId) {
+  console.warn('Missing Google Tag')
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: !isProduction },
@@ -81,6 +85,8 @@ export default defineNuxtConfig({
   css: ['@/assets/sass/app.scss'],
 
   modules: [
+    // https://github.com/johannschopplich/nuxt-gtag
+    'nuxt-gtag',
     // https://vee-validate.logaretm.com/v4/integrations/nuxt/
     '@vee-validate/nuxt',
     // https://google-fonts.nuxtjs.org/
@@ -100,6 +106,10 @@ export default defineNuxtConfig({
         wght: [300, 400, 600],
       },
     },
+  },
+
+  gtag: {
+    tags: googleAnalyticsId ? [googleAnalyticsId] : [],
   },
 
   robots: {
