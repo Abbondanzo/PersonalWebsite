@@ -16,13 +16,13 @@
       <div class="nav-links">
         <ul>
           <li>
-            <NuxtLink class="underline" to="/about"> About </NuxtLink>
+            <NuxtLink class="underline" to="/about">About</NuxtLink>
           </li>
           <li>
-            <NuxtLink class="underline" to="/projects"> Projects </NuxtLink>
+            <NuxtLink class="underline" to="/projects">Projects</NuxtLink>
           </li>
           <li>
-            <NuxtLink class="underline" to="/contact"> Contact </NuxtLink>
+            <NuxtLink class="underline" to="/contact">Contact</NuxtLink>
           </li>
         </ul>
       </div>
@@ -139,7 +139,7 @@ export default {
   a {
     color: #fff;
     cursor: pointer;
-    &.nuxt-link-active {
+    &.router-link-active {
       color: $primary;
     }
   }
@@ -224,10 +224,10 @@ export default {
       }
     }
     a {
-      &.nuxt-link-active {
+      &.router-link-active {
         color: inherit !important;
       }
-      &.nuxt-link-exact-active {
+      &.router-link-exact-active {
         color: #222 !important;
       }
       &:hover {
