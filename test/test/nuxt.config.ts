@@ -12,7 +12,7 @@ const googleAnalyticsId = isProduction
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: !isProduction },
 
   // Global page headers (https://nuxt.com/docs/api/nuxt-config#head)
   app: {
@@ -86,6 +86,10 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     // https://google-fonts.nuxtjs.org/
     '@nuxtjs/google-fonts',
+    // https://github.com/nuxt-community/robots-module#readme
+    '@nuxtjs/robots',
+    // https://github.com/nuxt-community/sitemap-module#readme
+    '@nuxtjs/sitemap',
   ],
 
   googleFonts: {
@@ -96,6 +100,22 @@ export default defineNuxtConfig({
       Raleway: {
         wght: [300, 400, 600],
       },
+    },
+  },
+
+  robots: {
+    rules: {
+      UserAgent: '*',
+      Disallow: '',
+      Sitemap: `${BASE_URL}/sitemap.xml`,
+    },
+  },
+
+  sitemap: {
+    defaults: {
+      changefreq: 'monthly',
+      priority: 1,
+      lastmod: currentDate,
     },
   },
 

@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-app",
+  "name": "abbondanzo",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@nuxtjs/google-fonts": "3.2.0",
+    "@nuxtjs/robots": "3.0.0",
+    "@nuxtjs/sitemap": "^5.1.4",
     "@vee-validate/nuxt": "4.12.6",
     "@vee-validate/rules": "4.12.6",
     "nuxt": "3.11.2",

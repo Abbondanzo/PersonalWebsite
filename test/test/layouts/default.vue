@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <NavBar />
-    <slot />
+    <main>
+      <slot />
+    </main>
     <ProjectsFooter />
     <img alt="Background photo" class="underbg" src="~/assets/img/bg.jpg" />
   </div>
