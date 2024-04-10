@@ -265,29 +265,6 @@ iframe {
    \/_/   \/_/ /_/   \/_/\/_/   \/_/ \/_/   \/_____/   \/_/     \/_/   \/_/   \/_____/   \/_/ \/_/   \/_____/
 
 */
-.slide-leave-active {
-  .left {
-    transform: translateX(-130%);
-    transition-duration: $anim * 2;
-    transition-property: all;
-  }
-  .right {
-    transform: translateX(130%);
-    transition-duration: $anim * 2;
-    transition-property: all;
-  }
-  .hello-text {
-    animation: fade-out $anim * 2;
-  }
-  &.project {
-    animation: slide-to-bottom $anim * 2;
-  }
-}
-.slide-leave-to {
-  .hello-text {
-    opacity: 0;
-  }
-}
 @keyframes slide-from-left {
   0% {
     transform: translateX(-130%);
@@ -296,12 +273,28 @@ iframe {
     transform: translateX(0%);
   }
 }
+@keyframes slide-to-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-130%);
+  }
+}
 @keyframes slide-from-right {
   0% {
     transform: translateX(130%);
   }
   100% {
     transform: translateX(0%);
+  }
+}
+@keyframes slide-to-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(130%);
   }
 }
 @keyframes slide-from-bottom {
@@ -336,6 +329,26 @@ iframe {
     opacity: 0;
   }
 }
+.slide-leave-active {
+  transform-style: preserve-3d;
+  .left {
+    animation: slide-to-left $anim * 2;
+  }
+  .right {
+    animation: slide-to-right $anim * 2;
+  }
+  .hello-text {
+    animation: fade-out $anim * 2;
+  }
+  &.project {
+    animation: slide-to-bottom $anim * 2;
+  }
+}
+.slide-leave-to {
+  .hello-text {
+    opacity: 0;
+  }
+}
 .slide-enter-active {
   transform-style: preserve-3d;
   .left {
@@ -350,6 +363,14 @@ iframe {
   &.project {
     animation: slide-from-bottom $anim * 2;
   }
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: opacity $anim * 2 ease;
+}
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
 }
 html {
   animation: fade-in $anim * 4;
