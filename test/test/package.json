@@ -10,8 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@vee-validate/nuxt": "^4.12.6",
-    "@vee-validate/rules": "^4.12.6",
+    "@nuxtjs/google-fonts": "3.2.0",
+    "@vee-validate/nuxt": "4.12.6",
+    "@vee-validate/rules": "4.12.6",
     "nuxt": "3.11.2",
     "vue": "3.4.21",
     "vue-router": "4.3.0"

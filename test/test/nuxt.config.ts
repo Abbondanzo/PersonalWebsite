@@ -76,12 +76,28 @@ export default defineNuxtConfig({
       link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     },
 
-    pageTransition: { name: 'slide', mode: 'in-out' },
+    pageTransition: { name: 'slide', mode: 'out-in' },
   },
 
   css: ['@/assets/sass/app.scss'],
 
-  modules: ['@vee-validate/nuxt'],
+  modules: [
+    // https://vee-validate.logaretm.com/v4/integrations/nuxt/
+    '@vee-validate/nuxt',
+    // https://google-fonts.nuxtjs.org/
+    '@nuxtjs/google-fonts',
+  ],
+
+  googleFonts: {
+    families: {
+      Montserrat: {
+        wght: [400, 600, 700],
+      },
+      Raleway: {
+        wght: [300, 400, 600],
+      },
+    },
+  },
 
   vite: {
     css: {
