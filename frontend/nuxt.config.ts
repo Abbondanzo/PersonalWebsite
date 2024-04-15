@@ -18,9 +18,12 @@ if (!googleAnalyticsId) {
 export default defineNuxtConfig({
   devtools: { enabled: !isProduction },
 
-  ssr: true,
+  ssr: isProduction,
   nitro: {
-    static: true,
+    static: isProduction,
+    prerender: {
+      routes: ['/_ipx/f_webp/bg.webp'],
+    },
   },
 
   typescript: {
@@ -85,16 +88,12 @@ export default defineNuxtConfig({
   css: ['@/assets/sass/app.scss'],
 
   modules: [
-    // https://github.com/johannschopplich/nuxt-gtag
-    'nuxt-gtag',
-    // https://vee-validate.logaretm.com/v4/integrations/nuxt/
-    '@vee-validate/nuxt',
-    // https://google-fonts.nuxtjs.org/
-    '@nuxtjs/google-fonts',
-    // https://github.com/nuxt-community/robots-module#readme
-    '@nuxtjs/robots',
-    // https://github.com/nuxt-community/sitemap-module#readme
-    '@nuxtjs/sitemap',
+    'nuxt-gtag', // https://github.com/johannschopplich/nuxt-gtag
+    '@vee-validate/nuxt', // https://vee-validate.logaretm.com/v4/integrations/nuxt/
+    '@nuxtjs/google-fonts', // https://google-fonts.nuxtjs.org/
+    '@nuxtjs/robots', // https://github.com/nuxt-community/robots-module#readme
+    '@nuxtjs/sitemap', // https://github.com/nuxt-community/sitemap-module#readme
+    '@nuxt/image', // https://image.nuxt.com/usage/nuxt-img
   ],
 
   googleFonts: {
@@ -110,6 +109,12 @@ export default defineNuxtConfig({
 
   gtag: {
     tags: googleAnalyticsId ? [googleAnalyticsId] : [],
+  },
+
+  image: {
+    dir: 'assets/img',
+    format: ['webp'],
+    inject: true,
   },
 
   robots: {
