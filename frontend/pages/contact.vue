@@ -23,17 +23,19 @@
             email is too antiquated, I've linked several social media profiles
             below. Use whatever floats your boat.
           </p>
-          <a
-            v-for="(social, index) in socials"
-            :key="index"
-            :index="index"
-            :href="social.url"
-            target="_blank"
-          >
-            <button class="btn btn-square">
-              <i class="fa" :class="social.icon" aria-hidden="true"></i>
-            </button>
-          </a>
+          <div class="social-container">
+            <a
+              v-for="(social, index) in socials"
+              :key="index"
+              :index="index"
+              :href="social.url"
+              target="_blank"
+            >
+              <button class="btn btn-square">
+                <img :alt="social.name" :src="social.icon" aria-hidden="true" />
+              </button>
+            </a>
+          </div>
         </div>
       </div>
       <div class="right">
@@ -117,6 +119,9 @@
 </template>
 
 <script>
+import github from '~/assets/icons/github.svg'
+import linkedin from '~/assets/icons/linkedin.svg'
+import twitter from '~/assets/icons/twitter.svg'
 import { defineRule, Form, Field, ErrorMessage } from 'vee-validate'
 import { alpha_spaces, required, email } from '@vee-validate/rules'
 import Modal from '~/components/Modal'
@@ -157,17 +162,17 @@ export default {
         {
           name: 'Twitter',
           url: 'https://twitter.com/PAbbondanzo',
-          icon: 'fa-twitter',
+          icon: twitter,
         },
         {
           name: 'LinkedIn',
           url: 'https://www.linkedin.com/in/pabbondanzo',
-          icon: 'fa-linkedin',
+          icon: linkedin,
         },
         {
           name: 'Github',
           url: 'https://github.com/Abbondanzo',
-          icon: 'fa-github',
+          icon: github,
         },
       ],
       mobile: false,
@@ -226,6 +231,22 @@ export default {
 #app {
   .content {
     overflow-x: hidden;
+  }
+  .social-container {
+    display: flex;
+    .btn-square {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        filter: $primaryFilter;
+        width: 24px;
+        transition: filter $anim;
+      }
+      &:hover img {
+        filter: invert(1);
+      }
+    }
   }
   section {
     min-height: 100vh;
