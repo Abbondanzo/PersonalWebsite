@@ -27,13 +27,14 @@
         </ul>
       </div>
       <div id="mobile-links" class="mobile-links" :class="{ active: show }">
-        <div @keyup.esc="escapeMenu">
-          <i
-            class="fa fa-bars"
-            aria-hidden="true"
-            :class="{ 'logo-black': lightBackground }"
+        <div @keyup.esc="escapeMenu" tabindex="0">
+          <div
+            id="sidebar-toggle-label"
+            :class="{ 'logo-black': lightBackground && !show, active: show }"
             @click="showMenu"
-          />
+          >
+            <span></span>
+          </div>
           <ul :class="{ active: show }">
             <li>
               <NuxtLink class="underline" to="/">
@@ -125,7 +126,7 @@ export default {
   bottom: 0;
   pointer-events: none;
   width: 100%;
-  z-index: 999999;
+  z-index: 10;
   a {
     color: #fff;
     cursor: pointer;
@@ -135,8 +136,8 @@ export default {
   }
   .nav-logo-container {
     width: $container;
-    height: auto;
-    max-height: 100%;
+    max-width: 100%;
+    height: 100%;
     margin: 0 auto;
     position: absolute;
     overflow: hidden;
@@ -182,6 +183,48 @@ export default {
       }
     }
   }
+  #sidebar-toggle {
+    display: none;
+  }
+  #sidebar-toggle-label {
+    position: fixed;
+    z-index: 11;
+    top: 16px;
+    right: 20px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    span,
+    span::before,
+    span::after {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+      transition-duration: $anim;
+      top: 50%;
+    }
+    span::before {
+      content: '';
+      top: -8px;
+    }
+    span::after {
+      content: '';
+      top: 8px;
+    }
+    &.active span {
+      transform: rotate(45deg);
+      &::before {
+        top: 0;
+        transform: rotate(0deg);
+      }
+      &::after {
+        top: 0;
+        transform: rotate(90deg);
+      }
+    }
+  }
   .mobile-links {
     display: none;
     float: right;
@@ -206,7 +249,7 @@ export default {
       background: $primary;
       text-align: center;
       font-size: 28px;
-      z-index: 99999;
+      z-index: 10;
       list-style: none;
       li {
         &:first-child {
