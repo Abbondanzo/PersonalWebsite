@@ -33,6 +33,10 @@ export default defineNuxtConfig({
   // Global page headers (https://nuxt.com/docs/api/nuxt-config#head)
   app: {
     head: {
+      charset: 'utf-8',
+      htmlAttrs: {
+        lang: 'en',
+      },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
