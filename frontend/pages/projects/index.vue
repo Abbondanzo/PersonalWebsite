@@ -52,20 +52,11 @@
 </template>
 
 <script>
-import magicMover from '~/assets/img/magic-mover.jpg'
-import replayViewer from '~/assets/img/replay-viewer.jpg'
-import flipster from '~/assets/img/flipster.jpg'
-import bvc from '~/assets/img/bvc.jpg'
-import rogue from '~/assets/img/rogue.jpg'
-import feedshare from '~/assets/img/feedshare.jpg'
-import sth from '~/assets/img/sth.jpg'
-import myneu from '~/assets/img/myneu.jpg'
-
 export default {
   name: 'Projects',
   data() {
     return {
-      img: magicMover,
+      img: this.$img('/magic-mover.jpg', { format: 'jpg' }),
       activeProject: 0,
       windowHeight: 0,
       preview: '',
@@ -74,19 +65,43 @@ export default {
         {
           title: 'Magic Mover',
           source: 'magic-mover',
-          image: magicMover,
+          image: this.$img('/magic-mover.jpg', { format: 'jpg' }),
         },
         {
           title: 'Replay Viewer',
           source: 'replay-viewer',
-          image: replayViewer,
+          image: this.$img('/replay-viewer.jpg', { format: 'jpg' }),
         },
-        { title: 'Flipster', source: 'flipster', image: flipster },
-        { title: 'Bonne Vie Cafe', source: 'bvc', image: bvc },
-        { title: 'Rogue', source: 'rogue', image: rogue },
-        { title: 'FeedShare', source: 'feedshare', image: feedshare },
-        { title: 'Sthacks', source: 'sthacks', image: sth },
-        { title: 'Modern MyNEU', source: 'modern-myneu', image: myneu },
+        {
+          title: 'Flipster',
+          source: 'flipster',
+          image: this.$img('/flipster.jpg', { format: 'jpg' }),
+        },
+        {
+          title: 'Bonne Vie Cafe',
+          source: 'bvc',
+          image: this.$img('/bvc.jpg', { format: 'jpg' }),
+        },
+        {
+          title: 'Rogue',
+          source: 'rogue',
+          image: this.$img('/rogue.jpg', { format: 'jpg' }),
+        },
+        {
+          title: 'FeedShare',
+          source: 'feedshare',
+          image: this.$img('/feedshare.jpg', { format: 'jpg' }),
+        },
+        {
+          title: 'Sthacks',
+          source: 'sthacks',
+          image: this.$img('/sth.jpg', { format: 'jpg' }),
+        },
+        {
+          title: 'Modern MyNEU',
+          source: 'modern-myneu',
+          image: this.$img('/myneu.jpg', { format: 'jpg' }),
+        },
       ],
     }
   },

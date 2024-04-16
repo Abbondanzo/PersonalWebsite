@@ -54,14 +54,16 @@
         user to move around the real space with increasing the complexity and
         magnitude of movements.
       </p>
-      <img
+      <NuxtImg
         alt="Taha Vasowalla trying out the Hololens"
-        src="~/assets/img/magic-mover/mm1.jpg"
+        src="/magic-mover/mm1.jpg"
+        format="webp"
       />
       <span>Taha Vasowalla trying out the Hololens</span>
-      <img
+      <NuxtImg
         alt="Taha and I setting up the Hololens for the first time"
-        src="~/assets/img/magic-mover/mm2.jpg"
+        src="/magic-mover/mm2.jpg"
+        format="webp"
       />
       <span>Taha and I setting up the Hololens for the first time</span>
       <p>

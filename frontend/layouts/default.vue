@@ -5,6 +5,12 @@
       <slot />
     </main>
     <ProjectsFooter />
+    <NuxtImg
+      alt="Background photo"
+      class="underbg"
+      format="webp"
+      src="/bg.webp"
+    />
   </div>
 </template>
 
@@ -97,7 +103,7 @@ export default {
       const backgroundImage = this.$img('/bg.webp', {
         format: 'webp',
       })
-      body.style.backgroundImage = backgroundImage
+      body.style.backgroundImage = `url('${backgroundImage}')`
     },
   },
 }

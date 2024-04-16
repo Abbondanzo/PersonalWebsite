@@ -8,10 +8,11 @@
 
     <section id="contact" class="about-contact">
       <div class="left">
-        <img
+        <NuxtImg
           alt="Portrait photo"
           class="portrait"
-          src="~/assets/img/peter.png"
+          src="/peter.png"
+          format="webp"
         />
         <div class="text-block">
           <h2>Let's Chat!</h2>

@@ -9,7 +9,7 @@
     <div class="p-heading">
       <div class="p-title">
         <h1>Bonne Vie Café</h1>
-        <h4>Simple cafe web-page mockup.</h4>
+        <h4>Streamlined cafe web-page mockup.</h4>
       </div>
     </div>
     <div id="text" class="p-text">

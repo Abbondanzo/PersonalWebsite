@@ -35,17 +35,17 @@
 </template>
 
 <script>
-import s1 from '~/assets/img/sthacks/s1.gif'
-import s2 from '~/assets/img/sthacks/s2.gif'
-import s3 from '~/assets/img/sthacks/s3.gif'
-import s4 from '~/assets/img/sthacks/s4.gif'
-import s5 from '~/assets/img/sthacks/s5.gif'
-
 export default {
   name: 'Sthacks',
   data() {
     return {
-      imageArray: [s5, s2, s3, s4, s1],
+      imageArray: [
+        this.$img('/sthacks/s1.gif', { format: 'gif' }),
+        this.$img('/sthacks/s2.gif', { format: 'gif' }),
+        this.$img('/sthacks/s3.gif', { format: 'gif' }),
+        this.$img('/sthacks/s4.gif', { format: 'gif' }),
+        this.$img('/sthacks/s5.gif', { format: 'gif' }),
+      ],
     }
   },
 }

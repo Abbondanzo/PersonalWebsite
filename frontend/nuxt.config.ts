@@ -115,6 +115,7 @@ export default defineNuxtConfig({
     dir: 'assets/img',
     format: ['webp'],
     inject: true,
+    provider: 'ipx',
   },
 
   robots: {

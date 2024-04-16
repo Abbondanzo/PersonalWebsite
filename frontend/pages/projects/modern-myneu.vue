@@ -25,12 +25,13 @@
         Northeastern to support the reconstruction of a new, user-friendly
         portal.
       </p>
-      <img alt="Old login page" src="~/assets/img/myneu/m1.png" />
+      <NuxtImg alt="Old login page" src="/myneu/m1.png" format="webp" />
       <span>Old login page</span>
-      <img
+      <NuxtImg
         alt="New login page that cycles 20 different backgrounds from all around
         campus"
-        src="~/assets/img/myneu/m1.jpg"
+        src="/myneu/m1.jpg"
+        format="jpg"
       />
       <span
         >New login page that cycles 20 different backgrounds from all around
@@ -44,9 +45,9 @@
         the portal has also been added. Enhanced drop-down menus add to the
         capabilities that the vanilla site is unable to provide.
       </p>
-      <img alt="Old Self-Service page" src="~/assets/img/myneu/m2.png" />
+      <NuxtImg alt="Old Self-Service page" src="/myneu/m2.png" format="webp" />
       <span>Old "Self-Service" page</span>
-      <img alt="New Self-Service page" src="~/assets/img/myneu/m3.png" />
+      <NuxtImg alt="New Self-Service page" src="/myneu/m3.png" format="webp" />
       <span>New "Self-Service" page</span>
       <p>
         Since the plugin is still in beta stages, new features are getting added
