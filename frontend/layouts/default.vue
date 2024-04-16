@@ -10,6 +10,7 @@
       class="underbg"
       format="webp"
       src="/bg.webp"
+      @load="backgroundHeight"
     />
   </div>
 </template>
