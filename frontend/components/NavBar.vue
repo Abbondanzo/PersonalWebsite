@@ -145,12 +145,11 @@ export default {
     &.home {
       position: fixed;
       pointer-events: none;
-      left: 10%;
-      top: 10%;
-      width: 80%;
+      width: 100%;
       opacity: 0.1;
       background-size: contain;
-      height: 80%;
+      height: 100%;
+      padding: 10%;
     }
   }
   .logo-black {
