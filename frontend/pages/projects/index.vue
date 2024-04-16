@@ -56,7 +56,7 @@ export default {
   name: 'Projects',
   data() {
     return {
-      img: this.$img('/magic-mover.jpg', { format: 'jpg' }),
+      img: this.$img('/magic-mover.jpg', { format: 'webp' }),
       activeProject: 0,
       windowHeight: 0,
       preview: '',
@@ -65,42 +65,42 @@ export default {
         {
           title: 'Magic Mover',
           source: 'magic-mover',
-          image: this.$img('/magic-mover.jpg', { format: 'jpg' }),
+          image: this.$img('/magic-mover.jpg', { format: 'webp' }),
         },
         {
           title: 'Replay Viewer',
           source: 'replay-viewer',
-          image: this.$img('/replay-viewer.jpg', { format: 'jpg' }),
+          image: this.$img('/replay-viewer.jpg', { format: 'webp' }),
         },
         {
           title: 'Flipster',
           source: 'flipster',
-          image: this.$img('/flipster.jpg', { format: 'jpg' }),
+          image: this.$img('/flipster.jpg', { format: 'webp' }),
         },
         {
           title: 'Bonne Vie Cafe',
           source: 'bvc',
-          image: this.$img('/bvc.jpg', { format: 'jpg' }),
+          image: this.$img('/bvc.jpg', { format: 'webp' }),
         },
         {
           title: 'Rogue',
           source: 'rogue',
-          image: this.$img('/rogue.jpg', { format: 'jpg' }),
+          image: this.$img('/rogue.jpg', { format: 'webp' }),
         },
         {
           title: 'FeedShare',
           source: 'feedshare',
-          image: this.$img('/feedshare.jpg', { format: 'jpg' }),
+          image: this.$img('/feedshare.jpg', { format: 'webp' }),
         },
         {
           title: 'Sthacks',
           source: 'sthacks',
-          image: this.$img('/sth.jpg', { format: 'jpg' }),
+          image: this.$img('/sth.jpg', { format: 'webp' }),
         },
         {
           title: 'Modern MyNEU',
           source: 'modern-myneu',
-          image: this.$img('/myneu.jpg', { format: 'jpg' }),
+          image: this.$img('/myneu.jpg', { format: 'webp' }),
         },
       ],
     }
