@@ -5,7 +5,12 @@
       <slot />
     </main>
     <ProjectsFooter />
-    <img alt="Background photo" class="underbg" src="~/assets/img/bg.jpg" />
+    <NuxtImg
+      alt="Background photo"
+      class="underbg"
+      format="webp"
+      src="/bg.webp"
+    />
   </div>
 </template>
 
@@ -26,6 +31,7 @@ export default {
   mounted() {
     setTimeout(() => this.backgroundHeight(), 0)
     this.parallax()
+    this.setBackgroundImage()
   },
   methods: {
     parallax() {
@@ -92,15 +98,25 @@ export default {
         img.style.height = '100%'
       }
     },
+    setBackgroundImage() {
+      const body = document.querySelector('body')
+      const backgroundImage = this.$img('/bg.webp', {
+        format: 'webp',
+      })
+      body.style.backgroundImage = `url('${backgroundImage}')`
+    },
   },
 }
 </script>
 
 <style lang="scss">
 body {
-  background: url('~/assets/img/bg.jpg') top left no-repeat;
+  background-position: top left;
+  background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  background-color: $primary;
+  transition: background-image 0.2s ease-in-out;
   overflow-y: scroll;
   .underbg {
     position: fixed;

@@ -19,9 +19,10 @@
         creating page-by-page mockups from the landing screen to the
         confirmation of a trade.
       </p>
-      <img
+      <NuxtImg
         alt="Screenshot from the PSD mockup of the landing page"
-        src="@/assets/img/flipster/f1.jpg"
+        src="/flipster/f1.jpg"
+        format="webp"
       />
       <span>Screenshot from the PSD mockup of the landing page</span>
       <p>
@@ -40,19 +41,22 @@
         in addition to the design to describe how the platform was to be built
         to accompany the design.
       </p>
-      <img
+      <NuxtImg
         alt="Wireframe of recent items section"
-        src="@/assets/img/flipster/f2.jpg"
+        src="/flipster/f2.jpg"
+        format="webp"
       />
-      <img
+      <NuxtImg
         alt="Rendering of the home page on a laptop"
         class="block-1"
-        src="@/assets/img/flipster/f3.jpg"
+        src="/flipster/f3.jpg"
+        format="webp"
       />
-      <img
+      <NuxtImg
         alt="Preview of the buying page"
         class="block-2"
-        src="@/assets/img/flipster/f4.jpg"
+        src="/flipster/f4.jpg"
+        format="webp"
       />
       <p>
         You can view the full suite of screenshots by following the button

@@ -9,7 +9,7 @@
     <div class="p-heading">
       <div class="p-title">
         <h1>Bonne Vie Café</h1>
-        <h4>Simple cafe web-page mockup.</h4>
+        <h4>Streamlined cafe web-page mockup.</h4>
       </div>
     </div>
     <div id="text" class="p-text">
@@ -18,9 +18,10 @@
         had very little requirements, other than to satisfy a number of
         sections. When he came to me, I knew just how to build the perfect site.
       </p>
-      <img
+      <NuxtImg
         alt="Stylesheet and index side-by-side"
-        src="~/assets/img/bonne/b1.jpg"
+        src="/bonne/b1.jpg"
+        format="webp"
       />
       <span>Stylesheet and index side-by-side</span>
       <p>
@@ -30,14 +31,16 @@
         Javascript to handle contact/review forms and table reservations.
         Everything else was made using HTML and CSS.
       </p>
-      <img
+      <NuxtImg
         alt="Preview of the download section"
-        src="~/assets/img/bonne/b2.jpg"
+        src="/bonne/b2.jpg"
+        format="webp"
       />
-      <img
+      <NuxtImg
         alt="Preview of the reservation section"
         style="padding: 40px 0"
-        src="~/assets/img/bonne/b3.jpg"
+        src="/bonne/b3.jpg"
+        format="webp"
       />
       <p>
         Users can book a reservation in just a few clicks. I utilized Zapla's

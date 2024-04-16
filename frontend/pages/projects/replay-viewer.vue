@@ -29,9 +29,10 @@
         >
         go head-to-head in a three-day extravaganza.
       </p>
-      <img
+      <NuxtImg
         alt="Photo of the Prudential Center event"
-        src="@/assets/img/replay-viewer/rv5.jpg"
+        src="/replay-viewer/rv5.jpg"
+        format="webp"
       />
       <span>Yes, they built an arena</span>
 
@@ -96,19 +97,22 @@
         playstyles and how you perform individual matches. But I digress; let
         the site speak for itself.
       </p>
-      <img
+      <NuxtImg
         alt="The homepage of calculated.gg"
-        src="~/assets/img/replay-viewer/rv2.png"
+        src="/replay-viewer/rv2.png"
+        format="webp"
       />
       <span>The homepage of calculated.gg</span>
-      <img
+      <NuxtImg
         alt="Preview of my play style"
-        src="~/assets/img/replay-viewer/rv6.png"
+        src="/replay-viewer/rv6.png"
+        format="webp"
       />
       <span>My play style</span>
-      <img
+      <NuxtImg
         alt="Preview of my player stats"
-        src="~/assets/img/replay-viewer/rv7.png"
+        src="/replay-viewer/rv7.png"
+        format="webp"
       />
       <span
         >Just one of the many tabs of information about a single replay of
@@ -124,9 +128,10 @@
         prototype displaying some crudely-designed cars, an object that
         represented the ball, and a basic field and set of goals.
       </p>
-      <img
+      <NuxtImg
         alt="A very early version of the replay viewer"
-        src="~/assets/img/replay-viewer/rv9.gif"
+        src="/replay-viewer/rv9.gif"
+        format="gif"
       />
       <span>A very early version of the replay viewer</span>
       <p>
@@ -149,9 +154,10 @@
         the case for us, since we parsed replay data from the game into JSON and
         then had to animate it manually ourselves.
       </p>
-      <img
+      <NuxtImg
         alt="Example of keyframes that are interpolated"
-        src="~/assets/img/replay-viewer/rv8.png"
+        src="/replay-viewer/rv8.png"
+        format="webp"
       />
       <span
         >Each of those little diamonds are keyframes and software like this
@@ -292,14 +298,16 @@
         NPM package below.
       </p>
 
-      <img
+      <NuxtImg
         alt="Above-goal view of the replay viewer"
-        src="~/assets/img/replay-viewer/rv1.png"
+        src="/replay-viewer/rv1.png"
+        format="webp"
       />
       <span>Above-goal view of the replay viewer</span>
-      <img
+      <NuxtImg
         alt="Orthographic view of the replay viewer"
-        src="~/assets/img/replay-viewer/rv3.jpg"
+        src="/replay-viewer/rv3.jpg"
+        format="webp"
       />
       <span>Orthographic view of the replay viewer</span>
 
@@ -314,17 +322,17 @@
 </template>
 
 <script>
-import rv10 from '~/assets/img/replay-viewer/rv10.png'
-import rv11 from '~/assets/img/replay-viewer/rv11.png'
-import rv12 from '~/assets/img/replay-viewer/rv12.png'
-import rv13 from '~/assets/img/replay-viewer/rv13.png'
-import rv14 from '~/assets/img/replay-viewer/rv14.png'
-
 export default {
   name: 'ReplayViewer',
   data() {
     return {
-      imageArray: [rv10, rv11, rv12, rv13, rv14],
+      imageArray: [
+        this.$img('/replay-viewer/rv10.png', { format: 'webp' }),
+        this.$img('/replay-viewer/rv11.png', { format: 'webp' }),
+        this.$img('/replay-viewer/rv12.png', { format: 'webp' }),
+        this.$img('/replay-viewer/rv13.png', { format: 'webp' }),
+        this.$img('/replay-viewer/rv14.png', { format: 'webp' }),
+      ],
     }
   },
 }

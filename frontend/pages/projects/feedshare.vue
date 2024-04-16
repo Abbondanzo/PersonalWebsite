@@ -19,10 +19,11 @@
         interface and implement said interface as an application built with
         React Native.
       </p>
-      <img
+      <NuxtImg
         alt="Detail view, home view, and new item view respectively. Taken directly
         from the app"
-        src="@/assets/img/feedshare/f1.png"
+        src="/feedshare/f1.png"
+        format="webp"
       />
       <span
         >Detail view, home view, and new item view respectively. Taken directly
@@ -36,9 +37,10 @@
         functional and features much of the design displayed here. Since the new
         version has not been released publically, these views only exist here.
       </p>
-      <img
+      <NuxtImg
         alt="Login page prototype on Android device"
-        src="@/assets/img/feedshare/f2.png"
+        src="/feedshare/f2.png"
+        format="webp"
       />
       <span>Login page prototype on Android device</span>
       <p>

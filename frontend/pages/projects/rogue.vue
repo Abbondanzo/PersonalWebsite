@@ -36,16 +36,16 @@
 </template>
 
 <script>
-import r1 from '~/assets/img/rogue/r1.png'
-import r2 from '~/assets/img/rogue/r2.png'
-import r3 from '~/assets/img/rogue/r3.png'
-import r4 from '~/assets/img/rogue/r4.png'
-
 export default {
   name: 'Rogue',
   data() {
     return {
-      imageArray: [r1, r2, r3, r4],
+      imageArray: [
+        this.$img('/rogue/r1.png', { format: 'webp' }),
+        this.$img('/rogue/r2.png', { format: 'webp' }),
+        this.$img('/rogue/r3.png', { format: 'webp' }),
+        this.$img('/rogue/r4.png', { format: 'webp' }),
+      ],
     }
   },
 }
