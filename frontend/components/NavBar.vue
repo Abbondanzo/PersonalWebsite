@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <div class="container">
-      <NuxtLink class="underline" to="/">
+      <NuxtLink class="nav-logo-container" to="/">
         <img
           alt="Logo"
           class="nav-logo"
@@ -133,19 +133,29 @@ export default {
       color: $primary;
     }
   }
+  .nav-logo-container {
+    width: $container;
+    height: auto;
+    max-height: 100%;
+    margin: 0 auto;
+    position: absolute;
+    overflow: hidden;
+  }
   .nav-logo {
     width: 80px;
     height: $navbarheight * 0.8;
     float: left;
     transition: all $anim * 4;
     pointer-events: all;
+    left: 0;
+    top: 0;
     &.hidden {
       display: none;
     }
     &.home {
-      position: fixed;
       pointer-events: none;
       width: 100%;
+      max-width: $container;
       opacity: 0.1;
       background-size: contain;
       height: 100%;
