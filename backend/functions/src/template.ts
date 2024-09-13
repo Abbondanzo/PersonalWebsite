@@ -1,26 +1,32 @@
 import * as express from 'express'
-import * as exphbs from 'express-handlebars'
-import * as functions from 'firebase-functions'
+import { engine } from 'express-handlebars'
+import { https } from 'firebase-functions'
+import { EmailData, getIp } from './emailData'
 
 const app = express()
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.engine('handlebars', engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.set('trust proxy', true)
 
-app.get('/', (req: functions.Request, res: functions.Response) => {
-  const data = {
+app.get('/', (req: https.Request, res: express.Response) => {
+  const data: EmailData = {
     name: req.body.name || 'NAME',
     email: req.body.name || 'EMAIL',
     msg: req.body.msg || 'Sample message from user',
-    ip: req.body.ip || req.headers['x-forwarded-for'],
-    userAgent: req.body.userAgent || req.get('User-Agent')
+    ip: getIp(req),
+    userAgent: req.body.userAgent || req.get('User-Agent') || 'Unknown'
   }
   console.log('Rendering template...', data)
-  res.render('template', data, (err: any, html: string) => {
-    console.log('Error', err)
-    console.log('HTML', html)
-    return
+  return res.render('template', data, (err, html) => {
+    if (err) {
+      console.error(err)
+      res.status(500).send('An error has occurred')
+    } else {
+      console.log('Rendering template')
+      res.status(200).send(html)
+    }
   })
 })
 
 // Export everything
-export default functions.https.onRequest(app)
+export default https.onRequest(app)

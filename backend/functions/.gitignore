@@ -6,8 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 lib/
 
-# Firebase config
+# Firebase
 .runtimeconfig.json
+firebase-debug.log
+ui-debug.log
 
 # Editor directories and files
 .idea
