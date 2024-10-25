@@ -27,7 +27,7 @@
       </p>
       <ImageSlider auto-scroll="true" :delay="2000" :images="imageArray" />
       <span>Vanilla build without Python running</span>
-      <a href="https://github.com/Sthacks/sthacksWebsite">
+      <a href="https://github.com/Abbondanzo/sthacksWebsite">
         <button class="btn">View Repo</button>
       </a>
     </div>
