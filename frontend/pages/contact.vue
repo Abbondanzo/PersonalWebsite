@@ -156,6 +156,12 @@ export default {
     Field,
     ErrorMessage,
   },
+  setup() {
+    const config = useRuntimeConfig()
+    return {
+      mailEndpoint: config.public.mailEndpoint,
+    }
+  },
   data() {
     return {
       socials: [
@@ -193,19 +199,15 @@ export default {
       this.mobile = width <= 960
     },
     submitForm(values, { resetForm }) {
-      const endpoint =
-        process.env.NODE_ENV === 'production'
-          ? 'mail/'
-          : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
       this.showModal = true
-      $fetch(endpoint, {
+      $fetch(this.mailEndpoint, {
         method: 'POST',
         body: values,
       })
         .then((response) => {
           this.showSuccess = true
           resetForm()
-          if (process.env.NODE_ENV !== 'production') {
+          if (import.meta.dev) {
             // eslint-disable-next-line no-console
             console.log('Response: ', response)
           }

@@ -1,0 +1,11 @@
+# Cloudflare Pages project for abbondanzo.com
+# Docs: https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+name = "abbondanzo"
+compatibility_date = "2026-09-07"
+pages_build_output_dir = ".output/public"
+
+# Secrets (set in Cloudflare dashboard → Settings → Environment variables,
+# or via `wrangler pages secret put <NAME> --project-name=abbondanzo`):
+#   EMAILER_API_KEY  – Postmark server token
+#   SENDER_EMAIL     – verified Postmark From address
+#   RECEIVER_EMAIL   – inbox that receives contact-form messages

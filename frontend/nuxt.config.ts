@@ -22,12 +22,29 @@ export default defineNuxtConfig({
   nitro: {
     static: isProduction,
     prerender: {
+      // Cloudflare Pages serves extensionless routes; avoid /about/index.html style paths.
+      autoSubfolderIndex: false,
       routes: ['/_ipx/f_webp/bg.webp'],
+    },
+  },
+
+  // Contact form posts here. Production/preview use the Pages Function at /mail.
+  // Override locally with NUXT_PUBLIC_MAIL_ENDPOINT if needed.
+  runtimeConfig: {
+    public: {
+      mailEndpoint: process.env.NUXT_PUBLIC_MAIL_ENDPOINT
+        || (isProduction
+          ? '/mail'
+          : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'),
     },
   },
 
   typescript: {
     typeCheck: true,
+    tsConfig: {
+      // Paths here are relative to .nuxt/tsconfig.json
+      exclude: ['../functions'],
+    },
   },
 
   // Global page headers (https://nuxt.com/docs/api/nuxt-config#head)

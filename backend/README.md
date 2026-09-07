@@ -1,6 +1,8 @@
-# Personal Website Backend
+# Personal Website Backend (legacy)
 
-It's not really a backend, just a handful of [Express](https://expressjs.com/) endpoints on [Firebase Functions](https://firebase.google.com/docs/functions/). That being said, here's all you need to know to get started.
+This folder contains the original [Firebase Functions](https://firebase.google.com/docs/functions/) contact API. **Production mail now ships as a Cloudflare Pages Function** in [`frontend/functions/mail.ts`](../frontend/functions/mail.ts). Keep this backend only if you still need the old Cloud Functions endpoints during migration.
+
+It's a handful of [Express](https://expressjs.com/) endpoints using [Postmark](https://postmarkapp.com/) for delivery.
 
 ## Deploying
 
@@ -38,25 +40,19 @@ Here's what they do
 
 ### `devmail`
 
-A quick-and-easy endpoint to hit that returns a 200 status code and friendly success message. To be used when testing a development build. The frontend is already equipped to hit a devmail endpoint, so specify your own if you deploy this function.
+A quick-and-easy endpoint to hit that returns a 200 status code and friendly success message. To be used when testing a development build. Local `nuxt dev` still points at this Cloud Function by default.
 
 ### `mail`
 
-Here's the bread and butter of sending contact information via email. In order for this to work, you must do the following:
+Sends contact-form email via Postmark. Prefer the Cloudflare Pages `/mail` Function for new deployments.
 
-Configure the email transport using the default SMTP transport and a gmail account.
-For Gmail, enable these:
-
-1.  https://www.google.com/settings/security/lesssecureapps
-2.  https://accounts.google.com/DisplayUnlockCaptcha. For other types of transports such as Sendgrid see https://nodemailer.com/transports/
-
-Set the following environment data by running the following:
+Before deploying, set secrets:
 
 ```bash
-firebase functions:config:set gmail.email="EMAIL USERNAME" gmail.password="EMAIL PASSWORD" contact.receiver="YOUR_EMAIL_ADDRESS@DOMAIN.COM"
+firebase functions:secrets:set EMAILER_API_KEY
+firebase functions:secrets:set SENDER_EMAIL
+firebase functions:secrets:set RECEIVER_EMAIL
 ```
-
-You can customize the handlebars template or even add your own data. All up to you!
 
 ### `template`
 

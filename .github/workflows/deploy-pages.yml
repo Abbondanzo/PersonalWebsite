@@ -1,0 +1,53 @@
+name: Deploy Cloudflare Pages
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: pages-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate static site
+        run: npm run generate
+        env:
+          GOOGLE_UA_KEY: ${{ secrets.GOOGLE_UA_KEY }}
+          GOOGLE_UA_KEY_DEV: ${{ secrets.GOOGLE_UA_KEY_DEV }}
+          NODE_ENV: production
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: frontend
+          # Wrangler reads pages_build_output_dir + functions/ from wrangler.toml
+          command: pages deploy
+          # Creates GitHub Deployments for production + PR preview URLs
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

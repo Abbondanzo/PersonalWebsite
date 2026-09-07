@@ -4,28 +4,31 @@ The current entirety of my personal website (in progress/under construction). De
 
 ## Deploy
 
-This project is broken up into two folders: [frontend](/frontend) and [backend](/backend). Both live and deploy very easily on Google's [Firebase](https://firebase.google.com/). The frontend is designed to live inside [Firebase Hosting](https://firebase.google.com/docs/hosting/) while the backend is designed to live inside [Firebase functions](https://firebase.google.com/docs/functions/).
+This project is broken up into two folders: [frontend](/frontend) and [backend](/backend).
 
-You should create a Firebase project before proceeding. That can be done [here](https://console.firebase.google.com/u/0/).
+- **Frontend** deploys to [Cloudflare Pages](https://developers.cloudflare.com/pages/) (static Nuxt output + a Pages Function for `/mail`).
+- **Backend** Firebase Functions remain available as a legacy contact API, but production mail now runs on Cloudflare.
 
-To install the Firebase CLI, run the following:
+### Frontend (Cloudflare Pages)
+
+1. Create a Cloudflare account and an API token with **Cloudflare Pages → Edit** permission.
+2. Add GitHub Actions secrets on this repo:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+   - Optional: `GOOGLE_UA_KEY` / `GOOGLE_UA_KEY_DEV`
+3. In the Cloudflare Pages project `abbondanzo`, set Function secrets for production (and preview if you want contact forms on PR URLs):
+   - `EMAILER_API_KEY` (Postmark server token)
+   - `SENDER_EMAIL`
+   - `RECEIVER_EMAIL`
+4. Push to `master` (production) or open a PR (preview deployment). The [Deploy Cloudflare Pages](/.github/workflows/deploy-pages.yml) workflow runs `nuxt generate` and `wrangler pages deploy`.
+
+Local deploy from `frontend/`:
 
 ```bash
-# You may need to run this with sudo
-npm install -g firebase-tools
+npm ci
+npm run deploy
 ```
 
-Next, you'll need to login to your account by running:
+### Backend (legacy Firebase Functions)
 
-```bash
-# This will open a browser window.
-firebase login
-```
-
-Since I have committed the proper configuration files, there is no need to initialize. Instead, you just need to deploy!
-
-```bash
-firebase deploy
-```
-
-And that's it!
+Firebase is no longer required for hosting. See [backend/README.md](/backend/README.md) if you still need the old Cloud Functions endpoints.
