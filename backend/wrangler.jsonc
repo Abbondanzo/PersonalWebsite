@@ -6,18 +6,22 @@
   "observability": {
     "enabled": true
   },
-  // Custom domain: Cloudflare creates the DNS record and certificate. This does
-  // not touch the apex record, which still points at Firebase Hosting until the
-  // site itself moves over.
+  // mail.abbondanzo.com already has Cloudflare DNS (A/AAAA proxied). Custom
+  // Domains refuse that ("externally managed DNS"), so attach via a route on
+  // the existing hostname instead of asking Workers to own the record.
+  // workers.dev stays enabled for smoke tests before the frontend cutover.
+  "workers_dev": true,
   "routes": [
     {
-      "pattern": "mail.abbondanzo.com",
-      "custom_domain": true
+      "pattern": "mail.abbondanzo.com/*",
+      "zone_name": "abbondanzo.com"
     }
   ],
   "vars": {
     "ALLOWED_ORIGINS": "https://abbondanzo.com,https://www.abbondanzo.com",
-    "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com",
+    // example.com is only for Turnstile *test* tokens during rollout smoke
+    // tests (dummy token hostname). Remove once real Turnstile secrets land.
+    "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com,example.com",
     "ENVIRONMENT": "production"
   }
   // Secrets (wrangler secret put <NAME>, mirrored in .dev.vars for local dev):
