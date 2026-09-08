@@ -63,9 +63,12 @@ pnpm check     # wrangler deploy --dry-run, no upload
 pnpm tail      # stream production logs
 ```
 
-The Worker is served from `mail.abbondanzo.com` as a
-[Custom Domain](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/),
-so Cloudflare manages its DNS record and certificate.
+The Worker is reached at `mail.abbondanzo.com/*` via a
+[Workers route](https://developers.cloudflare.com/workers/configuration/routing/routes/)
+on the existing Cloudflare-proxied hostname (Custom Domains refuse that DNS as
+"externally managed"). `workers_dev` stays on so
+`https://abbondanzo-mail.abbondanzo.workers.dev` is available for smoke tests
+before the frontend cutover.
 
 ## A note on escaping
 
