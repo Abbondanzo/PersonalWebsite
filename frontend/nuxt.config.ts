@@ -14,6 +14,18 @@ if (!googleAnalyticsId) {
   console.warn('Missing Google Tag')
 }
 
+// The contact form posts here. Absolute while the site is still on Firebase
+// Hosting and the mail Worker lives on its own subdomain; becomes '/mail' once
+// the site itself moves to Workers.
+const mailEndpoint =
+  process.env.NUXT_PUBLIC_MAIL_ENDPOINT || 'https://mail.abbondanzo.com/mail'
+
+const turnstileSiteKey = process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY
+
+if (!turnstileSiteKey) {
+  console.warn('Missing Turnstile site key')
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2026-09-07',
@@ -24,6 +36,15 @@ export default defineNuxtConfig({
     timeline: {
       enabled: true
     }
+  },
+
+  // This is a static build, so public runtime config is baked in at build time
+  // rather than read from the environment at runtime. Both values are public.
+  runtimeConfig: {
+    public: {
+      mailEndpoint,
+      turnstileSiteKey,
+    },
   },
 
   ssr: isProduction,

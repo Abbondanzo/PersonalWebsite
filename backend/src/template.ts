@@ -1,4 +1,36 @@
-<!doctype html>
+export interface EmailData {
+  name: string
+  email: string
+  msg: string
+  ip: string
+  userAgent: string
+}
+
+/**
+ * Escapes a value for interpolation into the email HTML.
+ *
+ * Every field in EmailData is attacker-controlled, coming straight off the
+ * public contact form, and the handlebars templates this replaced escaped by
+ * default. Template literals do not, so nothing may be interpolated below
+ * without passing through here first.
+ */
+export const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+
+/** Escapes, then preserves the line breaks the user typed. */
+const escapeMultiline = (value: string): string =>
+  escapeHtml(value).replace(/\r?\n/g, '<br />')
+
+/**
+ * Renders the contact form email. Port of the former views/layouts/main.handlebars
+ * and views/template.handlebars pair.
+ */
+export const renderEmailHtml = (data: EmailData): string => `<!doctype html>
 <html>
 
 <head>
@@ -333,7 +365,61 @@
 </head>
 
 <body class="">
-    {{{body}}}
+<table border="0" cellpadding="0" cellspacing="0" class="body">
+  <tr>
+    <td>&nbsp;</td>
+    <td class="container">
+      <div class="content">
+
+        <!-- START CENTERED WHITE CONTAINER -->
+        <span class="preheader">Received Contact Form from abbondanzo.com</span>
+        <table class="main">
+
+          <!-- START MAIN CONTENT AREA -->
+          <tr>
+            <td class="wrapper">
+              <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <p><b>Sent by:</b></p>
+                    <p>${escapeHtml(data.name)} &lt;<a href="mailto:${escapeHtml(data.email)}">${escapeHtml(data.email)}</a>&gt;</p>
+                    <p><b>Message Body:</b></p>
+                    <p>${escapeMultiline(data.msg)}</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- END MAIN CONTENT AREA -->
+        </table>
+
+        <!-- START FOOTER -->
+        <div class="footer">
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td class="content-block">
+                <span class="apple-link">Logged user information (for spam protection):</span>
+                <br> IP Address: ${escapeHtml(data.ip)} | Email: ${escapeHtml(data.email)} | User-Agent: ${escapeHtml(data.userAgent)}.
+              </td>
+            </tr>
+            <tr>
+              <td class="content-block powered-by">
+                Submitted by Contact Form at
+                <a href="https://abbondanzo.com/">abbondanzo.com</a>.
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- END FOOTER -->
+
+        <!-- END CENTERED WHITE CONTAINER -->
+      </div>
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
 </body>
 
 </html>
+`

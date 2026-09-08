@@ -4,9 +4,10 @@
   "packageManager": "pnpm@10.24.0",
   "scripts": {
     "dev": "pnpm --filter @abbondanzo/frontend dev",
+    "dev:mail": "pnpm --filter @abbondanzo/mail dev",
     "build": "pnpm --recursive build",
-    "generate": "pnpm --filter @abbondanzo/frontend generate",
-    "typecheck": "pnpm --recursive typecheck"
+    "typecheck": "pnpm --recursive typecheck",
+    "check": "pnpm --recursive check"
   },
   "engines": {
     "node": ">=22"

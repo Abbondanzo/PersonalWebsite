@@ -1,12 +1,6 @@
 {
   "hosting": {
     "public": ".output/public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "/mail",
-        "function": "mail"
-      }
-    ]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
 }

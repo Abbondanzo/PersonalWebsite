@@ -4,44 +4,39 @@ The current entirety of my personal website (in progress/under construction). De
 
 ## Layout
 
-The repository is a [pnpm workspace](pnpm-workspace.yaml). Dependencies for the site are installed from the repository root:
-
-```bash
-pnpm install      # install everything
-pnpm dev          # run the site at localhost:3000
-pnpm generate     # build the static site
-pnpm typecheck    # typecheck the workspace
-```
+A [pnpm workspace](pnpm-workspace.yaml) with two packages:
 
 | Package | Directory | What it is |
 | --- | --- | --- |
 | `@abbondanzo/frontend` | [frontend](/frontend) | The [Nuxt](https://nuxt.com/) site, generated as static files |
-| n/a | [backend](/backend) | [Firebase Functions](https://firebase.google.com/docs/functions/) behind the contact form |
+| `@abbondanzo/mail` | [backend](/backend) | A [Cloudflare Worker](https://developers.cloudflare.com/workers/) behind the contact form |
+
+```bash
+pnpm install      # install everything, from the root
+pnpm dev          # run the site at localhost:3000
+pnpm dev:mail     # run the mail Worker at localhost:8787
+pnpm typecheck    # typecheck both packages
+```
 
 ## Deploy
 
-Both halves live and deploy on Google's [Firebase](https://firebase.google.com/). The frontend is designed to live inside [Firebase Hosting](https://firebase.google.com/docs/hosting/) while the backend is designed to live inside [Firebase functions](https://firebase.google.com/docs/functions/).
-
-You should create a Firebase project before proceeding. That can be done [here](https://console.firebase.google.com/u/0/).
-
-To install the Firebase CLI, run the following:
+The mail Worker deploys to Cloudflare:
 
 ```bash
-# You may need to run this with sudo
-npm install -g firebase-tools
+pnpm --filter @abbondanzo/mail deploy
 ```
 
-Next, you'll need to login to your account by running:
+The site is still on [Firebase Hosting](https://firebase.google.com/docs/hosting/) while it is migrated across:
 
 ```bash
-# This will open a browser window.
-firebase login
+cd frontend && pnpm generate && pnpm deploy
 ```
 
-Since I have committed the proper configuration files, there is no need to initialize. Instead, you just need to deploy!
+Deploying the site needs the Firebase CLI (`npm install -g firebase-tools`, then `firebase login`); deploying the Worker needs [Wrangler](https://developers.cloudflare.com/workers/wrangler/), which is installed as a workspace dependency and will prompt you to log in on first use.
 
-```bash
-firebase deploy
-```
+## Migration status
 
-And that's it!
+Moving off Firebase and onto Cloudflare, in two steps:
+
+- [x] **Mail**: the Firebase Functions (`mail`, `devmail`, `template`) are now a single Worker at `mail.abbondanzo.com`, with [Turnstile](https://developers.cloudflare.com/turnstile/) protecting the contact form.
+- [ ] **Site**: Firebase Hosting becomes a Worker serving static assets, at which point `/mail` folds into it and the standalone mail Worker goes away.

@@ -35,6 +35,7 @@ jobs:
         env:
           GOOGLE_UA_KEY: ${{ secrets.GOOGLE_UA_KEY }}
           GOOGLE_UA_KEY_DEV: ${{ secrets.GOOGLE_UA_KEY_DEV }}
+          NUXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
 
       - name: Generate static site
         run: pnpm --filter @abbondanzo/frontend generate
@@ -42,27 +43,30 @@ jobs:
           # Optional; empty values are enough for CI (build warns if missing).
           GOOGLE_UA_KEY: ${{ secrets.GOOGLE_UA_KEY }}
           GOOGLE_UA_KEY_DEV: ${{ secrets.GOOGLE_UA_KEY_DEV }}
+          NUXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
           NODE_ENV: production
 
-  backend:
-    name: Backend
+  mail:
+    name: Mail Worker
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: backend/functions
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: backend/functions/package-lock.json
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
-      - name: Build functions
-        run: npm run build
+      - name: Typecheck
+        run: pnpm --filter @abbondanzo/mail typecheck
+
+      - name: Build (dry-run deploy)
+        run: pnpm --filter @abbondanzo/mail check

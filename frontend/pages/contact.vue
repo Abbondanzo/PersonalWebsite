@@ -80,6 +80,8 @@
               <ErrorMessage name="message" />
             </span>
 
+            <TurnstileWidget ref="turnstile" v-model="turnstileToken" />
+
             <button
               type="submit"
               name="submit"
@@ -125,6 +127,7 @@ import twitter from '~/assets/icons/twitter.svg'
 import { defineRule, Form, Field, ErrorMessage } from 'vee-validate'
 import { alpha_spaces, required, email } from '@vee-validate/rules'
 import Modal from '~/components/Modal'
+import TurnstileWidget from '~/components/TurnstileWidget'
 
 defineRule('required', (...args) => {
   const result = required(...args)
@@ -152,12 +155,17 @@ export default {
   name: 'Contact',
   components: {
     Modal,
+    TurnstileWidget,
     Form,
     Field,
     ErrorMessage,
   },
   data() {
+    // Read in data(), not in submitForm: Nuxt composables need a component
+    // instance context, which a click handler does not have.
+    const { mailEndpoint } = useRuntimeConfig().public
     return {
+      mailEndpoint,
       socials: [
         {
           name: 'Twitter',
@@ -179,6 +187,7 @@ export default {
       showModal: false,
       showSuccess: false,
       showFailure: false,
+      turnstileToken: '',
     }
   },
   mounted() {
@@ -196,14 +205,10 @@ export default {
       this.mobile = width <= 960
     },
     submitForm(values, { resetForm }) {
-      const endpoint =
-        process.env.NODE_ENV === 'production'
-          ? 'mail/'
-          : 'https://us-central1-abbondanzo-b8015.cloudfunctions.net/devmail'
       this.showModal = true
-      $fetch(endpoint, {
+      $fetch(this.mailEndpoint, {
         method: 'POST',
-        body: values,
+        body: { ...values, turnstileToken: this.turnstileToken },
       })
         .then((response) => {
           this.showSuccess = true
@@ -217,6 +222,11 @@ export default {
           this.showFailure = true
           // eslint-disable-next-line no-console
           console.error('There was an error sending your message', error)
+        })
+        .finally(() => {
+          // Turnstile tokens are single-use and this form stays mounted behind
+          // the modal, so the widget must be reset before another attempt.
+          this.$refs.turnstile?.reset()
         })
     },
     hideModal() {

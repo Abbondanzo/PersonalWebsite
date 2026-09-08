@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "abbondanzo-mail",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-07",
+  "observability": {
+    "enabled": true
+  },
+  // Custom domain: Cloudflare creates the DNS record and certificate. This does
+  // not touch the apex record, which still points at Firebase Hosting until the
+  // site itself moves over.
+  "routes": [
+    {
+      "pattern": "mail.abbondanzo.com",
+      "custom_domain": true
+    }
+  ],
+  "vars": {
+    "ALLOWED_ORIGINS": "https://abbondanzo.com,https://www.abbondanzo.com",
+    "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com",
+    "ENVIRONMENT": "production"
+  }
+  // Secrets (wrangler secret put <NAME>, mirrored in .dev.vars for local dev):
+  //   EMAILER_API_KEY, SENDER_EMAIL, RECEIVER_EMAIL, TURNSTILE_SECRET_KEY
+}
