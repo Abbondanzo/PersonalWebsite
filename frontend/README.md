@@ -4,20 +4,26 @@ This site is built using [Vue](https://vuejs.org/). Once upon a time, many years
 
 ## Env Information
 
-Inside this folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. Even if you have no IDs, you should still perform this test or Webpack will fail to build.
+Inside this folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. The IDs may be left blank, but the build warns if they are missing.
 
 ## Build Setup
 
+Dependencies are installed from the repository root, since this is a
+[pnpm workspace](../pnpm-workspace.yaml).
+
 ```bash
-# install dependencies
-$ npm install
+# install dependencies (from the repo root)
+$ pnpm install
 
 # serve with hot reload at localhost:3000
-$ npm run dev
+$ pnpm dev
 
-# generate static project and launch server
-$ npm run generate
-$ npm run start
+# typecheck
+$ pnpm typecheck
+
+# generate the static site into .output/public
+$ pnpm generate
+$ pnpm preview
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxt.com/docs).

@@ -79,14 +79,27 @@ export default {
       homeScreen: false,
     }
   },
+  computed: {
+    // Nuxt resolves this.$route to the route injected by NuxtPage, i.e. the
+    // route of the page currently rendered. This component lives in the
+    // layout, outside NuxtPage, so with an "out-in" page transition that is
+    // still the outgoing page and lags one navigation behind. The router's
+    // own currentRoute is always live.
+    currentRoute() {
+      return this.$router.currentRoute.value
+    },
+  },
   watch: {
-    $route() {
+    currentRoute() {
       this.updateLogo()
       this.isHome()
     },
   },
   beforeMount() {
     window.addEventListener('resize', this.updateLogo)
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.updateLogo)
   },
   mounted() {
     this.updateLogo()
@@ -106,12 +119,13 @@ export default {
     },
     updateLogo() {
       const width = document.body.offsetWidth
-      const splitProjects = this.$route.path === '/projects' && width > 960
-      const isContact = this.$route.path === '/contact'
+      const splitProjects =
+        this.currentRoute.path === '/projects' && width > 960
+      const isContact = this.currentRoute.path === '/contact'
       this.lightBackground = splitProjects || isContact
     },
     isHome() {
-      this.homeScreen = this.$route.path === '/'
+      this.homeScreen = this.currentRoute.path === '/'
     },
   },
 }

@@ -1,0 +1,14 @@
+{
+  "name": "abbondanzo",
+  "private": true,
+  "packageManager": "pnpm@10.24.0",
+  "scripts": {
+    "dev": "pnpm --filter @abbondanzo/frontend dev",
+    "build": "pnpm --recursive build",
+    "generate": "pnpm --filter @abbondanzo/frontend generate",
+    "typecheck": "pnpm --recursive typecheck"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

@@ -14,31 +14,30 @@ jobs:
   frontend:
     name: Frontend
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: npx nuxi typecheck
+        run: pnpm --filter @abbondanzo/frontend typecheck
         env:
           GOOGLE_UA_KEY: ${{ secrets.GOOGLE_UA_KEY }}
           GOOGLE_UA_KEY_DEV: ${{ secrets.GOOGLE_UA_KEY_DEV }}
 
       - name: Generate static site
-        run: npm run generate
+        run: pnpm --filter @abbondanzo/frontend generate
         env:
           # Optional; empty values are enough for CI (build warns if missing).
           GOOGLE_UA_KEY: ${{ secrets.GOOGLE_UA_KEY }}

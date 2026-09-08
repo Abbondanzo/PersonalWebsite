@@ -53,7 +53,10 @@ export default {
     this.updateActive()
   },
   beforeMount() {
-    window.addEventListener('resize', this.updateActive())
+    window.addEventListener('resize', this.updateActive)
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.updateActive)
   },
   methods: {
     track(e) {
