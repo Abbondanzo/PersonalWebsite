@@ -19,6 +19,9 @@ importers:
 
   frontend:
     dependencies:
+      '@abbondanzo/mail':
+        specifier: workspace:*
+        version: link:../backend
       '@nuxt/image':
         specifier: 2.1.0
         version: 2.1.0(@types/node@22.10.2)(magic-string@0.30.21)(magicast@0.5.4)(oxc-parser@0.143.0)(unplugin@3.3.0(esbuild@0.28.2)(rollup@4.63.1)(vite@7.3.6(@types/node@22.10.2)(jiti@2.7.0)(sass@1.104.0)(terser@5.51.2)(yaml@2.9.0)))(unstorage@1.17.5(db0@0.3.4)(ioredis@5.11.1))
@@ -62,6 +65,9 @@ importers:
       vue-tsc:
         specifier: 2.2.12
         version: 2.2.12(typescript@5.9.3)
+      wrangler:
+        specifier: 4.129.1
+        version: 4.129.1
 
 packages:
 

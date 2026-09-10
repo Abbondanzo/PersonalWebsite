@@ -1,0 +1,28 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "abbondanzo",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-10",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": ".output/public",
+    "binding": "ASSETS",
+    // nuxt generate prerenders a page per route plus a 404.html, so serve
+    // those directly rather than falling back to an SPA shell.
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    // Everything else is a static asset and never invokes the Worker.
+    "run_worker_first": ["/mail"]
+  },
+  "vars": {
+    "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com",
+    "ENVIRONMENT": "production"
+  }
+  // No routes yet: this deploys to workers.dev so it can be checked against the
+  // live site before abbondanzo.com is pointed at it.
+  //
+  // Secrets (wrangler secret put <NAME> --name abbondanzo):
+  //   EMAILER_API_KEY, SENDER_EMAIL, RECEIVER_EMAIL, TURNSTILE_SECRET_KEY
+}

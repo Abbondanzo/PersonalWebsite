@@ -14,11 +14,23 @@ if (!googleAnalyticsId) {
   console.warn('Missing Google Tag')
 }
 
-// The contact form posts here. Absolute while the site is still on Firebase
-// Hosting and the mail Worker lives on its own subdomain; becomes '/mail' once
-// the site itself moves to Workers.
-const mailEndpoint =
-  process.env.NUXT_PUBLIC_MAIL_ENDPOINT || 'https://mail.abbondanzo.com/mail'
+// The contact form posts here. Same-origin now that the site Worker serves
+// /mail itself; override only to point at a different deployment.
+const mailEndpoint = process.env.NUXT_PUBLIC_MAIL_ENDPOINT || '/mail'
+
+// Guard against a mangled override. Git Bash on Windows rewrites a leading
+// slash into a Windows path, so NUXT_PUBLIC_MAIL_ENDPOINT=/mail silently
+// becomes something like C:/Program Files/Git/mail and the form posts nowhere.
+const endpointLooksValid =
+  mailEndpoint.startsWith('/') ||
+  mailEndpoint.startsWith('http://') ||
+  mailEndpoint.startsWith('https://')
+
+if (!endpointLooksValid) {
+  throw new Error(
+    `NUXT_PUBLIC_MAIL_ENDPOINT must be an absolute URL or a root-relative path, got: ${mailEndpoint}`
+  )
+}
 
 const turnstileSiteKey = process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY
 

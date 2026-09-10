@@ -4,14 +4,17 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
+    "check": "wrangler deploy --dry-run",
+    "deploy": "firebase deploy",
+    "deploy:worker": "nuxt generate && wrangler deploy",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "typecheck": "nuxi typecheck",
-    "deploy": "firebase deploy"
+    "preview": "nuxt preview",
+    "typecheck": "nuxi typecheck"
   },
   "dependencies": {
+    "@abbondanzo/mail": "workspace:*",
     "@nuxt/image": "2.1.0",
     "@nuxtjs/google-fonts": "3.2.0",
     "@nuxtjs/robots": "6.2.0",
@@ -27,6 +30,7 @@
     "nuxt-gtag": "4.1.0",
     "sass": "1.104.0",
     "typescript": "5.9.3",
-    "vue-tsc": "2.2.12"
+    "vue-tsc": "2.2.12",
+    "wrangler": "4.129.1"
   }
 }
