@@ -31,7 +31,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: pnpm --filter @abbondanzo/frontend typecheck
+        run: pnpm --recursive typecheck
         env:
           GOOGLE_UA_KEY: ${{ secrets.GOOGLE_UA_KEY }}
           GOOGLE_UA_KEY_DEV: ${{ secrets.GOOGLE_UA_KEY_DEV }}
@@ -50,28 +50,3 @@ jobs:
       # after the site is built. No upload, no credentials needed.
       - name: Validate site Worker
         run: pnpm --filter @abbondanzo/frontend check
-
-  mail:
-    name: Mail Worker
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Typecheck
-        run: pnpm --filter @abbondanzo/mail typecheck
-
-      - name: Build (dry-run deploy)
-        run: pnpm --filter @abbondanzo/mail check

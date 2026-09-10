@@ -9,25 +9,47 @@ A [pnpm workspace](pnpm-workspace.yaml) with two packages:
 | Package | Directory | What it is |
 | --- | --- | --- |
 | `@abbondanzo/frontend` | [frontend](/frontend) | The [Nuxt](https://nuxt.com/) site, and the Worker that serves it |
-| `@abbondanzo/mail` | [backend](/backend) | The contact form handler, shared by both Workers |
+| `@abbondanzo/mail` | [backend](/backend) | The contact form handler, imported by that Worker |
 
 ```bash
 pnpm install      # install everything, from the root
 pnpm dev          # run the site at localhost:3000
-pnpm dev:mail     # run the mail Worker on its own at localhost:8787
 pnpm typecheck    # typecheck both packages
 ```
 
+Everything ships as a single [Cloudflare Worker](https://developers.cloudflare.com/workers/): the generated site is uploaded as static assets, and `POST /mail` is the only path that runs code.
+
 ## Deploy
 
-The site and the contact form ship together as one Worker:
+Pushes to `master` are built and deployed by [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/), so a normal merge is all that is needed.
+
+To deploy by hand:
 
 ```bash
-cd frontend && pnpm deploy    # nuxt generate && wrangler deploy
+pnpm run deploy   # nuxt generate && wrangler deploy
 ```
 
-That builds the static site into `.output/public`, uploads it as Worker assets, and serves `abbondanzo.com` and `www.abbondanzo.com`. Static files are served without invoking the Worker; only `POST /mail` runs code.
+Note `pnpm run deploy`, not `pnpm deploy`: the latter is a built-in pnpm command for deploying workspace packages and will not run this script.
 
-Deploying needs [Wrangler](https://developers.cloudflare.com/workers/wrangler/), which is installed as a workspace dependency. Run `npx wrangler login` once.
+### Workers Builds settings
 
-The Worker reads four secrets, set with `wrangler secret put <NAME> --name abbondanzo`: `EMAILER_API_KEY`, `SENDER_EMAIL`, `RECEIVER_EMAIL` and `TURNSTILE_SECRET_KEY`. See the [backend README](/backend) for what each does.
+Set under **Workers & Pages → abbondanzo → Settings → Build**. The Worker lives in a workspace package, so the commands run from the repository root and target it by filter:
+
+| Setting | Value |
+| --- | --- |
+| Root directory | *(leave blank, the repository root)* |
+| Build command | `pnpm --filter @abbondanzo/frontend run generate` |
+| Deploy command | `pnpm --filter @abbondanzo/frontend exec wrangler deploy` |
+
+`.nvmrc` pins Node for the build image. Two values are baked into the static build and must be set as **Build variables** (they are public, and are not runtime secrets):
+
+| Build variable | Purpose |
+| --- | --- |
+| `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | [Turnstile](https://developers.cloudflare.com/turnstile/) widget on the contact form |
+| `GOOGLE_UA_KEY` | Google Analytics tag; the build only warns if it is missing |
+
+### Runtime secrets
+
+Read by the Worker at runtime, set with `wrangler secret put <NAME> --name abbondanzo` or under **Settings → Variables & Secrets**:
+
+`EMAILER_API_KEY`, `SENDER_EMAIL`, `RECEIVER_EMAIL`, `TURNSTILE_SECRET_KEY`. See the [backend README](/backend) for what each does.

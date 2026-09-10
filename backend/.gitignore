@@ -1,10 +1,10 @@
 node_modules/
 
-# Wrangler
+# Belt and braces: this package has no Worker of its own, but keep local
+# wrangler state and secrets out of git if anyone runs it here.
 .wrangler/
 .dev.vars
 .dev.vars.*
-!.dev.vars.example
 
 # Editor directories and files
 .DS_Store

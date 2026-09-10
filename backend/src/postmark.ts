@@ -20,7 +20,7 @@ export interface SendEmailOptions {
 
 /**
  * Sends a message through Postmark's REST API. Uses the account's default
- * ("outbound") message stream, matching what the Firebase function sent.
+ * ("outbound") message stream.
  *
  * @returns the Postmark message ID
  * @throws if Postmark rejects the message; the error carries provider detail
