@@ -1,63 +1,77 @@
-# Personal Website Backend
+# Mail Worker
 
-It's not really a backend, just a handful of [Express](https://expressjs.com/) endpoints on [Firebase Functions](https://firebase.google.com/docs/functions/). That being said, here's all you need to know to get started.
+A single [Cloudflare Worker](https://developers.cloudflare.com/workers/) behind the
+contact form on [abbondanzo.com](https://abbondanzo.com). It verifies a
+[Turnstile](https://developers.cloudflare.com/turnstile/) token, renders the
+submission into an HTML email, and hands it to
+[Postmark](https://postmarkapp.com/developer).
+
+No runtime dependencies. Postmark and Turnstile are both plain `fetch` calls.
+
+## Routes
+
+| Route | Description |
+| --- | --- |
+| `POST /mail` (or `POST /`) | Contact form submission. Body: `name`, `email`, `message`, `turnstileToken`. Responds in plain text: `200` sent, `400` bad input, `403` failed verification, `502` provider failure. |
+| `GET /preview` | Renders the email template with mock data so you can eyeball it. Local only, so it 404s unless `ENVIRONMENT=development`. Any field can be overridden from the query string, e.g. `/preview?name=Bob&msg=Hello`. |
+| `OPTIONS *` | CORS preflight, restricted to `ALLOWED_ORIGINS`. |
+
+## Configuration
+
+Secrets (`wrangler secret put <NAME>`):
+
+| Name | Description |
+| --- | --- |
+| `EMAILER_API_KEY` | Postmark server token |
+| `SENDER_EMAIL` | Verified Postmark sender |
+| `RECEIVER_EMAIL` | Where submissions are delivered |
+| `TURNSTILE_SECRET_KEY` | Pairs with the site key baked into the frontend |
+
+Plain vars live in [wrangler.jsonc](wrangler.jsonc): `ALLOWED_ORIGINS` (who may POST)
+and `TURNSTILE_HOSTNAMES` (which hostnames a token may come from). Both are
+comma-separated; an empty `TURNSTILE_HOSTNAMES` rejects every request rather
+than accepting tokens from anywhere.
+
+## Local development
+
+```bash
+cp .dev.vars.example .dev.vars   # already filled in with test credentials
+pnpm dev                         # or `pnpm dev:mail` from the repo root
+```
+
+The example file uses Postmark's `POSTMARK_API_TEST` token, which accepts
+messages without delivering them, and Turnstile's always-passes test secret.
+Note that `wrangler dev` does **not** hot-reload `.dev.vars`, so restart it
+after editing.
+
+Turnstile test keys:
+
+| Site key | Secret key | Behaviour |
+| --- | --- | --- |
+| `1x00000000000000000000AA` | `1x0000000000000000000000000000000AA` | always passes |
+| `2x00000000000000000000AB` | `2x0000000000000000000000000000000AA` | always blocks |
+| `3x00000000000000000000FF` | | forces an interactive challenge |
+
+Tokens minted by the test site key report a hostname of `example.com`, so add
+that to `TURNSTILE_HOSTNAMES` when testing with raw `curl`.
 
 ## Deploying
 
-To deploy functions, you first need to install Firebase's CLI. It can be done like so:
-
 ```bash
-# You may need to run this with sudo
-npm install -g firebase-tools
+pnpm deploy    # wrangler deploy
+pnpm check     # wrangler deploy --dry-run, no upload
+pnpm tail      # stream production logs
 ```
 
-Next, you'll need to login to your account by running:
+The Worker is reached at `mail.abbondanzo.com/*` via a
+[Workers route](https://developers.cloudflare.com/workers/configuration/routing/routes/)
+on the existing Cloudflare-proxied hostname (Custom Domains refuse that DNS as
+"externally managed"). `workers_dev` stays on so
+`https://abbondanzo-mail.abbondanzo.workers.dev` is available for smoke tests
+before the frontend cutover.
 
-```bash
-# This will open a browser window.
-firebase login
-```
+## A note on escaping
 
-Finally, to deploy, just:
-
-```bash
-firebase deploy
-```
-
-### Partial functions
-
-You can deploy or update a subset of functions very easily by doing the following:
-
-```bash
-firebase deploy --only functions:myFunctionName
-```
-
-## Function Descriptions
-
-Here's what they do
-
-### `devmail`
-
-A quick-and-easy endpoint to hit that returns a 200 status code and friendly success message. To be used when testing a development build. The frontend is already equipped to hit a devmail endpoint, so specify your own if you deploy this function.
-
-### `mail`
-
-Here's the bread and butter of sending contact information via email. In order for this to work, you must do the following:
-
-Configure the email transport using the default SMTP transport and a gmail account.
-For Gmail, enable these:
-
-1.  https://www.google.com/settings/security/lesssecureapps
-2.  https://accounts.google.com/DisplayUnlockCaptcha. For other types of transports such as Sendgrid see https://nodemailer.com/transports/
-
-Set the following environment data by running the following:
-
-```bash
-firebase functions:config:set gmail.email="EMAIL USERNAME" gmail.password="EMAIL PASSWORD" contact.receiver="YOUR_EMAIL_ADDRESS@DOMAIN.COM"
-```
-
-You can customize the handlebars template or even add your own data. All up to you!
-
-### `template`
-
-An easy `GET` endpoint to hit to test out what your emailed form looks like with mock data.
+Every field rendered into the email comes from a public form. The handlebars
+templates this replaced escaped by default; template literals do not. Anything
+interpolated in [src/template.ts](src/template.ts) must go through `escapeHtml`.

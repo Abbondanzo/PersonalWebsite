@@ -1,10 +1,12 @@
 packages:
   - frontend
+  - backend
 
 # pnpm 10 blocks dependency build scripts by default. These need theirs:
-# sharp backs @nuxt/image, and esbuild and @parcel/watcher are part of the
-# Nuxt/Vite toolchain.
+# workerd is the Workers runtime, sharp backs @nuxt/image, and esbuild and
+# @parcel/watcher are part of the Nuxt/Vite toolchain.
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
   - sharp
+  - workerd

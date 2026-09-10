@@ -4,7 +4,16 @@ This site is built using [Vue](https://vuejs.org/). Once upon a time, many years
 
 ## Env Information
 
-Inside this folder, there is an `.env.example` file. This must be _copied_ and named as `.env` with your correct Google Analytics tracking IDs. The IDs may be left blank, but the build warns if they are missing.
+Inside this folder, there is an `.env.example` file. This must be _copied_ and named as `.env` and filled in. The Google Analytics IDs may be left blank, but the build warns if they are missing.
+
+`NUXT_PUBLIC_TURNSTILE_SITE_KEY` is the [Turnstile](https://developers.cloudflare.com/turnstile/)
+site key protecting the contact form; `1x00000000000000000000AA` always passes
+and is fine for local work. `NUXT_PUBLIC_MAIL_ENDPOINT` points the form at the
+[mail Worker](../backend). Leave it blank to use the deployed one, or set it to
+`http://localhost:8787/mail` to run against a local `pnpm dev:mail`.
+
+Because this is a static build, both values are baked in at build time rather
+than read at runtime.
 
 ## Build Setup
 
