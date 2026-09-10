@@ -61,10 +61,14 @@ export default defineNuxtConfig({
   },
 
   ssr: isProduction,
+
   nitro: {
-    prerender: {
-      routes: ['/_ipx/f_webp/bg.webp'],
-    },
+    // Pin the preset. Workers Builds sets Cloudflare environment variables, and
+    // Nitro then auto-selects cloudflare-module even for `nuxt generate`: it
+    // prerenders a handful of routes instead of every page, and emits a
+    // redirected wrangler config pointing at a server entry a static build
+    // never produces. The Worker serves .output/public as static assets.
+    preset: 'static',
   },
 
   typescript: {

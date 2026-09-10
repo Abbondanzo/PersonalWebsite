@@ -6,6 +6,10 @@
   "observability": {
     "enabled": true
   },
+  // Non-production branch builds run `wrangler versions upload`, which only
+  // produces a reachable URL if preview URLs are switched on. Production keeps
+  // serving through the routes below either way.
+  "preview_urls": true,
   "assets": {
     "directory": ".output/public",
     "binding": "ASSETS",

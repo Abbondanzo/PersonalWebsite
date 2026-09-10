@@ -37,9 +37,28 @@ Set under **Workers & Pages → abbondanzo → Settings → Build**. The Worker 
 
 | Setting | Value |
 | --- | --- |
-| Root directory | *(leave blank, the repository root)* |
-| Build command | `pnpm --filter @abbondanzo/frontend run generate` |
+| Root directory | `/` |
+| Build command | `pnpm run build` |
 | Deploy command | `pnpm --filter @abbondanzo/frontend exec wrangler deploy` |
+| Version command | `pnpm --filter @abbondanzo/frontend exec wrangler versions upload` |
+
+Both deploy commands have to name the package. Wrangler's defaults fail at the
+repository root: `npx wrangler deploy` reports "detection logic has been run in the
+root of a workspace instead of targeting a specific project", and `npx wrangler
+versions upload` reports "Missing entry-point to Worker script or to assets
+directory".
+
+The version command is what branch builds run. They upload a version and get a preview URL, enabled by `preview_urls` in
+[frontend/wrangler.jsonc](frontend/wrangler.jsonc). The contact form will not work on
+a preview URL: that hostname is in neither `TURNSTILE_HOSTNAMES` nor the widget's
+domain list, so verification fails and no mail is sent. That is deliberate.
+
+`build` runs `nuxt generate`, not `nuxt build`, and
+[frontend/nuxt.config.ts](frontend/nuxt.config.ts) pins `nitro.preset` to `static`.
+Both matter. The Worker serves `.output/public` as static assets, and on Cloudflare's
+runners Nitro otherwise auto-selects the `cloudflare-module` preset: it prerenders a
+handful of routes instead of every page, and writes a redirected wrangler config
+pointing at a server entry that a static build never produces.
 
 `.nvmrc` pins Node for the build image. Two values are baked into the static build and must be set as **Build variables** (they are public, and are not runtime secrets):
 
