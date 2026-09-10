@@ -187,6 +187,9 @@ export default {
   beforeMount() {
     window.addEventListener('resize', this.mobileCheck)
   },
+  unmounted() {
+    window.removeEventListener('resize', this.mobileCheck)
+  },
   methods: {
     mobileCheck() {
       const width = document.body.offsetWidth

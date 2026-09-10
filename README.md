@@ -2,9 +2,25 @@
 
 The current entirety of my personal website (in progress/under construction). Deployable website located at [abbondanzo.com](https://abbondanzo.com). Each directory has README instructions on how to get set up and started.
 
+## Layout
+
+The repository is a [pnpm workspace](pnpm-workspace.yaml). Dependencies for the site are installed from the repository root:
+
+```bash
+pnpm install      # install everything
+pnpm dev          # run the site at localhost:3000
+pnpm generate     # build the static site
+pnpm typecheck    # typecheck the workspace
+```
+
+| Package | Directory | What it is |
+| --- | --- | --- |
+| `@abbondanzo/frontend` | [frontend](/frontend) | The [Nuxt](https://nuxt.com/) site, generated as static files |
+| n/a | [backend](/backend) | [Firebase Functions](https://firebase.google.com/docs/functions/) behind the contact form |
+
 ## Deploy
 
-This project is broken up into two folders: [frontend](/frontend) and [backend](/backend). Both live and deploy very easily on Google's [Firebase](https://firebase.google.com/). The frontend is designed to live inside [Firebase Hosting](https://firebase.google.com/docs/hosting/) while the backend is designed to live inside [Firebase functions](https://firebase.google.com/docs/functions/).
+Both halves live and deploy on Google's [Firebase](https://firebase.google.com/). The frontend is designed to live inside [Firebase Hosting](https://firebase.google.com/docs/hosting/) while the backend is designed to live inside [Firebase functions](https://firebase.google.com/docs/functions/).
 
 You should create a Firebase project before proceeding. That can be done [here](https://console.firebase.google.com/u/0/).
 

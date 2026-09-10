@@ -16,11 +16,18 @@ if (!googleAnalyticsId) {
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: !isProduction },
+  compatibilityDate: '2026-09-07',
+
+  devtools: {
+    enabled: !isProduction,
+
+    timeline: {
+      enabled: true
+    }
+  },
 
   ssr: isProduction,
   nitro: {
-    static: isProduction,
     prerender: {
       routes: ['/_ipx/f_webp/bg.webp'],
     },
@@ -41,43 +48,36 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
-          hid: 'keywords',
           name: 'keywords',
           content:
             'graphic designer,design,developer,develop,code,css,html,photoshop,peter,abbondanzo,peter abbondanzo,website,photoshop,ui,ui designer,ui developer,graphic,graphics',
         },
-        { hid: 'og:title', name: 'og:title', content: 'Peter V. Abbondanzo' },
+        { name: 'og:title', content: 'Peter V. Abbondanzo' },
         {
-          hid: 'og:site_name',
           name: 'og:site_name',
           content: 'abbondanzo.com',
         },
         {
-          hid: 'og:description',
           name: 'og:description',
           content:
             "I design websites and mobile applications for people and have a long last name. Come check out the cool projects I've made.",
         },
         {
-          hid: 'og:image',
           name: 'og:image',
           property: 'og:image',
           content: `${BASE_URL}/ogimage.jpg`,
         },
         {
-          hid: 'image',
           name: 'image',
           property: 'image',
           content: `${BASE_URL}/ogimage.jpg`,
         },
         {
-          hid: 'author',
           name: 'author',
           property: 'author',
           content: 'Peter Abbondanzo',
         },
         {
-          hid: 'date',
           name: 'date',
           property: 'date',
           content: currentDate,
@@ -120,14 +120,6 @@ export default defineNuxtConfig({
     format: ['webp'],
     inject: true,
     provider: 'ipx',
-  },
-
-  robots: {
-    rules: {
-      UserAgent: '*',
-      Disallow: '',
-      Sitemap: `${BASE_URL}/sitemap.xml`,
-    },
   },
 
   site: {

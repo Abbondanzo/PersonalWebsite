@@ -28,12 +28,14 @@ export default {
   props: {
     error: {
       type: Object,
-      default() {},
+      default: () => ({}),
     },
   },
-  beforeMount() {
+  setup(props) {
+    // In beforeMount this never ran during prerendering, leaving the error
+    // page without a title in the generated HTML.
     useHead({
-      title: this.error.statusCode?.toString(),
+      title: props.error?.statusCode?.toString(),
     })
   },
 }

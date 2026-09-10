@@ -18,8 +18,18 @@
 <script>
 export default {
   name: 'Index',
+  computed: {
+    // Nuxt resolves this.$route to the route injected by NuxtPage, i.e. the
+    // route of the page currently rendered. This component lives in the
+    // layout, outside NuxtPage, so with an "out-in" page transition that is
+    // still the outgoing page and lags one navigation behind. The router's
+    // own currentRoute is always live.
+    currentRoute() {
+      return this.$router.currentRoute.value
+    },
+  },
   watch: {
-    $route() {
+    currentRoute() {
       this.parallax()
       this.backgroundHeight()
     },
@@ -28,6 +38,11 @@ export default {
     window.addEventListener('scroll', this.parallax)
     window.addEventListener('resize', this.parallax)
     window.addEventListener('resize', this.backgroundHeight)
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.parallax)
+    window.removeEventListener('resize', this.parallax)
+    window.removeEventListener('resize', this.backgroundHeight)
   },
   mounted() {
     setTimeout(() => this.backgroundHeight(), 0)
@@ -47,7 +62,7 @@ export default {
       if (!img) return
       let imgHeight = img.offsetHeight - window.innerHeight
       // Make sure background isn't being modified in a projects environment
-      if (this.$route.path.includes('about')) {
+      if (this.currentRoute.path.includes('about')) {
         // Display parallax image
         img.style.display = 'block'
         // Vertical scroll

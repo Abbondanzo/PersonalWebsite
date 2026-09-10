@@ -14,8 +14,18 @@ export default {
       isViewingProject: false,
     }
   },
+  computed: {
+    // Nuxt resolves this.$route to the route injected by NuxtPage, i.e. the
+    // route of the page currently rendered. This component lives in the
+    // layout, outside NuxtPage, so with an "out-in" page transition that is
+    // still the outgoing page and lags one navigation behind. The router's
+    // own currentRoute is always live.
+    currentRoute() {
+      return this.$router.currentRoute.value
+    },
+  },
   watch: {
-    $route() {
+    currentRoute() {
       this.checkRoute()
     },
   },
@@ -24,9 +34,13 @@ export default {
   },
   methods: {
     checkRoute() {
+      // name is undefined for unmatched routes, which the live route now
+      // surfaces mid-navigation; the stale injected route always had one.
+      const name = this.currentRoute.name
       this.isViewingProject =
-        this.$route.name.startsWith('projects') &&
-        this.$route.name !== 'projects'
+        typeof name === 'string' &&
+        name.startsWith('projects') &&
+        name !== 'projects'
     },
   },
 }

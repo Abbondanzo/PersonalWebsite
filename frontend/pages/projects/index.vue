@@ -111,6 +111,9 @@ export default {
       this.getWindowHeight()
     })
   },
+  unmounted() {
+    window.removeEventListener('resize', this.getWindowHeight)
+  },
   methods: {
     async projectCheck(arg) {
       this.activeProject = arg
