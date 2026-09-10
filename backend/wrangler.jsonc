@@ -19,9 +19,7 @@
   ],
   "vars": {
     "ALLOWED_ORIGINS": "https://abbondanzo.com,https://www.abbondanzo.com",
-    // example.com is only for Turnstile *test* tokens during rollout smoke
-    // tests (dummy token hostname). Remove once real Turnstile secrets land.
-    "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com,example.com",
+    "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com",
     "ENVIRONMENT": "production"
   }
   // Secrets (wrangler secret put <NAME>, mirrored in .dev.vars for local dev):

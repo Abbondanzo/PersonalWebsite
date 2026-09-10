@@ -1,13 +1,20 @@
 <template>
-  <div ref="container" class="turnstile-widget" />
+  <div class="turnstile-field">
+    <div ref="container" class="turnstile-widget" />
+    <span v-if="failed" class="help turnstile-error">
+      Verification could not load. Please refresh and try again, or reach out
+      over social media.
+    </span>
+  </div>
 </template>
 
 <script>
 /**
  * Cloudflare Turnstile widget, rendered explicitly.
  *
- * Hand-rolled rather than using @nuxtjs/turnstile: that module requires
- * @nuxt/scripts and Nuxt >= 3.16, and this app is on 3.11.
+ * Hand-rolled rather than using @nuxtjs/turnstile, which pulls in @nuxt/scripts.
+ * Written when this app was on Nuxt 3.11, below that module's minimum; kept
+ * after the 3.21 upgrade because it needs no dependency and no version pin.
  *
  * Exposes reset() for the parent to call after every submission attempt --
  * Turnstile tokens are single-use, and the contact form stays mounted behind
@@ -62,6 +69,7 @@ export default {
     return {
       siteKey: turnstileSiteKey,
       widgetId: null,
+      failed: false,
     }
   },
   async mounted() {
@@ -81,9 +89,19 @@ export default {
 
     this.widgetId = window.turnstile.render(this.$refs.container, {
       sitekey: this.siteKey,
-      callback: (token) => this.$emit('update:modelValue', token),
+      // Render UI only when a challenge actually needs the visitor to do
+      // something. On success the widget stays invisible rather than showing
+      // Cloudflare's success box.
+      appearance: 'interaction-only',
+      callback: (token) => {
+        this.failed = false
+        this.$emit('update:modelValue', token)
+      },
       'expired-callback': () => this.$emit('update:modelValue', ''),
-      'error-callback': () => this.$emit('update:modelValue', ''),
+      'error-callback': () => {
+        this.failed = true
+        this.$emit('update:modelValue', '')
+      },
     })
   },
   beforeUnmount() {
@@ -94,6 +112,7 @@ export default {
   methods: {
     reset() {
       if (this.widgetId && window.turnstile) {
+        this.failed = false
         window.turnstile.reset(this.widgetId)
         this.$emit('update:modelValue', '')
       }
@@ -103,7 +122,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.turnstile-widget {
+.turnstile-field {
+  position: relative;
+}
+
+// Only take up space when Cloudflare actually injects a challenge; with
+// appearance "interaction-only" the container is empty the rest of the time.
+.turnstile-widget:not(:empty) {
   margin: 1rem 0;
+}
+
+.turnstile-error {
+  position: static;
+  display: block;
+  color: #fff;
+  font-size: 12px;
+  opacity: 0.8;
+  padding: 1rem 0;
 }
 </style>
