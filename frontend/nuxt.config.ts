@@ -28,7 +28,7 @@ const endpointLooksValid =
 
 if (!endpointLooksValid) {
   throw new Error(
-    `NUXT_PUBLIC_MAIL_ENDPOINT must be an absolute URL or a root-relative path, got: ${mailEndpoint}`
+    `NUXT_PUBLIC_MAIL_ENDPOINT must be an absolute URL or a root-relative path, got: ${mailEndpoint}`,
   )
 }
 
@@ -46,14 +46,15 @@ export default defineNuxtConfig({
     enabled: !isProduction,
 
     timeline: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
 
   // This is a static build, so public runtime config is baked in at build time
   // rather than read from the environment at runtime. Both values are public.
   runtimeConfig: {
     public: {
+      siteUrl: BASE_URL,
       mailEndpoint,
       turnstileSiteKey,
     },

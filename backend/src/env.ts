@@ -1,9 +1,9 @@
 /**
- * Bindings available to the mail Worker.
+ * Bindings the contact form handler needs from the Worker that hosts it.
  *
- * The four secrets are set with `wrangler secret put <NAME>` and mirrored in a
- * local, gitignored `.dev.vars` file. The rest are plain vars declared in
- * wrangler.jsonc.
+ * The four secrets are set with `wrangler secret put <NAME> --name abbondanzo`
+ * and mirrored in a local, gitignored `frontend/.dev.vars`. TURNSTILE_HOSTNAMES
+ * and ENVIRONMENT are plain vars in frontend/wrangler.jsonc.
  */
 export interface Env {
   /** Postmark server token. */
@@ -14,10 +14,8 @@ export interface Env {
   RECEIVER_EMAIL: string
   /** Turnstile secret key, paired with the site key baked into the frontend. */
   TURNSTILE_SECRET_KEY: string
-  /** Comma-separated origins allowed to POST to this Worker. */
-  ALLOWED_ORIGINS: string
   /** Comma-separated hostnames a Turnstile token is allowed to come from. */
   TURNSTILE_HOSTNAMES: string
-  /** "development" unlocks the /preview route. */
+  /** "development" unlocks the local-only /preview route. */
   ENVIRONMENT: string
 }

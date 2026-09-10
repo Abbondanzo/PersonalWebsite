@@ -3,20 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "wrangler deploy --dry-run",
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "tail": "wrangler tail abbondanzo-mail",
-    "typecheck": "tsc --noEmit",
-    "types": "wrangler types --include-env false",
-    "types:check": "wrangler types --include-env false --check"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "typescript": "5.6.2",
-    "wrangler": "4.129.1"
+    "typescript": "5.6.2"
   },
   "exports": {
     ".": "./src/mail.ts",
-    "./env": "./src/env.ts"
-  }
+    "./env": "./src/env.ts",
+    "./template": "./src/template.ts"
+  },
+  "description": "Contact form handler shared by the site Worker"
 }

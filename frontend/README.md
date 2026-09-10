@@ -15,6 +15,19 @@ and is fine for local work. `NUXT_PUBLIC_MAIL_ENDPOINT` points the form at the
 Because this is a static build, both values are baked in at build time rather
 than read at runtime.
 
+## Deploying
+
+The site and the contact form ship together as one Cloudflare Worker:
+
+```bash
+$ pnpm deploy   # nuxt generate && wrangler deploy
+```
+
+The static build is uploaded as Worker assets and served for `abbondanzo.com` and
+`www.abbondanzo.com`. Only `POST /mail` invokes Worker code; everything else is
+served straight from assets. Both hostnames serve the site, and every page carries a
+canonical link pointing at the apex.
+
 ## Build Setup
 
 Dependencies are installed from the repository root, since this is a

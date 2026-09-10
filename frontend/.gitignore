@@ -6,10 +6,13 @@
 .cache
 dist
 
+# Wrangler
+.wrangler
+.dev.vars
+.dev.vars.*
+
 # Local env files
 .env
 .env.*
 !.env.example
 
-# Firebase
-.firebase/

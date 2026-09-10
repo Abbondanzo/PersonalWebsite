@@ -3,11 +3,11 @@
   "private": true,
   "packageManager": "pnpm@10.24.0",
   "scripts": {
-    "dev": "pnpm --filter @abbondanzo/frontend dev",
-    "dev:mail": "pnpm --filter @abbondanzo/mail dev",
     "build": "pnpm --recursive build",
-    "typecheck": "pnpm --recursive typecheck",
-    "check": "pnpm --recursive check"
+    "check": "pnpm --recursive check",
+    "deploy": "pnpm --filter @abbondanzo/frontend run deploy",
+    "dev": "pnpm --filter @abbondanzo/frontend dev",
+    "typecheck": "pnpm --recursive typecheck"
   },
   "engines": {
     "node": ">=22"

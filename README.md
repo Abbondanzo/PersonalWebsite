@@ -8,35 +8,48 @@ A [pnpm workspace](pnpm-workspace.yaml) with two packages:
 
 | Package | Directory | What it is |
 | --- | --- | --- |
-| `@abbondanzo/frontend` | [frontend](/frontend) | The [Nuxt](https://nuxt.com/) site, generated as static files |
-| `@abbondanzo/mail` | [backend](/backend) | A [Cloudflare Worker](https://developers.cloudflare.com/workers/) behind the contact form |
+| `@abbondanzo/frontend` | [frontend](/frontend) | The [Nuxt](https://nuxt.com/) site, and the Worker that serves it |
+| `@abbondanzo/mail` | [backend](/backend) | The contact form handler, imported by that Worker |
 
 ```bash
 pnpm install      # install everything, from the root
 pnpm dev          # run the site at localhost:3000
-pnpm dev:mail     # run the mail Worker at localhost:8787
 pnpm typecheck    # typecheck both packages
 ```
 
+Everything ships as a single [Cloudflare Worker](https://developers.cloudflare.com/workers/): the generated site is uploaded as static assets, and `POST /mail` is the only path that runs code.
+
 ## Deploy
 
-The mail Worker deploys to Cloudflare:
+Pushes to `master` are built and deployed by [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/), so a normal merge is all that is needed.
+
+To deploy by hand:
 
 ```bash
-pnpm --filter @abbondanzo/mail deploy
+pnpm run deploy   # nuxt generate && wrangler deploy
 ```
 
-The site is still on [Firebase Hosting](https://firebase.google.com/docs/hosting/) while it is migrated across:
+Note `pnpm run deploy`, not `pnpm deploy`: the latter is a built-in pnpm command for deploying workspace packages and will not run this script.
 
-```bash
-cd frontend && pnpm generate && pnpm deploy
-```
+### Workers Builds settings
 
-Deploying the site needs the Firebase CLI (`npm install -g firebase-tools`, then `firebase login`); deploying the Worker needs [Wrangler](https://developers.cloudflare.com/workers/wrangler/), which is installed as a workspace dependency and will prompt you to log in on first use.
+Set under **Workers & Pages → abbondanzo → Settings → Build**. The Worker lives in a workspace package, so the commands run from the repository root and target it by filter:
 
-## Migration status
+| Setting | Value |
+| --- | --- |
+| Root directory | *(leave blank, the repository root)* |
+| Build command | `pnpm --filter @abbondanzo/frontend run generate` |
+| Deploy command | `pnpm --filter @abbondanzo/frontend exec wrangler deploy` |
 
-Moving off Firebase and onto Cloudflare, in two steps:
+`.nvmrc` pins Node for the build image. Two values are baked into the static build and must be set as **Build variables** (they are public, and are not runtime secrets):
 
-- [x] **Mail**: the Firebase Functions (`mail`, `devmail`, `template`) are now a single Worker at `mail.abbondanzo.com`, with [Turnstile](https://developers.cloudflare.com/turnstile/) protecting the contact form.
-- [ ] **Site**: the Nuxt build is now served by a Worker with static assets, which also handles `/mail` itself. Deployed and verified on `workers.dev`; `abbondanzo.com` still points at Firebase Hosting until DNS is cut over, after which the standalone mail Worker goes away.
+| Build variable | Purpose |
+| --- | --- |
+| `NUXT_PUBLIC_TURNSTILE_SITE_KEY` | [Turnstile](https://developers.cloudflare.com/turnstile/) widget on the contact form |
+| `GOOGLE_UA_KEY` | Google Analytics tag; the build only warns if it is missing |
+
+### Runtime secrets
+
+Read by the Worker at runtime, set with `wrangler secret put <NAME> --name abbondanzo` or under **Settings → Variables & Secrets**:
+
+`EMAILER_API_KEY`, `SENDER_EMAIL`, `RECEIVER_EMAIL`, `TURNSTILE_SECRET_KEY`. See the [backend README](/backend) for what each does.

@@ -16,13 +16,16 @@
     // Everything else is a static asset and never invokes the Worker.
     "run_worker_first": ["/mail"]
   },
+  // Routes rather than a custom domain: the zone is already proxied, so a
+  // route takes over serving without touching any DNS records.
+  "routes": [
+    { "pattern": "abbondanzo.com/*", "zone_name": "abbondanzo.com" },
+    { "pattern": "www.abbondanzo.com/*", "zone_name": "abbondanzo.com" }
+  ],
   "vars": {
     "TURNSTILE_HOSTNAMES": "abbondanzo.com,www.abbondanzo.com",
     "ENVIRONMENT": "production"
   }
-  // No routes yet: this deploys to workers.dev so it can be checked against the
-  // live site before abbondanzo.com is pointed at it.
-  //
   // Secrets (wrangler secret put <NAME> --name abbondanzo):
   //   EMAILER_API_KEY, SENDER_EMAIL, RECEIVER_EMAIL, TURNSTILE_SECRET_KEY
 }

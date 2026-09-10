@@ -1,5 +1,6 @@
 import { handleMail } from '@abbondanzo/mail'
 import type { Env as MailEnv } from '@abbondanzo/mail/env'
+import { renderEmailHtml } from '@abbondanzo/mail/template'
 
 interface Env extends MailEnv {
   ASSETS: Fetcher
@@ -22,6 +23,25 @@ export default {
 
     if (request.method === 'POST' && url.pathname === '/mail') {
       return handleMail(request, env)
+    }
+
+    // Local only: eyeball the contact email without sending one. Any field can
+    // be overridden from the query string, e.g. /preview?name=Bob&msg=Hello
+    if (
+      request.method === 'GET' &&
+      url.pathname === '/preview' &&
+      env.ENVIRONMENT === 'development'
+    ) {
+      return new Response(
+        renderEmailHtml({
+          name: url.searchParams.get('name') ?? 'NAME',
+          email: url.searchParams.get('email') ?? 'EMAIL',
+          msg: url.searchParams.get('msg') ?? 'Sample message from user',
+          ip: request.headers.get('CF-Connecting-IP') ?? 'Unknown',
+          userAgent: request.headers.get('User-Agent') ?? 'Unknown'
+        }),
+        { headers: { 'Content-Type': 'text/html; charset=utf-8' } }
+      )
     }
 
     return env.ASSETS.fetch(request)

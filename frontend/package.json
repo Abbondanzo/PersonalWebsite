@@ -5,8 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "check": "wrangler deploy --dry-run",
-    "deploy": "firebase deploy",
-    "deploy:worker": "nuxt generate && wrangler deploy",
+    "deploy": "nuxt generate && wrangler deploy",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
