@@ -40,10 +40,18 @@ Set under **Workers & Pages → abbondanzo → Settings → Build**. The Worker 
 | Root directory | *(leave blank, the repository root)* |
 | Build command | `pnpm run build` |
 | Deploy command | `pnpm --filter @abbondanzo/frontend exec wrangler deploy` |
+| Non-production branch deploy command | `pnpm --filter @abbondanzo/frontend exec wrangler versions upload` |
 
-The deploy command has to name the package. Wrangler's default, `npx wrangler deploy`,
-fails at the repository root with "detection logic has been run in the root of a
-workspace instead of targeting a specific project".
+Both deploy commands have to name the package. Wrangler's defaults fail at the
+repository root: `npx wrangler deploy` reports "detection logic has been run in the
+root of a workspace instead of targeting a specific project", and `npx wrangler
+versions upload` reports "Missing entry-point to Worker script or to assets
+directory".
+
+Branch builds upload a version and get a preview URL, enabled by `preview_urls` in
+[frontend/wrangler.jsonc](frontend/wrangler.jsonc). The contact form will not work on
+a preview URL: that hostname is in neither `TURNSTILE_HOSTNAMES` nor the widget's
+domain list, so verification fails and no mail is sent. That is deliberate.
 
 `build` runs `nuxt generate`, not `nuxt build`. The Worker serves `.output/public` as
 static assets, so a server build is never what is wanted: it selects the
