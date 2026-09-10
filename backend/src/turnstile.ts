@@ -56,7 +56,7 @@ export const verifyTurnstile = async (
     if (!response.ok) {
       throw new Error(`siteverify responded ${response.status}`)
     }
-    result = await response.json<SiteverifyResponse>()
+    result = (await response.json()) as SiteverifyResponse
   } catch (error) {
     console.error('Turnstile verification failed', error)
     return false

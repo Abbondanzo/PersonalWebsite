@@ -46,6 +46,11 @@ jobs:
           NUXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
           NODE_ENV: production
 
+      # Bundles worker/index.ts and reads the generated assets, so it has to run
+      # after the site is built. No upload, no credentials needed.
+      - name: Validate site Worker
+        run: pnpm --filter @abbondanzo/frontend check
+
   mail:
     name: Mail Worker
     runs-on: ubuntu-latest

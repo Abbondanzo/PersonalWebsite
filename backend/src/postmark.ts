@@ -45,9 +45,9 @@ export const sendEmail = async (options: SendEmailOptions): Promise<string> => {
     })
   })
 
-  const result = await response
-    .json<PostmarkResponse>()
-    .catch(() => ({}) as PostmarkResponse)
+  const result = (await response
+    .json()
+    .catch(() => ({}))) as PostmarkResponse
 
   if (!response.ok || result.ErrorCode) {
     const code = result.ErrorCode ?? 'none'

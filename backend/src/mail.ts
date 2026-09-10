@@ -44,7 +44,7 @@ export const handleMail = async (
 ): Promise<Response> => {
   let body: Record<string, unknown>
   try {
-    body = await request.json<Record<string, unknown>>()
+    body = (await request.json()) as Record<string, unknown>
   } catch {
     return text('Malformed request body', 400)
   }

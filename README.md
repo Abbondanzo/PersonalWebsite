@@ -39,4 +39,4 @@ Deploying the site needs the Firebase CLI (`npm install -g firebase-tools`, then
 Moving off Firebase and onto Cloudflare, in two steps:
 
 - [x] **Mail**: the Firebase Functions (`mail`, `devmail`, `template`) are now a single Worker at `mail.abbondanzo.com`, with [Turnstile](https://developers.cloudflare.com/turnstile/) protecting the contact form.
-- [ ] **Site**: Firebase Hosting becomes a Worker serving static assets, at which point `/mail` folds into it and the standalone mail Worker goes away.
+- [ ] **Site**: the Nuxt build is now served by a Worker with static assets, which also handles `/mail` itself. Deployed and verified on `workers.dev`; `abbondanzo.com` still points at Firebase Hosting until DNS is cut over, after which the standalone mail Worker goes away.
