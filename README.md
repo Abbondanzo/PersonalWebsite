@@ -38,8 +38,16 @@ Set under **Workers & Pages → abbondanzo → Settings → Build**. The Worker 
 | Setting | Value |
 | --- | --- |
 | Root directory | *(leave blank, the repository root)* |
-| Build command | `pnpm --filter @abbondanzo/frontend run generate` |
+| Build command | `pnpm run build` |
 | Deploy command | `pnpm --filter @abbondanzo/frontend exec wrangler deploy` |
+
+The deploy command has to name the package. Wrangler's default, `npx wrangler deploy`,
+fails at the repository root with "detection logic has been run in the root of a
+workspace instead of targeting a specific project".
+
+`build` runs `nuxt generate`, not `nuxt build`. The Worker serves `.output/public` as
+static assets, so a server build is never what is wanted: it selects the
+`cloudflare-module` preset, skips the crawler, and prerenders nothing.
 
 `.nvmrc` pins Node for the build image. Two values are baked into the static build and must be set as **Build variables** (they are public, and are not runtime secrets):
 

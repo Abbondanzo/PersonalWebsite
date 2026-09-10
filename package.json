@@ -3,7 +3,7 @@
   "private": true,
   "packageManager": "pnpm@10.24.0",
   "scripts": {
-    "build": "pnpm --recursive build",
+    "build": "pnpm --filter @abbondanzo/frontend run generate",
     "check": "pnpm --recursive check",
     "deploy": "pnpm --filter @abbondanzo/frontend run deploy",
     "dev": "pnpm --filter @abbondanzo/frontend dev",

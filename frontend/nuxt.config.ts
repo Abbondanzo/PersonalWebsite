@@ -61,11 +61,6 @@ export default defineNuxtConfig({
   },
 
   ssr: isProduction,
-  nitro: {
-    prerender: {
-      routes: ['/_ipx/f_webp/bg.webp'],
-    },
-  },
 
   typescript: {
     typeCheck: true,
