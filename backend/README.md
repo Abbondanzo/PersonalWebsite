@@ -1,10 +1,13 @@
-# Mail Worker
+# Mail
 
-A single [Cloudflare Worker](https://developers.cloudflare.com/workers/) behind the
-contact form on [abbondanzo.com](https://abbondanzo.com). It verifies a
+The contact form handler for [abbondanzo.com](https://abbondanzo.com). It verifies a
 [Turnstile](https://developers.cloudflare.com/turnstile/) token, renders the
 submission into an HTML email, and hands it to
 [Postmark](https://postmarkapp.com/developer).
+
+`handleMail` is imported by the site Worker in [frontend/worker](../frontend/worker),
+which serves `POST /mail` on the live site. This package also deploys on its own as
+a standalone Worker, which is useful for testing the handler in isolation.
 
 No runtime dependencies. Postmark and Turnstile are both plain `fetch` calls.
 
@@ -46,7 +49,7 @@ after editing.
 
 Turnstile test keys:
 
-| Site key | Secret key | Behaviour |
+| Site key | Secret key | Behavior |
 | --- | --- | --- |
 | `1x00000000000000000000AA` | `1x0000000000000000000000000000000AA` | always passes |
 | `2x00000000000000000000AB` | `2x0000000000000000000000000000000AA` | always blocks |

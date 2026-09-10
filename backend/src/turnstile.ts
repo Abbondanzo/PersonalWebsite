@@ -14,7 +14,7 @@ interface SiteverifyResponse {
  *
  * Tokens are single-use, so the frontend must reset its widget after every
  * submission attempt. Anything unexpected counts as a failure: a bad token, a
- * timeout, or a hostname we do not recognise. This never throws.
+ * timeout, or a hostname we do not recognize. This never throws.
  *
  * @param token The `cf-turnstile-response` value sent by the widget
  * @param remoteIp Client IP, from CF-Connecting-IP
