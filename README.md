@@ -53,9 +53,12 @@ The version command is what branch builds run. They upload a version and get a p
 a preview URL: that hostname is in neither `TURNSTILE_HOSTNAMES` nor the widget's
 domain list, so verification fails and no mail is sent. That is deliberate.
 
-`build` runs `nuxt generate`, not `nuxt build`. The Worker serves `.output/public` as
-static assets, so a server build is never what is wanted: it selects the
-`cloudflare-module` preset, skips the crawler, and prerenders nothing.
+`build` runs `nuxt generate`, not `nuxt build`, and
+[frontend/nuxt.config.ts](frontend/nuxt.config.ts) pins `nitro.preset` to `static`.
+Both matter. The Worker serves `.output/public` as static assets, and on Cloudflare's
+runners Nitro otherwise auto-selects the `cloudflare-module` preset: it prerenders a
+handful of routes instead of every page, and writes a redirected wrangler config
+pointing at a server entry that a static build never produces.
 
 `.nvmrc` pins Node for the build image. Two values are baked into the static build and must be set as **Build variables** (they are public, and are not runtime secrets):
 
