@@ -11,8 +11,7 @@ const {
   Events,
 } = Matter
 
-/** Mid-level cards/panels that should fall as whole chunks on long pages.
- *  Tall ones are skipped as bodies but still hidden as abandoned shells. */
+/** Section shells that may wrap falling leaves — never fall as one body themselves. */
 const CHUNK_SELECTOR = [
   '.info-block',
   '.experience',
@@ -29,7 +28,7 @@ const CHUNK_SELECTOR = [
   '.popup',
 ].join(', ')
 
-/** Leaf content used when nothing wraps it in a chunk. */
+/** Leaf content that can become physics bodies (text leaves explode per word). */
 const LEAF_SELECTOR = [
   'h1',
   'h2',
@@ -38,7 +37,6 @@ const LEAF_SELECTOR = [
   'p',
   'button',
   'img',
-  'li',
   'input',
   'textarea',
   '.input',
@@ -46,6 +44,9 @@ const LEAF_SELECTOR = [
   '.mobile-links a',
   '.btn',
 ].join(', ')
+
+/** Elements whose visible text is split into one body per word. */
+const WORD_SPLIT_SELECTOR = 'h1, h2, h3, h4, p, button, .btn'
 
 const WALL_THICKNESS = 200
 const DEFAULT_GRAVITY = 1
@@ -70,7 +71,6 @@ type TrackedElement = {
   width: number
   height: number
   body: Matter.Body
-  previousPointerEvents: string
 }
 
 function isVisible(el: HTMLElement): boolean {
@@ -121,41 +121,23 @@ function canUseDeviceOrientation(): boolean {
 }
 
 function getBreakableElements(): HTMLElement[] {
-  const chunks = Array.from(
-    document.querySelectorAll<HTMLElement>(CHUNK_SELECTOR),
-  ).filter((el) => {
-    if (isBreakUi(el)) return false
-    if (!isVisible(el)) return false
-    // Giant About/project panels fill the viewport when they hit the floor and
-    // look “stuck mid-page”. Break their inner leaves instead and hide the shell.
-    if (el.getBoundingClientRect().height > window.innerHeight * 0.4) return false
-    return true
-  })
-
-  // Prefer outer chunks when one chunk wraps another.
-  const topChunks = chunks.filter(
-    (el) => !chunks.some((other) => other !== el && other.contains(el)),
-  )
-
+  // Chunks are shells only — paragraphs/headers must fall as words, not panels.
   const leaves = Array.from(
     document.querySelectorAll<HTMLElement>(LEAF_SELECTOR),
   ).filter((el) => {
     if (isBreakUi(el)) return false
     if (!isVisible(el)) return false
     if (isOversizedMedia(el)) return false
-    // Skip leaves already covered by a falling chunk.
-    if (topChunks.some((chunk) => chunk.contains(el))) return false
     return true
   })
 
-  const topLeaves = leaves.filter(
+  // Prefer innermost leaves (e.g. `.btn` over wrapping structures).
+  return leaves.filter(
     (el) => !leaves.some((other) => other !== el && other.contains(el)),
   )
-
-  return [...topChunks, ...topLeaves]
 }
 
-/** Hide oversized section shells whose children are falling as leaves. */
+/** Hide section shells whose children are falling as leaves/words. */
 function hideAbandonedShells(falling: HTMLElement[]): HTMLElement[] {
   const shells: HTMLElement[] = []
   for (const el of document.querySelectorAll<HTMLElement>(CHUNK_SELECTOR)) {
@@ -224,6 +206,12 @@ const FROZEN_STYLE_PROPS = [
   'padding-right',
   'padding-bottom',
   'padding-left',
+  'width',
+  'height',
+  'min-width',
+  'min-height',
+  'max-width',
+  'max-height',
   'display',
   'align-items',
   'justify-content',
@@ -240,6 +228,10 @@ const IMPORTANT_FROZEN_PROPS = new Set([
   '-webkit-filter',
   'box-shadow',
   '-webkit-box-shadow',
+  'width',
+  'height',
+  'min-width',
+  'min-height',
 ])
 
 function isTransparentColor(value: string): boolean {
@@ -273,6 +265,134 @@ function paintedAncestorBackground(el: HTMLElement): string | null {
   return null
 }
 
+/** Typographic styles copied onto synthetic word spans. */
+const WORD_STYLE_PROPS = [
+  'color',
+  'font-family',
+  'font-size',
+  'font-weight',
+  'font-style',
+  'font-variant',
+  'line-height',
+  'letter-spacing',
+  'text-transform',
+  'text-decoration',
+  'text-decoration-color',
+  'text-decoration-line',
+  'text-decoration-style',
+  'white-space',
+  '-webkit-text-fill-color',
+  'text-shadow',
+  'opacity',
+  'filter',
+] as const
+
+function isIconOnlyControl(el: HTMLElement): boolean {
+  if (el.tagName !== 'BUTTON' && !el.classList.contains('btn')) return false
+  const text = (el.textContent || '').replace(/\s+/g, '')
+  return text.length === 0 && Boolean(el.querySelector('img, svg'))
+}
+
+function shouldSplitIntoWords(el: HTMLElement): boolean {
+  if (!el.matches(WORD_SPLIT_SELECTOR)) return false
+  if (isIconOnlyControl(el)) return false
+  const text = (el.textContent || '').trim()
+  return text.length > 0
+}
+
+type BreakPiece = {
+  /** Original page node hidden while broken (may be shared by many words). */
+  source: HTMLElement
+  /** Node that lives in the physics overlay. */
+  clone: HTMLElement
+  rect: DOMRect
+}
+
+/**
+ * Measure each word in `el` via Range rects, then build absolute-positioned
+ * spans that carry the live text styling.
+ */
+function explodeElementIntoWords(el: HTMLElement): BreakPiece[] {
+  const pieces: BreakPiece[] = []
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+  let node: Node | null = walker.nextNode()
+
+  while (node) {
+    const textNode = node as Text
+    const value = textNode.nodeValue || ''
+    const parent = textNode.parentElement
+    if (!parent || isBreakUi(parent)) {
+      node = walker.nextNode()
+      continue
+    }
+
+    const wordRe = /\S+/g
+    let match: RegExpExecArray | null
+    while ((match = wordRe.exec(value))) {
+      const range = document.createRange()
+      range.setStart(textNode, match.index)
+      range.setEnd(textNode, match.index + match[0].length)
+      const rect = range.getBoundingClientRect()
+      if (rect.width < 2 || rect.height < 2) continue
+      if (
+        rect.bottom < 0 ||
+        rect.top > window.innerHeight ||
+        rect.right < 0 ||
+        rect.left > window.innerWidth
+      ) {
+        continue
+      }
+
+      const span = document.createElement('span')
+      span.textContent = match[0]
+      span.setAttribute('data-break-word', '')
+      const computed = window.getComputedStyle(parent)
+      for (const prop of WORD_STYLE_PROPS) {
+        const v = computed.getPropertyValue(prop)
+        if (!v) continue
+        const priority = IMPORTANT_FROZEN_PROPS.has(prop) ? 'important' : ''
+        span.style.setProperty(prop, v, priority)
+      }
+      span.style.setProperty('display', 'inline-block', 'important')
+      span.style.setProperty('transition', 'none', 'important')
+      // Words shouldn't drag panel backgrounds with them — just glyphs.
+      span.style.setProperty('background', 'transparent', 'important')
+      span.style.setProperty('background-color', 'transparent', 'important')
+      span.style.setProperty('padding', '0', 'important')
+      span.style.setProperty('margin', '0', 'important')
+      span.style.setProperty('border', 'none', 'important')
+      span.style.setProperty('box-shadow', 'none', 'important')
+
+      pieces.push({ source: el, clone: span, rect })
+    }
+
+    node = walker.nextNode()
+  }
+
+  return pieces
+}
+
+function buildBreakPieces(leaves: HTMLElement[]): BreakPiece[] {
+  const pieces: BreakPiece[] = []
+  for (const leaf of leaves) {
+    if (shouldSplitIntoWords(leaf)) {
+      const words = explodeElementIntoWords(leaf)
+      if (words.length > 0) {
+        pieces.push(...words)
+        continue
+      }
+    }
+
+    const rect = leaf.getBoundingClientRect()
+    const clone = leaf.cloneNode(true) as HTMLElement
+    clone.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'))
+    clone.removeAttribute('id')
+    freezeAppearance(leaf, clone)
+    pieces.push({ source: leaf, clone, rect })
+  }
+  return pieces
+}
+
 /**
  * Copy computed appearance from a live in-DOM node tree onto its clone.
  * Clones leave parent selectors (e.g. `.experience h3 { color: #fff }`), so
@@ -300,6 +420,20 @@ function freezeAppearance(sourceRoot: HTMLElement, cloneRoot: HTMLElement) {
       }
     }
 
+    // Explicit pixel box for replaced media so icons don't inflate mid-fall.
+    if (
+      source instanceof HTMLElement &&
+      (source.tagName === 'IMG' ||
+        source.tagName === 'SVG' ||
+        source.tagName === 'CANVAS')
+    ) {
+      const box = source.getBoundingClientRect()
+      clone.style.setProperty('width', `${box.width}px`, 'important')
+      clone.style.setProperty('height', `${box.height}px`, 'important')
+      clone.style.setProperty('max-width', 'none', 'important')
+      clone.style.setProperty('max-height', 'none', 'important')
+    }
+
     // Kill transitions so baked filter/color/opacity do not animate mid-fall.
     try {
       clone.style.setProperty('transition', 'none', 'important')
@@ -308,7 +442,26 @@ function freezeAppearance(sourceRoot: HTMLElement, cloneRoot: HTMLElement) {
     }
   }
 
-  // If the piece itself is transparent, inherit the nearest opaque panel fill.
+  // Icon buttons keep their square box; don't pull a white panel fill onto them.
+  if (isIconOnlyControl(sourceRoot)) {
+    const box = sourceRoot.getBoundingClientRect()
+    cloneRoot.style.setProperty('width', `${box.width}px`, 'important')
+    cloneRoot.style.setProperty('height', `${box.height}px`, 'important')
+    cloneRoot.style.setProperty('min-width', `${box.width}px`, 'important')
+    cloneRoot.style.setProperty('min-height', `${box.height}px`, 'important')
+    cloneRoot.style.setProperty('max-width', 'none', 'important')
+    cloneRoot.style.setProperty('max-height', 'none', 'important')
+    cloneRoot.style.setProperty('box-sizing', 'border-box', 'important')
+    return
+  }
+
+  // Text leaves (and single-word headings that didn't explode) should stay
+  // glyph-only — pulling the parent panel fill makes giant olive/white slabs.
+  if (sourceRoot.matches('h1, h2, h3, h4, p, a')) {
+    return
+  }
+
+  // Form controls: keep nearest opaque panel fill when their own bg is clear.
   const rootComputed = window.getComputedStyle(sourceRoot)
   if (isTransparentColor(rootComputed.backgroundColor)) {
     const inherited = paintedAncestorBackground(sourceRoot)
@@ -473,15 +626,14 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   Composite.add(world, walls)
 
   const tracked: TrackedElement[] = []
-  const elements = getBreakableElements()
-  // Resolve shells now, but hide them only after freezing piece styles so
-  // parent selectors (e.g. `.experience h3`) still resolve while we bake.
-  const abandonedShellEls = hideAbandonedShells(elements)
+  const leaves = getBreakableElements()
+  // Resolve shells from leaf sources; hide after freezing so parent selectors apply.
+  const abandonedShellEls = hideAbandonedShells(leaves)
+  const pieces = buildBreakPieces(leaves)
+  const sourceRestores = new Map<HTMLElement, string>()
 
-  for (const source of elements) {
-    // Measure the live node, then clone it into the overlay. Reparenting Vue-managed
-    // nodes fails — the next patch yanks them back into overflow/transform cages.
-    const rect = source.getBoundingClientRect()
+  for (const piece of pieces) {
+    const { source, clone: el, rect } = piece
     const w = Math.max(rect.width, 8)
     const h = Math.max(rect.height, 8)
     const bodyW = Math.max(w * 0.92, 6)
@@ -489,13 +641,7 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     const x = rect.left + w / 2
     const y = rect.top + h / 2
 
-    const el = source.cloneNode(true) as HTMLElement
-    el.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'))
-    el.removeAttribute('id')
-
-    // Bake computed colors/fonts/borders while the source is still in-tree.
-    freezeAppearance(source, el)
-
+    // Word spans are already styled; whole clones were frozen in buildBreakPieces.
     el.style.position = 'absolute'
     el.style.left = `${rect.left}px`
     el.style.top = `${rect.top}px`
@@ -509,8 +655,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.style.pointerEvents = 'auto'
     layer.appendChild(el)
 
-    const previousPointerEvents = source.style.pointerEvents
-    hideBrokenSource(source)
+    if (!sourceRestores.has(source)) {
+      sourceRestores.set(source, source.style.pointerEvents)
+      hideBrokenSource(source)
+    }
 
     const body = Bodies.rectangle(x, y, bodyW, bodyH, {
       restitution: 0.15,
@@ -531,7 +679,6 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       width: w,
       height: h,
       body,
-      previousPointerEvents,
     })
     Composite.add(world, body)
   }
@@ -671,8 +818,6 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   let stopped = false
 
   const putBack = (item: TrackedElement) => {
-    showBrokenSource(item.source)
-    item.source.style.pointerEvents = item.previousPointerEvents
     item.el.remove()
   }
 
@@ -698,6 +843,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
       for (const item of tracked) {
         putBack(item)
+      }
+      for (const [source, previousPointerEvents] of sourceRestores) {
+        showBrokenSource(source)
+        source.style.pointerEvents = previousPointerEvents
       }
       for (const shell of abandonedShells) {
         showBrokenSource(shell.el)
