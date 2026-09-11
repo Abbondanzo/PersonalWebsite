@@ -38,6 +38,13 @@ html.site-broken {
   iframe {
     visibility: hidden !important;
   }
+  // Cloned sources — beat Vue logo transitions that ignore inline visibility/opacity.
+  [data-break-hidden] {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
 }
 html,
 body,

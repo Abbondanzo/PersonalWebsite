@@ -62,20 +62,6 @@ export type BreakSiteController = {
   stop: () => void
 }
 
-type StoredStyles = {
-  position: string
-  left: string
-  top: string
-  width: string
-  height: string
-  margin: string
-  transform: string
-  transformOrigin: string
-  zIndex: string
-  pointerEvents: string
-  maxWidth: string
-}
-
 type TrackedElement = {
   /** Physics/DOM node living in the overlay (a clone — Vue keeps the original). */
   el: HTMLElement
@@ -84,7 +70,6 @@ type TrackedElement = {
   width: number
   height: number
   body: Matter.Body
-  previousVisibility: string
   previousPointerEvents: string
 }
 
@@ -184,34 +169,165 @@ function hideAbandonedShells(falling: HTMLElement[]): HTMLElement[] {
   return shells
 }
 
-function snapshotStyles(el: HTMLElement): StoredStyles {
-  return {
-    position: el.style.position,
-    left: el.style.left,
-    top: el.style.top,
-    width: el.style.width,
-    height: el.style.height,
-    margin: el.style.margin,
-    transform: el.style.transform,
-    transformOrigin: el.style.transformOrigin,
-    zIndex: el.style.zIndex,
-    pointerEvents: el.style.pointerEvents,
-    maxWidth: el.style.maxWidth,
+/** Visual CSS properties (kebab-case) baked onto clones so parent-scoped rules stick. */
+const FROZEN_STYLE_PROPS = [
+  'color',
+  'background-color',
+  'background-image',
+  'background-size',
+  'background-position',
+  'background-repeat',
+  'background-clip',
+  'border-top-color',
+  'border-right-color',
+  'border-bottom-color',
+  'border-left-color',
+  'border-top-width',
+  'border-right-width',
+  'border-bottom-width',
+  'border-left-width',
+  'border-top-style',
+  'border-right-style',
+  'border-bottom-style',
+  'border-left-style',
+  'border-top-left-radius',
+  'border-top-right-radius',
+  'border-bottom-right-radius',
+  'border-bottom-left-radius',
+  'box-shadow',
+  'text-shadow',
+  'opacity',
+  'font-family',
+  'font-size',
+  'font-weight',
+  'font-style',
+  'font-variant',
+  'line-height',
+  'letter-spacing',
+  'word-spacing',
+  'text-align',
+  'text-transform',
+  'text-decoration',
+  'text-decoration-color',
+  'text-decoration-line',
+  'text-decoration-style',
+  'white-space',
+  'filter',
+  '-webkit-filter',
+  '-webkit-text-fill-color',
+  '-webkit-background-clip',
+  'mix-blend-mode',
+  'fill',
+  'stroke',
+  'stroke-width',
+  'padding-top',
+  'padding-right',
+  'padding-bottom',
+  'padding-left',
+  'display',
+  'align-items',
+  'justify-content',
+  'flex-direction',
+  'gap',
+  'object-fit',
+  'vertical-align',
+] as const
+
+/** Props that site CSS often sets with !important (autofill, fills) — mirror that. */
+const IMPORTANT_FROZEN_PROPS = new Set([
+  '-webkit-text-fill-color',
+  'filter',
+  '-webkit-filter',
+  'box-shadow',
+  '-webkit-box-shadow',
+])
+
+function isTransparentColor(value: string): boolean {
+  const v = value.trim().toLowerCase()
+  return (
+    !v ||
+    v === 'transparent' ||
+    v === 'rgba(0, 0, 0, 0)' ||
+    v === 'rgba(0,0,0,0)'
+  )
+}
+
+/**
+ * When a leaf is ripped out of a painted panel (`.experience`, `.contact-form`,
+ * `.text-block`), keep that panel color on the falling piece so dark text does
+ * not suddenly sit naked on the photo.
+ */
+function paintedAncestorBackground(el: HTMLElement): string | null {
+  let node: HTMLElement | null = el.parentElement
+  while (node && node !== document.documentElement && node !== document.body) {
+    const style = window.getComputedStyle(node)
+    const bg = style.backgroundColor
+    if (!isTransparentColor(bg)) return bg
+    const image = style.backgroundImage
+    if (image && image !== 'none') {
+      // Solid color is enough for panels; images are rare on shells we abandon.
+      return bg && !isTransparentColor(bg) ? bg : null
+    }
+    node = node.parentElement
+  }
+  return null
+}
+
+/**
+ * Copy computed appearance from a live in-DOM node tree onto its clone.
+ * Clones leave parent selectors (e.g. `.experience h3 { color: #fff }`), so
+ * without this white-on-olive text becomes black-on-transparent mid-fall.
+ */
+function freezeAppearance(sourceRoot: HTMLElement, cloneRoot: HTMLElement) {
+  const sources = [sourceRoot, ...sourceRoot.querySelectorAll<Element>('*')]
+  const clones = [cloneRoot, ...cloneRoot.querySelectorAll<Element>('*')]
+  const count = Math.min(sources.length, clones.length)
+
+  for (let i = 0; i < count; i++) {
+    const source = sources[i]
+    const clone = clones[i] as HTMLElement | SVGElement
+    if (!clone || !('style' in clone)) continue
+
+    const computed = window.getComputedStyle(source)
+    for (const prop of FROZEN_STYLE_PROPS) {
+      const value = computed.getPropertyValue(prop)
+      if (!value) continue
+      try {
+        const priority = IMPORTANT_FROZEN_PROPS.has(prop) ? 'important' : ''
+        clone.style.setProperty(prop, value, priority)
+      } catch {
+        // Some SVG presentation attrs reject setProperty — ignore quietly.
+      }
+    }
+
+    // Kill transitions so baked filter/color/opacity do not animate mid-fall.
+    try {
+      clone.style.setProperty('transition', 'none', 'important')
+    } catch {
+      /* ignore */
+    }
+  }
+
+  // If the piece itself is transparent, inherit the nearest opaque panel fill.
+  const rootComputed = window.getComputedStyle(sourceRoot)
+  if (isTransparentColor(rootComputed.backgroundColor)) {
+    const inherited = paintedAncestorBackground(sourceRoot)
+    if (inherited) {
+      cloneRoot.style.setProperty('background-color', inherited, 'important')
+    }
   }
 }
 
-function restoreStyles(el: HTMLElement, original: StoredStyles) {
-  el.style.position = original.position
-  el.style.left = original.left
-  el.style.top = original.top
-  el.style.width = original.width
-  el.style.height = original.height
-  el.style.margin = original.margin
-  el.style.transform = original.transform
-  el.style.transformOrigin = original.transformOrigin
-  el.style.zIndex = original.zIndex
-  el.style.pointerEvents = original.pointerEvents
-  el.style.maxWidth = original.maxWidth
+const BREAK_HIDDEN_ATTR = 'data-break-hidden'
+
+function hideBrokenSource(el: HTMLElement) {
+  // Attribute + stylesheet beat Vue class transitions that ignore inline visibility.
+  el.setAttribute(BREAK_HIDDEN_ATTR, '')
+  el.style.pointerEvents = 'none'
+}
+
+function showBrokenSource(el: HTMLElement) {
+  el.removeAttribute(BREAK_HIDDEN_ATTR)
 }
 
 function screenOrientationAngle(): number {
@@ -358,13 +474,9 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
   const tracked: TrackedElement[] = []
   const elements = getBreakableElements()
-  const abandonedShells = hideAbandonedShells(elements).map((el) => {
-    const previousVisibility = el.style.visibility
-    const previousPointerEvents = el.style.pointerEvents
-    el.style.visibility = 'hidden'
-    el.style.pointerEvents = 'none'
-    return { el, previousVisibility, previousPointerEvents }
-  })
+  // Resolve shells now, but hide them only after freezing piece styles so
+  // parent selectors (e.g. `.experience h3`) still resolve while we bake.
+  const abandonedShellEls = hideAbandonedShells(elements)
 
   for (const source of elements) {
     // Measure the live node, then clone it into the overlay. Reparenting Vue-managed
@@ -381,6 +493,9 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'))
     el.removeAttribute('id')
 
+    // Bake computed colors/fonts/borders while the source is still in-tree.
+    freezeAppearance(source, el)
+
     el.style.position = 'absolute'
     el.style.left = `${rect.left}px`
     el.style.top = `${rect.top}px`
@@ -394,10 +509,8 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.style.pointerEvents = 'auto'
     layer.appendChild(el)
 
-    const previousVisibility = source.style.visibility
     const previousPointerEvents = source.style.pointerEvents
-    source.style.visibility = 'hidden'
-    source.style.pointerEvents = 'none'
+    hideBrokenSource(source)
 
     const body = Bodies.rectangle(x, y, bodyW, bodyH, {
       restitution: 0.15,
@@ -418,11 +531,16 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       width: w,
       height: h,
       body,
-      previousVisibility,
       previousPointerEvents,
     })
     Composite.add(world, body)
   }
+
+  const abandonedShells = abandonedShellEls.map((el) => {
+    const previousPointerEvents = el.style.pointerEvents
+    hideBrokenSource(el)
+    return { el, previousPointerEvents }
+  })
 
   // About cards heavily overlap in the layout. Leave piece-piece collisions off
   // so they fall through each other onto the floor instead of detonating apart.
@@ -553,7 +671,7 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   let stopped = false
 
   const putBack = (item: TrackedElement) => {
-    item.source.style.visibility = item.previousVisibility
+    showBrokenSource(item.source)
     item.source.style.pointerEvents = item.previousPointerEvents
     item.el.remove()
   }
@@ -582,7 +700,7 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
         putBack(item)
       }
       for (const shell of abandonedShells) {
-        shell.el.style.visibility = shell.previousVisibility
+        showBrokenSource(shell.el)
         shell.el.style.pointerEvents = shell.previousPointerEvents
       }
       layer.remove()
