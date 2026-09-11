@@ -21,6 +21,11 @@ html.site-broken {
   .nav {
     pointer-events: none !important;
   }
+  // Parallax writes transforms onto these; clear them so empty shells stay put.
+  .block-1,
+  .block-2 {
+    transform: none !important;
+  }
 }
 html,
 body,

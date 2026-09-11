@@ -1,10 +1,31 @@
 import Matter from 'matter-js'
 
-const { Engine, Runner, Bodies, Body, Composite, Mouse, MouseConstraint, Events } =
-  Matter
+const {
+  Engine,
+  Runner,
+  Bodies,
+  Body,
+  Composite,
+  Mouse,
+  MouseConstraint,
+  Events,
+} = Matter
 
-/** Elements that become physics bodies when the site “breaks”. */
-const BREAKABLE_SELECTOR = [
+/** Mid-level cards/panels that should fall as whole chunks on long pages. */
+const CHUNK_SELECTOR = [
+  '.info-block',
+  '.experience',
+  '.more-info-block',
+  '.contact-cta',
+  '.greeting',
+  '.hello-text',
+  '.p-title',
+  '.p-text',
+  '.project-return',
+].join(', ')
+
+/** Leaf content used when nothing wraps it in a chunk. */
+const LEAF_SELECTOR = [
   'h1',
   'h2',
   'h3',
@@ -20,6 +41,7 @@ const BREAKABLE_SELECTOR = [
 
 const WALL_THICKNESS = 200
 const DEFAULT_GRAVITY = 1
+const LAYER_ATTR = 'data-break-site-layer'
 
 export type BreakSiteOptions = {
   /** Fired once when the first deviceorientation event arrives. */
@@ -46,6 +68,7 @@ type StoredStyles = {
 
 type TrackedElement = {
   el: HTMLElement
+  placeholder: Comment
   width: number
   height: number
   body: Matter.Body
@@ -57,7 +80,14 @@ function isVisible(el: HTMLElement): boolean {
   if (style.display === 'none' || style.visibility === 'hidden') return false
   if (style.opacity === '0') return false
   const rect = el.getBoundingClientRect()
-  return rect.width > 4 && rect.height > 4
+  if (rect.width <= 4 || rect.height <= 4) return false
+  // Only break what you can see — off-screen pieces would spawn outside the walls.
+  return (
+    rect.bottom > 0 &&
+    rect.top < window.innerHeight &&
+    rect.right > 0 &&
+    rect.left < window.innerWidth
+  )
 }
 
 /** Full-bleed logos / heroes make terrible rigid bodies and block everything else. */
@@ -67,6 +97,12 @@ function isOversized(el: HTMLElement): boolean {
   const vh = window.innerHeight
   const areaRatio = (rect.width * rect.height) / (vw * vh)
   return areaRatio > 0.35 || (rect.width > vw * 0.7 && rect.height > vh * 0.5)
+}
+
+function isBreakUi(el: Element): boolean {
+  return Boolean(
+    el.closest('[data-break-site-ui]') || el.closest(`[${LAYER_ATTR}]`),
+  )
 }
 
 /** Laptops often emit bogus deviceorientation with a backward tilt that pulls “up”. */
@@ -81,19 +117,36 @@ function canUseDeviceOrientation(): boolean {
 }
 
 function getBreakableElements(): HTMLElement[] {
-  const candidates = Array.from(
-    document.querySelectorAll<HTMLElement>(BREAKABLE_SELECTOR),
+  const chunks = Array.from(
+    document.querySelectorAll<HTMLElement>(CHUNK_SELECTOR),
   ).filter((el) => {
-    if (el.closest('[data-break-site-ui]')) return false
+    if (isBreakUi(el)) return false
     if (!isVisible(el)) return false
     if (isOversized(el)) return false
     return true
   })
 
-  // Prefer leaf nodes so nested text/buttons are not double-bound.
-  return candidates.filter(
-    (el) => !candidates.some((other) => other !== el && el.contains(other)),
+  // Prefer outer chunks when one chunk wraps another.
+  const topChunks = chunks.filter(
+    (el) => !chunks.some((other) => other !== el && other.contains(el)),
   )
+
+  const leaves = Array.from(
+    document.querySelectorAll<HTMLElement>(LEAF_SELECTOR),
+  ).filter((el) => {
+    if (isBreakUi(el)) return false
+    if (!isVisible(el)) return false
+    if (isOversized(el)) return false
+    // Skip leaves already covered by a falling chunk.
+    if (topChunks.some((chunk) => chunk.contains(el))) return false
+    return true
+  })
+
+  const topLeaves = leaves.filter(
+    (el) => !leaves.some((other) => other !== el && other.contains(el)),
+  )
+
+  return [...topChunks, ...topLeaves]
 }
 
 function snapshotStyles(el: HTMLElement): StoredStyles {
@@ -145,7 +198,6 @@ function orientationToGravity(
     return { x: 0, y: DEFAULT_GRAVITY }
   }
 
-  // Compensate for landscape/portrait so “down” matches the screen.
   const angle = screenOrientationAngle()
   let x = gamma
   let y = beta
@@ -160,12 +212,10 @@ function orientationToGravity(
     y = -beta
   }
 
-  let gx = Math.sin((x * Math.PI) / 180)
-  let gy = Math.sin((y * Math.PI) / 180)
+  const gx = Math.sin((x * Math.PI) / 180)
+  const gy = Math.sin((y * Math.PI) / 180)
   const len = Math.hypot(gx, gy)
 
-  // Phone lying flat: almost no in-plane gravity — keep a light downward pull
-  // so pieces settle instead of floating mid-air.
   if (len < 0.15) {
     return { x: 0, y: DEFAULT_GRAVITY * 0.4 }
   }
@@ -190,9 +240,28 @@ function mouseToGravity(clientX: number, _clientY: number): { x: number; y: numb
   }
 }
 
+function createPhysicsLayer(): HTMLDivElement {
+  const layer = document.createElement('div')
+  layer.setAttribute(LAYER_ATTR, '')
+  // pointer-events none on the layer so the teleported Fix button stays clickable;
+  // children re-enable hits for dragging.
+  layer.style.cssText = [
+    'position:fixed',
+    'inset:0',
+    'z-index:30',
+    'overflow:hidden',
+    'pointer-events:none',
+  ].join(';')
+  document.body.appendChild(layer)
+  return layer
+}
+
 /**
  * Turns visible page content into Matter.js bodies that fall with gravity.
  * Device orientation steers gravity when available; otherwise the mouse does.
+ *
+ * Elements are reparented into a viewport-fixed layer so ancestor `transform`
+ * / `overflow` (parallax cards, clipped sections) cannot trap `position:fixed`.
  */
 export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteController {
   const engine = Engine.create({
@@ -203,14 +272,19 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   })
   const world = engine.world
   const runner = Runner.create()
+  const layer = createPhysicsLayer()
 
   const width = window.innerWidth
   const height = window.innerHeight
 
   const walls = [
-    Bodies.rectangle(width / 2, -WALL_THICKNESS / 2, width + WALL_THICKNESS * 2, WALL_THICKNESS, {
-      isStatic: true,
-    }),
+    Bodies.rectangle(
+      width / 2,
+      -WALL_THICKNESS / 2,
+      width + WALL_THICKNESS * 2,
+      WALL_THICKNESS,
+      { isStatic: true },
+    ),
     Bodies.rectangle(
       width / 2,
       height + WALL_THICKNESS / 2,
@@ -218,9 +292,13 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       WALL_THICKNESS,
       { isStatic: true },
     ),
-    Bodies.rectangle(-WALL_THICKNESS / 2, height / 2, WALL_THICKNESS, height + WALL_THICKNESS * 2, {
-      isStatic: true,
-    }),
+    Bodies.rectangle(
+      -WALL_THICKNESS / 2,
+      height / 2,
+      WALL_THICKNESS,
+      height + WALL_THICKNESS * 2,
+      { isStatic: true },
+    ),
     Bodies.rectangle(
       width + WALL_THICKNESS / 2,
       height / 2,
@@ -235,18 +313,21 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   const elements = getBreakableElements()
 
   for (const el of elements) {
+    // Measure before reparenting — rects are viewport-relative.
     const rect = el.getBoundingClientRect()
     const original = snapshotStyles(el)
     const w = Math.max(rect.width, 8)
     const h = Math.max(rect.height, 8)
-    // Slightly shrink the collider so stacked hero text doesn't explode apart
-    // when Matter resolves the initial overlaps.
-    const bodyW = Math.max(w * 0.9, 6)
-    const bodyH = Math.max(h * 0.9, 6)
+    const bodyW = Math.max(w * 0.92, 6)
+    const bodyH = Math.max(h * 0.92, 6)
     const x = rect.left + w / 2
     const y = rect.top + h / 2
 
-    el.style.position = 'fixed'
+    const placeholder = document.createComment('break-site-placeholder')
+    el.parentNode?.insertBefore(placeholder, el)
+
+    // Absolute inside the fixed layer = viewport coordinates, free of ancestor transforms.
+    el.style.position = 'absolute'
     el.style.left = `${rect.left}px`
     el.style.top = `${rect.top}px`
     el.style.width = `${w}px`
@@ -254,8 +335,9 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.style.maxWidth = 'none'
     el.style.margin = '0'
     el.style.transformOrigin = 'center center'
-    el.style.zIndex = '20'
+    el.style.zIndex = '1'
     el.style.pointerEvents = 'auto'
+    layer.appendChild(el)
 
     const body = Bodies.rectangle(x, y, bodyW, bodyH, {
       restitution: 0.15,
@@ -264,16 +346,14 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       density: 0.002,
       slop: 0.05,
     })
-    // Soft downward start — avoid random kicks that look like sideways sliding.
     Body.setVelocity(body, { x: 0, y: 1.2 })
     Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.03)
 
-    tracked.push({ el, width: w, height: h, body, original })
+    tracked.push({ el, placeholder, width: w, height: h, body, original })
     Composite.add(world, body)
   }
 
-  // Bleed off the violent separation impulse Matter applies to overlapping bodies
-  // for the first few frames so the break reads as a fall, not an explosion.
+  // Bleed off the violent separation impulse Matter applies to overlapping bodies.
   let settleFrames = 0
   const dampOverlapExplosion = () => {
     if (settleFrames++ > 20) {
@@ -290,7 +370,8 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   }
   Events.on(engine, 'beforeUpdate', dampOverlapExplosion)
 
-  // Let people fling pieces around after the break.
+  // Mouse on document.body so hits work even though the layer is pointer-events:none
+  // (children re-enable hits). Capture-phase guard keeps the Fix button usable.
   const mouse = Mouse.create(document.body)
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse,
@@ -301,9 +382,19 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   })
   Composite.add(world, mouseConstraint)
 
-  // Matter’s mouse uses the element’s scroll offset; keep it in sync with the viewport.
   mouse.element.removeEventListener('mousewheel', (mouse as any).mousewheel)
   mouse.element.removeEventListener('DOMMouseScroll', (mouse as any).mousewheel)
+
+  const ignoreBreakUiPointer = (event: Event) => {
+    const target = event.target as Element | null
+    if (target?.closest?.('[data-break-site-ui]')) {
+      event.stopImmediatePropagation()
+    }
+  }
+  document.body.addEventListener('mousedown', ignoreBreakUiPointer, true)
+  document.body.addEventListener('mouseup', ignoreBreakUiPointer, true)
+  document.body.addEventListener('touchstart', ignoreBreakUiPointer, true)
+  document.body.addEventListener('touchend', ignoreBreakUiPointer, true)
 
   const syncDom = () => {
     for (const item of tracked) {
@@ -317,14 +408,12 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   Events.on(engine, 'afterUpdate', syncDom)
 
   let usingOrientation = false
-  // Let the initial collapse finish before mouse tilt kicks in.
   let mouseTiltEnabled = false
   const mouseTiltDelay = window.setTimeout(() => {
     mouseTiltEnabled = true
   }, 900)
 
   const onOrientation = (event: DeviceOrientationEvent) => {
-    // Ignore empty events some desktops fire without a real sensor.
     if (event.beta == null && event.gamma == null) return
     if (!usingOrientation) {
       usingOrientation = true
@@ -355,6 +444,14 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
   let stopped = false
 
+  const putBack = (item: TrackedElement) => {
+    restoreStyles(item.el, item.original)
+    if (item.placeholder.parentNode) {
+      item.placeholder.parentNode.insertBefore(item.el, item.placeholder)
+      item.placeholder.remove()
+    }
+  }
+
   return {
     stop() {
       if (stopped) return
@@ -366,12 +463,17 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       Events.off(engine, 'afterUpdate', syncDom)
       window.removeEventListener('deviceorientation', onOrientation)
       window.removeEventListener('mousemove', onMouseMove)
+      document.body.removeEventListener('mousedown', ignoreBreakUiPointer, true)
+      document.body.removeEventListener('mouseup', ignoreBreakUiPointer, true)
+      document.body.removeEventListener('touchstart', ignoreBreakUiPointer, true)
+      document.body.removeEventListener('touchend', ignoreBreakUiPointer, true)
       Composite.clear(world, false, true)
       Engine.clear(engine)
 
       for (const item of tracked) {
-        restoreStyles(item.el, item.original)
+        putBack(item)
       }
+      layer.remove()
 
       document.body.style.overflow = previousOverflow
       document.documentElement.classList.remove('site-broken')

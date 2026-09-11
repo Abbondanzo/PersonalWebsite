@@ -1,15 +1,22 @@
 <template>
-  <div data-break-site-ui class="break-site" :class="{ broken: isBroken }">
-    <button
-      type="button"
-      class="break-site__btn"
-      :title="isBroken ? 'Put everything back' : 'Knock the page over'"
-      @click="toggle"
+  <Teleport to="body">
+    <div
+      data-break-site-ui
+      class="break-site"
+      :class="{ broken: isBroken }"
     >
-      {{ isBroken ? 'Fix this site' : 'Break this site' }}
-    </button>
-    <p v-if="isBroken && hint" class="break-site__hint">{{ hint }}</p>
-  </div>
+      <button
+        type="button"
+        class="break-site__btn"
+        :title="isBroken ? 'Put everything back' : 'Knock the page over'"
+        @pointerdown.stop="onPointerDown"
+        @click.stop.prevent="toggle"
+      >
+        {{ isBroken ? 'Fix this site' : 'Break this site' }}
+      </button>
+      <p v-if="isBroken && hint" class="break-site__hint">{{ hint }}</p>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -22,16 +29,33 @@ import {
 const isBroken = ref(false)
 const hint = ref('')
 let controller: BreakSiteController | null = null
+let fixing = false
 
 const clearController = () => {
   controller?.stop()
   controller = null
 }
 
+const fixSite = () => {
+  if (fixing) return
+  fixing = true
+  // Hard navigation — reload() can no-op oddly under some Matter mouse handlers.
+  const url =
+    window.location.pathname + window.location.search + window.location.hash
+  window.location.assign(url)
+}
+
+const onPointerDown = (event: PointerEvent) => {
+  // Fire Fix on pointerdown so Matter’s mouse constraint cannot swallow the click.
+  if (isBroken.value) {
+    event.preventDefault()
+    fixSite()
+  }
+}
+
 const toggle = async () => {
   if (isBroken.value) {
-    // A full reload is the honest “fix” — layout and parallax state are messy after a break.
-    window.location.reload()
+    fixSite()
     return
   }
 
@@ -60,7 +84,8 @@ export default {
 <style lang="scss" scoped>
 .break-site {
   position: fixed;
-  z-index: 10000;
+  // Above the physics layer (z-index 30) — Teleport to body avoids #app stacking traps.
+  z-index: 10050;
   left: 16px;
   bottom: 16px;
   pointer-events: none;
@@ -88,7 +113,7 @@ export default {
 }
 
 .break-site__btn {
-  pointer-events: all;
+  pointer-events: auto;
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
   font-weight: 600;
@@ -104,7 +129,9 @@ export default {
   position: relative;
   z-index: 0;
   backdrop-filter: blur(4px);
-  transition: color $anim * 2 $ease-out-quint, border-color $anim * 2 $ease-out-quint;
+  transition:
+    color $anim * 2 $ease-out-quint,
+    border-color $anim * 2 $ease-out-quint;
 
   &::before {
     content: '';
@@ -140,7 +167,6 @@ export default {
 
 @media screen and (max-width: 960px) {
   .break-site {
-    // Keep clear of the mobile menu hamburger (top-right).
     left: 12px;
     bottom: 12px;
   }
