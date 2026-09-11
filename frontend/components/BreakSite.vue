@@ -42,7 +42,8 @@ const toggle = async () => {
     },
   })
   isBroken.value = true
-  hint.value = 'Move your mouse to tilt gravity. On a phone, tilt the device.'
+  hint.value =
+    'Move your mouse left or right to tilt. On a phone, tilt the device.'
 }
 
 onBeforeUnmount(() => {

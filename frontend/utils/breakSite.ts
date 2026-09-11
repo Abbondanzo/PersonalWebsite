@@ -1,6 +1,6 @@
 import Matter from 'matter-js'
 
-const { Engine, Runner, Bodies, Composite, Mouse, MouseConstraint, Events } =
+const { Engine, Runner, Bodies, Body, Composite, Mouse, MouseConstraint, Events } =
   Matter
 
 /** Elements that become physics bodies when the site “breaks”. */
@@ -104,20 +104,27 @@ function restoreStyles(el: HTMLElement, original: StoredStyles) {
   el.style.maxWidth = original.maxWidth
 }
 
+function screenOrientationAngle(): number {
+  if (typeof screen.orientation?.angle === 'number') {
+    return screen.orientation.angle
+  }
+  return (window.orientation as number | undefined) || 0
+}
+
+/**
+ * Map device tilt to a gravity vector of roughly constant strength so pieces
+ * always fall “down” relative to the real world (not drift with weak tilt).
+ */
 function orientationToGravity(
   beta: number | null,
   gamma: number | null,
 ): { x: number; y: number } {
-  // Fall back to normal downward gravity when the device reports nothing.
   if (beta == null || gamma == null) {
     return { x: 0, y: DEFAULT_GRAVITY }
   }
 
   // Compensate for landscape/portrait so “down” matches the screen.
-  const angle = (typeof screen.orientation?.angle === 'number'
-    ? screen.orientation.angle
-    : (window.orientation as number | undefined) || 0) as number
-
+  const angle = screenOrientationAngle()
   let x = gamma
   let y = beta
   if (angle === 90) {
@@ -131,20 +138,33 @@ function orientationToGravity(
     y = -beta
   }
 
-  // Scale device degrees into Matter gravity units.
-  const scale = 1 / 45
+  let gx = Math.sin((x * Math.PI) / 180)
+  let gy = Math.sin((y * Math.PI) / 180)
+  const len = Math.hypot(gx, gy)
+
+  // Phone lying flat: almost no in-plane gravity — keep a light downward pull
+  // so pieces settle instead of floating mid-air.
+  if (len < 0.15) {
+    return { x: 0, y: DEFAULT_GRAVITY * 0.4 }
+  }
+
   return {
-    x: Math.max(-2, Math.min(2, x * scale)),
-    y: Math.max(-2, Math.min(2, y * scale)),
+    x: (gx / len) * DEFAULT_GRAVITY,
+    y: (gy / len) * DEFAULT_GRAVITY,
   }
 }
 
-function mouseToGravity(clientX: number, clientY: number): { x: number; y: number } {
+/**
+ * Desktop fallback: keep real downward gravity and only tilt left/right with
+ * the cursor. Mapping both axes to the cursor made pieces slide around instead
+ * of falling.
+ */
+function mouseToGravity(clientX: number, _clientY: number): { x: number; y: number } {
   const cx = window.innerWidth / 2
-  const cy = window.innerHeight / 2
+  const tilt = Math.max(-1, Math.min(1, (clientX - cx) / cx))
   return {
-    x: Math.max(-2, Math.min(2, (clientX - cx) / cx)),
-    y: Math.max(-2, Math.min(2, (clientY - cy) / cy + 0.6)),
+    x: tilt * 0.9,
+    y: DEFAULT_GRAVITY,
   }
 }
 
@@ -154,7 +174,10 @@ function mouseToGravity(clientX: number, clientY: number): { x: number; y: numbe
  */
 export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteController {
   const engine = Engine.create({
-    gravity: { x: 0, y: DEFAULT_GRAVITY, scale: 0.001 },
+    // Sleeping bodies ignore gravity changes — disable so tilt keeps working
+    // after pieces settle on the floor.
+    enableSleeping: false,
+    gravity: { x: 0, y: DEFAULT_GRAVITY, scale: 0.0015 },
   })
   const world = engine.world
   const runner = Runner.create()
@@ -209,11 +232,17 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.style.pointerEvents = 'auto'
 
     const body = Bodies.rectangle(x, y, w, h, {
-      restitution: 0.35,
-      friction: 0.2,
-      frictionAir: 0.02,
+      restitution: 0.25,
+      friction: 0.35,
+      frictionAir: 0.01,
       density: 0.002,
     })
+    // Nudge pieces so the break reads as a collapse, not a hover.
+    Body.setVelocity(body, {
+      x: (Math.random() - 0.5) * 2,
+      y: 1 + Math.random() * 2,
+    })
+    Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.08)
 
     tracked.push({ el, width: w, height: h, body, original })
     Composite.add(world, body)
@@ -246,6 +275,11 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   Events.on(engine, 'afterUpdate', syncDom)
 
   let usingOrientation = false
+  // Let the initial collapse finish before mouse tilt kicks in.
+  let mouseTiltEnabled = false
+  const mouseTiltDelay = window.setTimeout(() => {
+    mouseTiltEnabled = true
+  }, 900)
 
   const onOrientation = (event: DeviceOrientationEvent) => {
     // Ignore empty events some desktops fire without a real sensor.
@@ -260,7 +294,7 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   }
 
   const onMouseMove = (event: MouseEvent) => {
-    if (usingOrientation) return
+    if (usingOrientation || !mouseTiltEnabled) return
     const g = mouseToGravity(event.clientX, event.clientY)
     engine.gravity.x = g.x
     engine.gravity.y = g.y
@@ -282,6 +316,7 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       if (stopped) return
       stopped = true
 
+      window.clearTimeout(mouseTiltDelay)
       Runner.stop(runner)
       Events.off(engine, 'afterUpdate', syncDom)
       window.removeEventListener('deviceorientation', onOrientation)
