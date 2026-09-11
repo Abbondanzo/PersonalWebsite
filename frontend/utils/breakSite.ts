@@ -90,8 +90,14 @@ function isVisible(el: HTMLElement): boolean {
   )
 }
 
-/** Full-bleed logos / heroes make terrible rigid bodies and block everything else. */
-function isOversized(el: HTMLElement): boolean {
+/**
+ * Full-bleed logos / heroes make terrible rigid bodies and block everything else.
+ * Only apply this to media — content cards on long pages are allowed to be large.
+ */
+function isOversizedMedia(el: HTMLElement): boolean {
+  if (el.tagName !== 'IMG' && el.tagName !== 'VIDEO' && el.tagName !== 'CANVAS') {
+    return false
+  }
   const rect = el.getBoundingClientRect()
   const vw = window.innerWidth
   const vh = window.innerHeight
@@ -122,7 +128,6 @@ function getBreakableElements(): HTMLElement[] {
   ).filter((el) => {
     if (isBreakUi(el)) return false
     if (!isVisible(el)) return false
-    if (isOversized(el)) return false
     return true
   })
 
@@ -136,7 +141,7 @@ function getBreakableElements(): HTMLElement[] {
   ).filter((el) => {
     if (isBreakUi(el)) return false
     if (!isVisible(el)) return false
-    if (isOversized(el)) return false
+    if (isOversizedMedia(el)) return false
     // Skip leaves already covered by a falling chunk.
     if (topChunks.some((chunk) => chunk.contains(el))) return false
     return true
