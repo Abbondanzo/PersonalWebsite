@@ -421,7 +421,8 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   // Walls still catch them; the mouse constraint can still fling individual pieces.
 
   // Mouse on document.body so hits work even though the layer is pointer-events:none
-  // (children re-enable hits). Capture-phase guard keeps the Fix button usable.
+  // (children re-enable hits). Capture-phase guard keeps Fix + real links usable —
+  // Matter’s mouse otherwise swallows mousedown and kills <a> navigation.
   const mouse = Mouse.create(document.body)
   const mouseConstraint = MouseConstraint.create(engine, {
     mouse,
@@ -435,16 +436,65 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   mouse.element.removeEventListener('mousewheel', (mouse as any).mousewheel)
   mouse.element.removeEventListener('DOMMouseScroll', (mouse as any).mousewheel)
 
-  const ignoreBreakUiPointer = (event: Event) => {
+  let pointerDown: { x: number; y: number } | null = null
+  let pointerDragged = false
+
+  const isFixUi = (target: Element | null) =>
+    Boolean(target?.closest?.('[data-break-site-ui]'))
+
+  const linkFromEvent = (target: Element | null) =>
+    target?.closest?.('a[href]') as HTMLAnchorElement | null
+
+  const ignoreMatterOnInteractive = (event: Event) => {
     const target = event.target as Element | null
-    if (target?.closest?.('[data-break-site-ui]')) {
+    if (isFixUi(target)) {
+      event.stopImmediatePropagation()
+      return
+    }
+    // Let anchors get a real click instead of starting a physics drag.
+    if (
+      (event.type === 'mousedown' || event.type === 'touchstart') &&
+      linkFromEvent(target)
+    ) {
       event.stopImmediatePropagation()
     }
   }
-  document.body.addEventListener('mousedown', ignoreBreakUiPointer, true)
-  document.body.addEventListener('mouseup', ignoreBreakUiPointer, true)
-  document.body.addEventListener('touchstart', ignoreBreakUiPointer, true)
-  document.body.addEventListener('touchend', ignoreBreakUiPointer, true)
+
+  const onPointerDownTrack = (event: PointerEvent) => {
+    pointerDown = { x: event.clientX, y: event.clientY }
+    pointerDragged = false
+  }
+
+  const onPointerMoveTrack = (event: PointerEvent) => {
+    if (!pointerDown || pointerDragged) return
+    const dx = event.clientX - pointerDown.x
+    const dy = event.clientY - pointerDown.y
+    if (dx * dx + dy * dy > 64) pointerDragged = true
+  }
+
+  const onLinkClick = (event: MouseEvent) => {
+    if (pointerDragged) return
+    const anchor = linkFromEvent(event.target as Element | null)
+    if (!anchor || isFixUi(anchor)) return
+    // Only handle clicks on physics clones (Vue listeners were lost on cloneNode).
+    if (!anchor.closest(`[${LAYER_ATTR}]`)) return
+
+    const href = anchor.getAttribute('href')
+    if (!href || href.startsWith('#')) return
+
+    event.preventDefault()
+    event.stopPropagation()
+    // Full navigation clears the broken state cleanly.
+    window.location.assign(anchor.href)
+  }
+
+  document.body.addEventListener('mousedown', ignoreMatterOnInteractive, true)
+  document.body.addEventListener('mouseup', ignoreMatterOnInteractive, true)
+  document.body.addEventListener('touchstart', ignoreMatterOnInteractive, true)
+  document.body.addEventListener('touchend', ignoreMatterOnInteractive, true)
+  document.body.addEventListener('pointerdown', onPointerDownTrack, true)
+  document.body.addEventListener('pointermove', onPointerMoveTrack, true)
+  document.body.addEventListener('click', onLinkClick, true)
 
   const syncDom = () => {
     for (const item of tracked) {
@@ -510,10 +560,13 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       Events.off(engine, 'afterUpdate', syncDom)
       window.removeEventListener('deviceorientation', onOrientation)
       window.removeEventListener('mousemove', onMouseMove)
-      document.body.removeEventListener('mousedown', ignoreBreakUiPointer, true)
-      document.body.removeEventListener('mouseup', ignoreBreakUiPointer, true)
-      document.body.removeEventListener('touchstart', ignoreBreakUiPointer, true)
-      document.body.removeEventListener('touchend', ignoreBreakUiPointer, true)
+      document.body.removeEventListener('mousedown', ignoreMatterOnInteractive, true)
+      document.body.removeEventListener('mouseup', ignoreMatterOnInteractive, true)
+      document.body.removeEventListener('touchstart', ignoreMatterOnInteractive, true)
+      document.body.removeEventListener('touchend', ignoreMatterOnInteractive, true)
+      document.body.removeEventListener('pointerdown', onPointerDownTrack, true)
+      document.body.removeEventListener('pointermove', onPointerMoveTrack, true)
+      document.body.removeEventListener('click', onLinkClick, true)
       Composite.clear(world, false, true)
       Engine.clear(engine)
 
