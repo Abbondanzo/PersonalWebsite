@@ -32,7 +32,10 @@ html.site-broken {
   .about-contact .left,
   .about-contact .right,
   .contact-form,
-  .project-list {
+  .text-block,
+  .project-list,
+  .cf-turnstile,
+  iframe {
     visibility: hidden !important;
   }
 }
