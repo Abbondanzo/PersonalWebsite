@@ -60,12 +60,34 @@ function isVisible(el: HTMLElement): boolean {
   return rect.width > 4 && rect.height > 4
 }
 
+/** Full-bleed logos / heroes make terrible rigid bodies and block everything else. */
+function isOversized(el: HTMLElement): boolean {
+  const rect = el.getBoundingClientRect()
+  const vw = window.innerWidth
+  const vh = window.innerHeight
+  const areaRatio = (rect.width * rect.height) / (vw * vh)
+  return areaRatio > 0.35 || (rect.width > vw * 0.7 && rect.height > vh * 0.5)
+}
+
+/** Laptops often emit bogus deviceorientation with a backward tilt that pulls “up”. */
+function canUseDeviceOrientation(): boolean {
+  const needsPermission =
+    typeof (DeviceOrientationEvent as unknown as { requestPermission?: unknown })
+      .requestPermission === 'function'
+  if (needsPermission) return true
+  return (
+    window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window
+  )
+}
+
 function getBreakableElements(): HTMLElement[] {
   const candidates = Array.from(
     document.querySelectorAll<HTMLElement>(BREAKABLE_SELECTOR),
   ).filter((el) => {
     if (el.closest('[data-break-site-ui]')) return false
-    return isVisible(el)
+    if (!isVisible(el)) return false
+    if (isOversized(el)) return false
+    return true
   })
 
   // Prefer leaf nodes so nested text/buttons are not double-bound.
@@ -300,8 +322,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     engine.gravity.y = g.y
   }
 
-  window.addEventListener('deviceorientation', onOrientation)
   window.addEventListener('mousemove', onMouseMove)
+  if (canUseDeviceOrientation()) {
+    window.addEventListener('deviceorientation', onOrientation)
+  }
 
   const previousOverflow = document.body.style.overflow
   document.body.style.overflow = 'hidden'
