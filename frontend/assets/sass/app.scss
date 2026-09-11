@@ -16,6 +16,36 @@ body {
 html {
   height: 100%;
 }
+// While the easter egg is active, freeze nav so route changes do not fight physics.
+html.site-broken {
+  .nav {
+    pointer-events: none !important;
+  }
+  // Parallax writes transforms onto these; clear them so empty shells stay put.
+  .block-1,
+  .block-2 {
+    transform: none !important;
+  }
+  // Section fills / form columns — hide so fallen pieces aren’t framed by empty boxes.
+  .backgrounding,
+  .background-2,
+  .about-contact .left,
+  .about-contact .right,
+  .contact-form,
+  .text-block,
+  .project-list,
+  .cf-turnstile,
+  iframe {
+    visibility: hidden !important;
+  }
+  // Cloned sources — beat Vue logo transitions that ignore inline visibility/opacity.
+  [data-break-hidden] {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
+}
 html,
 body,
 h1,
