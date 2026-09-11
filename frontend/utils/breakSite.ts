@@ -133,6 +133,9 @@ function getBreakableElements(): HTMLElement[] {
   ).filter((el) => {
     if (isBreakUi(el)) return false
     if (!isVisible(el)) return false
+    // Giant About/project panels fill the viewport when they hit the floor and
+    // look “stuck mid-page”. Break their inner leaves instead and hide the shell.
+    if (el.getBoundingClientRect().height > window.innerHeight * 0.4) return false
     return true
   })
 
@@ -157,6 +160,20 @@ function getBreakableElements(): HTMLElement[] {
   )
 
   return [...topChunks, ...topLeaves]
+}
+
+/** Hide oversized section shells whose children are falling as leaves. */
+function hideAbandonedShells(falling: HTMLElement[]): HTMLElement[] {
+  const shells: HTMLElement[] = []
+  for (const el of document.querySelectorAll<HTMLElement>(CHUNK_SELECTOR)) {
+    if (isBreakUi(el)) continue
+    if (!isVisible(el)) continue
+    if (falling.some((piece) => piece === el)) continue
+    // Shell owns at least one falling leaf.
+    if (!falling.some((piece) => el.contains(piece))) continue
+    shells.push(el)
+  }
+  return shells
 }
 
 function snapshotStyles(el: HTMLElement): StoredStyles {
@@ -333,6 +350,13 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
   const tracked: TrackedElement[] = []
   const elements = getBreakableElements()
+  const abandonedShells = hideAbandonedShells(elements).map((el) => {
+    const previousVisibility = el.style.visibility
+    const previousPointerEvents = el.style.pointerEvents
+    el.style.visibility = 'hidden'
+    el.style.pointerEvents = 'none'
+    return { el, previousVisibility, previousPointerEvents }
+  })
 
   for (const source of elements) {
     // Measure the live node, then clone it into the overlay. Reparenting Vue-managed
@@ -495,6 +519,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
       for (const item of tracked) {
         putBack(item)
+      }
+      for (const shell of abandonedShells) {
+        shell.el.style.visibility = shell.previousVisibility
+        shell.el.style.pointerEvents = shell.previousPointerEvents
       }
       layer.remove()
 
