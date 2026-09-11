@@ -11,7 +11,8 @@ const {
   Events,
 } = Matter
 
-/** Mid-level cards/panels that should fall as whole chunks on long pages. */
+/** Mid-level cards/panels that should fall as whole chunks on long pages.
+ *  Tall ones are skipped as bodies but still hidden as abandoned shells. */
 const CHUNK_SELECTOR = [
   '.info-block',
   '.experience',
@@ -22,6 +23,10 @@ const CHUNK_SELECTOR = [
   '.p-title',
   '.p-text',
   '.project-return',
+  '.contact-form',
+  '.text-block',
+  '.project-list',
+  '.popup',
 ].join(', ')
 
 /** Leaf content used when nothing wraps it in a chunk. */
@@ -34,6 +39,9 @@ const LEAF_SELECTOR = [
   'button',
   'img',
   'li',
+  'input',
+  'textarea',
+  '.input',
   '.nav-links a',
   '.mobile-links a',
   '.btn',
