@@ -42,6 +42,8 @@ const LEAF_SELECTOR = [
 const WALL_THICKNESS = 200
 const DEFAULT_GRAVITY = 1
 const LAYER_ATTR = 'data-break-site-layer'
+const WALL_CATEGORY = 0x0001
+const PIECE_CATEGORY = 0x0002
 
 export type BreakSiteOptions = {
   /** Fired once when the first deviceorientation event arrives. */
@@ -291,28 +293,40 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       -WALL_THICKNESS / 2,
       width + WALL_THICKNESS * 2,
       WALL_THICKNESS,
-      { isStatic: true },
+      {
+        isStatic: true,
+        collisionFilter: { category: WALL_CATEGORY, mask: PIECE_CATEGORY },
+      },
     ),
     Bodies.rectangle(
       width / 2,
       height + WALL_THICKNESS / 2,
       width + WALL_THICKNESS * 2,
       WALL_THICKNESS,
-      { isStatic: true },
+      {
+        isStatic: true,
+        collisionFilter: { category: WALL_CATEGORY, mask: PIECE_CATEGORY },
+      },
     ),
     Bodies.rectangle(
       -WALL_THICKNESS / 2,
       height / 2,
       WALL_THICKNESS,
       height + WALL_THICKNESS * 2,
-      { isStatic: true },
+      {
+        isStatic: true,
+        collisionFilter: { category: WALL_CATEGORY, mask: PIECE_CATEGORY },
+      },
     ),
     Bodies.rectangle(
       width + WALL_THICKNESS / 2,
       height / 2,
       WALL_THICKNESS,
       height + WALL_THICKNESS * 2,
-      { isStatic: true },
+      {
+        isStatic: true,
+        collisionFilter: { category: WALL_CATEGORY, mask: PIECE_CATEGORY },
+      },
     ),
   ]
   Composite.add(world, walls)
@@ -359,8 +373,11 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
       frictionAir: 0.02,
       density: 0.002,
       slop: 0.05,
+      // Fall through other pieces at first so stacked About cards do not explode
+      // apart — collide with walls only until the drop settles.
+      collisionFilter: { category: PIECE_CATEGORY, mask: WALL_CATEGORY },
     })
-    Body.setVelocity(body, { x: 0, y: 1.2 })
+    Body.setVelocity(body, { x: 0, y: 2 })
     Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.03)
 
     tracked.push({
@@ -375,22 +392,9 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     Composite.add(world, body)
   }
 
-  // Bleed off the violent separation impulse Matter applies to overlapping bodies.
-  let settleFrames = 0
-  const dampOverlapExplosion = () => {
-    if (settleFrames++ > 20) {
-      Events.off(engine, 'beforeUpdate', dampOverlapExplosion)
-      return
-    }
-    for (const { body } of tracked) {
-      Body.setVelocity(body, {
-        x: body.velocity.x * 0.25,
-        y: Math.max(body.velocity.y, 0.8),
-      })
-      Body.setAngularVelocity(body, body.angularVelocity * 0.4)
-    }
-  }
-  Events.on(engine, 'beforeUpdate', dampOverlapExplosion)
+  // About cards heavily overlap in the layout. Leave piece-piece collisions off
+  // so they fall through each other onto the floor instead of detonating apart.
+  // Walls still catch them; the mouse constraint can still fling individual pieces.
 
   // Mouse on document.body so hits work even though the layer is pointer-events:none
   // (children re-enable hits). Capture-phase guard keeps the Fix button usable.
@@ -479,7 +483,6 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
       window.clearTimeout(mouseTiltDelay)
       Runner.stop(runner)
-      Events.off(engine, 'beforeUpdate', dampOverlapExplosion)
       Events.off(engine, 'afterUpdate', syncDom)
       window.removeEventListener('deviceorientation', onOrientation)
       window.removeEventListener('mousemove', onMouseMove)
