@@ -26,6 +26,11 @@ html.site-broken {
   .block-2 {
     transform: none !important;
   }
+  // About/project section fills — hide so fallen pieces aren’t framed by empty columns.
+  .backgrounding,
+  .background-2 {
+    visibility: hidden !important;
+  }
 }
 html,
 body,
