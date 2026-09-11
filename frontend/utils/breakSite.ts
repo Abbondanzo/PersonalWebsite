@@ -239,6 +239,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     const original = snapshotStyles(el)
     const w = Math.max(rect.width, 8)
     const h = Math.max(rect.height, 8)
+    // Slightly shrink the collider so stacked hero text doesn't explode apart
+    // when Matter resolves the initial overlaps.
+    const bodyW = Math.max(w * 0.9, 6)
+    const bodyH = Math.max(h * 0.9, 6)
     const x = rect.left + w / 2
     const y = rect.top + h / 2
 
@@ -253,22 +257,38 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.style.zIndex = '20'
     el.style.pointerEvents = 'auto'
 
-    const body = Bodies.rectangle(x, y, w, h, {
-      restitution: 0.25,
-      friction: 0.35,
-      frictionAir: 0.01,
+    const body = Bodies.rectangle(x, y, bodyW, bodyH, {
+      restitution: 0.15,
+      friction: 0.4,
+      frictionAir: 0.02,
       density: 0.002,
+      slop: 0.05,
     })
-    // Nudge pieces so the break reads as a collapse, not a hover.
-    Body.setVelocity(body, {
-      x: (Math.random() - 0.5) * 2,
-      y: 1 + Math.random() * 2,
-    })
-    Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.08)
+    // Soft downward start — avoid random kicks that look like sideways sliding.
+    Body.setVelocity(body, { x: 0, y: 1.2 })
+    Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.03)
 
     tracked.push({ el, width: w, height: h, body, original })
     Composite.add(world, body)
   }
+
+  // Bleed off the violent separation impulse Matter applies to overlapping bodies
+  // for the first few frames so the break reads as a fall, not an explosion.
+  let settleFrames = 0
+  const dampOverlapExplosion = () => {
+    if (settleFrames++ > 20) {
+      Events.off(engine, 'beforeUpdate', dampOverlapExplosion)
+      return
+    }
+    for (const { body } of tracked) {
+      Body.setVelocity(body, {
+        x: body.velocity.x * 0.25,
+        y: Math.max(body.velocity.y, 0.8),
+      })
+      Body.setAngularVelocity(body, body.angularVelocity * 0.4)
+    }
+  }
+  Events.on(engine, 'beforeUpdate', dampOverlapExplosion)
 
   // Let people fling pieces around after the break.
   const mouse = Mouse.create(document.body)
@@ -342,6 +362,7 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
 
       window.clearTimeout(mouseTiltDelay)
       Runner.stop(runner)
+      Events.off(engine, 'beforeUpdate', dampOverlapExplosion)
       Events.off(engine, 'afterUpdate', syncDom)
       window.removeEventListener('deviceorientation', onOrientation)
       window.removeEventListener('mousemove', onMouseMove)
