@@ -67,12 +67,15 @@ type StoredStyles = {
 }
 
 type TrackedElement = {
+  /** Physics/DOM node living in the overlay (a clone — Vue keeps the original). */
   el: HTMLElement
-  placeholder: Comment
+  /** Original page node, hidden while broken. */
+  source: HTMLElement
   width: number
   height: number
   body: Matter.Body
-  original: StoredStyles
+  previousVisibility: string
+  previousPointerEvents: string
 }
 
 function isVisible(el: HTMLElement): boolean {
@@ -317,10 +320,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   const tracked: TrackedElement[] = []
   const elements = getBreakableElements()
 
-  for (const el of elements) {
-    // Measure before reparenting — rects are viewport-relative.
-    const rect = el.getBoundingClientRect()
-    const original = snapshotStyles(el)
+  for (const source of elements) {
+    // Measure the live node, then clone it into the overlay. Reparenting Vue-managed
+    // nodes fails — the next patch yanks them back into overflow/transform cages.
+    const rect = source.getBoundingClientRect()
     const w = Math.max(rect.width, 8)
     const h = Math.max(rect.height, 8)
     const bodyW = Math.max(w * 0.92, 6)
@@ -328,10 +331,10 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     const x = rect.left + w / 2
     const y = rect.top + h / 2
 
-    const placeholder = document.createComment('break-site-placeholder')
-    el.parentNode?.insertBefore(placeholder, el)
+    const el = source.cloneNode(true) as HTMLElement
+    el.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'))
+    el.removeAttribute('id')
 
-    // Absolute inside the fixed layer = viewport coordinates, free of ancestor transforms.
     el.style.position = 'absolute'
     el.style.left = `${rect.left}px`
     el.style.top = `${rect.top}px`
@@ -339,10 +342,16 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     el.style.height = `${h}px`
     el.style.maxWidth = 'none'
     el.style.margin = '0'
+    el.style.transform = 'none'
     el.style.transformOrigin = 'center center'
     el.style.zIndex = '1'
     el.style.pointerEvents = 'auto'
     layer.appendChild(el)
+
+    const previousVisibility = source.style.visibility
+    const previousPointerEvents = source.style.pointerEvents
+    source.style.visibility = 'hidden'
+    source.style.pointerEvents = 'none'
 
     const body = Bodies.rectangle(x, y, bodyW, bodyH, {
       restitution: 0.15,
@@ -354,7 +363,15 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
     Body.setVelocity(body, { x: 0, y: 1.2 })
     Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.03)
 
-    tracked.push({ el, placeholder, width: w, height: h, body, original })
+    tracked.push({
+      el,
+      source,
+      width: w,
+      height: h,
+      body,
+      previousVisibility,
+      previousPointerEvents,
+    })
     Composite.add(world, body)
   }
 
@@ -450,11 +467,9 @@ export function startBreakSite(options: BreakSiteOptions = {}): BreakSiteControl
   let stopped = false
 
   const putBack = (item: TrackedElement) => {
-    restoreStyles(item.el, item.original)
-    if (item.placeholder.parentNode) {
-      item.placeholder.parentNode.insertBefore(item.el, item.placeholder)
-      item.placeholder.remove()
-    }
+    item.source.style.visibility = item.previousVisibility
+    item.source.style.pointerEvents = item.previousPointerEvents
+    item.el.remove()
   }
 
   return {
