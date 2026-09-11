@@ -34,7 +34,7 @@ export default {
       w.hello = true
       // eslint-disable-next-line no-console
       console.log(
-        "Thanks for visiting! I didn't put any easter eggs in here but I'll add one if you file an issue on my GH repository"
+        "Thanks for visiting! Someone filed an issue — try the 'Break this site' button in the corner. Gyro preferred; mouse tilt works too."
       )
     }
   },

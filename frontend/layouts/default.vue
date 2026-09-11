@@ -5,6 +5,7 @@
       <slot />
     </main>
     <ProjectsFooter />
+    <BreakSite />
     <NuxtImg
       alt="Background photo"
       class="underbg"
